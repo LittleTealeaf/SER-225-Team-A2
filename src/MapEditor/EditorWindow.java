@@ -11,8 +11,7 @@ public class EditorWindow {
         editorMainPanel = new EditorMainPanel(editorWindow);
         editorWindow.setContentPane(editorMainPanel);
         editorWindow.setResizable(false);
-        //TODO: MAPEDITOR WINDOW SIZE: change this first then change the rest to match it
-        editorWindow.setSize(1400, 1200);
+        editorWindow.setSize(800, 600);
         editorWindow.setLocationRelativeTo(null);
         editorWindow.setVisible(true);
         editorWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // it'd be nice if this actually worked more than 1/3rd of the time

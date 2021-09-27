@@ -55,15 +55,6 @@ public class Enemy extends MapEntity {
     public void touchedPlayer(Player player) {
         player.hurtPlayer(this);
     }
-
-    public void touchedEnemy(Enemy enemy) {
-        enemy.hurtEnemy(this);
-    }
-
-    //extend enemy class.
-    public void hurtEnemy(MapEntity mapEntity) {
-        if (mapEntity instanceof PowerUp) {
-            this.mapEntityStatus = MapEntityStatus.REMOVED;
-        }
-    }
+ 
+    
 }

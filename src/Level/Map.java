@@ -53,7 +53,6 @@ public abstract class Map {
 
     // lists to hold map entities that are a part of the map
     protected ArrayList<Enemy> enemies;
-    protected ArrayList<PowerUp> powerUps;
     protected ArrayList<EnhancedMapTile> enhancedMapTiles;
     protected ArrayList<NPC> npcs;
 
@@ -82,11 +81,6 @@ public abstract class Map {
         this.enemies = loadEnemies();
         for (Enemy enemy: this.enemies) {
             enemy.setMap(this);
-        }
-
-        this.powerUps = loadPowerUps();
-        for (PowerUp powerUp: this.powerUps) {
-            powerUp.setMap(this);
         }
 
         this.enhancedMapTiles = loadEnhancedMapTiles();
@@ -215,23 +209,6 @@ public abstract class Map {
         }
     }
 
-    //Getters and setters for the X boundaries
-    public int getStartBoundX () {
-        return startBoundX;
-    }
-
-    public void setStartBoundX(int newStartBound) {
-        startBoundX = newStartBound;
-    }
-
-    public int getEndBoundX () {
-        return endBoundX;
-    }
-
-    public void setEndBoundX(int newEndBound) {
-        endBoundX = newEndBound;
-    }
-
     // set specific map tile from tile map to a new map tile
     public void setMapTile(int x, int y, MapTile tile) {
         mapTiles[getConvertedIndex(x, y)] = tile;
@@ -270,11 +247,6 @@ public abstract class Map {
         return new ArrayList<>();
     }
 
-    // list of powerups defined to be a part of the map, should be overriden in a subclass
-    protected ArrayList<PowerUp> loadPowerUps() {
-        return new ArrayList<>();
-    }
-
     // list of enhanced map tiles defined to be a part of the map, should be overridden in a subclass
     protected ArrayList<EnhancedMapTile> loadEnhancedMapTiles() {
         return new ArrayList<>();
@@ -292,7 +264,6 @@ public abstract class Map {
     public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
-    public ArrayList<PowerUp> getPowerUps() {return powerUps;}
     public ArrayList<EnhancedMapTile> getEnhancedMapTiles() {
         return enhancedMapTiles;
     }
@@ -319,11 +290,6 @@ public abstract class Map {
     public void addEnemy(Enemy enemy) {
         enemy.setMap(this);
         this.enemies.add(enemy);
-    }
-
-    public void addPowerUp(PowerUp powerUp) {
-        powerUp.setMap(this);
-        this.powerUps.add(powerUp);
     }
 
     // add an enhanced map tile to the map's list of enhanced map tiles

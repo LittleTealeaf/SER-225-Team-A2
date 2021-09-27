@@ -5,6 +5,9 @@ import Level.MapTile;
 import Utils.Colors;
 
 import javax.swing.*;
+
+import Engine.Config;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,7 +28,8 @@ public class ChangeMapSizeWindow {
 
         changeMapSizeWindow = new JDialog();
         changeMapSizeWindow.setResizable(false);
-        changeMapSizeWindow.setSize(500, 510);
+       changeMapSizeWindow.setSize(300, 310);
+        //changeMapSizeWindow.setSize(Config.WIDTH, Config.HEIGHT);
         changeMapSizeWindow.setTitle("Change Map Size");
         changeMapSizeWindow.setModal(true);
         changeMapSizeWindow.setLocationRelativeTo(parent);

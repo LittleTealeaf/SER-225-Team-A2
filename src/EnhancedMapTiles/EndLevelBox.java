@@ -23,6 +23,7 @@ public class EndLevelBox extends EnhancedMapTile {
         super.update(player);
         if (intersects(player)) {
             player.completeLevel();
+            
         }
     }
 

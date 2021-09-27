@@ -1,16 +1,18 @@
 package Game;
 
 import Engine.DefaultScreen;
-
 import Engine.GameWindow;
 import Engine.GraphicsHandler;
 import Engine.Screen;
 import Screens.CreditsScreen;
-import Screens.IntroductionScreen;
-import Screens.InstructionScreen;
 import Screens.MenuScreen;
+
+import Screens.OpeningScreen;
+import Screens.OptionsScreen;
 import Screens.PlayLevelScreen;
-import Level.MusicData;
+import Screens.PlayLevelScreen.PlayLevelScreenState;
+import Screens.InstructionsScreen;
+
 
 /*
  * Based on the current game state, this class determines which Screen should be shown
@@ -18,19 +20,14 @@ import Level.MusicData;
  */
 public class ScreenCoordinator extends Screen {
 	// currently shown Screen
+	protected GameWindow gameWindow;
 	protected Screen currentScreen = new DefaultScreen();
-	private GameWindow gameWindow;
-	private MusicData musicData;
-	private PlayLevelScreen pLS;
+
 	// keep track of gameState so ScreenCoordinator knows which Screen to show
 	protected GameState gameState;
 	protected GameState previousGameState;
-	public ScreenCoordinator(GameWindow gameWindow) 
-	{
-		this.gameWindow = gameWindow;
-	}
 
-	public GameState getGameState() {
+	public  GameState getGameState() {
 		return gameState;
 	}
 
@@ -42,7 +39,6 @@ public class ScreenCoordinator extends Screen {
 	@Override
 	public void initialize() {
 		// start game off with Menu Screen
-		//TODO: Where to start off on your level
 		gameState = GameState.MENU;
 	}
 
@@ -51,23 +47,30 @@ public class ScreenCoordinator extends Screen {
 		do {
 			// if previousGameState does not equal gameState, it means there was a change in gameState
 			// this triggers ScreenCoordinator to bring up a new Screen based on what the gameState is
-			
 			if (previousGameState != gameState) {
 				switch(gameState) {
-					case INTRO:
-						currentScreen = new IntroductionScreen(this);
-						break;
 					case MENU:
 						currentScreen = new MenuScreen(this);
 						break;
-					case INSTRUCTIONS:
-						currentScreen = new InstructionScreen(this);
-						break;
 					case LEVEL:
-						currentScreen = new PlayLevelScreen(this, gameWindow, musicData);
+						currentScreen = new PlayLevelScreen(this);
 						break;
 					case CREDITS:
 						currentScreen = new CreditsScreen(this);
+						break;
+					case INSTRUCTIONS:
+						currentScreen = new InstructionsScreen(this);
+						break;
+
+					case LEVELSELECT:
+						currentScreen = new PlayLevelScreen(this,PlayLevelScreenState.LEVEL_SELECT);
+						break;
+
+					case OPENING:
+					    currentScreen = new OpeningScreen(this);
+					    break;
+					case OPTIONS:
+						currentScreen = new PlayLevelScreen(this,PlayLevelScreenState.OPTIONS);
 						break;
 				}
 				currentScreen.initialize();

@@ -1,6 +1,8 @@
 package Engine;
 
 
+import Game.GameState;
+
 import GameObject.Rectangle;
 
 /*
@@ -10,6 +12,7 @@ import GameObject.Rectangle;
  */
 public class ScreenManager {
     private Screen currentScreen;
+   
     private static Rectangle screenBounds = new Rectangle(0, 0, 0, 0);
 
     public void initialize(Rectangle screenBounds) {
@@ -26,6 +29,7 @@ public class ScreenManager {
     public void update() {
         currentScreen.update();
     }
+    
 
     public void draw(GraphicsHandler graphicsHandler) {
         currentScreen.draw(graphicsHandler);

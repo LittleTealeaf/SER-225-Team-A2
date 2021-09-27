@@ -9,7 +9,7 @@ search_exclude: true
 # SER-225-Game Documentation
 
 <div id="cat-image-container">
-    <img id="cat-gif" src="/SER-225-Game/assets/images/cat-walking-right.gif" alt="cat-walking-right.gif" style="padding-left:0px;">
+    <img id="cat-gif" src="TeamA4/docs/assets/images/cat-walking-right.gif" alt="cat-walking-right.gif" style="padding-left:0px;">
 </div>
 
 Welcome to the unnamed SER-225-Game's website! Here you can find information on the game, documentation on how the code works, 

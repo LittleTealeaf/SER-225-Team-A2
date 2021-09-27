@@ -191,20 +191,23 @@ public class CommonTileset extends Tileset {
         // top water
         Frame topWaterFrame = new FrameBuilder(getSubImage(3, 0), 0)
                 .withScale(tileScale)
+                .withBounds(0, 5, 16, 11)
                 .build();
 
-        MapTileBuilder topWaterTile = new MapTileBuilder(topWaterFrame);
+        MapTileBuilder topWaterTile = new MapTileBuilder(topWaterFrame)
+        		.withTileType(TileType.LETHAL);
 
         mapTiles.add(topWaterTile);
 
-        // water
-        Frame waterFrame = new FrameBuilder(getSubImage(3, 1), 0)
+        // lethal water
+        Frame lethalWaterFrame = new FrameBuilder(getSubImage(3, 1), 0)
                 .withScale(tileScale)
                 .build();
 
-        MapTileBuilder waterTile = new MapTileBuilder(waterFrame);
+        MapTileBuilder lethalWaterTile = new MapTileBuilder(lethalWaterFrame)
+        		.withTileType(TileType.LETHAL);;
 
-        mapTiles.add(waterTile);
+        mapTiles.add(lethalWaterTile);
 
         // grey rock
         Frame greyRockFrame = new FrameBuilder(getSubImage(3, 2), 0)

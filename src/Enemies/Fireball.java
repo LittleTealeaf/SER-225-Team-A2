@@ -27,7 +27,7 @@ public class Fireball extends Enemy {
         // how long the fireball will exist for before disappearing
         existenceTimer.setWaitTime(existenceTime);
 
-        // this enemy will not respawn after it has been removed
+        // this will not respawn after it has been removed
         isRespawnable = false;
 
         initialize();
@@ -59,6 +59,10 @@ public class Fireball extends Enemy {
         // if fireball touches player, it disappears
         super.touchedPlayer(player);
         this.mapEntityStatus = MapEntityStatus.REMOVED;
+    }
+    
+    public void touchedEnemy(Enemy enemy) {
+    	
     }
 
     @Override

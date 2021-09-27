@@ -21,16 +21,15 @@ search_exclude: true
 
 Below is a list of potential enhancement ideas that could be made to this game.
 
-## Multiple levels
+## More levels
 
-Right now this game only contains one short level. I think the game having multiple levels that the player
-can progress through one after the other would make this into much more of a game.
+Right now this game only contains five levels. We think that having a game have up to 20+ levels would 
+add lots of dimension to the game. Users enjoy working through challenging levels.
 
-## Ways to kill enemies
+## Increased ways to kill enemies
 
-Touching enemies and immediately dying is generally not a recipe for a fun game. There are many different ways platformers
-go about different ways to kill enemies, but the most common are either jumping on enemies or being able to shoot enemies with
-some sort of projectile.
+We implemented a way to kill the enemies but many games feature the ability to kill AI by jumping on their head.
+We think this would be a great addition to our game.
 
 ## Lives/Health
 
@@ -42,12 +41,13 @@ in a level before dying.
 ## More ways to die
 
 Enemies work great to hinder the player's progression through a level, but most games have other means of doing so like falling
-in a bottomless pit, landing on spikes, etc. Would definitely spice things up a bit.
+in a bottomless pit, landing on spikes, etc. Would definitely spice things up a bit. We included dying by jumping into the water 
+but using lava or other barriers would be interesting to see.
 
 ## Game music/sounds
 
-This one is obvious, there is no music/sounds in this game! Music and sound support could be added to specific classes or even better
-be added to the actual game engine itself so every class in the game can use it.
+We added sound to the game but having sound effects for jumping, walking, swimming, or dying would add a lot to this
+simple game. 
 
 ## Slopes
 
@@ -56,10 +56,7 @@ that it is HARD and I don't recommend doing it without a solid understanding of 
 There are so many ways to implement them with their own different pros and cons, and even games known for their
 slopes like 2D Sonic the Hedgehog games have some bugs (you just don't notice them because in those games you move very fast).
 
-## Improved jump mechanics
+## Adjusting aspect ratio
 
-In nearly all platformer games, the player will jump at different heights based on how long the jump button is held.
-I think this would make the controls feel a lot better, as the player jumping right now feels really high and it's impossible
-to shorten the jump. Additionally, I think the jumping physics can definitely be updated/changed to feel a lot better. There are like
-100 different ways to implement jump code all with different pros and cons, so it's definitely worth playing around with
-and seeing if you can make the jumping feel better.
+During Scrum Sprint 4, we struggled to complete the task of changing aspect ratio in the options screen. Many expert gamers
+love this ability and adding this to the game would be very time consuming. We thought this would be a great additon as well.

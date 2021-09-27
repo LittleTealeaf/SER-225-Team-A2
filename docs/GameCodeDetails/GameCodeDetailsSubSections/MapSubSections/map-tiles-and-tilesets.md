@@ -226,3 +226,4 @@ The available tile types are defined in the `TileType` enum, and include:
 - **PASSABLE** -- player can pass through it, such as the sky tiles
 - **JUMP_THROUGH_PLATFORM** -- all platformers have these types of platforms, the player can walk on top of it and cannot pass through it
 when coming downwards from above, but can pass through it when coming upwards from below; the tree branch tiles are jump through platforms for example
+- **LETHAL** -- player dies if they touch a lethal tile

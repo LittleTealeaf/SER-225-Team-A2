@@ -102,6 +102,11 @@ public class AnimatedSprite implements IntersectableRectangle {
 	public HashMap<String, Frame[]> getAnimations(SpriteSheet spriteSheet) {
 	    return null;
     }
+	
+	public void setAnimations(HashMap<String, Frame[]> animations) {
+		this.animations = animations; 
+		
+	}
 
     // currentFrame is essentially a sprite, so each game loop cycle
 	// the sprite needs to have its current state updated based on animation logic,
@@ -267,4 +272,10 @@ public class AnimatedSprite implements IntersectableRectangle {
 	public String toString() {
 		return String.format("Current Sprite: x=%s y=%s width=%s height=%s bounds=(%s, %s, %s, %s)", x, y, getScaledWidth(), getScaledHeight(), getScaledBoundsX1(), getScaledBoundsY1(), getScaledBounds().getWidth(), getScaledBounds().getHeight());
 	}
+	
+	public void setCurrentAnimationName(String name) {
+		this.currentAnimationName = name;
+	}
+	
+	
 }

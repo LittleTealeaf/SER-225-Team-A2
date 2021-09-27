@@ -22,7 +22,7 @@ permalink: /GameCodeDetails/Screens/MenuScreen
 
 The screen handles the logic and graphics related to the menu that is loaded upon the game starting up.
 
-![menu-screen.png](../../../assets/images/menu-screen.png)
+![main-menu.PNG](../../../assets/images/main-menu.PNG)
 
 The class file for it is `MenuScreen.java` which can be found in the `Screens` package.
 

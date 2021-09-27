@@ -89,7 +89,7 @@ The `hasCollidedWithMapTile` method is very simple compared to the monstrous oth
 if the tile a player intersects with is considered a "collision" or not. This is 100% based on the tile's tile type. A tile type of `NOT_PASSABLE`
 would return true to there being a collision. `PASSABLE` tiles cannot be collided with and would always return false.
 `JUMP_THROUGH_PLATFORM` tiles have a bit of a more complex check, because for a collision to occur the player has to be moving downwards and their
-bottom hurtbox has to be overlapping the jump through platform's top hurtbox. Overall though this method is very simple when looking at it:
+bottom hurtbox has to be overlapping the jump through platform's top hurtbox. `LETHAL` tiles kill the player and restart the level. Overall though this method is very simple when looking at it:
 
 ```java
 private static boolean hasCollidedWithMapTile(GameObject gameObject, MapTile mapTile, Direction direction) {
@@ -101,6 +101,8 @@ private static boolean hasCollidedWithMapTile(GameObject gameObject, MapTile map
         case JUMP_THROUGH_PLATFORM:
             return direction == Direction.DOWN && gameObject.intersects(mapTile) &&
                     Math.round(gameObject.getScaledBoundsY2() - 1) == Math.round(mapTile.getScaledBoundsY1());
+        case LETHAL:
+            return gameObject.intersects(mapTile);
         default:
             return false;
     }

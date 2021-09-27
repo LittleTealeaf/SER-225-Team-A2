@@ -16,24 +16,20 @@ public class MapBuilder extends JPanel {
     public MapBuilder(SelectedTileIndexHolder controlPanelHolder) {
         setBackground(Colors.CORNFLOWER_BLUE);
         setLocation(205, 5);
-        //TODO: MAPEDITOR WINDOW SIZE: change this
-        setSize(1175, 1160);
+        setSize(585, 562);
         setLayout(null);
 
         mapWidthLabel = new JLabel("Width: ");
         mapWidthLabel.setSize(70, 20);
-        //TODO: MAPEDITOR WINDOW SIZE: change this
-        mapWidthLabel.setLocation(2, 1140);
+        mapWidthLabel.setLocation(2, 544);
         add(mapWidthLabel);
         mapHeightLabel = new JLabel("Height: ");
         mapHeightLabel.setSize(70, 20);
-        //TODO: MAPEDITOR WINDOW SIZE: change this
-        mapHeightLabel.setLocation(76, 1140);
+        mapHeightLabel.setLocation(76, 544);
         add(mapHeightLabel);
         hoveredTileIndexLabel = new JLabel("X: , Y:");
         hoveredTileIndexLabel.setSize(140, 20);
-        //TODO: MAPEDITOR WINDOW SIZE: change this
-        hoveredTileIndexLabel.setLocation(152, 1140);
+        hoveredTileIndexLabel.setLocation(152, 544);
         add(hoveredTileIndexLabel);
 
         tileBuilder = new TileBuilder(controlPanelHolder, hoveredTileIndexLabel);
@@ -41,8 +37,7 @@ public class MapBuilder extends JPanel {
         tileBuilderScroll.setViewportView(tileBuilder);
         tileBuilderScroll.getVerticalScrollBar().setValue(tileBuilderScroll.getVerticalScrollBar().getMaximum());
         tileBuilderScroll.setLocation(0, 0);
-        //TODO: MAPEDITOR WINDOW SIZE: change this
-        tileBuilderScroll.setSize(1175, 1144);
+        tileBuilderScroll.setSize(585, 546);
         add(tileBuilderScroll);
     }
 

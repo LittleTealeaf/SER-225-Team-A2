@@ -3,21 +3,17 @@ package Level;
 import Engine.Key;
 import Engine.KeyLocker;
 import Engine.Keyboard;
+import Game.GameState;
 import GameObject.GameObject;
 import GameObject.SpriteSheet;
-import Players.Hairball;
-import Utils.*;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
-import javax.sound.sampled.FloatControl;
-import javax.sound.sampled.LineUnavailableException;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import java.applet.AudioClip;
-import java.io.File;
+import Utils.AirGroundState;
+import Utils.Direction;
+import Utils.Point;
 
 import java.util.ArrayList;
+
+import Enemies.Fireball;
+import Enemies.DinosaurEnemy.DinosaurState;
 
 public abstract class Player extends GameObject {
     // values that affect player movement
@@ -26,27 +22,29 @@ public abstract class Player extends GameObject {
     protected float gravity = 0;
     protected float jumpHeight = 0;
     protected float jumpDegrade = 0;
+    protected float terminalVelocityX = 0;
+    
+    protected float momentumXIncrease = 0;
+
+    // values used to handle player movement
+    protected float jumpForce = 0;
+    protected float momentumX = 0;
     protected float terminalVelocityY = 0;
     protected float momentumYIncrease = 0;
 
     // values used to handle player movement
-    protected float jumpForce = 0;
+
     protected float momentumY = 0;
     protected float moveAmountX, moveAmountY;
 
-    public static boolean walkSoundPlayed = true;
-    public static float dB;
-
     // values used to keep track of player's current state
+    protected GameState levelTwo;
     protected PlayerState playerState;
     protected PlayerState previousPlayerState;
     protected Direction facingDirection;
     protected AirGroundState airGroundState;
     protected AirGroundState previousAirGroundState;
-    protected PowerState powerState;
-    protected PowerState previousPowerState;
     protected LevelState levelState;
-    protected boolean unlockedPowerUpOne = false;
 
     // classes that listen to player events can be added to this list
     protected ArrayList<PlayerListener> listeners = new ArrayList<>();
@@ -57,13 +55,17 @@ public abstract class Player extends GameObject {
     protected Key MOVE_LEFT_KEY = Key.LEFT;
     protected Key MOVE_RIGHT_KEY = Key.RIGHT;
     protected Key CROUCH_KEY = Key.DOWN;
-    //powerup attack
-    protected Key POWERUP_ONE_KEY = Key.ONE;
-    protected Stopwatch coolDownTimer = new Stopwatch();
+    protected Key rightKey = Key.D;
+    protected Key leftKey = Key.A;
+    protected Key upKey = Key.W;
+    protected Key downKey = Key.S;
+    protected Key spaceKey = Key.SPACE;
+    protected Key attackKey = Key.E;
 
     // if true, player cannot be hurt by enemies (good for testing)
-    //TODO: Where to set god mode
     protected boolean isInvincible = false;
+    // added 11/19
+	protected PlayerAttack currentProjectile;
 
     public Player(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
         super(spriteSheet, x, y, startingAnimationName);
@@ -72,12 +74,10 @@ public abstract class Player extends GameObject {
         previousAirGroundState = airGroundState;
         playerState = PlayerState.STANDING;
         previousPlayerState = playerState;
-        powerState = PowerState.SAFE;
-        previousPowerState = powerState;
         levelState = LevelState.RUNNING;
-
-        File jumpSound = new File("Jump.wav");
-        File walkSound = new File("Walking on concrete sound effect YouTube.wav");
+        
+        // 11/19
+        currentProjectile = null;
     }
 
     public void update() {
@@ -95,7 +95,6 @@ public abstract class Player extends GameObject {
             } while (previousPlayerState != playerState);
 
             previousAirGroundState = airGroundState;
-            previousPowerState = powerState;
 
             // update player's animation
             super.update();
@@ -105,14 +104,6 @@ public abstract class Player extends GameObject {
             super.moveXHandleCollision(moveAmountX);
 
             updateLockedKeys();
-
-            // boundaries stopping the cat from falling off the map
-            if (x <= super.getStartBoundX()) {
-                x = previousX;
-            }
-            else if (x >= super.getEndBoundX() - 60) {
-                x = previousX;
-            }
         }
 
         // if player has beaten level
@@ -146,9 +137,10 @@ public abstract class Player extends GameObject {
             case JUMPING:
                 playerJumping();
                 break;
-            case POWERUP_ONE:
-                playerPowerUp();
-                break;
+            // 11/19    
+            case ATTACKING:
+            	playerAttacking();
+            	break;
         }
     }
 
@@ -156,71 +148,74 @@ public abstract class Player extends GameObject {
     protected void playerStanding() {
         // sets animation to a STAND animation based on which way player is facing
         currentAnimationName = facingDirection == Direction.RIGHT ? "STAND_RIGHT" : "STAND_LEFT";
+
         // if walk left or walk right key is pressed, player enters WALKING state
-        if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(MOVE_RIGHT_KEY)) {
+        if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(MOVE_RIGHT_KEY) || Keyboard.isKeyDown(rightKey) || Keyboard.isKeyDown(leftKey)) {
             playerState = PlayerState.WALKING;
-            walkSoundPlayed = true;
         }
 
         // if jump key is pressed, player enters JUMPING state
-        else if (Keyboard.isKeyDown(JUMP_KEY) && !keyLocker.isKeyLocked(JUMP_KEY)) {
+        else if ((Keyboard.isKeyDown(JUMP_KEY) && !keyLocker.isKeyLocked(JUMP_KEY)) || (Keyboard.isKeyDown(upKey) && !keyLocker.isKeyLocked(upKey)) || (Keyboard.isKeyDown(spaceKey) && !keyLocker.isKeyLocked(spaceKey))) {
             keyLocker.lockKey(JUMP_KEY);
+            keyLocker.lockKey(upKey);
+            keyLocker.lockKey(spaceKey);
             playerState = PlayerState.JUMPING;
-            walkSoundPlayed = false;
         }
 
         // if crouch key is pressed, player enters CROUCHING state
-        else if (Keyboard.isKeyDown(CROUCH_KEY)) {
+        else if (Keyboard.isKeyDown(CROUCH_KEY) || Keyboard.isKeyDown(downKey)) {
             playerState = PlayerState.CROUCHING;
-            walkSoundPlayed = false;
-        } else if (getUnlockedPowerUpOne()) {
-            if (Keyboard.isKeyDown(POWERUP_ONE_KEY) && !keyLocker.isKeyLocked(POWERUP_ONE_KEY)) {
-                powerState = PowerState.SAFE;
-                playerState = PlayerState.POWERUP_ONE;
-            }
         }
-
+        
+        // 11/19
+        else if(Keyboard.isKeyDown(attackKey)) {
+        	
+        	//keyLocker.lockKey(attackKey);
+        	playerState = PlayerState.ATTACKING;
+        	//System.out.println(previousPlayerState.toString());
+        }
     }
 
     // player WALKING state logic
     protected void playerWalking() {
-        File walk = new File("Resources/Walk.wav");
         // sets animation to a WALK animation based on which way player is facing
         currentAnimationName = facingDirection == Direction.RIGHT ? "WALK_RIGHT" : "WALK_LEFT";
 
         // if walk left key is pressed, move player to the left
-        if (Keyboard.isKeyDown(MOVE_LEFT_KEY)) {
+        if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(leftKey)) {
+        	//System.out.println("s");
             moveAmountX -= walkSpeed;
             facingDirection = Direction.LEFT;
         }
 
         // if walk right key is pressed, move player to the right
-        else if (Keyboard.isKeyDown(MOVE_RIGHT_KEY)) {
-            moveAmountX += walkSpeed;
+        else if (Keyboard.isKeyDown(MOVE_RIGHT_KEY) || Keyboard.isKeyDown(rightKey)) {
+        	//System.out.println("d");
+        	moveAmountX += walkSpeed;
             facingDirection = Direction.RIGHT;
-        } else if (Keyboard.isKeyUp(MOVE_LEFT_KEY) && Keyboard.isKeyUp(MOVE_RIGHT_KEY)) {
+        } else if (Keyboard.isKeyUp(MOVE_LEFT_KEY) && Keyboard.isKeyUp(MOVE_RIGHT_KEY) && Keyboard.isKeyUp(rightKey) && Keyboard.isKeyUp(leftKey)) {
             playerState = PlayerState.STANDING;
         }
 
         // if jump key is pressed, player enters JUMPING state
-        if (Keyboard.isKeyDown(JUMP_KEY) && !keyLocker.isKeyLocked(JUMP_KEY)) {
+        if ((Keyboard.isKeyDown(JUMP_KEY) && !keyLocker.isKeyLocked(JUMP_KEY)) || (Keyboard.isKeyDown(upKey) && !keyLocker.isKeyLocked(upKey)) || (Keyboard.isKeyDown(spaceKey) && !keyLocker.isKeyLocked(spaceKey))) {
             keyLocker.lockKey(JUMP_KEY);
+            keyLocker.lockKey(upKey);
+            keyLocker.lockKey(spaceKey);
+            //System.out.println("w");
             playerState = PlayerState.JUMPING;
         }
 
         // if crouch key is pressed,
-        else if (Keyboard.isKeyDown(CROUCH_KEY)) {
+        else if (Keyboard.isKeyDown(CROUCH_KEY) || Keyboard.isKeyDown(downKey)) {
             playerState = PlayerState.CROUCHING;
         }
-    }
-
-    public void playWalkSound(boolean walkingCalled)
-    {
-        if(walkingCalled == true)
-        {
-            File walk = new File("Resources/Walk.wav");
-            PlaySoundLoop(walk,0.25);
-            walkSoundPlayed = false;
+        
+        // 11/19
+        else if(Keyboard.isKeyDown(attackKey)) {
+        	keyLocker.lockKey(attackKey);
+        	playerState = PlayerState.ATTACKING;
+        	//System.out.println(previousPlayerState.toString());
         }
     }
 
@@ -230,54 +225,27 @@ public abstract class Player extends GameObject {
         currentAnimationName = facingDirection == Direction.RIGHT ? "CROUCH_RIGHT" : "CROUCH_LEFT";
 
         // if crouch key is released, player enters STANDING state
-        if (Keyboard.isKeyUp(CROUCH_KEY)) {
+        if (Keyboard.isKeyUp(CROUCH_KEY) && Keyboard.isKeyUp(downKey)) {
             playerState = PlayerState.STANDING;
         }
 
         // if jump key is pressed, player enters JUMPING state
-        if (Keyboard.isKeyDown(JUMP_KEY) && !keyLocker.isKeyLocked(JUMP_KEY)) {
+        if ((Keyboard.isKeyDown(JUMP_KEY) && !keyLocker.isKeyLocked(JUMP_KEY)) || (Keyboard.isKeyDown(upKey) && !keyLocker.isKeyLocked(upKey)) || (Keyboard.isKeyDown(spaceKey) && !keyLocker.isKeyLocked(spaceKey))) {
             keyLocker.lockKey(JUMP_KEY);
+            keyLocker.lockKey(upKey);
+            keyLocker.lockKey(spaceKey);
             playerState = PlayerState.JUMPING;
-        }
-    }
-
-    protected void playerPowerUp() {
-
-        if (previousPowerState == PowerState.SAFE && powerState == PowerState.SAFE) {
-            int hairballX;
-            float movementSpeed;
-            if (facingDirection == Direction.RIGHT) {
-                hairballX = Math.round(getX()) + getScaledWidth();
-                movementSpeed = 1.5f;
-            } else {
-                hairballX = Math.round(getX());
-                movementSpeed = -1.5f;
-            }
-
-            // define where hairball will spawn on the map (y location) relative to player's location
-            int hairballY = Math.round(getY()) + 20;
-
-            //create a Hairball enemy
-            Hairball hairball = new Hairball(new Point(hairballX, hairballY), movementSpeed, 2000);
-
-            // add hairball enemy to the map for it to offically spawn in the level
-            map.addPowerUp(hairball);
-            powerState = PowerState.FIRE;
-        }
-
-        if (Keyboard.isKeyUp(POWERUP_ONE_KEY)) {
-            playerState = PlayerState.STANDING;
         }
     }
 
     // player JUMPING state logic
     protected void playerJumping() {
-        File jump = new File("Resources/Jump.wav");
         // if last frame player was on ground and this frame player is still on ground, the jump needs to be setup
         if (previousAirGroundState == AirGroundState.GROUND && airGroundState == AirGroundState.GROUND) {
+
             // sets animation to a JUMP animation based on which way player is facing
             currentAnimationName = facingDirection == Direction.RIGHT ? "JUMP_RIGHT" : "JUMP_LEFT";
-            PlaySound(jump, 0.15);
+
             // player is set to be in air and then player is sent into the air
             airGroundState = AirGroundState.AIR;
             jumpForce = jumpHeight;
@@ -308,9 +276,9 @@ public abstract class Player extends GameObject {
             }
 
             // allows you to move left and right while in the air
-            if (Keyboard.isKeyDown(MOVE_LEFT_KEY)) {
+            if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(leftKey)) {
                 moveAmountX -= walkSpeed;
-            } else if (Keyboard.isKeyDown(MOVE_RIGHT_KEY)) {
+            } else if (Keyboard.isKeyDown(MOVE_RIGHT_KEY) || Keyboard.isKeyDown(rightKey)) {
                 moveAmountX += walkSpeed;
             }
 
@@ -323,7 +291,40 @@ public abstract class Player extends GameObject {
         // if player last frame was in air and this frame is now on ground, player enters STANDING state
         else if (previousAirGroundState == AirGroundState.AIR && airGroundState == AirGroundState.GROUND) {
             playerState = PlayerState.STANDING;
+            
         }
+    }
+    
+    // 11/19
+    public void playerAttacking() {
+    	if (playerState == PlayerState.ATTACKING) {
+                // define where projectile will spawn on map (x location) relative to cat's location
+                // and define its movement speed
+                int attackX;
+                float movementSpeed;
+                if (facingDirection == Direction.RIGHT) {
+                	attackX = Math.round(getX()) + getScaledWidth();
+                    movementSpeed = 1.5f;
+                } else {
+                	attackX = Math.round(getX());
+                    movementSpeed = -1.5f;
+                }
+
+                // define where projectile will spawn on the map (y location) relative to dinosaur enemy's location
+                int attackY = Math.round(getY()) + 4;
+
+                // create projectile
+                PlayerAttack projectile = new PlayerAttack(new Point(attackX, attackY), movementSpeed, 1000);
+                currentProjectile = projectile;
+
+                // add projectile enemy to the map for it to offically spawn in the level
+                map.addEnemy(projectile);
+                
+                //is key up
+                if (Keyboard.isKeyUp(attackKey)) {
+                	playerState = PlayerState.STANDING;
+                }
+            }
     }
 
     // while player is in air, this is called, and will increase momentumY by a set amount until player reaches terminal velocity
@@ -334,18 +335,46 @@ public abstract class Player extends GameObject {
         }
     }
 
-    protected void updateLockedKeys() {
-        if (Keyboard.isKeyUp(JUMP_KEY)) {
-            keyLocker.unlockKey(JUMP_KEY);
+    protected void increaseMomentumX() {
+        momentumX += momentumXIncrease;
+        if (momentumX > terminalVelocityX) {
+            momentumX = terminalVelocityX;
         }
-        if (Keyboard.isKeyUp(POWERUP_ONE_KEY)) {
-            keyLocker.unlockKey(POWERUP_ONE_KEY);
+    }
+
+    protected void updateLockedKeys() {
+        if (Keyboard.isKeyUp(JUMP_KEY) && Keyboard.isKeyUp(upKey) && Keyboard.isKeyUp(spaceKey)) {
+            keyLocker.unlockKey(JUMP_KEY);
+            keyLocker.unlockKey(upKey);
+            keyLocker.unlockKey(spaceKey);
+        }
+        // 11/19
+        else if (Keyboard.isKeyUp(attackKey)) {
+        	keyLocker.unlockKey(attackKey);
         }
     }
 
     @Override
     public void onEndCollisionCheckX(boolean hasCollided, Direction direction) {
-
+    	// if the player collides with the coordinates specified below, it either stops (beginning of level) or goes back to the start (end of level)
+    	if (direction == Direction.LEFT || direction == Direction.RIGHT) {
+    		if (x < 0) {
+    			hasCollided = true;
+    			momentumX = 0;
+    			setX(0);
+    		}
+    		else if (x > 1700) {
+    			hasCollided = true;
+    			momentumX = 0;
+    			setX(0);
+    			setY(0);
+    		}
+    	}
+    	if (hasCollided && MapTileCollisionHandler.lastCollidedTileX != null) {
+    		if (MapTileCollisionHandler.lastCollidedTileX.getTileType() == TileType.LETHAL) {
+    			levelState = LevelState.PLAYER_DEAD;
+    		}
+    	}
     }
 
     @Override
@@ -368,6 +397,11 @@ public abstract class Player extends GameObject {
                 jumpForce = 0;
             }
         }
+        if (hasCollided && MapTileCollisionHandler.lastCollidedTileY != null) {
+    		if (MapTileCollisionHandler.lastCollidedTileY.getTileType() == TileType.LETHAL) {
+    			levelState = LevelState.PLAYER_DEAD;
+    		}
+    	}
     }
 
     // other entities can call this method to hurt the player
@@ -383,6 +417,7 @@ public abstract class Player extends GameObject {
     // other entities can call this to tell the player they beat a level
     public void completeLevel() {
         levelState = LevelState.LEVEL_COMPLETED;
+     
     }
 
     // if player has beaten level, this will be the update cycle
@@ -435,6 +470,7 @@ public abstract class Player extends GameObject {
             }
         }
     }
+    
 
     public PlayerState getPlayerState() {
         return playerState;
@@ -462,59 +498,7 @@ public abstract class Player extends GameObject {
 
     public void addListener(PlayerListener listener) {
         listeners.add(listener);
-    }
-
-    public boolean getUnlockedPowerUpOne() { return unlockedPowerUpOne; }
-
-    public void unlockPowerUpOne() { unlockedPowerUpOne = true; }
-
-    public static void PlaySound(File Sound, double vol)
-    {
-        try
-        {
-            Clip clip = AudioSystem.getClip();
-            clip.open(AudioSystem.getAudioInputStream(Sound));
-            clip.getLevel();
-            setVol(vol,clip);
-            clip.start();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-    public static void PlaySoundLoop(File Sound, double vol)
-    {
-        try
-        {
-
-            Clip clip = AudioSystem.getClip();
-
-            if(walkSoundPlayed == true)
-            {
-                clip.open(AudioSystem.getAudioInputStream(Sound));
-                clip.getLevel();
-                setVol(vol,clip);
-                clip.start();
-                clip.loop(Clip.LOOP_CONTINUOUSLY);
-            }
-            else if(walkSoundPlayed == false)
-            {
-                clip.stop();
-                System.out.println("Stop the walk");
-            }
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-    public static void setVol(double vol, Clip clip)
-    {
-        FloatControl gain = (FloatControl)clip.getControl(FloatControl.Type.MASTER_GAIN);
-        dB = (float)(Math.log(vol)/(Math.log(10)) * 20);
-        gain.setValue(dB);
-    }
-
-
+    } 
+    
+    
 }

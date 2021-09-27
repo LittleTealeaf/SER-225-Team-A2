@@ -22,6 +22,7 @@ public class CreditsScreen extends Screen {
     public CreditsScreen(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
     }
+    
 
     @Override
     public void initialize() {
