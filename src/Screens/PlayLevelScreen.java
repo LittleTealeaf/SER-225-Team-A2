@@ -33,7 +33,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
 	protected LevelClearedScreen levelClearedScreen;
 	protected LevelLoseScreen levelLoseScreen;
 	protected SpriteFont pauseLabel;
-	protected LevelSelectScreen levelSelectScreen;
+	protected LevelSelectScreenOld levelSelectScreen;
 	protected int levelNum = 0;
 	protected int catNum = 0;
 	private SpriteFont instructionLabel;
@@ -62,7 +62,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
 		map.reset();
 		System.out.println(levelNum);
 
-		levelSelectScreen = new LevelSelectScreen(this);
+		levelSelectScreen = new LevelSelectScreenOld(this);
 		levelSelectScreen.initialize();
 		
 		optionsScreen = new OptionsScreenOld(this);

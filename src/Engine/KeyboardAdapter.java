@@ -8,7 +8,8 @@ public enum KeyboardAdapter {
     MENU_UP(Key.UP,Key.W),
     MENU_DOWN(Key.DOWN,Key.S),
     MENU_LEFT(Key.LEFT,Key.A),
-    MENU_RIGHT(Key.RIGHT,Key.D);
+    MENU_RIGHT(Key.RIGHT,Key.D),
+    MENU_ESCAPE(Key.ESC);
 
     Key[] keys;
 

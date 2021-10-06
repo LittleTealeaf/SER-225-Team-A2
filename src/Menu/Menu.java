@@ -1,6 +1,7 @@
 package Menu;
 
 import Engine.*;
+import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.Map;
 import Utils.Stopwatch;
@@ -54,6 +55,10 @@ public abstract class Menu extends Screen {
             selectionDown = false;
         } else if(!selectionDown && KeyboardAdapter.MENU_ENTER.isDown()) {
             selectedItem.execute();
+        }
+
+        if(KeyboardAdapter.MENU_ESCAPE.isDown()) {
+            GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
         }
     }
 
