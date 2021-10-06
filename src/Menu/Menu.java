@@ -16,6 +16,8 @@ public abstract class Menu extends Screen {
     private KeyLocker keyLocker = new KeyLocker();
     private Stopwatch keyTimer = new Stopwatch();
 
+    private boolean selectionDown;
+
 
     public Menu(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
@@ -30,9 +32,8 @@ public abstract class Menu extends Screen {
         if(background != null) {
             background.setAdjustCamera(false);
         }
-        keyLocker.lockKey(Key.SPACE,Key.ENTER);
         keyTimer.setWaitTime(200);
-
+        selectionDown = false;
     }
 
     @Override
@@ -52,6 +53,12 @@ public abstract class Menu extends Screen {
         } else if(KeyboardAdapter.MENU_RIGHT.isDown() && keyTimer.isTimeUp()) {
             keyTimer.reset();
             moveDirection(Direction.RIGHT);
+        }
+
+        if(!KeyboardAdapter.MENU_ENTER.isDown()) {
+            selectionDown = false;
+        } else if(!selectionDown && KeyboardAdapter.MENU_ENTER.isDown()) {
+            selectedItem.execute();
         }
     }
 
