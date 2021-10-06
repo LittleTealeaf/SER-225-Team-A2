@@ -11,13 +11,15 @@ public class DebugScreen extends Menu {
         setMenuItemsAsGrid(new MenuItem[][] {
                 new MenuItem[] {
                         new MenuItem("PLAY GAME",80,100),
-                        new MenuItem("CREDITS",80,200),
+                        new MenuItem("LEVEL SELECT",350,100)
                 }, new MenuItem[] {
-                    new MenuItem("INSTRUCTIONS",80,300),
-                    new MenuItem("LEVEL SELECT",350,100)
+                    new MenuItem("CREDITS",80,200),
+                    new MenuItem("NARRATIVE",350,200)
+
+
                 }, new MenuItem[] {
-                        new MenuItem("NARRATIVE",350,200),
-                new MenuItem("OPTIONS",350,300)
+                        new MenuItem("INSTRUCTIONS",80,300),
+                    new MenuItem("OPTIONS",350,300)
             }
         });
         setBackground(new TitleScreenMap());

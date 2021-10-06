@@ -1,9 +1,6 @@
 package Menu;
 
-import Engine.GraphicsHandler;
-import Engine.Key;
-import Engine.KeyLocker;
-import Engine.Screen;
+import Engine.*;
 import Game.ScreenCoordinator;
 import Level.Map;
 import Utils.Stopwatch;
@@ -18,7 +15,7 @@ public abstract class Menu extends Screen {
 
     private KeyLocker keyLocker = new KeyLocker();
     private Stopwatch keyTimer = new Stopwatch();
-    
+
 
     public Menu(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
@@ -34,6 +31,7 @@ public abstract class Menu extends Screen {
             background.setAdjustCamera(false);
         }
         keyLocker.lockKey(Key.SPACE,Key.ENTER);
+        keyTimer.setWaitTime(200);
 
     }
 
@@ -41,6 +39,20 @@ public abstract class Menu extends Screen {
     public void update() {
         background.update(null);
 
+        if(KeyboardAdapter.MENU_DOWN.isDown() && keyTimer.isTimeUp()) {
+            keyTimer.reset();
+            moveDirection(Direction.DOWN);
+        } else if(KeyboardAdapter.MENU_UP.isDown() && keyTimer.isTimeUp()) {
+            keyTimer.reset();
+            moveDirection(Direction.UP);
+        } else if(KeyboardAdapter.MENU_LEFT.isDown() && keyTimer.isTimeUp()) {
+            keyTimer.reset();
+            moveDirection(Direction.LEFT);
+
+        } else if(KeyboardAdapter.MENU_RIGHT.isDown() && keyTimer.isTimeUp()) {
+            keyTimer.reset();
+            moveDirection(Direction.RIGHT);
+        }
     }
 
     /**
@@ -55,29 +67,31 @@ public abstract class Menu extends Screen {
                 if(grid[i][j] != null) {
                     count++;
                     //find upper neighbor
-                    for(int k = i; k >= 0; k--) {
+                    for(int k = i - 1; k >= 0; k--) {
                         if(grid[k][j] != null) {
                             grid[i][j].setNeighborItem(grid[k][j],Direction.UP);
                             break;
                         }
                     }
                     //Find lower neighbor
-                    for(int k = i; k < grid.length; k++) {
+                    for(int k = i + 1; k < grid.length; k++) {
                         if(grid[k][j] != null) {
                             grid[i][j].setNeighborItem(grid[k][j],Direction.DOWN);
                             break;
                         }
                     }
                     //Find left neighbor
-                    for(int k = j; k >= 0; k--) {
+                    for(int k = j - 1; k >= 0; k--) {
                         if(grid[i][k] != null) {
                             grid[i][j].setNeighborItem(grid[i][k],Direction.LEFT);
+                            break;
                         }
                     }
                     //Find right neighbor
-                    for(int k = j; k < grid[i].length; k++) {
+                    for(int k = j + 1; k < grid[i].length; k++) {
                         if(grid[i][k] != null) {
                             grid[i][j].setNeighborItem(grid[i][k],Direction.RIGHT);
+                            break;
                         }
                     }
                 }
