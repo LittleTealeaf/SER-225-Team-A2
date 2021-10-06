@@ -41,7 +41,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
 	private SpriteFont instruction3Label;
 	private SpriteFont instruction4Label;
 	private SpriteFont returnInstructionLabel;
-	protected OptionsScreen optionsScreen;
+	protected OptionsScreenOld optionsScreen;
 
 	public PlayLevelScreen(ScreenCoordinator screenCoordinator) {
 		
@@ -65,7 +65,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
 		levelSelectScreen = new LevelSelectScreen(this);
 		levelSelectScreen.initialize();
 		
-		optionsScreen = new OptionsScreen(this);
+		optionsScreen = new OptionsScreenOld(this);
 		optionsScreen.initialize();
 		
 		pauseLabel = new SpriteFont("Pause", 350, 250, "Comic Sans", 30, Color.white);

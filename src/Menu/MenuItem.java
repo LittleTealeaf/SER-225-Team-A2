@@ -6,7 +6,7 @@ import java.awt.*;
 
 public class MenuItem {
 
-    private static final Font MENU_FONT = new Font("Comic sans",Font.PLAIN,30);
+    private static final Font DEFAULT_MENU_FONT = new Font("Comic sans",Font.PLAIN,30);
     private static final Color DEFAULT_COLOR = new Color(49, 207, 240);
     private static final Color SELECTED_COLOR = new Color(255, 215, 0);
     private static final Color OUTLINE_COLOR = new Color(0, 0, 0);
@@ -15,6 +15,8 @@ public class MenuItem {
     private MenuItem[] neighbors;
 
     private MenuItemListener listener;
+
+    private Font font;
 
     private String text;
 
@@ -54,6 +56,14 @@ public class MenuItem {
         }
     }
 
+    public void setFont(Font font) {
+        this.font = font;
+    }
+
+    public Font getFont() {
+        return font != null ? font : DEFAULT_MENU_FONT;
+    }
+
 
     public boolean isSelected() {
         return selected;
@@ -83,9 +93,9 @@ public class MenuItem {
 
     public void draw(GraphicsHandler graphicsHandler) {
         if (!OUTLINE_COLOR.equals(getColor())) {
-            graphicsHandler.drawStringWithOutline(text, Math.round(x), Math.round(y), MENU_FONT, getColor(), OUTLINE_COLOR, OUTLINE_THICKNESS);
+            graphicsHandler.drawStringWithOutline(text, Math.round(x), Math.round(y), getFont(), getColor(), OUTLINE_COLOR, OUTLINE_THICKNESS);
         } else {
-            graphicsHandler.drawString(text, Math.round(x), Math.round(y), MENU_FONT, getColor());
+            graphicsHandler.drawString(text, Math.round(x), Math.round(y), getFont(), getColor());
         }
 
         //Draws the pointer
@@ -99,11 +109,11 @@ public class MenuItem {
         int drawLocationY = Math.round(this.y);
         for (String line: text.split("\n")) {
             if (!OUTLINE_COLOR.equals(getColor())) {
-                graphicsHandler.drawStringWithOutline(line, Math.round(x), drawLocationY, MENU_FONT, getColor(), OUTLINE_COLOR, OUTLINE_THICKNESS);
+                graphicsHandler.drawStringWithOutline(line, Math.round(x), drawLocationY, getFont(), getColor(), OUTLINE_COLOR, OUTLINE_THICKNESS);
             } else {
-                graphicsHandler.drawString(line, Math.round(x), drawLocationY, MENU_FONT, getColor());
+                graphicsHandler.drawString(line, Math.round(x), drawLocationY, getFont(), getColor());
             }
-            drawLocationY += MENU_FONT.getSize();
+            drawLocationY += getFont().getSize();
         }
     }
 }

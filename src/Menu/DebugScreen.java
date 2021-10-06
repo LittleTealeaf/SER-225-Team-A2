@@ -1,14 +1,11 @@
 package Menu;
 
-import Engine.Screen;
 import Game.GameState;
 import Game.ScreenCoordinator;
 import Maps.TitleScreenMap;
-import jdk.nashorn.internal.runtime.Debug;
 
 public class DebugScreen extends Menu {
     public DebugScreen(ScreenCoordinator screenCoordinator) {
-        super(screenCoordinator);
         setMenuItemsAsGrid(new MenuItem[][] {
                 new MenuItem[] {
                         new MenuItem("PLAY GAME",80,100, () -> screenCoordinator.setGameState(GameState.LEVEL)),

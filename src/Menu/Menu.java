@@ -9,7 +9,6 @@ public abstract class Menu extends Screen {
 
     protected MenuItem[] menuItems;
     private MenuItem selectedItem;
-    protected ScreenCoordinator screenCoordinator;
 
     private Map background;
 
@@ -18,10 +17,6 @@ public abstract class Menu extends Screen {
 
     private boolean selectionDown;
 
-
-    public Menu(ScreenCoordinator screenCoordinator) {
-        this.screenCoordinator = screenCoordinator;
-    }
 
     //DIRECTIONS: 0 = up, 1 = right, 2 = down, 3 = left
 
