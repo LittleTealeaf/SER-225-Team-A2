@@ -10,13 +10,17 @@ public class KeyLocker {
     private HashSet<Key> lockedKeys = new HashSet<>();
 
     // lock a key
-    public void lockKey(Key key) {
-        lockedKeys.add(key);
+    public void lockKey(Key... keys) {
+        for(Key key : keys) {
+            lockedKeys.add(key);
+        }
     }
 
     // unlock a key
-    public void unlockKey(Key key) {
-        lockedKeys.remove(key);
+    public void unlockKey(Key... keys) {
+        for(Key key : keys) {
+            lockedKeys.remove(key);
+        }
     }
 
     // check if a key is currently locked

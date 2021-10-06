@@ -28,8 +28,14 @@ public class MenuItem {
         this.y = y;
     }
 
+    public MenuItem(String text, int x, int y, MenuItemListener listener) {
+        this(text,x,y);
+        setListener(listener);
+    }
+
     public void setNeighborItem(MenuItem item, Direction direction) {
         neighbors[direction.getIndex()] = item;
+//        item.neighbors[direction.getOppositeIndex()] = this;
     }
 
     /**
@@ -69,7 +75,7 @@ public class MenuItem {
         this.listener = listener;
     }
 
-    public void select() {
+    public void execute() {
         if(listener != null) {
             listener.event();
         }

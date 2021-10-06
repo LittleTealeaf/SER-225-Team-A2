@@ -4,6 +4,7 @@ import Engine.DefaultScreen;
 import Engine.GameWindow;
 import Engine.GraphicsHandler;
 import Engine.Screen;
+import Menu.DebugScreen;
 import Screens.CreditsScreen;
 import Screens.MenuScreen;
 
@@ -23,6 +24,7 @@ public class ScreenCoordinator extends Screen {
 	protected GameWindow gameWindow;
 	protected Screen currentScreen = new DefaultScreen();
 
+
 	// keep track of gameState so ScreenCoordinator knows which Screen to show
 	protected GameState gameState;
 	protected GameState previousGameState;
@@ -39,7 +41,8 @@ public class ScreenCoordinator extends Screen {
 	@Override
 	public void initialize() {
 		// start game off with Menu Screen
-		gameState = GameState.MENU;
+		gameState = GameState.DEBUG;
+
 	}
 
 	@Override
@@ -49,6 +52,9 @@ public class ScreenCoordinator extends Screen {
 			// this triggers ScreenCoordinator to bring up a new Screen based on what the gameState is
 			if (previousGameState != gameState) {
 				switch(gameState) {
+					case DEBUG:
+						currentScreen = new DebugScreen(this);
+						break;
 					case MENU:
 						currentScreen = new MenuScreen(this);
 						break;

@@ -11,4 +11,7 @@ public enum Direction {
     public int getIndex() {
         return index;
     }
+    public int getOppositeIndex() {
+        return (index + 2)%4;
+    }
 }
