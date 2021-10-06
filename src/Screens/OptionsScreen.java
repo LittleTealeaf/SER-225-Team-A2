@@ -20,9 +20,9 @@ public class OptionsScreen extends Menu {
                         new MenuItem("High", 630, 150, () -> GamePanel.setVolumeHigh())
                 },{
                 new MenuItem("Player",100,300),
-                new MenuItem("Green",630,300),
+                new MenuItem("Orange",350,300),
                 new MenuItem("Blue",500,300),
-                new MenuItem("Orange",350,300)
+                new MenuItem("Green",630,300)
         }
         };
         setMenuItemsAsGrid(items);
