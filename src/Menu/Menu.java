@@ -18,9 +18,6 @@ public abstract class Menu extends Screen {
 
     private boolean selectionDown;
 
-
-    //DIRECTIONS: 0 = up, 1 = right, 2 = down, 3 = left
-
     @Override
     public void initialize() {
         selectedItem = menuItems[0];
@@ -75,14 +72,14 @@ public abstract class Menu extends Screen {
                     count++;
                     //find upper neighbor
                     for(int k = i - 1; k >= 0; k--) {
-                        if(grid[k][j] != null) {
+                        if(j < grid[k].length && grid[k][j] != null) {
                             grid[i][j].setNeighborItem(grid[k][j],Direction.UP);
                             break;
                         }
                     }
                     //Find lower neighbor
                     for(int k = i + 1; k < grid.length; k++) {
-                        if(grid[k][j] != null) {
+                        if(j < grid[k].length && grid[k][j] != null) {
                             grid[i][j].setNeighborItem(grid[k][j],Direction.DOWN);
                             break;
                         }
