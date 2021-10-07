@@ -1,11 +1,12 @@
 package SpriteFont;
 
+import Engine.Drawable;
 import Engine.GraphicsHandler;
 
 import java.awt.*;
 
 // This class represents a sprite font, which is graphic text (text drawn to the screen as if it were an image)
-public class SpriteFont {
+public class SpriteFont implements Drawable {
 	protected String text;
 	protected Font font;
 	protected float x;
