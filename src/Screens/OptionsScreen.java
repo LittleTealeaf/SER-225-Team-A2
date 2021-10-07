@@ -2,6 +2,7 @@ package Screens;
 
 import Engine.Config;
 import Engine.GamePanel;
+import Engine.GraphicsHandler;
 import Game.ScreenCoordinator;
 import Maps.LevelSelectMap;
 import Menu.Menu;
@@ -31,10 +32,15 @@ public class OptionsScreen extends Menu {
 
         //Sets the smaller fonts
         Font smallerFont = new Font("Comic Sans",Font.PLAIN,24);
-        for(int i = 0; i < 1; i++) {
+        for(int i = 0; i < 2; i++) {
             for(int j = 1; j < items[i].length; j++) {
                 items[i][j].setFont(smallerFont);
             }
         }
+    }
+
+    public void draw(GraphicsHandler handler) {
+        super.draw(handler);
+//        handler.drawImage(new BufferedImage());
     }
 }
