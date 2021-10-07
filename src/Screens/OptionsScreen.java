@@ -1,10 +1,12 @@
 package Screens;
 
+import Engine.Config;
 import Engine.GamePanel;
 import Game.ScreenCoordinator;
 import Maps.LevelSelectMap;
 import Menu.Menu;
 import Menu.MenuItem;
+import Players.CatOptions;
 
 import java.awt.*;
 
@@ -20,9 +22,9 @@ public class OptionsScreen extends Menu {
                         new MenuItem("High", 630, 150, () -> GamePanel.setVolumeHigh())
                 },{
                 new MenuItem("Player",100,300),
-                new MenuItem("Orange",350,300),
-                new MenuItem("Blue",500,300),
-                new MenuItem("Green",630,300)
+                new MenuItem("Orange",350,300, () -> Config.avatar = CatOptions.DEFAULT),
+                new MenuItem("Blue",500,300, () -> Config.avatar = CatOptions.BLUE),
+                new MenuItem("Green",630,300, () -> Config.avatar = CatOptions.GREEN)
         }
         };
         setMenuItemsAsGrid(items);
