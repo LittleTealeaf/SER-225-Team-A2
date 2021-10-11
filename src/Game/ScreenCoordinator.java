@@ -6,7 +6,7 @@ import Engine.GraphicsHandler;
 import Engine.Screen;
 import Screens.*;
 
-import Screens.PlayLevelScreen.PlayLevelScreenState;
+import Screens.PlayLevelScreenOld.PlayLevelScreenState;
 
 
 /*
@@ -14,14 +14,12 @@ import Screens.PlayLevelScreen.PlayLevelScreenState;
  * There can only be one "currentScreen", although screens can have "nested" screens
  */
 public class ScreenCoordinator extends Screen {
-	// currently shown Screen
-	protected GameWindow gameWindow;
+
 	protected Screen currentScreen = new DefaultScreen();
 
 
 	// keep track of gameState so ScreenCoordinator knows which Screen to show
-	protected GameState gameState;
-	protected GameState previousGameState;
+	protected GameState gameState, previousGameState;
 
 	public  GameState getGameState() {
 		return gameState;
@@ -50,7 +48,7 @@ public class ScreenCoordinator extends Screen {
 						currentScreen = new MenuScreen();
 						break;
 					case LEVEL:
-						currentScreen = new PlayLevelScreen(this);
+						currentScreen = new PlayLevelScreenOld(this);
 						break;
 					case CREDITS:
 						currentScreen = new CreditsScreen(this);
@@ -60,7 +58,7 @@ public class ScreenCoordinator extends Screen {
 						break;
 
 					case LEVELSELECT:
-						currentScreen = new PlayLevelScreen(this,PlayLevelScreenState.LEVEL_SELECT);
+						currentScreen = new PlayLevelScreenOld(this,PlayLevelScreenState.LEVEL_SELECT);
 						break;
 
 					case OPENING:

@@ -1,12 +1,10 @@
 package Screens;
 
 import Engine.*;
-import Game.GameState;
 import Game.ScreenCoordinator;
 import Level.Map;
 import Maps.LevelSelectMap;
-import Maps.TitleScreenMap;
-import Screens.PlayLevelScreen.PlayLevelScreenState;
+import Screens.PlayLevelScreenOld.PlayLevelScreenState;
 import SpriteFont.SpriteFont;
 import Utils.Stopwatch;
 
@@ -26,10 +24,10 @@ public class LevelSelectScreenOld extends Screen {
 	protected Stopwatch keyTimer = new Stopwatch();
 	protected int pointerLocationX, pointerLocationY;
 	protected KeyLocker keyLocker = new KeyLocker();
-	protected PlayLevelScreen playLevelScreen;
+	protected PlayLevelScreenOld playLevelScreenOld;
 
-	public LevelSelectScreenOld(PlayLevelScreen screen) {
-		this.playLevelScreen = screen;
+	public LevelSelectScreenOld(PlayLevelScreenOld screen) {
+		this.playLevelScreenOld = screen;
 
 	}
 
@@ -134,26 +132,26 @@ public class LevelSelectScreenOld extends Screen {
 
 			// playLevelScreen.getPlayLevelScreenState();
 			if (LevelSelected == 0) {
-				playLevelScreen.setLevelNum(0);
+				playLevelScreenOld.setLevelNum(0);
 
-				playLevelScreen.setPlayLevelScreenState(PlayLevelScreenState.RUNNING);
-				playLevelScreen.initialize();
+				playLevelScreenOld.setPlayLevelScreenState(PlayLevelScreenState.RUNNING);
+				playLevelScreenOld.initialize();
 			} else if (LevelSelected == 1) {
-				playLevelScreen.setLevelNum(1);
-				playLevelScreen.setPlayLevelScreenState(PlayLevelScreenState.RUNNING);
-				playLevelScreen.initialize();
+				playLevelScreenOld.setLevelNum(1);
+				playLevelScreenOld.setPlayLevelScreenState(PlayLevelScreenState.RUNNING);
+				playLevelScreenOld.initialize();
 			} else if (LevelSelected == 2) {
-				playLevelScreen.setLevelNum(2);
-				playLevelScreen.setPlayLevelScreenState(PlayLevelScreenState.RUNNING);
-				playLevelScreen.initialize();
+				playLevelScreenOld.setLevelNum(2);
+				playLevelScreenOld.setPlayLevelScreenState(PlayLevelScreenState.RUNNING);
+				playLevelScreenOld.initialize();
 			} else if (LevelSelected == 3) {
-				playLevelScreen.setLevelNum(3);
-				playLevelScreen.setPlayLevelScreenState(PlayLevelScreenState.RUNNING);
-				playLevelScreen.initialize();
+				playLevelScreenOld.setLevelNum(3);
+				playLevelScreenOld.setPlayLevelScreenState(PlayLevelScreenState.RUNNING);
+				playLevelScreenOld.initialize();
 			} else if (LevelSelected == 4) {
-				playLevelScreen.setLevelNum(4);
-				playLevelScreen.setPlayLevelScreenState(PlayLevelScreenState.RUNNING);
-				playLevelScreen.initialize();
+				playLevelScreenOld.setLevelNum(4);
+				playLevelScreenOld.setPlayLevelScreenState(PlayLevelScreenState.RUNNING);
+				playLevelScreenOld.initialize();
 			}
 		}
 

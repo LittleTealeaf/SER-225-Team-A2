@@ -106,9 +106,9 @@ accordingly based on what the user presses -- which is essentially just this:
 
 ```java
 if (Keyboard.isKeyDown(Key.SPACE)) {
-    playLevelScreen.resetLevel();
+    playLevelScreenOld.resetLevel();
 } else if (Keyboard.isKeyDown(Key.ESC)) {
-    playLevelScreen.goBackToMenu();
+    playLevelScreenOld.goBackToMenu();
 }
 ```
 
