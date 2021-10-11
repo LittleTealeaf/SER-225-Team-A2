@@ -65,7 +65,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
 
     private void loadMap(int index) {
         loadedMap = maps[index].generateMap();
-        cat = new Cat(Config.avatar.getFileName(),loadedMap.getPlayerStartPosition().x,loadedMap.getPlayerStartPosition().y);
+        cat = new Cat(Config.avatar.getFileName(),loadedMap.getPlayerStartPosition());
     }
 
     private interface MapFactory {
