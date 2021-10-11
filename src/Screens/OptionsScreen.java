@@ -3,6 +3,7 @@ package Screens;
 import Engine.Config;
 import Engine.GamePanel;
 import Engine.GraphicsHandler;
+import Game.GameState;
 import Game.ScreenCoordinator;
 import Maps.LevelSelectMap;
 import Menu.Menu;
@@ -26,7 +27,9 @@ public class OptionsScreen extends Menu {
                 new MenuItem("Orange",350,300, () -> Config.avatar = CatOptions.DEFAULT),
                 new MenuItem("Blue",500,300, () -> Config.avatar = CatOptions.BLUE),
                 new MenuItem("Green",630,300, () -> Config.avatar = CatOptions.GREEN)
-        }
+        },{
+                    new MenuItem("Hit [Escape] to go back to main menu",100,450)
+                }
         };
         setMenuItemsAsGrid(items);
 
