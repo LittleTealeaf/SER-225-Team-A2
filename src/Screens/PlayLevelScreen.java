@@ -34,6 +34,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
          * This is some new java funky stuff :D
          */
         MAPS = new MapFactory[]{
+                TestTutorial::new,
                 TestMap::new,
                 TestMap2::new,
                 TestMap3::new,
