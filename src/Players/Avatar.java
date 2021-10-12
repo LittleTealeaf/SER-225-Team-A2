@@ -5,7 +5,7 @@ import Level.Player;
 import Utils.Point;
 
 //TODO make this the new Cat Options with a factory to create the player
-public enum PlayerOptions {
+public enum Avatar {
     CAT_ORANGE(p -> new Cat("Cat.png",p)),
     CAT_BLUE(p -> new Cat("CatBlue.png",p)),
     CAT_GREEN(p -> new Cat("CatGreen.png",p));
@@ -13,7 +13,7 @@ public enum PlayerOptions {
 
     private PlayerFactory factory;
 
-    PlayerOptions(PlayerFactory factory) {
+    Avatar(PlayerFactory factory) {
         this.factory = factory;
     }
 

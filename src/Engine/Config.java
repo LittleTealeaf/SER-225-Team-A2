@@ -1,6 +1,6 @@
 package Engine;
 
-import Players.CatOptions;
+import Players.Avatar;
 import Utils.Colors;
 
 import java.awt.*;
@@ -16,7 +16,7 @@ public class Config {
     public static int WIDTH= 800;
     public static int HEIGHT = 605;
     public static final Color TRANSPARENT_COLOR = Colors.MAGENTA;
-    public static CatOptions avatar = CatOptions.DEFAULT;
+    public static Avatar playerAvatar = Avatar.CAT_ORANGE;
 
     // prevents Config from being instantiated -- it's my way of making a "static" class like C# has
     private Config() {
