@@ -9,7 +9,11 @@ public enum KeyboardAdapter {
     MENU_DOWN(Key.DOWN,Key.S),
     MENU_LEFT(Key.LEFT,Key.A),
     MENU_RIGHT(Key.RIGHT,Key.D),
-    MENU_ESCAPE(Key.ESC);
+    MENU_ESCAPE(Key.ESC),
+    GAME_PAUSE(Key.P,Key.ESC),
+    GAME_MOVE_LEFT(Key.A,Key.LEFT),
+    GAME_MOVE_RIGHT(Key.D,Key.RIGHT),
+    GAME_JUMP(Key.W,Key.SPACE,Key.UP);
 
     Key[] keys;
 

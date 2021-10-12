@@ -23,6 +23,18 @@ public class KeyLocker {
         }
     }
 
+    public void setKeys(boolean locked, KeyboardAdapter keyChannel) {
+        setKeys(locked,keyChannel.getKeys());
+    }
+
+    public void setKeys(boolean locked, Key... keys) {
+        if(locked) {
+            lockKey(keys);
+        } else {
+            unlockKey(keys);
+        }
+    }
+
     // check if a key is currently locked
     public boolean isKeyLocked(Key key) {
         return lockedKeys.contains(key);

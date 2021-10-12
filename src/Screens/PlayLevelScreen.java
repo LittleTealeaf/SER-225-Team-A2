@@ -1,8 +1,6 @@
 package Screens;
 
-import Engine.Config;
-import Engine.GraphicsHandler;
-import Engine.Screen;
+import Engine.*;
 import Level.Map;
 import Level.Player;
 import Level.PlayerListener;
@@ -16,6 +14,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
     private static Map loadedMap;
     private static Player player;
     private Stopwatch screenTimer = new Stopwatch();
+    private KeyLocker keyLocker = new KeyLocker();
     private State screenState;
     private int currentMap = 0;
 
@@ -51,12 +50,22 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
 
     @Override
     public void update() {
+        switch(screenState) {
+            case RUNNING -> {
 
+            }
+        }
     }
 
     @Override
     public void draw(GraphicsHandler graphicsHandler) {
+        switch(screenState) {
+            case RUNNING, LEVEL_COMPLETED, PLAYER_DEAD -> {
+                loadedMap.draw(graphicsHandler);
+                player.draw(graphicsHandler);
+            }
 
+        }
     }
 
     @Override
