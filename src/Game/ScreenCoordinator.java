@@ -54,7 +54,7 @@ public class ScreenCoordinator extends Screen {
 						currentScreen = new CreditsScreen(this);
 						break;
 					case INSTRUCTIONS:
-						currentScreen = new InstructionsScreen(this);
+						currentScreen = new InstructionsScreen();
 						break;
 
 					case LEVELSELECT:

@@ -18,8 +18,11 @@ public abstract class Menu extends Screen {
 
     @Override
     public void initialize() {
-        selectedItem = menuItems[0];
-        selectedItem.setSelected(true);
+        if(menuItems != null) {
+            selectedItem = menuItems[0];
+            selectedItem.setSelected(true);
+            //SOMETHING IS GOING VERY WONKY HERE AWIJOEFJIAWEJF WOIEFJIWEIFOAWEJFIAW
+        }
         if(background != null) {
             background.setAdjustCamera(false);
         }
@@ -130,8 +133,10 @@ public abstract class Menu extends Screen {
         if(background != null) {
             background.draw(graphicsHandler);
         }
-        for(MenuItem item : menuItems) {
-            item.draw(graphicsHandler);
+        if(menuItems != null) {
+            for(MenuItem item : menuItems) {
+                item.draw(graphicsHandler);
+            }
         }
         if(drawables != null) {
             for(Drawable drawable : drawables) {
