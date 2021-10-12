@@ -16,6 +16,9 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
     private static Map loadedMap;
     private static Player player;
     private Stopwatch screenTimer = new Stopwatch();
+    private State screenState;
+    private int currentMap = 0;
+
 
 
 
@@ -38,13 +41,12 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
 
     public PlayLevelScreen(int initialMap) {
         super();
-
-        loadMap(initialMap);
+        this.currentMap = initialMap;
     }
 
     @Override
     public void initialize() {
-
+        loadMap(currentMap);
     }
 
     @Override
@@ -67,6 +69,15 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
 
     }
 
+    public void nextLevel() {
+        currentMap++;
+        initialize();
+    }
+
+    /**
+     * Loads the map into the loadedMap variable, and the player into the player variable
+     * @param index
+     */
     private void loadMap(int index) {
         //Load map using the MapFactory
         loadedMap = MAPS[index].generateMap();
@@ -77,6 +88,11 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
 
     private interface MapFactory {
         Map generateMap();
+    }
+
+    public enum State {
+        RUNNING, LEVEL_COMPLETED, PLAYER_DEAD, LEVEL_WIN_MESSAGE, LEVEL_LOSE_MESSAGE, LEVEL_SELECT, PAUSE,
+        INSTRUCTIONS, OPTIONS
     }
 
 }
