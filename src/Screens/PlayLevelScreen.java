@@ -4,22 +4,26 @@ import Engine.Config;
 import Engine.GraphicsHandler;
 import Engine.Screen;
 import Level.Map;
+import Level.Player;
 import Level.PlayerListener;
 import Maps.*;
 import Players.Cat;
+import Utils.Stopwatch;
 
 public class PlayLevelScreen extends Screen implements PlayerListener {
 
-    public static MapFactory[] maps;
+    private static final MapFactory[] MAPS;
     private static Map loadedMap;
-    private static Cat cat;
+    private static Player player;
+    private Stopwatch screenTimer = new Stopwatch();
+
 
 
     static {
         /**
          * List of maps in the game, each map is given a constructor
          */
-        maps = new MapFactory[]{
+        MAPS = new MapFactory[]{
                 () -> new TestMap(),
                 () -> new TestMap2(),
                 () -> new TestMap3(),
@@ -64,8 +68,11 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
     }
 
     private void loadMap(int index) {
-        loadedMap = maps[index].generateMap();
-        cat = new Cat(Config.avatar.getFileName(),loadedMap.getPlayerStartPosition());
+        //Load map using the MapFactory
+        loadedMap = MAPS[index].generateMap();
+
+        //Load the cat using the Config setting
+        player = new Cat(Config.avatar.getFileName(),loadedMap.getPlayerStartPosition());
     }
 
     private interface MapFactory {
