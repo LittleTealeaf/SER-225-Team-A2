@@ -17,6 +17,7 @@ public class LevelSelectScreen extends Screen {
 	protected ScreenCoordinator screenCoordinator;
 	protected int currentLevelHovered = 0; // current menu item being "hovered" over
 	protected int LevelSelected = -1;
+	protected SpriteFont levelTutorial;
 	protected SpriteFont levelOne;
 	protected SpriteFont levelTwo;
 	protected SpriteFont levelThree;
@@ -36,6 +37,9 @@ public class LevelSelectScreen extends Screen {
 	@Override
 	public void initialize() {
 
+		levelTutorial = new SpriteFont("Tutorial", 200, 100, "Comic Sans", 30, new Color(49, 207, 240));
+		levelTutorial.setOutlineColor(Color.black);
+		levelTutorial.setOutlineThickness(3);
 		levelOne = new SpriteFont("Level One", 200, 100, "Comic Sans", 30, new Color(49, 207, 240));
 		levelOne.setOutlineColor(Color.black);
 		levelOne.setOutlineThickness(3);
@@ -75,16 +79,17 @@ public class LevelSelectScreen extends Screen {
 
 		// if down is pressed on last menu item or up is pressed on first menu item,
 		// "loop" the selection back around to the beginning/end
-		if (currentLevelHovered > 4) {
+		if (currentLevelHovered > 5) {
 			currentLevelHovered = 0;
 		} else if (currentLevelHovered < 0) {
-			currentLevelHovered = 4;
+			currentLevelHovered = 5;
 		}
 
 		// sets location for blue square in front of text (pointerLocation) and also
 		// sets color of spritefont text based on which menu item is being hovered
 		if (currentLevelHovered == 0) {
-			levelOne.setColor(new Color(255, 215, 0));
+			levelTutorial.setColor(new Color(255, 215, 0));
+			levelOne.setColor(new Color(49, 207, 240));
 			levelTwo.setColor(new Color(49, 207, 240));
 			levelThree.setColor(new Color(49, 207, 240));
 			levelFour.setColor(new Color(49, 207, 240));
@@ -92,37 +97,50 @@ public class LevelSelectScreen extends Screen {
 			pointerLocationX = 170;
 			pointerLocationY = 80;
 		} else if (currentLevelHovered == 1) {
+			levelTutorial.setColor(new Color(49, 207, 240));
+			levelOne.setColor(new Color(255, 215, 0));
+			levelThree.setColor(new Color(49, 207, 240));
+			levelTwo.setColor(new Color(49, 207, 240));
+			levelFour.setColor(new Color(49, 207, 240));
+			levelFive.setColor(new Color(49, 207, 240));
+			pointerLocationX = 170;
+			pointerLocationY = 160;
+		} else if (currentLevelHovered == 2) {
+			levelTutorial.setColor(new Color(49, 207, 240));
 			levelOne.setColor(new Color(49, 207, 240));
 			levelThree.setColor(new Color(49, 207, 240));
 			levelTwo.setColor(new Color(255, 215, 0));
 			levelFour.setColor(new Color(49, 207, 240));
 			levelFive.setColor(new Color(49, 207, 240));
 			pointerLocationX = 170;
-			pointerLocationY = 160;
-		} else if (currentLevelHovered == 2) {
-			levelOne.setColor(new Color(49, 207, 240));
-			levelThree.setColor(new Color(255, 215, 0));
-			levelTwo.setColor(new Color(49, 207, 240));
-			levelFour.setColor(new Color(49, 207, 240));
-			levelFive.setColor(new Color(49, 207, 240));
-			pointerLocationX = 170;
 			pointerLocationY = 240;
 		} else if (currentLevelHovered == 3) {
+			levelTutorial.setColor(new Color(49, 207, 240));
 			levelOne.setColor(new Color(49, 207, 240));
-			levelFour.setColor(new Color(255, 215, 0));
-			levelThree.setColor(new Color(49, 207, 240));
+			levelFour.setColor(new Color(49, 207, 240));
+			levelThree.setColor(new Color(255, 215, 0));
 			levelTwo.setColor(new Color(49, 207, 240));
 			levelFive.setColor(new Color(49, 207, 240));
 			pointerLocationX = 170;
 			pointerLocationY = 320;
 		} else if (currentLevelHovered == 4) {
+			levelTutorial.setColor(new Color(49, 207, 240));
+			levelOne.setColor(new Color(49, 207, 240));
+			levelFive.setColor(new Color(49, 207, 240));
+			levelThree.setColor(new Color(49, 207, 240));
+			levelFour.setColor(new Color(255, 215, 0));
+			levelTwo.setColor(new Color(49, 207, 240));
+			pointerLocationX = 170;
+			pointerLocationY = 400;
+		} else if (currentLevelHovered == 5) {
+			levelTutorial.setColor(new Color(49, 207, 240));
 			levelOne.setColor(new Color(49, 207, 240));
 			levelFive.setColor(new Color(255, 215, 0));
 			levelThree.setColor(new Color(49, 207, 240));
 			levelFour.setColor(new Color(49, 207, 240));
 			levelTwo.setColor(new Color(49, 207, 240));
 			pointerLocationX = 170;
-			pointerLocationY = 400;
+			pointerLocationY = 480;
 		}
 		LevelSelected = currentLevelHovered;
 		// if space is pressed on menu item, change to appropriate screen based on which
@@ -154,6 +172,10 @@ public class LevelSelectScreen extends Screen {
 				playLevelScreen.setLevelNum(4);
 				playLevelScreen.setPlayLevelScreenState(PlayLevelScreenState.RUNNING);
 				playLevelScreen.initialize();
+			} else if (LevelSelected == 5) {
+				playLevelScreen.setLevelNum(5);
+				playLevelScreen.setPlayLevelScreenState(PlayLevelScreenState.RUNNING);
+				playLevelScreen.initialize();
 			}
 		}
 
@@ -161,6 +183,7 @@ public class LevelSelectScreen extends Screen {
 
 	public void draw(GraphicsHandler graphicsHandler) {
 		background.draw(graphicsHandler);
+		levelTutorial.draw(graphicsHandler);
 		levelOne.draw(graphicsHandler);
 		levelTwo.draw(graphicsHandler);
 		levelThree.draw(graphicsHandler);
