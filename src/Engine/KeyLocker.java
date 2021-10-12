@@ -27,6 +27,14 @@ public class KeyLocker {
         setKeys(locked,keyChannel.getKeys());
     }
 
+    public void setKeys(KeyboardAdapter adapter) {
+        setKeys(adapter.isDown(),adapter.getKeys());
+    }
+
+    public boolean isKeyLocked(KeyboardAdapter adapter) {
+        return isKeyLocked(adapter.getKeys()[0]);
+    }
+
     public void setKeys(boolean locked, Key... keys) {
         if(locked) {
             lockKey(keys);

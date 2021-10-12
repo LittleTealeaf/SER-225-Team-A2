@@ -7,6 +7,7 @@ import Maps.LevelSelectMap;
 import Menu.Menu;
 import Menu.MenuItem;
 import Players.Avatar;
+import Menu.Direction;
 
 import java.awt.*;
 
@@ -36,6 +37,9 @@ public class OptionsScreen extends Menu {
         for(int i = 0; i < 2; i++) {
             for(int j = 1; j < items[i].length; j++) {
                 items[i][j].setFont(smallerFont);
+                if(i == 1) {
+                    items[i][j].setNeighborItem(items[2][0], Direction.DOWN);
+                }
             }
         }
     }

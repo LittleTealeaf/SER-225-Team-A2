@@ -52,7 +52,13 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
     public void update() {
         switch(screenState) {
             case RUNNING -> {
-
+                if (KeyboardAdapter.GAME_PAUSE.isDown() && !keyLocker.isKeyLocked(KeyboardAdapter.GAME_PAUSE)) {
+                    screenState = State.PAUSE;
+                } else {
+                    player.update();
+                    loadedMap.update(player);
+                }
+                keyLocker.setKeys(KeyboardAdapter.GAME_PAUSE);
             }
         }
     }
