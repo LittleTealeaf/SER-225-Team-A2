@@ -58,7 +58,8 @@ public class ScreenCoordinator extends Screen {
 						break;
 
 					case LEVELSELECT:
-						currentScreen = new PlayLevelScreenOld(this,PlayLevelScreenState.LEVEL_SELECT);
+//						currentScreen = new PlayLevelScreenOld(this,PlayLevelScreenState.LEVEL_SELECT);
+						currentScreen = new LevelSelectScreen();
 						break;
 
 					case OPENING:
