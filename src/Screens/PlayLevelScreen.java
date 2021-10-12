@@ -23,6 +23,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
     private int currentMap = 0;
     private static final SpriteFont SPRITE_FONT_PAUSE;
     private static final SpriteFont[] SPRITE_FONT_INSTRUCTIONS;
+    private static final Color COLOR_GREY_BACKGROUND;
 
     static {
         screenTimer = new Stopwatch();
@@ -57,6 +58,8 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
             font.setOutlineColor(Color.white);
             font.setOutlineThickness(2.0f);
         }
+
+        COLOR_GREY_BACKGROUND = new Color(0, 0, 0, 100);
     }
 
     public PlayLevelScreen() {
@@ -67,11 +70,13 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
         super();
         this.currentMap = initialMap;
         keyLocker.clear();
+        initialize();
     }
 
     @Override
     public void initialize() {
         loadMap(currentMap);
+        screenState = State.RUNNING;
     }
 
     @Override
@@ -80,12 +85,27 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
             case RUNNING -> {
                 if (KeyboardAdapter.GAME_PAUSE.isDown() && !keyLocker.isKeyLocked(KeyboardAdapter.GAME_PAUSE)) {
                     screenState = State.PAUSE;
-                } else {
+                } else if(KeyboardAdapter.GAME_INSTRUCTIONS.isDown() && !keyLocker.isKeyLocked(KeyboardAdapter.GAME_INSTRUCTIONS)) {
+                    screenState = State.INSTRUCTIONS;
+                }else {
                     player.update();
                     loadedMap.update(player);
                 }
+                keyLocker.setKeys(KeyboardAdapter.GAME_PAUSE,KeyboardAdapter.GAME_INSTRUCTIONS);
+            }
+            case INSTRUCTIONS -> {
+                if(KeyboardAdapter.GAME_INSTRUCTIONS.isDown() && !keyLocker.isKeyLocked(KeyboardAdapter.GAME_INSTRUCTIONS)) {
+                    screenState = State.RUNNING;
+                }
+                keyLocker.setKeys(KeyboardAdapter.GAME_INSTRUCTIONS);
+            }
+            case PAUSE -> {
+                if(KeyboardAdapter.GAME_PAUSE.isDown() && !keyLocker.isKeyLocked(KeyboardAdapter.GAME_PAUSE)) {
+                    screenState = State.RUNNING;
+                }
                 keyLocker.setKeys(KeyboardAdapter.GAME_PAUSE);
             }
+            
         }
     }
 
@@ -113,7 +133,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                 player.draw(graphicsHandler);
                 SPRITE_FONT_PAUSE.draw(graphicsHandler);
                 graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(),
-                        Color.black);
+                        COLOR_GREY_BACKGROUND);
             }
             case INSTRUCTIONS -> {
                 loadedMap.draw(graphicsHandler);
@@ -122,19 +142,19 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                     sprite.draw(graphicsHandler);
                 }
                 graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(),
-                        Color.BLACK);
+                        COLOR_GREY_BACKGROUND);
             }
         }
     }
 
     @Override
     public void onLevelCompleted() {
-
+        screenState = State.LEVEL_COMPLETED;
     }
 
     @Override
     public void onDeath() {
-
+        screenState = State.PLAYER_DEAD;
     }
 
     public void nextLevel() {
@@ -157,9 +177,12 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
     private void loadMap(int index) {
         //Load map using the MapFactory
         loadedMap = MAPS[index].generateMap();
+        loadedMap.reset();
 
         //Load the cat using the Config setting
         player = Config.playerAvatar.generatePlayer(loadedMap.getPlayerStartPosition());
+        player.setMap(loadedMap);
+        player.addListener(this);
     }
 
     private interface MapFactory {
