@@ -12,12 +12,14 @@ public class LevelLoseScreen extends Screen {
 	protected SpriteFont instructions;
 	protected KeyLocker keyLocker = new KeyLocker();
 	protected PlayLevelScreenOld playLevelScreenOld;
-	
-	protected ScreenCoordinator screenCoordinator;
 
-	public LevelLoseScreen(PlayLevelScreenOld playLevelScreenOld, ScreenCoordinator sc1) {
-		screenCoordinator = sc1;
+
+	public LevelLoseScreen(PlayLevelScreenOld playLevelScreenOld) {
 		this.playLevelScreenOld = playLevelScreenOld;
+	}
+
+	public LevelLoseScreen(PlayLevelScreen screen) {
+
 	}
 
 	

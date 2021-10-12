@@ -47,4 +47,8 @@ public class KeyLocker {
     public boolean isKeyLocked(Key key) {
         return lockedKeys.contains(key);
     }
+
+    public void clear() {
+        lockedKeys.clear();
+    }
 }

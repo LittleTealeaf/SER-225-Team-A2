@@ -142,7 +142,7 @@ public class PlayLevelScreenOld extends Screen implements PlayerListener {
 			break;
 		// if player died in level, bring up level lost screen
 		case PLAYER_DEAD:
-			levelLoseScreen = new LevelLoseScreen(this, screenCoordinator);
+			levelLoseScreen = new LevelLoseScreen(this);
 			levelLoseScreen.initialize();
 			playLevelScreenState = PlayLevelScreenState.LEVEL_LOSE_MESSAGE;
 			break;
