@@ -105,7 +105,23 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                 }
                 keyLocker.setKeys(KeyboardAdapter.GAME_PAUSE);
             }
-            
+            case PLAYER_DEAD -> {
+                screenState = State.LEVEL_LOSE_MESSAGE;
+            }
+            case LEVEL_LOSE_MESSAGE -> alternateScreen.update();
+            case LEVEL_COMPLETED -> {
+                alternateScreen = new LevelClearedScreen();
+                alternateScreen.initialize();
+                screenTimer.setWaitTime(2500);
+                screenState = State.LEVEL_WIN_MESSAGE;
+            }
+            case LEVEL_WIN_MESSAGE ->  {
+                alternateScreen.update();
+                if(screenTimer.isTimeUp()) {
+                    nextLevel();
+                    screenState = State.RUNNING;
+                }
+            }
         }
     }
 
@@ -119,12 +135,14 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
             case LEVEL_WIN_MESSAGE -> {
                 if(!(alternateScreen instanceof LevelClearedScreen)) {
                     alternateScreen = new LevelClearedScreen();
+                    alternateScreen.initialize();
                 }
                 alternateScreen.draw(graphicsHandler);
             }
             case LEVEL_LOSE_MESSAGE -> {
                 if(!(alternateScreen instanceof LevelLoseScreen)) {
                     alternateScreen = new LevelLoseScreen(this);
+                    alternateScreen.initialize();
                 }
                 alternateScreen.draw(graphicsHandler);
             }
@@ -158,12 +176,11 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
     }
 
     public void nextLevel() {
-        currentMap++;
-        initialize();
+        loadMap(currentMap+1);
     }
 
     public void resetLevel() {
-
+        loadMap(currentMap);
     }
 
     public void backToMenu() {
@@ -175,6 +192,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
      * @param index
      */
     private void loadMap(int index) {
+        currentMap = index;
         //Load map using the MapFactory
         loadedMap = MAPS[index].generateMap();
         loadedMap.reset();
@@ -183,6 +201,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
         player = Config.playerAvatar.generatePlayer(loadedMap.getPlayerStartPosition());
         player.setMap(loadedMap);
         player.addListener(this);
+        screenState = State.RUNNING;
     }
 
     private interface MapFactory {
