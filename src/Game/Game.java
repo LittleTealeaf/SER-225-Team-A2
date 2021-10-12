@@ -3,6 +3,7 @@ package Game;
 import Engine.GameWindow;
 
 import Engine.ScreenManager;
+import Menu.DebugScreen;
 
 /*
  * The game starts here
@@ -22,5 +23,7 @@ public class Game {
         gameWindow.startGame();
         ScreenManager screenManager = gameWindow.getScreenManager();
         screenManager.setCurrentScreen(c1);
+//        DEBUG USE ONLY
+//        screenManager.setCurrentScreen(new DebugScreen());
     }
 }

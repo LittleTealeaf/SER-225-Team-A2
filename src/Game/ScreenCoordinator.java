@@ -4,14 +4,9 @@ import Engine.DefaultScreen;
 import Engine.GameWindow;
 import Engine.GraphicsHandler;
 import Engine.Screen;
-import Screens.CreditsScreen;
-import Screens.MenuScreen;
+import Screens.*;
 
-import Screens.OpeningScreen;
-import Screens.OptionsScreen;
-import Screens.PlayLevelScreen;
-import Screens.PlayLevelScreen.PlayLevelScreenState;
-import Screens.InstructionsScreen;
+import Screens.PlayLevelScreenOld.PlayLevelScreenState;
 
 
 /*
@@ -19,13 +14,12 @@ import Screens.InstructionsScreen;
  * There can only be one "currentScreen", although screens can have "nested" screens
  */
 public class ScreenCoordinator extends Screen {
-	// currently shown Screen
-	protected GameWindow gameWindow;
+
 	protected Screen currentScreen = new DefaultScreen();
 
+
 	// keep track of gameState so ScreenCoordinator knows which Screen to show
-	protected GameState gameState;
-	protected GameState previousGameState;
+	protected GameState gameState, previousGameState;
 
 	public  GameState getGameState() {
 		return gameState;
@@ -40,6 +34,7 @@ public class ScreenCoordinator extends Screen {
 	public void initialize() {
 		// start game off with Menu Screen
 		gameState = GameState.MENU;
+
 	}
 
 	@Override
@@ -50,27 +45,29 @@ public class ScreenCoordinator extends Screen {
 			if (previousGameState != gameState) {
 				switch(gameState) {
 					case MENU:
-						currentScreen = new MenuScreen(this);
+						currentScreen = new MenuScreen();
 						break;
 					case LEVEL:
-						currentScreen = new PlayLevelScreen(this);
+						currentScreen = new PlayLevelScreen(0);
 						break;
 					case CREDITS:
 						currentScreen = new CreditsScreen(this);
 						break;
 					case INSTRUCTIONS:
-						currentScreen = new InstructionsScreen(this);
+						currentScreen = new InstructionsScreen();
 						break;
 
 					case LEVELSELECT:
-						currentScreen = new PlayLevelScreen(this,PlayLevelScreenState.LEVEL_SELECT);
+//						currentScreen = new PlayLevelScreenOld(this,PlayLevelScreenState.LEVEL_SELECT);
+						currentScreen = new LevelSelectScreen();
 						break;
 
 					case OPENING:
 					    currentScreen = new OpeningScreen(this);
 					    break;
 					case OPTIONS:
-						currentScreen = new PlayLevelScreen(this,PlayLevelScreenState.OPTIONS);
+//						currentScreen = new PlayLevelScreen(this,PlayLevelScreenState.OPTIONS);
+						currentScreen = new OptionsScreen();
 						break;
 				}
 				currentScreen.initialize();
