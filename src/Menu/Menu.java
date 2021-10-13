@@ -27,7 +27,7 @@ public abstract class Menu extends Screen {
             background.setAdjustCamera(false);
         }
         keyTimer.setWaitTime(200);
-        selectionDown = false;
+        selectionDown = true;
     }
 
     @Override
