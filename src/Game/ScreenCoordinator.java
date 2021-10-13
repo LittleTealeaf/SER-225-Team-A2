@@ -5,6 +5,8 @@ import Engine.GraphicsHandler;
 import Engine.Screen;
 import Screens.*;
 
+import java.awt.event.MouseEvent;
+
 
 /*
  * Based on the current game state, this class determines which Screen should be shown
@@ -38,6 +40,9 @@ public class ScreenCoordinator extends Screen {
 
 	@Override
 	public void update() {
+
+
+
 		do {
 			// if previousGameState does not equal gameState, it means there was a change in gameState
 			// this triggers ScreenCoordinator to bring up a new Screen based on what the gameState is
@@ -73,4 +78,9 @@ public class ScreenCoordinator extends Screen {
 		this.initialMap = level;
 		this.gameState = GameState.LEVEL;
 	}
+
+	public void mouseClicked(MouseEvent e) {
+		currentScreen.mouseClicked(e);
+	}
+
 }

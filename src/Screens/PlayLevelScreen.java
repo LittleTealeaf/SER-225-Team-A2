@@ -10,6 +10,7 @@ import SpriteFont.SpriteFont;
 import Utils.Stopwatch;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 public class PlayLevelScreen extends Screen implements PlayerListener {
 
@@ -166,6 +167,12 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
             }
         }
     }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
 
     @Override
     public void onLevelCompleted() {

@@ -7,6 +7,7 @@ import Engine.ScreenManager;
 import SpriteFont.SpriteFont;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 // This class is for the level cleared screen
 public class LevelClearedScreen extends Screen {
@@ -31,4 +32,9 @@ public class LevelClearedScreen extends Screen {
         graphicsHandler.drawFilledRectangle(0, 0, Config.WIDTH, Config.HEIGHT, Color.black);
         winMessage.draw(graphicsHandler);
     }
+
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
 }

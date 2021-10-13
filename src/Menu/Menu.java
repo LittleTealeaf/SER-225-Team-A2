@@ -5,6 +5,9 @@ import Game.GameState;
 import Level.Map;
 import Utils.Stopwatch;
 
+import java.awt.*;
+import java.awt.event.MouseEvent;
+
 public abstract class Menu extends Screen {
 
     private MenuOption[] menuOptions;
@@ -15,6 +18,8 @@ public abstract class Menu extends Screen {
     private final Stopwatch keyTimer = new Stopwatch();
 
     private boolean selectionDown;
+
+    private Point previousMouse;
 
     @Override
     public void initialize() {
@@ -32,6 +37,15 @@ public abstract class Menu extends Screen {
     @Override
     public void update() {
         background.update(null);
+
+        Point p = GamePanel.getGameWindow().getMousePoint();
+        if(p != null && !p.equals(previousMouse)) {
+            for(MenuOption option : menuOptions) {
+                option.mouseMoved(p);
+            }
+        }
+        previousMouse = p;
+
 
         //Move Direction
         if(KeyboardAdapter.MENU_DOWN.isDown() && keyTimer.isTimeUp()) {
@@ -103,11 +117,19 @@ public abstract class Menu extends Screen {
                 }
             }
         }
+
+        SelectFunction function = (newSelection) -> {
+            selectedItem.setSelected(false);
+            newSelection.setSelected(true);
+            selectedItem = newSelection;
+        };
+
         menuOptions = new MenuOption[count];
         for(int i = 0; i < grid.length; i++) {
             for(int j = 0; j < grid[i].length; j++) {
                 if(grid[i][j] != null) {
                     menuOptions[menuOptions.length - (count--)] = grid[i][j];
+                    grid[i][j].setSelectFunction(function);
                 }
             }
         }
@@ -129,6 +151,7 @@ public abstract class Menu extends Screen {
 
     @Override
     public void draw(GraphicsHandler graphicsHandler) {
+
         if(background != null) {
             background.draw(graphicsHandler);
         }
@@ -146,5 +169,15 @@ public abstract class Menu extends Screen {
 
     protected void setDrawables(Drawable[] drawables) {
         this.drawables = drawables;
+    }
+
+    public void mouseClicked(MouseEvent e) {
+        for(MenuOption option : menuOptions) {
+            option.mouseClicked(e);
+        }
+    }
+
+    public interface SelectFunction {
+        void select(MenuOption item);
     }
 }
