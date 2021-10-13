@@ -112,9 +112,13 @@ public class GamePanel extends JPanel {
 		
 	}
 	public static void setVolume(double gain) {
-		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-		float dB = (float) (Math.log(gain) / Math.log(10.0) * 20.0);
-		gainControl.setValue(dB);
+		try {
+			FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+			float dB = (float) (Math.log(gain) / Math.log(10.0) * 20.0);
+			gainControl.setValue(dB);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 
@@ -137,7 +141,7 @@ public class GamePanel extends JPanel {
 	public void startGame() {
 		timer.start();
 
-		music("src/Blossoming Inspiration Loop (online-audio-converter.com).wav",1);
+		music("src/music.wav",1);
 	}
 
 	public ScreenManager getScreenManager() {

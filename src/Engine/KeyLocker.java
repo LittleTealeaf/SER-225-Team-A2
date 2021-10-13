@@ -10,17 +10,49 @@ public class KeyLocker {
     private HashSet<Key> lockedKeys = new HashSet<>();
 
     // lock a key
-    public void lockKey(Key key) {
-        lockedKeys.add(key);
+    public void lockKey(Key... keys) {
+        for(Key key : keys) {
+            lockedKeys.add(key);
+        }
     }
 
     // unlock a key
-    public void unlockKey(Key key) {
-        lockedKeys.remove(key);
+    public void unlockKey(Key... keys) {
+        for(Key key : keys) {
+            lockedKeys.remove(key);
+        }
     }
+
+    public void setKeys(boolean locked, KeyboardAdapter keyChannel) {
+        setKeys(locked,keyChannel.getKeys());
+    }
+
+    public void setKeys(KeyboardAdapter... adapters) {
+        for(KeyboardAdapter adapter : adapters) {
+            setKeys(adapter.isDown(),adapter.getKeys());
+        }
+    }
+
+    public boolean isKeyLocked(KeyboardAdapter adapter) {
+        return isKeyLocked(adapter.getKeys()[0]);
+    }
+
+    public void setKeys(boolean locked, Key... keys) {
+        if(locked) {
+            lockKey(keys);
+        } else {
+            unlockKey(keys);
+        }
+    }
+
+
 
     // check if a key is currently locked
     public boolean isKeyLocked(Key key) {
         return lockedKeys.contains(key);
+    }
+
+    public void clear() {
+        lockedKeys.clear();
     }
 }

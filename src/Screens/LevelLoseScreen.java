@@ -1,7 +1,6 @@
 package Screens;
 
 import Engine.*;
-import Game.GameState;
 import Game.ScreenCoordinator;
 import SpriteFont.SpriteFont;
 
@@ -13,12 +12,10 @@ public class LevelLoseScreen extends Screen {
 	protected SpriteFont instructions;
 	protected KeyLocker keyLocker = new KeyLocker();
 	protected PlayLevelScreen playLevelScreen;
-	
-	protected ScreenCoordinator screenCoordinator;
 
-	public LevelLoseScreen(PlayLevelScreen playLevelScreen, ScreenCoordinator sc1) {
-		screenCoordinator = sc1;
-		this.playLevelScreen = playLevelScreen;
+
+	public LevelLoseScreen(PlayLevelScreen screen) {
+		this.playLevelScreen = screen;
 	}
 
 	
@@ -45,7 +42,7 @@ public class LevelLoseScreen extends Screen {
 			playLevelScreen.resetLevel();
 			
 		} else if (Keyboard.isKeyDown(Key.ESC)) {
-			playLevelScreen.goBackToMenu();
+			playLevelScreen.backToMenu();
 		}
 	}
 
