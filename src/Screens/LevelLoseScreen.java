@@ -14,10 +14,6 @@ public class LevelLoseScreen extends Screen {
 	protected PlayLevelScreen playLevelScreen;
 
 
-	public LevelLoseScreen(PlayLevelScreenOld playLevelScreenOld) {
-//		this.playLevelScreenOld = playLevelScreenOld;
-	}
-
 	public LevelLoseScreen(PlayLevelScreen screen) {
 		this.playLevelScreen = screen;
 	}

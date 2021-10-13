@@ -73,7 +73,6 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
         super();
         this.currentMap = initialMap;
         keyLocker.clear();
-        initialize();
     }
 
     @Override
