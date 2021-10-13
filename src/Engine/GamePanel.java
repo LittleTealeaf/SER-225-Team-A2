@@ -141,7 +141,7 @@ public class GamePanel extends JPanel {
 	public void startGame() {
 		timer.start();
 
-		music("src/hi.wav",1);
+		music("src/music.wav",1);
 	}
 
 	public ScreenManager getScreenManager() {
