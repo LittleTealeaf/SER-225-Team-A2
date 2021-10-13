@@ -19,6 +19,9 @@ public abstract class Player extends GameObject {
     // values that affect player movement
     // these should be set in a subclass
     protected float walkSpeed = 0;
+    protected float maxWalkSpeed = 0;
+    protected float minWalkSpeed = 0;
+    protected float walkAcceleration = 0;
     protected float gravity = 0;
     protected float jumpHeight = 0;
     protected float jumpDegrade = 0;
@@ -31,9 +34,9 @@ public abstract class Player extends GameObject {
     protected float momentumX = 0;
     protected float terminalVelocityY = 0;
     protected float momentumYIncrease = 0;
-
+    
+    
     // values used to handle player movement
-
     protected float momentumY = 0;
     protected float moveAmountX, moveAmountY;
 
@@ -61,6 +64,7 @@ public abstract class Player extends GameObject {
     protected Key downKey = Key.S;
     protected Key spaceKey = Key.SPACE;
     protected Key attackKey = Key.E;
+    protected Key shiftKey = Key.SHIFT;
 
     // if true, player cannot be hurt by enemies (good for testing)
     protected boolean isInvincible = false;
@@ -169,7 +173,6 @@ public abstract class Player extends GameObject {
         
         // 11/19
         else if(Keyboard.isKeyDown(attackKey)) {
-        	
         	//keyLocker.lockKey(attackKey);
         	playerState = PlayerState.ATTACKING;
         	//System.out.println(previousPlayerState.toString());
@@ -181,20 +184,34 @@ public abstract class Player extends GameObject {
         // sets animation to a WALK animation based on which way player is facing
         currentAnimationName = facingDirection == Direction.RIGHT ? "WALK_RIGHT" : "WALK_LEFT";
 
-        // if walk left key is pressed, move player to the left
+        // if the running key, shift, is held down acceleration the walk speed until the character reaches the max speed
+        if (Keyboard.isKeyDown(shiftKey))
+        {
+        	if (walkSpeed < maxWalkSpeed)
+        	{
+        		walkSpeed = walkSpeed * walkAcceleration;
+        	}
+        	
+        }
+        // once the user lets go of the running key reset the walk speed
+        else if (Keyboard.isKeyUp(shiftKey))
+        {
+        	walkSpeed = minWalkSpeed;
+        }  
+        
         if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(leftKey)) {
         	//System.out.println("s");
             moveAmountX -= walkSpeed;
             facingDirection = Direction.LEFT;
         }
-
+        
         // if walk right key is pressed, move player to the right
         else if (Keyboard.isKeyDown(MOVE_RIGHT_KEY) || Keyboard.isKeyDown(rightKey)) {
         	//System.out.println("d");
         	moveAmountX += walkSpeed;
             facingDirection = Direction.RIGHT;
         } else if (Keyboard.isKeyUp(MOVE_LEFT_KEY) && Keyboard.isKeyUp(MOVE_RIGHT_KEY) && Keyboard.isKeyUp(rightKey) && Keyboard.isKeyUp(leftKey)) {
-            playerState = PlayerState.STANDING;
+        	playerState = PlayerState.STANDING;
         }
 
         // if jump key is pressed, player enters JUMPING state
@@ -242,7 +259,6 @@ public abstract class Player extends GameObject {
     protected void playerJumping() {
         // if last frame player was on ground and this frame player is still on ground, the jump needs to be setup
         if (previousAirGroundState == AirGroundState.GROUND && airGroundState == AirGroundState.GROUND) {
-
             // sets animation to a JUMP animation based on which way player is facing
             currentAnimationName = facingDirection == Direction.RIGHT ? "JUMP_RIGHT" : "JUMP_LEFT";
 
@@ -257,9 +273,15 @@ public abstract class Player extends GameObject {
                 }
             }
         }
-
+        // if the player is no longer holding any of the jump keys set the jump force to 0 to stop the jump this allows the player to control how high they want to jump
+        if (!(Keyboard.isKeyDown(JUMP_KEY) || (Keyboard.isKeyDown(upKey)) || Keyboard.isKeyDown(spaceKey)))
+        {
+        	jumpForce = 0;
+        }
+        
+        
         // if player is in air (currently in a jump) and has more jumpForce, continue sending player upwards
-        else if (airGroundState == AirGroundState.AIR) {
+        if (airGroundState == AirGroundState.AIR) {
             if (jumpForce > 0) {
                 moveAmountY -= jumpForce;
                 jumpForce -= jumpDegrade;
@@ -278,8 +300,12 @@ public abstract class Player extends GameObject {
             // allows you to move left and right while in the air
             if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(leftKey)) {
                 moveAmountX -= walkSpeed;
-            } else if (Keyboard.isKeyDown(MOVE_RIGHT_KEY) || Keyboard.isKeyDown(rightKey)) {
+                facingDirection = Direction.LEFT;
+            }             
+            
+            else if (Keyboard.isKeyDown(MOVE_RIGHT_KEY) || Keyboard.isKeyDown(rightKey)) {
                 moveAmountX += walkSpeed;
+                facingDirection = Direction.RIGHT;
             }
 
             // if player is falling, increases momentum as player falls so it falls faster over time
@@ -298,8 +324,19 @@ public abstract class Player extends GameObject {
     // 11/19
     public void playerAttacking() {
     	if (playerState == PlayerState.ATTACKING) {
-                // define where projectile will spawn on map (x location) relative to cat's location
-                // and define its movement speed
+    		
+    		// this allows the player to still move left or right will in the attacking state
+    		 if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(leftKey)) {
+                 moveAmountX -= walkSpeed;
+                 facingDirection = Direction.LEFT;
+             } 
+             else if (Keyboard.isKeyDown(MOVE_RIGHT_KEY) || Keyboard.isKeyDown(rightKey)) {
+                 moveAmountX += walkSpeed;
+                 facingDirection = Direction.RIGHT;
+             }
+    		 
+             // define where projectile will spawn on map (x location) relative to cat's location
+             // and define its movement speed
                 int attackX;
                 float movementSpeed;
                 if (facingDirection == Direction.RIGHT) {
@@ -470,7 +507,6 @@ public abstract class Player extends GameObject {
             }
         }
     }
-    
 
     public PlayerState getPlayerState() {
         return playerState;
@@ -502,3 +538,5 @@ public abstract class Player extends GameObject {
     
     
 }
+
+
