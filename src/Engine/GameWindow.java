@@ -1,6 +1,8 @@
 package Engine;
 
-import java.awt.BorderLayout;
+import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.*;
 
@@ -19,6 +21,12 @@ public class GameWindow {
 
 	public GameWindow(ScreenCoordinator c1) {
 		gameWindow = new JFrame("Game");
+		gameWindow.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				GamePanel.mouseClicked(e);
+			}
+		});
+
 		gamePanel = new GamePanel(c1,this);
 		gamePanel.setFocusable(true);
 		gamePanel.requestFocusInWindow();
@@ -52,6 +60,10 @@ public class GameWindow {
 		gameWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		
+	}
+
+	public Point getMousePoint() {
+		return gameWindow.getMousePosition();
 	}
 	
 

@@ -22,6 +22,7 @@ import Game.ScreenCoordinator;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.io.File;
 
 /*
@@ -44,6 +45,7 @@ public class GamePanel extends JPanel {
 	protected static GameWindow gameWindow;
 	private static ScreenCoordinator coordinator;
 	public static Clip clip;
+	private Point previousMousePoint = new Point(0,0);
 
 	
 	/*
@@ -62,6 +64,7 @@ public class GamePanel extends JPanel {
 
 		screenManager = new ScreenManager();
 		coordinator = c1;
+
 
 	
 		
@@ -170,7 +173,10 @@ public class GamePanel extends JPanel {
 		}
 
 	}
-	
-	
+
+	public static void mouseClicked(MouseEvent e) {
+		System.out.println("Click: " + e.getPoint());
+		coordinator.mouseClicked(e);
+	}
 
 }

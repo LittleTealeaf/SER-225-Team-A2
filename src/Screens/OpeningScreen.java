@@ -1,6 +1,7 @@
 package Screens;
 
 import java.awt.Color;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
 import Builders.FrameBuilder;
@@ -103,9 +104,14 @@ public class OpeningScreen extends Screen {
 		
 		
 	}
-	
-	
-	
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+
+	}
+
+
+
 	public HashMap<String, Frame[]> getCatAnimations(SpriteSheet spriteSheet) {
         return new HashMap<String, Frame[]>() {{
             put("STAND_RIGHT", new Frame[] {

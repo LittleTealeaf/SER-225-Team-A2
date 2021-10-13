@@ -5,6 +5,7 @@ import Game.ScreenCoordinator;
 import SpriteFont.SpriteFont;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 // This is the class for the level lose screen
 public class LevelLoseScreen extends Screen {
@@ -51,4 +52,10 @@ public class LevelLoseScreen extends Screen {
 		loseMessage.draw(graphicsHandler);
 		instructions.draw(graphicsHandler);
 	}
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+
+	}
+
 }

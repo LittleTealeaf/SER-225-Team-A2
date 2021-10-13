@@ -3,6 +3,7 @@ package Menu;
 import Engine.GraphicsHandler;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 public class MenuOption {
 
@@ -11,6 +12,8 @@ public class MenuOption {
     private static final Color SELECTED_COLOR = new Color(255, 215, 0);
     private static final Color OUTLINE_COLOR = new Color(0, 0, 0);
     private static final int OUTLINE_THICKNESS = 3;
+
+    private Menu.SelectFunction selectFunction;
 
     private MenuOption[] neighbors;
 
@@ -21,7 +24,8 @@ public class MenuOption {
     private String text;
 
     private boolean selected;
-    private int x,y;
+    private boolean softSelected;
+    private int x,y, width, height;
 
     public MenuOption(String text, int x, int y) {
         neighbors = new MenuOption[4];
@@ -98,10 +102,19 @@ public class MenuOption {
             graphicsHandler.drawString(text, Math.round(x), Math.round(y), getFont(), getColor());
         }
 
+        if(width == 0) {
+            graphicsHandler.getGraphics2D().setFont(font);
+            FontMetrics metrics = graphicsHandler.getGraphics2D().getFontMetrics();
+            height = metrics.getHeight() * 3;
+            width = (int) (metrics.stringWidth(text) * 2.5);
+        }
+
         //Draws the pointer
         if(selected) {
             graphicsHandler.drawFilledRectangleWithBorder(x - 30, y - 20, 20, 20, new Color(49, 207, 240), Color.black, 2);
         }
+
+
     }
 
     // this can be called instead of regular draw to have the text drop to the next line in graphics space on a new line character
@@ -115,5 +128,26 @@ public class MenuOption {
             }
             drawLocationY += getFont().getSize();
         }
+    }
+
+    public boolean contains(Point point) {
+        return point != null && point.x > x && point.y > y && point.x < x + width && point.y < y + height;
+    }
+
+    public void mouseMoved(Point p) {
+        softSelected = contains(p);
+        if(selected != softSelected && selectFunction != null) {
+            selectFunction.select(this);
+        }
+    }
+
+    public void mouseClicked(MouseEvent e) {
+        if(contains(e.getPoint())) {
+            execute();
+        }
+    }
+
+    public void setSelectFunction(Menu.SelectFunction function) {
+        this.selectFunction = function;
     }
 }
