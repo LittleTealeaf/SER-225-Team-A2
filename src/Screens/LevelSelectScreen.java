@@ -1,6 +1,7 @@
 package Screens;
 
 import Engine.GamePanel;
+import Game.GameState;
 import Game.ScreenCoordinator;
 import Maps.TitleScreenMap;
 import Menu.Menu;
@@ -26,7 +27,10 @@ public class LevelSelectScreen extends Menu {
                     new MenuOption("Level Four",200,300, () -> coordinator.loadLevel(4))
         }, {
                     new MenuOption("Level Five",200,350, () -> coordinator.loadLevel(5))
-        }};
+        },
+                {
+                        new MenuOption("Hit [Escape] to go back to main menu", 100, 550, () -> GamePanel.getScreenCoordinator().setGameState(GameState.MENU))
+                }};
         setBackground(new TitleScreenMap());
         setMenuItemsAsGrid(menu);
     }
