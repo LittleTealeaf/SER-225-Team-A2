@@ -4,7 +4,7 @@ import Engine.GraphicsHandler;
 
 import java.awt.*;
 
-public class MenuItem {
+public class MenuOption {
 
     private static final Font DEFAULT_MENU_FONT = new Font("Comic sans",Font.PLAIN,30);
     private static final Color DEFAULT_COLOR = new Color(49, 207, 240);
@@ -12,7 +12,7 @@ public class MenuItem {
     private static final Color OUTLINE_COLOR = new Color(0, 0, 0);
     private static final int OUTLINE_THICKNESS = 3;
 
-    private MenuItem[] neighbors;
+    private MenuOption[] neighbors;
 
     private MenuItemListener listener;
 
@@ -23,19 +23,19 @@ public class MenuItem {
     private boolean selected;
     private int x,y;
 
-    public MenuItem(String text, int x, int y) {
-        neighbors = new MenuItem[4];
+    public MenuOption(String text, int x, int y) {
+        neighbors = new MenuOption[4];
         this.text = text;
         this.x = x;
         this.y = y;
     }
 
-    public MenuItem(String text, int x, int y, MenuItemListener listener) {
+    public MenuOption(String text, int x, int y, MenuItemListener listener) {
         this(text,x,y);
         setListener(listener);
     }
 
-    public void setNeighborItem(MenuItem item, Direction direction) {
+    public void setNeighborItem(MenuOption item, Direction direction) {
         neighbors[direction.getIndex()] = item;
 //        item.neighbors[direction.getOppositeIndex()] = this;
     }
@@ -45,8 +45,8 @@ public class MenuItem {
      * @param direction Direction of neighbor
      * @return
      */
-    public MenuItem selectNeighbor(Direction direction) {
-        MenuItem newSelection = neighbors[direction.getIndex()];
+    public MenuOption selectNeighbor(Direction direction) {
+        MenuOption newSelection = neighbors[direction.getIndex()];
         if(newSelection == null) {
             return this;
         } else {

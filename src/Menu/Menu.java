@@ -7,8 +7,8 @@ import Utils.Stopwatch;
 
 public abstract class Menu extends Screen {
 
-    private MenuItem[] menuItems;
-    private MenuItem selectedItem;
+    private MenuOption[] menuOptions;
+    private MenuOption selectedItem;
     private Drawable[] drawables;
 
     private Map background;
@@ -18,10 +18,9 @@ public abstract class Menu extends Screen {
 
     @Override
     public void initialize() {
-        if(menuItems != null) {
-            selectedItem = menuItems[0];
+        if(menuOptions != null) {
+            selectedItem = menuOptions[0];
             selectedItem.setSelected(true);
-            //SOMETHING IS GOING VERY WONKY HERE AWIJOEFJIAWEJF WOIEFJIWEIFOAWEJFIAW
         }
         if(background != null) {
             background.setAdjustCamera(false);
@@ -67,7 +66,7 @@ public abstract class Menu extends Screen {
      * that direction
      * @param grid
      */
-    protected void setMenuItemsAsGrid(MenuItem[][] grid) {
+    protected void setMenuItemsAsGrid(MenuOption[][] grid) {
         int count = 0;
         for(int i = 0; i < grid.length; i++) {
             for(int j = 0; j < grid[i].length; j++) {
@@ -104,11 +103,11 @@ public abstract class Menu extends Screen {
                 }
             }
         }
-        menuItems = new MenuItem[count];
+        menuOptions = new MenuOption[count];
         for(int i = 0; i < grid.length; i++) {
             for(int j = 0; j < grid[i].length; j++) {
                 if(grid[i][j] != null) {
-                    menuItems[menuItems.length - (count--)] = grid[i][j];
+                    menuOptions[menuOptions.length - (count--)] = grid[i][j];
                 }
             }
         }
@@ -118,7 +117,7 @@ public abstract class Menu extends Screen {
     private void moveDirection(Direction direction) {
         //Fallback if selected item is null
         if(selectedItem == null) {
-            selectedItem = menuItems[0];
+            selectedItem = menuOptions[0];
         }
 
         selectedItem = selectedItem.selectNeighbor(direction);
@@ -133,8 +132,8 @@ public abstract class Menu extends Screen {
         if(background != null) {
             background.draw(graphicsHandler);
         }
-        if(menuItems != null) {
-            for(MenuItem item : menuItems) {
+        if(menuOptions != null) {
+            for(MenuOption item : menuOptions) {
                 item.draw(graphicsHandler);
             }
         }

@@ -48,7 +48,7 @@ public class ScreenCoordinator extends Screen {
 						currentScreen = new PlayLevelScreen(initialMap);
 						initialMap = 0;
 					} //should we skip tutorial?
-					case CREDITS -> currentScreen = new CreditsScreen(this); //TODO rebuild this
+					case CREDITS -> currentScreen = new CreditsScreen(); //TODO rebuild this
 					case INSTRUCTIONS -> currentScreen = new InstructionsScreen();
 					case LEVELSELECT -> currentScreen = new LevelSelectScreen();
 					case OPENING -> currentScreen = new OpeningScreen(this);

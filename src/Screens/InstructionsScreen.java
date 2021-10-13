@@ -1,8 +1,11 @@
 package Screens;
 
 import Engine.Drawable;
+import Engine.GamePanel;
+import Game.GameState;
 import Maps.TitleScreenMap;
 import Menu.Menu;
+import Menu.MenuOption;
 import SpriteFont.SpriteFont;
 
 import java.awt.*;
@@ -12,12 +15,19 @@ public class InstructionsScreen extends Menu {
     public InstructionsScreen() {
         super();
         setBackground(new TitleScreenMap());
-
-        setDrawables(new Drawable[] {
-                new SpriteFont("Credits", 15, 35, "Times New Roman", 30, Color.white),
-                new SpriteFont("Created by Alex Thimineur for Quinnipiac's SER225 Course.", 130, 140, "Times New Roman", 20, Color.white),
-                new SpriteFont("Thank you to QU Alumni Brian Carducci, Joseph White,\nand Alex Hutman for their contributions.", 60, 220, "Times New Roman",20, Color.white),
-                new SpriteFont("Press Space to return to the menu", 20, 560, "Times New Roman", 30, Color.white)
+        setMenuItemsAsGrid(new MenuOption[][]{
+                {
+                        new MenuOption("Hit [Escape] to go back to main menu", 100, 450, () -> GamePanel.getScreenCoordinator().setGameState(GameState.MENU))
+                }
+        });
+        setDrawables(new Drawable[]{
+                new SpriteFont("To JUMP: UP arrow key, or 'W', or SPACEBAR", 130, 140, "Times New Roman", 20, Color.white),
+                new SpriteFont("To MOVE LEFT: LEFT arrow key, or 'A'", 130, 170, "Times New Roman", 20, Color.white),
+                new SpriteFont("To MOVE RIGHT: RIGHT arrow key, or 'D'", 130, 220, "Times New Roman", 20, Color.white),
+                new SpriteFont("To CROUCH: DOWN arrow key, or 'S'", 130, 260, "Times New Roman", 20, Color.white),
+                new SpriteFont("Press SPACE to return to the menu", 20, 560, "Times New Roman", 30, Color.white),
+                new SpriteFont("PRESS P for PAUSE", 90, 400, "Times New Roman", 20, Color.white),
+                new SpriteFont("PRESS X for INSTRUCTIONS", 90, 422, "Times New Roman", 20, Color.white)
 
         });
     }

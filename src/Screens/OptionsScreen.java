@@ -3,9 +3,10 @@ package Screens;
 import Engine.Config;
 import Engine.GamePanel;
 import Engine.GraphicsHandler;
+import Game.GameState;
 import Maps.LevelSelectMap;
 import Menu.Menu;
-import Menu.MenuItem;
+import Menu.MenuOption;
 import Players.Avatar;
 import Menu.Direction;
 
@@ -15,19 +16,19 @@ public class OptionsScreen extends Menu {
 
     public OptionsScreen() {
         setBackground(new LevelSelectMap());
-        MenuItem[][] items = new MenuItem[][]{
+        MenuOption[][] items = new MenuOption[][]{
                 {
-                        new MenuItem("Volume Control:", 100, 150),
-                        new MenuItem("Low", 400, 150, () -> GamePanel.setVolumeLow()),
-                        new MenuItem("Medium", 500, 150, () -> GamePanel.setVolumeMed()),
-                        new MenuItem("High", 630, 150, () -> GamePanel.setVolumeHigh())
+                        new MenuOption("Volume Control:", 100, 150),
+                        new MenuOption("Low", 400, 150, () -> GamePanel.setVolumeLow()),
+                        new MenuOption("Medium", 500, 150, () -> GamePanel.setVolumeMed()),
+                        new MenuOption("High", 630, 150, () -> GamePanel.setVolumeHigh())
                 },{
-                new MenuItem("Player",100,300),
-                new MenuItem("Orange",350,300, () -> Config.playerAvatar = Avatar.CAT_ORANGE),
-                new MenuItem("Blue",500,300, () -> Config.playerAvatar = Avatar.CAT_BLUE),
-                new MenuItem("Green",630,300, () -> Config.playerAvatar = Avatar.CAT_GREEN)
+                new MenuOption("Player",100,300),
+                new MenuOption("Orange",350,300, () -> Config.playerAvatar = Avatar.CAT_ORANGE),
+                new MenuOption("Blue",500,300, () -> Config.playerAvatar = Avatar.CAT_BLUE),
+                new MenuOption("Green",630,300, () -> Config.playerAvatar = Avatar.CAT_GREEN)
         },{
-                    new MenuItem("Hit [Escape] to go back to main menu",100,450)
+                new MenuOption("Hit [Escape] to go back to main menu",100,450, () -> GamePanel.getScreenCoordinator().setGameState(GameState.MENU))
                 }
         };
         setMenuItemsAsGrid(items);
