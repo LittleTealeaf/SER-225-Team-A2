@@ -40,7 +40,9 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                 TestMap2::new,
                 TestMap3::new,
                 TestMap4::new,
-                TestMap5::new
+                TestMap5::new,
+                TestMap6::new,
+                TestMap7::new
         };
 
         SPRITE_FONT_PAUSE = new SpriteFont("Pause", 350, 250, "Comic Sans", 30, Color.white);
