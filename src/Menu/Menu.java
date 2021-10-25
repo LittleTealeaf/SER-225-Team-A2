@@ -36,38 +36,42 @@ public abstract class Menu extends Screen {
 
     @Override
     public void update() {
-        background.update(null);
+        if(background != null) {
+            background.update(null);
+        }
 
-        Point p = GamePanel.getGameWindow().getMousePoint();
-        if(p != null && !p.equals(previousMouse)) {
-            for(MenuOption option : menuOptions) {
-                option.mouseMoved(p);
+        if(menuOptions != null) {
+            Point p = GamePanel.getGameWindow().getMousePoint();
+            if(p != null && !p.equals(previousMouse)) {
+                for(MenuOption option : menuOptions) {
+                    option.mouseMoved(p);
+                }
             }
-        }
-        previousMouse = p;
+            previousMouse = p;
 
 
-        //Move Direction
-        if(KeyboardAdapter.MENU_DOWN.isDown() && keyTimer.isTimeUp()) {
-            keyTimer.reset();
-            moveDirection(Direction.DOWN);
-        } else if(KeyboardAdapter.MENU_UP.isDown() && keyTimer.isTimeUp()) {
-            keyTimer.reset();
-            moveDirection(Direction.UP);
-        } else if(KeyboardAdapter.MENU_LEFT.isDown() && keyTimer.isTimeUp()) {
-            keyTimer.reset();
-            moveDirection(Direction.LEFT);
+            //Move Direction
+            if(KeyboardAdapter.MENU_DOWN.isDown() && keyTimer.isTimeUp()) {
+                keyTimer.reset();
+                moveDirection(Direction.DOWN);
+            } else if(KeyboardAdapter.MENU_UP.isDown() && keyTimer.isTimeUp()) {
+                keyTimer.reset();
+                moveDirection(Direction.UP);
+            } else if(KeyboardAdapter.MENU_LEFT.isDown() && keyTimer.isTimeUp()) {
+                keyTimer.reset();
+                moveDirection(Direction.LEFT);
 
-        } else if(KeyboardAdapter.MENU_RIGHT.isDown() && keyTimer.isTimeUp()) {
-            keyTimer.reset();
-            moveDirection(Direction.RIGHT);
-        }
+            } else if(KeyboardAdapter.MENU_RIGHT.isDown() && keyTimer.isTimeUp()) {
+                keyTimer.reset();
+                moveDirection(Direction.RIGHT);
+            }
 
-        //Menu Enter
-        if(!KeyboardAdapter.MENU_ENTER.isDown()) {
-            selectionDown = false;
-        } else if(!selectionDown && KeyboardAdapter.MENU_ENTER.isDown()) {
-            selectedItem.execute();
+            //Menu Enter
+            if(!KeyboardAdapter.MENU_ENTER.isDown()) {
+                selectionDown = false;
+            } else if(!selectionDown && KeyboardAdapter.MENU_ENTER.isDown()) {
+                selectedItem.execute();
+            }
         }
 
         if(KeyboardAdapter.MENU_ESCAPE.isDown()) {

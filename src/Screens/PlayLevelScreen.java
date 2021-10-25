@@ -132,6 +132,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
     public void draw(GraphicsHandler graphicsHandler) {
         switch(screenState) {
             case RUNNING, LEVEL_COMPLETED, PLAYER_DEAD -> {
+                alternateScreen = null;
                 loadedMap.draw(graphicsHandler);
                 player.draw(graphicsHandler);
             }
