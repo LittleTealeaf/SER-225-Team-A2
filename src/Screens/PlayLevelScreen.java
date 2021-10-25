@@ -103,10 +103,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                 keyLocker.setKeys(KeyboardAdapter.GAME_INSTRUCTIONS);
             }
             case PAUSE -> {
-                if(KeyboardAdapter.GAME_PAUSE.isDown() && !keyLocker.isKeyLocked(KeyboardAdapter.GAME_PAUSE)) {
-                    screenState = State.RUNNING;
-                }
-                keyLocker.setKeys(KeyboardAdapter.GAME_PAUSE);
+                alternateScreen.update();
             }
             case PLAYER_DEAD -> {
                 screenState = State.LEVEL_LOSE_MESSAGE;
@@ -151,11 +148,16 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                 alternateScreen.draw(graphicsHandler);
             }
             case PAUSE -> {
-                loadedMap.draw(graphicsHandler);
-                player.draw(graphicsHandler);
-                SPRITE_FONT_PAUSE.draw(graphicsHandler);
-                graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(),
-                        COLOR_GREY_BACKGROUND);
+//                loadedMap.draw(graphicsHandler);
+//                player.draw(graphicsHandler);
+//                SPRITE_FONT_PAUSE.draw(graphicsHandler);
+//                graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth() + 50, ScreenManager.getScreenHeight() + 50,
+//                        COLOR_GREY_BACKGROUND);
+                if(!(alternateScreen instanceof PauseScreen)) {
+                    alternateScreen = new PauseScreen(loadedMap,player,this);
+                    alternateScreen.initialize();
+                }
+                alternateScreen.draw(graphicsHandler);
             }
             case INSTRUCTIONS -> {
                 loadedMap.draw(graphicsHandler);
@@ -195,6 +197,12 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
 
     public void backToMenu() {
         GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
+    }
+
+    public void resume() {
+        if(screenState == State.PAUSE || screenState == State.INSTRUCTIONS) {
+            screenState = State.RUNNING;
+        }
     }
 
     /**

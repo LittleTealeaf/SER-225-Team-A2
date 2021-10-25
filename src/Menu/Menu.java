@@ -36,10 +36,24 @@ public abstract class Menu extends Screen {
 
     @Override
     public void update() {
+        updateBackground();
+        updateMenuEscape();
+        updateMenu();
+    }
+
+    protected void updateMenuEscape() {
+        if(KeyboardAdapter.MENU_ESCAPE.isDown()) {
+            GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
+        }
+    }
+
+    protected void updateBackground() {
         if(background != null) {
             background.update(null);
         }
+    }
 
+    protected void updateMenu() {
         if(menuOptions != null) {
             Point p = GamePanel.getGameWindow().getMousePoint();
             if(p != null && !p.equals(previousMouse)) {
@@ -72,10 +86,6 @@ public abstract class Menu extends Screen {
             } else if(!selectionDown && KeyboardAdapter.MENU_ENTER.isDown()) {
                 selectedItem.execute();
             }
-        }
-
-        if(KeyboardAdapter.MENU_ESCAPE.isDown()) {
-            GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
         }
     }
 
@@ -156,14 +166,26 @@ public abstract class Menu extends Screen {
     @Override
     public void draw(GraphicsHandler graphicsHandler) {
 
+        drawBackground(graphicsHandler);
+        drawMenuOptions(graphicsHandler);
+        drawDrawables(graphicsHandler);
+    }
+
+    protected void drawBackground(GraphicsHandler graphicsHandler) {
         if(background != null) {
             background.draw(graphicsHandler);
         }
+    }
+
+    protected void drawMenuOptions(GraphicsHandler graphicsHandler) {
         if(menuOptions != null) {
             for(MenuOption item : menuOptions) {
                 item.draw(graphicsHandler);
             }
         }
+    }
+
+    protected void drawDrawables(GraphicsHandler graphicsHandler) {
         if(drawables != null) {
             for(Drawable drawable : drawables) {
                 drawable.draw(graphicsHandler);
