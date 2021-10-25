@@ -173,7 +173,9 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
+        if(alternateScreen != null) {
+            alternateScreen.mouseClicked(e);
+        }
     }
 
 
