@@ -15,16 +15,14 @@ import java.awt.event.MouseEvent;
 public class PlayLevelScreen extends Screen implements PlayerListener {
 
     private static final MapFactory[] MAPS;
-    private static Map loadedMap;
-    private static Screen alternateScreen;
-    private static Player player;
     private static final Stopwatch screenTimer;
     private static final KeyLocker keyLocker;
-    private State screenState;
-    private int currentMap = 0;
     private static final SpriteFont SPRITE_FONT_PAUSE;
     private static final SpriteFont[] SPRITE_FONT_INSTRUCTIONS;
     private static final Color COLOR_GREY_BACKGROUND;
+    private static Map loadedMap;
+    private static Screen alternateScreen;
+    private static Player player;
 
     static {
         screenTimer = new Stopwatch();
@@ -35,38 +33,30 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
          * This is some new java funky stuff :D
          */
         MAPS = new MapFactory[]{
-                TestTutorial::new,
-                TestMap::new,
-                TestMap2::new,
-                TestMap3::new,
-                TestMap4::new,
-                TestMap5::new,
-                TestMap6::new,
-                TestMap7::new
+                TestTutorial::new, TestMap::new, TestMap2::new, TestMap3::new, TestMap4::new, TestMap5::new, TestMap6::new, TestMap7::new
         };
 
         SPRITE_FONT_PAUSE = new SpriteFont("Pause", 350, 250, "Comic Sans", 30, Color.white);
 
-        SPRITE_FONT_INSTRUCTIONS = new SpriteFont[] {
-                new SpriteFont("To JUMP: UP arrow key, or 'W', or SPACEBAR", 130, 140, "Times New Roman", 20,
-                        Color.white),
-                new SpriteFont("To MOVE LEFT: LEFT arrow key, or 'A'", 130, 170, "Times New Roman", 20,
-                        Color.white),
-                new SpriteFont("To MOVE RIGHT: RIGHT arrow key, or 'D'", 130, 220, "Times New Roman", 20,
-                        Color.white),
-                new SpriteFont("To CROUCH: DOWN arrow key, or 'S'", 130, 260, "Times New Roman", 20,
-                        Color.white),
-                new SpriteFont("To ATTACK: press 'E'", 130,300, "Times New Roman", 20,
-                        Color.white),
-                new SpriteFont("Press X to return", 20, 560, "Times New Roman", 20, Color.white)
+        SPRITE_FONT_INSTRUCTIONS = new SpriteFont[]{
+                new SpriteFont("To JUMP: UP arrow key, or 'W', or SPACEBAR", 130, 140, "Times New Roman", 20, Color.white), new SpriteFont(
+                "To MOVE LEFT: LEFT arrow key, or 'A'", 130, 170, "Times New Roman", 20, Color.white), new SpriteFont(
+                "To MOVE RIGHT: RIGHT arrow key, or 'D'", 130, 220, "Times New Roman", 20, Color.white), new SpriteFont(
+                "To CROUCH: DOWN arrow key, or 'S'", 130, 260, "Times New Roman", 20, Color.white), new SpriteFont("To ATTACK: press 'E'", 130, 300,
+                                                                                                                   "Times New Roman", 20, Color.white
+        ), new SpriteFont(
+                "Press X to return", 20, 560, "Times New Roman", 20, Color.white)
         };
-        for(SpriteFont font : SPRITE_FONT_INSTRUCTIONS) {
+        for (SpriteFont font : SPRITE_FONT_INSTRUCTIONS) {
             font.setOutlineColor(Color.white);
             font.setOutlineThickness(2.0f);
         }
 
         COLOR_GREY_BACKGROUND = new Color(0, 0, 0, 100);
     }
+
+    private State screenState;
+    private int currentMap = 0;
 
     public PlayLevelScreen() {
         this(0);
@@ -86,29 +76,26 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
 
     @Override
     public void update() {
-        switch(screenState) {
+        switch (screenState) {
             case RUNNING -> {
                 if (KeyboardAdapter.GAME_PAUSE.isDown() && !keyLocker.isKeyLocked(KeyboardAdapter.GAME_PAUSE)) {
                     screenState = State.PAUSE;
-                } else if(KeyboardAdapter.GAME_INSTRUCTIONS.isDown() && !keyLocker.isKeyLocked(KeyboardAdapter.GAME_INSTRUCTIONS)) {
+                } else if (KeyboardAdapter.GAME_INSTRUCTIONS.isDown() && !keyLocker.isKeyLocked(KeyboardAdapter.GAME_INSTRUCTIONS)) {
                     screenState = State.INSTRUCTIONS;
-                }else {
+                } else {
                     player.update();
                     loadedMap.update(player);
                 }
-                keyLocker.setKeys(KeyboardAdapter.GAME_PAUSE,KeyboardAdapter.GAME_INSTRUCTIONS);
+                keyLocker.setKeys(KeyboardAdapter.GAME_PAUSE, KeyboardAdapter.GAME_INSTRUCTIONS);
             }
             case INSTRUCTIONS -> {
-                if(KeyboardAdapter.GAME_INSTRUCTIONS.isDown() && !keyLocker.isKeyLocked(KeyboardAdapter.GAME_INSTRUCTIONS)) {
+                if (KeyboardAdapter.GAME_INSTRUCTIONS.isDown() && !keyLocker.isKeyLocked(KeyboardAdapter.GAME_INSTRUCTIONS)) {
                     screenState = State.RUNNING;
                 }
                 keyLocker.setKeys(KeyboardAdapter.GAME_INSTRUCTIONS);
             }
             case PAUSE -> {
-                if(KeyboardAdapter.GAME_PAUSE.isDown() && !keyLocker.isKeyLocked(KeyboardAdapter.GAME_PAUSE)) {
-                    screenState = State.RUNNING;
-                }
-                keyLocker.setKeys(KeyboardAdapter.GAME_PAUSE);
+                alternateScreen.update();
             }
             case PLAYER_DEAD -> {
                 screenState = State.LEVEL_LOSE_MESSAGE;
@@ -120,9 +107,9 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                 screenTimer.setWaitTime(2500);
                 screenState = State.LEVEL_WIN_MESSAGE;
             }
-            case LEVEL_WIN_MESSAGE ->  {
+            case LEVEL_WIN_MESSAGE -> {
                 alternateScreen.update();
-                if(screenTimer.isTimeUp()) {
+                if (screenTimer.isTimeUp()) {
                     nextLevel();
                     screenState = State.RUNNING;
                 }
@@ -132,74 +119,58 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
 
     @Override
     public void draw(GraphicsHandler graphicsHandler) {
-        switch(screenState) {
+        switch (screenState) {
             case RUNNING, LEVEL_COMPLETED, PLAYER_DEAD -> {
+                alternateScreen = null;
                 loadedMap.draw(graphicsHandler);
                 player.draw(graphicsHandler);
             }
             case LEVEL_WIN_MESSAGE -> {
-                if(!(alternateScreen instanceof LevelClearedScreen)) {
+                if (!(alternateScreen instanceof LevelClearedScreen)) {
                     alternateScreen = new LevelClearedScreen();
                     alternateScreen.initialize();
                 }
                 alternateScreen.draw(graphicsHandler);
             }
             case LEVEL_LOSE_MESSAGE -> {
-                if(!(alternateScreen instanceof LevelLoseScreen)) {
+                if (!(alternateScreen instanceof LevelLoseScreen)) {
                     alternateScreen = new LevelLoseScreen(this);
                     alternateScreen.initialize();
                 }
                 alternateScreen.draw(graphicsHandler);
             }
             case PAUSE -> {
-                loadedMap.draw(graphicsHandler);
-                player.draw(graphicsHandler);
-                SPRITE_FONT_PAUSE.draw(graphicsHandler);
-                graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(),
-                        COLOR_GREY_BACKGROUND);
+                if (!(alternateScreen instanceof PauseScreen)) {
+                    alternateScreen = new PauseScreen(loadedMap, player, this);
+                    alternateScreen.initialize();
+                }
+                alternateScreen.draw(graphicsHandler);
             }
             case INSTRUCTIONS -> {
                 loadedMap.draw(graphicsHandler);
                 player.draw(graphicsHandler);
-                for(SpriteFont sprite : SPRITE_FONT_INSTRUCTIONS) {
+                for (SpriteFont sprite : SPRITE_FONT_INSTRUCTIONS) {
                     sprite.draw(graphicsHandler);
                 }
-                graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(),
-                        COLOR_GREY_BACKGROUND);
+                graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), COLOR_GREY_BACKGROUND);
             }
         }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
-    }
-
-
-    @Override
-    public void onLevelCompleted() {
-        screenState = State.LEVEL_COMPLETED;
-    }
-
-    @Override
-    public void onDeath() {
-        screenState = State.PLAYER_DEAD;
+        if (alternateScreen != null) {
+            alternateScreen.mouseClicked(e);
+        }
     }
 
     public void nextLevel() {
-        loadMap(currentMap+1);
-    }
-
-    public void resetLevel() {
-        loadMap(currentMap);
-    }
-
-    public void backToMenu() {
-        GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
+        loadMap(currentMap + 1);
     }
 
     /**
      * Loads the map into the loadedMap variable, and the player into the player variable
+     *
      * @param index
      */
     private void loadMap(int index) {
@@ -215,13 +186,36 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
         screenState = State.RUNNING;
     }
 
-    private interface MapFactory {
-        Map generateMap();
+    @Override
+    public void onLevelCompleted() {
+        screenState = State.LEVEL_COMPLETED;
+    }
+
+    @Override
+    public void onDeath() {
+        screenState = State.PLAYER_DEAD;
+    }
+
+    public void resetLevel() {
+        loadMap(currentMap);
+    }
+
+    public void backToMenu() {
+        GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
+    }
+
+    public void resume() {
+        if (screenState == State.PAUSE || screenState == State.INSTRUCTIONS) {
+            screenState = State.RUNNING;
+        }
     }
 
     public enum State {
-        RUNNING, LEVEL_COMPLETED, PLAYER_DEAD, LEVEL_WIN_MESSAGE, LEVEL_LOSE_MESSAGE, LEVEL_SELECT, PAUSE,
-        INSTRUCTIONS, OPTIONS
+        RUNNING, LEVEL_COMPLETED, PLAYER_DEAD, LEVEL_WIN_MESSAGE, LEVEL_LOSE_MESSAGE, LEVEL_SELECT, PAUSE, INSTRUCTIONS, OPTIONS
     }
 
+    private interface MapFactory {
+
+        Map generateMap();
+    }
 }
