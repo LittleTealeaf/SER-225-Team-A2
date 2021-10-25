@@ -1,6 +1,7 @@
 package GameObject;
 
 import Builders.FrameBuilder;
+import Engine.Drawable;
 import Engine.GraphicsHandler;
 import Level.Map;
 import Level.MapTileCollisionHandler;
@@ -20,7 +21,7 @@ import java.util.HashMap;
 	3. collision detection with a map
 	4. performing proper draw logic based on camera movement
  */
-public class GameObject extends AnimatedSprite {
+public class GameObject extends AnimatedSprite implements Drawable {
 
 	// stores game object's start position
 	// important to keep track of this as it's what allows the special draw logic to work

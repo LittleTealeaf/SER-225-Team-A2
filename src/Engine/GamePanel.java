@@ -172,7 +172,7 @@ public class GamePanel extends JPanel {
 	}
 
 	public static void mouseClicked(MouseEvent e) {
-		System.out.println("Click: " + e.getPoint());
+//		System.out.println("Click: " + e.getPoint());
 		coordinator.mouseClicked(e);
 	}
 

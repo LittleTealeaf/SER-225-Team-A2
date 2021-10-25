@@ -1,9 +1,10 @@
 package Menu;
 
 public enum Direction {
-    UP(0),RIGHT(1),LEFT(2),DOWN(3);
+    UP(0), RIGHT(1), LEFT(2), DOWN(3);
 
     int index;
+
     Direction(int index) {
         this.index = index;
     }
@@ -11,7 +12,8 @@ public enum Direction {
     public int getIndex() {
         return index;
     }
+
     public int getOppositeIndex() {
-        return (index + 2)%4;
+        return (index + 2) % 4;
     }
 }

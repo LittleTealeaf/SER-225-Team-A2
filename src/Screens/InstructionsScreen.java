@@ -17,7 +17,8 @@ public class InstructionsScreen extends Menu {
         setBackground(new TitleScreenMap());
         setMenuItemsAsGrid(new MenuOption[][]{
                 {
-                        new MenuOption("Hit [Escape] to go back to main menu", 100, 500, () -> GamePanel.getScreenCoordinator().setGameState(GameState.MENU))
+                        new MenuOption(
+                                "Hit [Escape] to go back to main menu", 100, 500, () -> GamePanel.getScreenCoordinator().setGameState(GameState.MENU))
                 }
         });
         setDrawables(new Drawable[]{
@@ -27,7 +28,6 @@ public class InstructionsScreen extends Menu {
                 new SpriteFont("To CROUCH: DOWN arrow key, or 'S'", 130, 260, "Times New Roman", 20, Color.white),
                 new SpriteFont("PRESS P for PAUSE", 90, 400, "Times New Roman", 20, Color.white),
                 new SpriteFont("PRESS X for INSTRUCTIONS", 90, 422, "Times New Roman", 20, Color.white)
-
         });
     }
 }

@@ -1,6 +1,7 @@
 package Level;
 
 import Engine.Config;
+import Engine.Drawable;
 import Engine.GraphicsHandler;
 import Engine.ScreenManager;
 import Utils.Point;
@@ -22,7 +23,7 @@ import java.util.Scanner;
     5. calculating which tile a game object is currently on based on its x and y location
 */
 
-public abstract class Map {
+public abstract class Map implements Drawable {
     // the tile map (map tiles that make up the entire map image)
     protected MapTile[] mapTiles;
 
