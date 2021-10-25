@@ -54,6 +54,7 @@ public abstract class Map implements Drawable {
 
     // lists to hold map entities that are a part of the map
     protected ArrayList<Enemy> enemies;
+    protected ArrayList<Projectile> projectiles;
     protected ArrayList<EnhancedMapTile> enhancedMapTiles;
     protected ArrayList<NPC> npcs;
 
@@ -82,6 +83,11 @@ public abstract class Map implements Drawable {
         this.enemies = loadEnemies();
         for (Enemy enemy: this.enemies) {
             enemy.setMap(this);
+        }
+        
+        this.projectiles = loadProjectiles();
+        for (Projectile projectile: this.projectiles) {
+            projectile.setMap(this);
         }
 
         this.enhancedMapTiles = loadEnhancedMapTiles();
@@ -247,6 +253,10 @@ public abstract class Map implements Drawable {
     protected ArrayList<Enemy> loadEnemies() {
         return new ArrayList<>();
     }
+    
+    protected ArrayList<Projectile> loadProjectiles() {
+        return new ArrayList<>();
+    }
 
     // list of enhanced map tiles defined to be a part of the map, should be overridden in a subclass
     protected ArrayList<EnhancedMapTile> loadEnhancedMapTiles() {
@@ -265,6 +275,10 @@ public abstract class Map implements Drawable {
     public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
+    
+    public ArrayList<Projectile> getProjectiles() {
+        return projectiles;
+    }
     public ArrayList<EnhancedMapTile> getEnhancedMapTiles() {
         return enhancedMapTiles;
     }
@@ -275,6 +289,11 @@ public abstract class Map implements Drawable {
     // returns all active enemies (enemies that are a part of the current update cycle) -- this changes every frame by the Camera class
     public ArrayList<Enemy> getActiveEnemies() {
         return camera.getActiveEnemies();
+    }
+    
+ // returns all active projectiles (projectiles that are a part of the current update cycle) -- this changes every frame by the Camera class
+    public ArrayList<Projectile> getActiveProjectiles() {
+        return camera.getActiveProjectiles();
     }
 
     // returns all active enhanced map tiles (enhanced map tiles that are a part of the current update cycle) -- this changes every frame by the Camera class
@@ -291,6 +310,11 @@ public abstract class Map implements Drawable {
     public void addEnemy(Enemy enemy) {
         enemy.setMap(this);
         this.enemies.add(enemy);
+    }
+    
+    public void addProjectile(Projectile projectile) {
+    	projectile.setMap(this);
+    	this.projectiles.add(projectile);
     }
 
     // add an enhanced map tile to the map's list of enhanced map tiles
