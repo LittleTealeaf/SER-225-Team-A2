@@ -1,4 +1,4 @@
-package Enemies;
+package Projectiles;
 
 import Builders.FrameBuilder;
 import Engine.ImageLoader;
@@ -7,24 +7,24 @@ import GameObject.SpriteSheet;
 import Level.Enemy;
 import Level.MapEntityStatus;
 import Level.Player;
+import Level.Projectile;
 import Utils.Direction;
 import Utils.Point;
 import Utils.Stopwatch;
-
 import java.util.HashMap;
 
-// This class is for the fireball enemy that the DinosaurEnemy class shoots out
+// This class is for the lazer beam enemy that the DinosaurEnemy class shoots out
 // it will travel in a straight line (x axis) for a set time before disappearing
 // it will disappear early if it collides with a solid map tile
-public class Fireball extends Enemy {
+public class LazerBeam extends Projectile {
     private float movementSpeed;
     private Stopwatch existenceTimer = new Stopwatch();
 
-    public Fireball(Point location, float movementSpeed, int existenceTime) {
-        super(location.x, location.y, new SpriteSheet(ImageLoader.load("Fireball.png"), 7, 7), "DEFAULT");
+    public LazerBeam(Point location, float movementSpeed, int existenceTime) {
+        super(location.x, location.y, new SpriteSheet(ImageLoader.load("Lazer Beam.png"), 11, 6), "DEFAULT");
         this.movementSpeed = movementSpeed;
 
-        // how long the fireball will exist for before disappearing
+        // how long the lazer beam will exist for before disappearing
         existenceTimer.setWaitTime(existenceTime);
 
         // this will not respawn after it has been removed
@@ -40,7 +40,7 @@ public class Fireball extends Enemy {
         if (existenceTimer.isTimeUp()) {
             this.mapEntityStatus = MapEntityStatus.REMOVED;
         } else {
-            // move fireball forward
+            // move lazer beam forward
             moveXHandleCollision(movementSpeed);
             super.update(player);
         }
@@ -48,7 +48,7 @@ public class Fireball extends Enemy {
 
     @Override
     public void onEndCollisionCheckX(boolean hasCollided, Direction direction) {
-        // if fireball collides with anything solid on the x axis, it is removed
+        // if lazer beam collides with anything solid on the x axis, it is removed
         if (hasCollided) {
             this.mapEntityStatus = MapEntityStatus.REMOVED;
         }
@@ -56,7 +56,7 @@ public class Fireball extends Enemy {
 
     @Override
     public void touchedPlayer(Player player) {
-        // if fireball touches player, it disappears
+        // if lazer beam touches player, it disappears
         super.touchedPlayer(player);
         this.mapEntityStatus = MapEntityStatus.REMOVED;
     }
@@ -70,7 +70,7 @@ public class Fireball extends Enemy {
         return new HashMap<String, Frame[]>() {{
             put("DEFAULT", new Frame[]{
                     new FrameBuilder(spriteSheet.getSprite(0, 0), 0)
-                            .withScale(3)
+                            .withScale(2)
                             .withBounds(1, 1, 5, 5)
                             .build()
             });

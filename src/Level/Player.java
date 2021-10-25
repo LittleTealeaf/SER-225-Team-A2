@@ -12,7 +12,8 @@ import Utils.Point;
 
 import java.util.ArrayList;
 
-import Enemies.Fireball;
+import Projectiles.Fireball;
+import Projectiles.LazerBeam;
 import Enemies.DinosaurEnemy.DinosaurState;
 
 public abstract class Player extends GameObject {
@@ -26,6 +27,7 @@ public abstract class Player extends GameObject {
     protected float jumpHeight = 0;
     protected float jumpDegrade = 0;
     protected float terminalVelocityX = 0;
+    protected int playerHealth = 3;
     
     protected float momentumXIncrease = 0;
 
@@ -446,8 +448,14 @@ public abstract class Player extends GameObject {
         if (!isInvincible) {
             // if map entity is an enemy, kill player on touch
             if (mapEntity instanceof Enemy) {
-                levelState = LevelState.PLAYER_DEAD;
+            	playerHealth = 0;
             }
+            if (mapEntity instanceof Projectile) {
+            	playerHealth -= 1;
+            }
+            if (playerHealth <= 0) {
+            	levelState = LevelState.PLAYER_DEAD;
+           }
         }
     }
 

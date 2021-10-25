@@ -7,6 +7,7 @@ import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.Enemy;
 import Level.Player;
+import Projectiles.LazerBeam;
 import Utils.AirGroundState;
 import Utils.Direction;
 import Utils.Point;
@@ -125,8 +126,8 @@ public class CyborgEnemy extends Enemy {
                 LazerBeam LazerBeam2 = new LazerBeam(new Point(LazerBeamX - 10, LazerBeamY), -movementSpeed, 1000);
 
                 // add LazerBeam enemy to the map for it to offically spawn in the level
-                map.addEnemy(LazerBeam);
-                map.addEnemy(LazerBeam2);
+                map.addProjectile(LazerBeam);
+                map.addProjectile(LazerBeam2);
 
                 // change cyborg back to its WALK state  0.5 seconds after shooting, reset shootTimer to wait another 2 seconds before shooting again
                 delay.setWaitTime(500);

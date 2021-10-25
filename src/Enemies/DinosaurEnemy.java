@@ -7,6 +7,7 @@ import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.Enemy;
 import Level.Player;
+import Projectiles.Fireball;
 import Utils.AirGroundState;
 import Utils.Direction;
 import Utils.Point;
@@ -123,7 +124,7 @@ public class DinosaurEnemy extends Enemy {
                 Fireball fireball = new Fireball(new Point(fireballX, fireballY), movementSpeed, 1000);
 
                 // add fireball enemy to the map for it to offically spawn in the level
-                map.addEnemy(fireball);
+                map.addProjectile(fireball);
 
                 // change dinosaur back to its WALK state after shooting, reset shootTimer to wait another 2 seconds before shooting again
                 dinosaurState = DinosaurState.WALK;
