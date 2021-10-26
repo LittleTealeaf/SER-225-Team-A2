@@ -27,6 +27,10 @@ public class LevelSelectScreen extends Menu {
                 }, {
                         new MenuOption("Level Five", 200, 350, () -> coordinator.loadLevel(5))
                 }, {
+                		new MenuOption("Level Six", 200, 400, () -> coordinator.loadLevel(6))
+                }, {
+                    	new MenuOption("Level Seven", 200, 450, () -> coordinator.loadLevel(7))
+                }, {
                         new MenuOption(
                                 "Hit [Escape] to go back to main menu", 100, 550, () -> GamePanel.getScreenCoordinator().setGameState(GameState.MENU))
                 }
