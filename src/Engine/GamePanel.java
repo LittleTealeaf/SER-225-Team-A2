@@ -9,11 +9,8 @@ import SpriteFont.SpriteFont;
 import Utils.Colors;
 import Utils.Stopwatch;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
 //import sun.audio.AudioData;
-import javax.sound.sampled.FloatControl;
 import javax.swing.*;
 
 import Game.GameState;
@@ -22,7 +19,9 @@ import Game.ScreenCoordinator;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.IOException;
 
 /*
  * This is where the game loop starts
@@ -44,6 +43,7 @@ public class GamePanel extends JPanel {
 	protected static GameWindow gameWindow;
 	private static ScreenCoordinator coordinator;
 	public static Clip clip;
+	private Point previousMousePoint = new Point(0,0);
 
 	
 	/*
@@ -62,6 +62,7 @@ public class GamePanel extends JPanel {
 
 		screenManager = new ScreenManager();
 		coordinator = c1;
+
 
 	
 		
@@ -91,24 +92,15 @@ public class GamePanel extends JPanel {
 		return gameWindow;
 	}
 	
-	public static void music(String filepath, double gain) {
-	
-		try {
-			AudioInputStream audioInput = AudioSystem.getAudioInputStream(new File(filepath));
-			clip = AudioSystem.getClip();
-			clip.open(audioInput);
-			setVolume(gain);
-			clip.start();
-	
-			clip.loop(Clip.LOOP_CONTINUOUSLY);
-			
-			
+	public static void music(String filepath, double gain) throws LineUnavailableException, UnsupportedAudioFileException, IOException {
 
-		} catch (Exception ex) {
-			System.out.println("No audio found!");
-			ex.printStackTrace();
+		AudioInputStream audioInput = AudioSystem.getAudioInputStream(new File(filepath));
+		clip = AudioSystem.getClip();
+		clip.open(audioInput);
+		setVolume(gain);
+		clip.start();
 
-		}
+		clip.loop(Clip.LOOP_CONTINUOUSLY);
 		
 	}
 	public static void setVolume(double gain) {
@@ -141,7 +133,15 @@ public class GamePanel extends JPanel {
 	public void startGame() {
 		timer.start();
 
-		music("src/hi.wav",1);
+		try {
+			music("Resources/Music/music.wav",1);
+		} catch(Exception e) {
+			try {
+				music("Resources/Music/music.mp3",1);
+			} catch(Exception f) {
+
+			}
+		}
 	}
 
 	public ScreenManager getScreenManager() {
@@ -170,7 +170,10 @@ public class GamePanel extends JPanel {
 		}
 
 	}
-	
-	
+
+	public static void mouseClicked(MouseEvent e) {
+//		System.out.println("Click: " + e.getPoint());
+		coordinator.mouseClicked(e);
+	}
 
 }

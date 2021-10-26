@@ -1,5 +1,7 @@
 package Engine;
 
+import java.awt.event.MouseEvent;
+
 /*
  * Default Screen that does nothing
  * Its existence is really just to prevent null pointers from occurring if no Screen is set somewhere
@@ -16,4 +18,10 @@ public class DefaultScreen extends Screen {
 
     @Override
     public void draw(GraphicsHandler graphicsHandler) { }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+
+    }
+
 }
