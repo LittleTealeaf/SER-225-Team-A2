@@ -17,10 +17,11 @@ public class OptionsScreen extends Menu {
         setBackground(new LevelSelectMap());
         MenuItem[][] items = new MenuItem[][]{
                 {
-                        new MenuItem("Volume Control:", 100, 150),
-                        new MenuItem("Low", 400, 150, () -> GamePanel.setVolumeLow()),
-                        new MenuItem("Medium", 500, 150, () -> GamePanel.setVolumeMed()),
-                        new MenuItem("High", 630, 150, () -> GamePanel.setVolumeHigh())
+                        new MenuItem("Volume Control:", 75, 150),
+                        new MenuItem("Off", 350, 150, () -> GamePanel.setVolumeOff()),
+                        new MenuItem("Low", 450, 150, () -> GamePanel.setVolumeLow()),
+                        new MenuItem("Medium", 550, 150, () -> GamePanel.setVolumeMed()),
+                        new MenuItem("High", 680, 150, () -> GamePanel.setVolumeHigh())
                 },{
                 new MenuItem("Player",100,300),
                 new MenuItem("Orange",350,300, () -> Config.playerAvatar = Avatar.CAT_ORANGE),

@@ -122,6 +122,10 @@ public class GamePanel extends JPanel {
 		
 	}
 
+	public static void setVolumeOff() {
+
+		setVolume(0);
+	}
 	public static void setVolumeLow() {
 		
 		setVolume(.5);
