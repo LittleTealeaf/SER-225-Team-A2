@@ -9,6 +9,7 @@ import GameObject.SpriteSheet;
 import Utils.AirGroundState;
 import Utils.Direction;
 import Utils.Point;
+import Utils.Stopwatch;
 
 import java.util.ArrayList;
 
@@ -39,6 +40,8 @@ public abstract class Player extends GameObject {
     // values used to handle player movement
     protected float momentumY = 0;
     protected float moveAmountX, moveAmountY;
+    
+    protected Stopwatch attackCooldown = new Stopwatch();
 
     // values used to keep track of player's current state
     protected GameState levelTwo;
@@ -171,8 +174,8 @@ public abstract class Player extends GameObject {
             playerState = PlayerState.CROUCHING;
         }
         
-        // 11/19
-        else if(Keyboard.isKeyDown(attackKey)) {
+        // enter the attacking state if the attack key is pressed and the attack cooldown is up
+        else if(Keyboard.isKeyDown(attackKey) && attackCooldown.isTimeUp()) {
         	//keyLocker.lockKey(attackKey);
         	playerState = PlayerState.ATTACKING;
         	//System.out.println(previousPlayerState.toString());
@@ -228,8 +231,8 @@ public abstract class Player extends GameObject {
             playerState = PlayerState.CROUCHING;
         }
         
-        // 11/19
-        else if(Keyboard.isKeyDown(attackKey)) {
+        // enter the attacking state if the attack key is pressed and the attack cooldown is up
+        else if(Keyboard.isKeyDown(attackKey) && attackCooldown.isTimeUp()) {
         	keyLocker.lockKey(attackKey);
         	playerState = PlayerState.ATTACKING;
         	//System.out.println(previousPlayerState.toString());
@@ -335,32 +338,36 @@ public abstract class Player extends GameObject {
                  facingDirection = Direction.RIGHT;
              }
     		 
-             // define where projectile will spawn on map (x location) relative to cat's location
-             // and define its movement speed
-                int attackX;
-                float movementSpeed;
-                if (facingDirection == Direction.RIGHT) {
-                	attackX = Math.round(getX()) + getScaledWidth();
-                    movementSpeed = 1.5f;
-                } else {
-                	attackX = Math.round(getX());
-                    movementSpeed = -1.5f;
-                }
+    		 
+				// define where projectile will spawn on map (x location) relative to cat's
+				// location
+				// and define its movement speed
+				int attackX;
+				float movementSpeed;
+				if (facingDirection == Direction.RIGHT) {
+					attackX = Math.round(getX()) + getScaledWidth() - 20;
+					movementSpeed = 1.5f;
+				} else {
+					attackX = Math.round(getX());
+					movementSpeed = -1.5f;
+				}
 
-                // define where projectile will spawn on the map (y location) relative to dinosaur enemy's location
-                int attackY = Math.round(getY()) + 4;
+				// define where projectile will spawn on the map (y location) relative to
+				// dinosaur enemy's location
+				int attackY = Math.round(getY()) + 10;
 
-                // create projectile
-                PlayerAttack projectile = new PlayerAttack(new Point(attackX, attackY), movementSpeed, 1000);
-                currentProjectile = projectile;
+				// create projectile
+				PlayerAttack projectile = new PlayerAttack(new Point(attackX, attackY), movementSpeed, 1000);
+				currentProjectile = projectile;
 
-                // add projectile enemy to the map for it to offically spawn in the level
-                map.addEnemy(projectile);
+				// add projectile enemy to the map for it to offically spawn in the level
+				map.addEnemy(projectile);
+
+				attackCooldown.setWaitTime(1500);
                 
-                //is key up
-                if (Keyboard.isKeyUp(attackKey)) {
-                	playerState = PlayerState.STANDING;
-                }
+               // after an attack finished set the player to a standing state
+                playerState = PlayerState.STANDING;
+               
             }
     }
 
