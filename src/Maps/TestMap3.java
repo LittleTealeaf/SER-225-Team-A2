@@ -24,7 +24,7 @@ public class TestMap3 extends Map {
     @Override
     public ArrayList<Enemy> loadEnemies() {
         ArrayList<Enemy> enemies = new ArrayList<>();
-        enemies.add(new BugEnemy(getPositionByTileIndex(15, 13), Direction.LEFT));
+        enemies.add(new BugEnemy(getPositionByTileIndex(25, 11), Direction.LEFT));
         enemies.add(new DinosaurEnemy(getPositionByTileIndex(19, 1).addY(2), getPositionByTileIndex(22, 1).addY(2), Direction.RIGHT));
         return enemies;
     }
@@ -35,8 +35,8 @@ public class TestMap3 extends Map {
 
         enhancedMapTiles.add(new HorizontalMovingPlatform(
                 ImageLoader.load("GreenPlatform.png"),
-                getPositionByTileIndex(24, 6),
-                getPositionByTileIndex(27, 6),
+                getPositionByTileIndex(14, 10),
+                getPositionByTileIndex(17, 10),
                 TileType.JUMP_THROUGH_PLATFORM,
                 3,
                 new Rectangle(0, 6,16,4),

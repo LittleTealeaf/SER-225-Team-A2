@@ -7,6 +7,7 @@ import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.Enemy;
 import Level.Player;
+import Projectiles.LazerBeam;
 import Utils.AirGroundState;
 import Utils.Direction;
 import Utils.Point;
@@ -25,7 +26,7 @@ public class CyborgEnemy extends Enemy {
     protected Point startLocation;
     protected Point endLocation;
     
-    // Whether or not the game is waiting for fireballs to launch
+    // Whether or not the game is waiting for LazerBeams to launch
     private boolean wait = false;
 
     protected float movementSpeed = 0.5f;
@@ -103,30 +104,30 @@ public class CyborgEnemy extends Enemy {
             }
 
             // if cyborg is shooting, it first turns read for 1 second
-            // then the fireball is actually shot out
+            // then the LazerBeam is actually shot out
         } else if (cyborgState == cyborgState.SHOOT) {
             if (previouscyborgState == cyborgState.WALK) {
                 shootTimer.setWaitTime(300);
                 currentAnimationName = facingDirection == Direction.RIGHT ? "SHOOT" : "SHOOT";
             } else if (shootTimer.isTimeUp()) {
 
-                // define where fireball will spawn on map (x location) relative to cyborg enemy's location
+                // define where LazerBeam will spawn on map (x location) relative to cyborg enemy's location
                 // and define its movement speed
-                int fireballX;
+                int LazerBeamX;
                 float movementSpeed;
-                fireballX = Math.round(getX());
+                LazerBeamX = Math.round(getX());
                 movementSpeed = 1.5f;
 
-                // define where fireball will spawn on the map (y location) relative to cyborg enemy's location
-                int fireballY = Math.round(getY() + 10);
+                // define where LazerBeam will spawn on the map (y location) relative to cyborg enemy's location
+                int LazerBeamY = Math.round(getY() + 15);
 
-                // create Fireball enemy
-                Fireball fireball = new Fireball(new Point(fireballX, fireballY), movementSpeed, 1000);
-                Fireball fireball2 = new Fireball(new Point(fireballX, fireballY), -movementSpeed, 1000);
+                // create LazerBeam enemy
+                LazerBeam LazerBeam = new LazerBeam(new Point(LazerBeamX + 20, LazerBeamY), movementSpeed, 1000);
+                LazerBeam LazerBeam2 = new LazerBeam(new Point(LazerBeamX - 10, LazerBeamY), -movementSpeed, 1000);
 
-                // add fireball enemy to the map for it to offically spawn in the level
-                map.addEnemy(fireball);
-                map.addEnemy(fireball2);
+                // add LazerBeam enemy to the map for it to offically spawn in the level
+                map.addProjectile(LazerBeam);
+                map.addProjectile(LazerBeam2);
 
                 // change cyborg back to its WALK state  0.5 seconds after shooting, reset shootTimer to wait another 2 seconds before shooting again
                 delay.setWaitTime(500);

@@ -28,6 +28,9 @@ public class Cat extends Player {
         jumpHeight = 14.5f;
         jumpDegrade = .5f;
         walkSpeed = 2.1f;
+        minWalkSpeed = 2.1f;
+        maxWalkSpeed = 3.3f;
+        walkAcceleration = 1.05f;
         momentumYIncrease = .5f;
         JUMP_KEY = Key.UP;
         MOVE_LEFT_KEY = Key.LEFT;

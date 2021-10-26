@@ -1,12 +1,11 @@
 package Game;
 
 import Engine.DefaultScreen;
-import Engine.GameWindow;
 import Engine.GraphicsHandler;
 import Engine.Screen;
 import Screens.*;
 
-import Screens.PlayLevelScreenOld.PlayLevelScreenState;
+import java.awt.event.MouseEvent;
 
 
 /*
@@ -20,6 +19,8 @@ public class ScreenCoordinator extends Screen {
 
 	// keep track of gameState so ScreenCoordinator knows which Screen to show
 	protected GameState gameState, previousGameState;
+
+	private int initialMap = 0;
 
 	public  GameState getGameState() {
 		return gameState;
@@ -39,36 +40,24 @@ public class ScreenCoordinator extends Screen {
 
 	@Override
 	public void update() {
+
+
+
 		do {
 			// if previousGameState does not equal gameState, it means there was a change in gameState
 			// this triggers ScreenCoordinator to bring up a new Screen based on what the gameState is
 			if (previousGameState != gameState) {
 				switch(gameState) {
-					case MENU:
-						currentScreen = new MenuScreen();
-						break;
-					case LEVEL:
-						currentScreen = new PlayLevelScreen(0);
-						break;
-					case CREDITS:
-						currentScreen = new CreditsScreen(this);
-						break;
-					case INSTRUCTIONS:
-						currentScreen = new InstructionsScreen();
-						break;
-
-					case LEVELSELECT:
-//						currentScreen = new PlayLevelScreenOld(this,PlayLevelScreenState.LEVEL_SELECT);
-						currentScreen = new LevelSelectScreen();
-						break;
-
-					case OPENING:
-					    currentScreen = new OpeningScreen(this);
-					    break;
-					case OPTIONS:
-//						currentScreen = new PlayLevelScreen(this,PlayLevelScreenState.OPTIONS);
-						currentScreen = new OptionsScreen();
-						break;
+					case MENU -> currentScreen = new MenuScreen();
+					case LEVEL -> {
+						currentScreen = new PlayLevelScreen(initialMap);
+						initialMap = 0;
+					} //should we skip tutorial?
+					case CREDITS -> currentScreen = new CreditsScreen(); //TODO rebuild this
+					case INSTRUCTIONS -> currentScreen = new InstructionsScreen();
+					case LEVELSELECT -> currentScreen = new LevelSelectScreen();
+					case OPENING -> currentScreen = new OpeningScreen(this);
+					case OPTIONS -> currentScreen = new OptionsScreen();
 				}
 				currentScreen.initialize();
 			}
@@ -84,4 +73,14 @@ public class ScreenCoordinator extends Screen {
 		// call the draw method for the currentScreen
 		currentScreen.draw(graphicsHandler);
 	}
+
+	public void loadLevel(int level) {
+		this.initialMap = level;
+		this.gameState = GameState.LEVEL;
+	}
+
+	public void mouseClicked(MouseEvent e) {
+		currentScreen.mouseClicked(e);
+	}
+
 }
