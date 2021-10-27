@@ -3,6 +3,7 @@ package Screens;
 import Engine.Drawable;
 import Engine.Key;
 import Engine.Keyboard;
+import Level.Player;
 import Menu.Menu;
 import SpriteFont.SpriteFont;
 
@@ -25,6 +26,7 @@ public class LevelLoseScreen extends Menu {
         super.update();
         if (Keyboard.isKeyDown(Key.SPACE)) {
             playLevelScreen.resetLevel();
+            Player.playerHealth = 3;
         }
     }
 }
