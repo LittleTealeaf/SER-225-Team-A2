@@ -18,16 +18,19 @@ public class OptionsScreen extends Menu {
         setBackground(new LevelSelectMap());
         MenuOption[][] items = new MenuOption[][]{
                 {
-                        new MenuOption("Volume Control:", 100, 150), new MenuOption("Low", 400, 150, () -> GamePanel.setVolumeLow()), new MenuOption(
-                        "Medium", 500, 150, () -> GamePanel.setVolumeMed()), new MenuOption("High", 630, 150, () -> GamePanel.setVolumeHigh())
-                }, {
-                        new MenuOption("Player", 100, 300),
-                        new MenuOption("Orange", 350, 300, () -> Config.playerAvatar = Avatar.CAT_ORANGE),
-                        new MenuOption("Blue", 500, 300, () -> Config.playerAvatar = Avatar.CAT_BLUE),
-                        new MenuOption("Green", 630, 300, () -> Config.playerAvatar = Avatar.CAT_GREEN)
-                }, {
-                        new MenuOption(
-                                "Hit [Escape] to go back to main menu", 100, 450, () -> GamePanel.getScreenCoordinator().setGameState(GameState.MENU))
+
+                        new MenuOption("Volume Control:", 75, 150),
+                        new MenuOption("Off", 350, 150, () -> GamePanel.setVolumeOff()),
+                        new MenuOption("Low", 450, 150, () -> GamePanel.setVolumeLow()),
+                        new MenuOption("Medium", 550, 150, () -> GamePanel.setVolumeMed()),
+                        new MenuOption("High", 680, 150, () -> GamePanel.setVolumeHigh())
+                },{
+                new MenuOption("Player",100,300),
+                new MenuOption("Orange",350,300, () -> Config.playerAvatar = Avatar.CAT_ORANGE),
+                new MenuOption("Blue",500,300, () -> Config.playerAvatar = Avatar.CAT_BLUE),
+                new MenuOption("Green",630,300, () -> Config.playerAvatar = Avatar.CAT_GREEN)
+        },{
+                    new MenuOption("Hit [Escape] to go back to main menu",100,450)
                 }
         };
         setMenuItemsAsGrid(items);

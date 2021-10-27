@@ -38,14 +38,21 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
 
         SPRITE_FONT_PAUSE = new SpriteFont("Pause", 350, 250, "Comic Sans", 30, Color.white);
 
-        SPRITE_FONT_INSTRUCTIONS = new SpriteFont[]{
-                new SpriteFont("To JUMP: UP arrow key, or 'W', or SPACEBAR", 130, 140, "Times New Roman", 20, Color.white), new SpriteFont(
-                "To MOVE LEFT: LEFT arrow key, or 'A'", 130, 170, "Times New Roman", 20, Color.white), new SpriteFont(
-                "To MOVE RIGHT: RIGHT arrow key, or 'D'", 130, 220, "Times New Roman", 20, Color.white), new SpriteFont(
-                "To CROUCH: DOWN arrow key, or 'S'", 130, 260, "Times New Roman", 20, Color.white), new SpriteFont("To ATTACK: press 'E'", 130, 300,
-                                                                                                                   "Times New Roman", 20, Color.white
-        ), new SpriteFont(
-                "Press X to return", 20, 560, "Times New Roman", 20, Color.white)
+        SPRITE_FONT_INSTRUCTIONS = new SpriteFont[] {
+                new SpriteFont("To JUMP: UP arrow key, or 'W', or SPACEBAR", 130, 140, "Times New Roman", 20,
+                        Color.white),
+                new SpriteFont("To MOVE LEFT: LEFT arrow key, or 'A'", 130, 170, "Times New Roman", 20,
+                        Color.white),
+                new SpriteFont("To MOVE RIGHT: RIGHT arrow key, or 'D'", 130, 220, "Times New Roman", 20,
+                        Color.white),
+                new SpriteFont("To CROUCH: DOWN arrow key, or 'S'", 130, 260, "Times New Roman", 20,
+                        Color.white),
+                new SpriteFont("To ATTACK: press 'E'", 130,300, "Times New Roman", 20,
+                        Color.white),
+                new SpriteFont("To SPRINT: hold 'SHIFT' while moving", 130,340, "Times New Roman", 20,
+                        Color.white),
+                new SpriteFont("Press X to return", 20, 560, "Times New Roman", 20, Color.white)
+
         };
         for (SpriteFont font : SPRITE_FONT_INSTRUCTIONS) {
             font.setOutlineColor(Color.white);
