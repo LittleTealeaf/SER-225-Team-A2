@@ -1,10 +1,7 @@
 package Engine;
 
 import GameObject.Rectangle;
-
-
-
-
+import Level.Player;
 import SpriteFont.SpriteFont;
 import Utils.Colors;
 import Utils.Stopwatch;
@@ -44,6 +41,7 @@ public class GamePanel extends JPanel {
 	private static ScreenCoordinator coordinator;
 	public static Clip clip;
 	private Point previousMousePoint = new Point(0,0);
+	private JLabel health;
 
 	
 	/*
@@ -53,6 +51,9 @@ public class GamePanel extends JPanel {
 		super();
 		this.gameWindow = gameWindow;
 		this.setDoubleBuffered(true);
+		
+		health = new JLabel();
+		add(health);
 
 		this.setSize(Config.WIDTH, Config.HEIGHT);
 		// attaches Keyboard class's keyListener to this JPanel
@@ -70,6 +71,13 @@ public class GamePanel extends JPanel {
 		timer = new Timer(1000 / Config.FPS, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				update();
+				changeHealth();
+				if(coordinator.getGameState() == GameState.LEVEL) {
+					health.show();
+				}
+				else {
+					health.hide();
+				}
 				repaint();
 			}
 		});
@@ -156,6 +164,31 @@ public class GamePanel extends JPanel {
 		screenManager.draw(graphicsHandler);
 
 
+	}
+	
+	// Checks the players health and accordingly changes to the image with the corresponding number of hearts
+	public void changeHealth() {
+		if(coordinator.getGameState() == GameState.LEVEL) {
+			if(Player.playerHealth == 3) { 
+				health.setIcon(new ImageIcon(ImageLoader.load("3 Hearts.png")));
+			}
+			
+			else if(Player.playerHealth == 2) { 
+				health.setIcon(new ImageIcon(ImageLoader.load("2 Hearts.png")));
+			}
+			
+			else if(Player.playerHealth == 1) { 
+				health.setIcon(new ImageIcon(ImageLoader.load("1 Heart.png")));
+			}
+			
+			else { 
+				health.setIcon(new ImageIcon(ImageLoader.load("0 Hearts.png")));
+			}
+		}
+		
+		if(coordinator.getGameState() == GameState.MENU) {
+			Player.playerHealth = 3;
+		}
 	}
 
 	@Override
