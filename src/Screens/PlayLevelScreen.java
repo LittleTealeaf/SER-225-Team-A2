@@ -28,7 +28,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
         screenTimer = new Stopwatch();
         keyLocker = new KeyLocker();
 
-        /**
+        /*
          * List of maps in the game, each map is given a constructor
          * This is some new java funky stuff :D
          */
@@ -63,7 +63,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
     }
 
     private State screenState;
-    private int currentMap = 0;
+    private int currentMap;
 
     public PlayLevelScreen() {
         this(0);
@@ -101,13 +101,8 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                 }
                 keyLocker.setKeys(KeyboardAdapter.GAME_INSTRUCTIONS);
             }
-            case PAUSE -> {
-                alternateScreen.update();
-            }
-            case PLAYER_DEAD -> {
-                screenState = State.LEVEL_LOSE_MESSAGE;
-            }
-            case LEVEL_LOSE_MESSAGE -> alternateScreen.update();
+            case PAUSE,LEVEL_LOSE_MESSAGE -> alternateScreen.update();
+            case PLAYER_DEAD -> screenState = State.LEVEL_LOSE_MESSAGE;
             case LEVEL_COMPLETED -> {
                 alternateScreen = new LevelClearedScreen();
                 alternateScreen.initialize();
@@ -178,7 +173,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
     /**
      * Loads the map into the loadedMap variable, and the player into the player variable
      *
-     * @param index
+     * @param index index of map to load
      */
     private void loadMap(int index) {
         if(index < MAPS.length) {
