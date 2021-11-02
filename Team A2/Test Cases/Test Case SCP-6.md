@@ -8,7 +8,7 @@
 
 ### Procedure
 
-|Step | Action | Expected Result | Pass     |
+|Step | Action | Expected Result | Pass/Fail     |
 |:---:| :---        |    :----  | :---: |
 |1|Run the game|The game successfully opens|P|
 |2|Press space bar to enter the first level and beat it|The player loads into the first level, and they can navigate to the end of the level|P|

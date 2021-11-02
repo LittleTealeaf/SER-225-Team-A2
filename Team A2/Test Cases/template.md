@@ -8,7 +8,7 @@
 
 ### Procedure
 
-|Step | Action | Expected Result | Pass     |
+|Step | Action | Expected Result | Pass/Fail     |
 |:---:| :---        |    :----  | :---: |
 |1| Run the game| The game successfully opens |P|
 |2| Press the spacebar to start the game.| The game starts and the character is loaded into the first level.     |N|
