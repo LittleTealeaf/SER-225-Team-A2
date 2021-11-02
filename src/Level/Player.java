@@ -404,6 +404,7 @@ public abstract class Player extends GameObject {
         }
     }
 
+    //TODO make dynamic to level
     @Override
     public void onEndCollisionCheckX(boolean hasCollided, Direction direction) {
     	// if the player collides with the coordinates specified below, it either stops (beginning of level) or goes back to the start (end of level)
