@@ -14,7 +14,8 @@ public enum KeyboardAdapter {
     GAME_MOVE_LEFT(Key.A,Key.LEFT),
     GAME_MOVE_RIGHT(Key.D,Key.RIGHT),
     GAME_JUMP(Key.W,Key.SPACE,Key.UP),
-    GAME_INSTRUCTIONS(Key.X);
+    GAME_INSTRUCTIONS(Key.X),
+    GAME_INTERACT(Key.SPACE);
 
     Key[] keys;
 
