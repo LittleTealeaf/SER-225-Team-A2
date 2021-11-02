@@ -1,4 +1,4 @@
-### Test Case SCP-33
+### Test Case Information
 | TEST CASE ID | SCP-33 |
 | :--- | :--- |
 | Owner of Test | Nicholas Tourony |
