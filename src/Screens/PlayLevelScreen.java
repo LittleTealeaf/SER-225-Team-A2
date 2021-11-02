@@ -181,16 +181,20 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
      * @param index
      */
     private void loadMap(int index) {
-        currentMap = index;
-        //Load map using the MapFactory
-        loadedMap = MAPS[index].generateMap();
-        loadedMap.reset();
+        if(index < MAPS.length) {
+            currentMap = index;
+            //Load map using the MapFactory
+            loadedMap = MAPS[index].generateMap();
+            loadedMap.reset();
 
-        //Load the cat using the Config setting
-        player = Config.playerAvatar.generatePlayer(loadedMap.getPlayerStartPosition());
-        player.setMap(loadedMap);
-        player.addListener(this);
-        screenState = State.RUNNING;
+            //Load the cat using the Config setting
+            player = Config.playerAvatar.generatePlayer(loadedMap.getPlayerStartPosition());
+            player.setMap(loadedMap);
+            player.addListener(this);
+            screenState = State.RUNNING;
+        } else {
+            GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
+        }
     }
 
     @Override
