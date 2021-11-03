@@ -42,20 +42,26 @@ public class KeyLocker {
         }
     }
 
-    public void setAction(KeyboardAction keyboardAction) {
-        if(keyboardAction.isDown() && !isActionLocked(keyboardAction)) {
-            lockAction(keyboardAction);
-        } else {
-            unlockAction(keyboardAction);
+    public void setAction(KeyboardAction... keyboardActions) {
+        for(KeyboardAction keyboardAction : keyboardActions) {
+            if(keyboardAction.isDown()) {
+                lockedAdapters.add(keyboardAction);
+            } else {
+                lockedAdapters.remove(keyboardAction);
+            }
         }
     }
 
-    public void unlockAction(KeyboardAction keyboardAction) {
-        lockedAdapters.remove(keyboardAction);
+    public void unlockAction(KeyboardAction... keyboardActions) {
+        for(KeyboardAction keyboardAction : keyboardActions) {
+            lockedAdapters.remove(keyboardAction);
+        }
     }
 
-    public void lockAction(KeyboardAction keyboardAction) {
-        lockedAdapters.add(keyboardAction);
+    public void lockAction(KeyboardAction... keyboardActions) {
+        for(KeyboardAction keyboardAction : keyboardActions) {
+            lockedAdapters.add(keyboardAction);
+        }
     }
 
     public boolean isActionLocked(KeyboardAction keyboardAction) {
