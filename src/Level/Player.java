@@ -1,8 +1,6 @@
 package Level;
 
-import Engine.Key;
 import Engine.KeyLocker;
-import Engine.Keyboard;
 import Engine.KeyboardAction;
 import Game.GameState;
 import GameObject.GameObject;
@@ -58,17 +56,6 @@ public abstract class Player extends GameObject {
 
     // define keys
     protected KeyLocker keyLocker = new KeyLocker();
-    protected Key JUMP_KEY = Key.UP;
-    protected Key MOVE_LEFT_KEY = Key.LEFT;
-    protected Key MOVE_RIGHT_KEY = Key.RIGHT;
-    protected Key CROUCH_KEY = Key.DOWN;
-    protected Key rightKey = Key.D;
-    protected Key leftKey = Key.A;
-    protected Key upKey = Key.W;
-    protected Key downKey = Key.S;
-    protected Key spaceKey = Key.SPACE;
-    protected Key attackKey = Key.E;
-    protected Key shiftKey = Key.SHIFT;
 
     // if true, player cannot be hurt by enemies (good for testing)
     protected boolean isInvincible = false;
@@ -98,12 +85,6 @@ public abstract class Player extends GameObject {
         if (levelState == LevelState.RUNNING) {
             applyGravity();
 
-            //TODO remove this code unless necessary
-            // update player's state and current actions, which includes things like determining how much it should move each frame and if its walking or jumping
-//            do {
-//                previousPlayerState = playerState;
-//
-//            } while (previousPlayerState != playerState);
             handlePlayerState();
 
             previousAirGroundState = airGroundState;
