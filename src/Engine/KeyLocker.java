@@ -8,6 +8,7 @@ import java.util.HashSet;
 // This class does NOT do anything to the keyboard class to prevent a key from actually being detected -- that is not advisable as multiple classes may be detecting key presses separately
 public class KeyLocker {
     private HashSet<Key> lockedKeys = new HashSet<>();
+    private HashSet<KeyboardAction> lockedAdapters = new HashSet<>();
 
     // lock a key
     public void lockKey(Key... keys) {
@@ -23,18 +24,14 @@ public class KeyLocker {
         }
     }
 
-    public void setKeys(boolean locked, KeyboardAdapter keyChannel) {
+    public void setKeys(boolean locked, KeyboardAction keyChannel) {
         setKeys(locked,keyChannel.getKeys());
     }
 
-    public void setKeys(KeyboardAdapter... adapters) {
-        for(KeyboardAdapter adapter : adapters) {
-            setKeys(adapter.isDown(),adapter.getKeys());
+    public void setKeys(KeyboardAction... adapters) {
+        for(KeyboardAction adapter : adapters) {
+            lockedAdapters.add(adapter);
         }
-    }
-
-    public boolean isKeyLocked(KeyboardAdapter adapter) {
-        return isKeyLocked(adapter.getKeys()[0]);
     }
 
     public void setKeys(boolean locked, Key... keys) {
@@ -45,10 +42,30 @@ public class KeyLocker {
         }
     }
 
+    public void setAction(KeyboardAction keyboardAction) {
+        if(keyboardAction.isDown() && !isActionLocked(keyboardAction)) {
+            lockAction(keyboardAction);
+        } else {
+            unlockAction(keyboardAction);
+        }
+    }
+
+    public void unlockAction(KeyboardAction keyboardAction) {
+        lockedAdapters.remove(keyboardAction);
+    }
+
+    public void lockAction(KeyboardAction keyboardAction) {
+        lockedAdapters.add(keyboardAction);
+    }
+
+    public boolean isActionLocked(KeyboardAction keyboardAction) {
+        return lockedAdapters.contains(keyboardAction);
+    }
+
 
 
     // check if a key is currently locked
-    public boolean isKeyLocked(Key key) {
+    public boolean isActionLocked(Key key) {
         return lockedKeys.contains(key);
     }
 

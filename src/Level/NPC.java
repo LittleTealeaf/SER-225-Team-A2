@@ -1,7 +1,7 @@
 package Level;
 
 import Engine.GraphicsHandler;
-import Engine.KeyboardAdapter;
+import Engine.KeyboardAction;
 import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.Rectangle;
@@ -71,7 +71,7 @@ public class NPC extends MapEntity {
     }
 
     public void checkTalkedTo(Player player) {
-        if (intersects(player) && KeyboardAdapter.GAME_INTERACT.isDown()) {
+        if (intersects(player) && KeyboardAction.GAME_INTERACT.isDown()) {
             talkedTo = true;
             timer.setWaitTime(talkedToTime);
         }

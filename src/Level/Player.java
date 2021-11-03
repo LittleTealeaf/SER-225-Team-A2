@@ -13,10 +13,6 @@ import Utils.Stopwatch;
 
 import java.util.ArrayList;
 
-import Projectiles.Fireball;
-import Projectiles.LazerBeam;
-import Enemies.DinosaurEnemy.DinosaurState;
-
 public abstract class Player extends GameObject {
     // values that affect player movement
     // these should be set in a subclass
@@ -168,7 +164,7 @@ public abstract class Player extends GameObject {
         }
 
         // if jump key is pressed, player enters JUMPING state
-        else if ((Keyboard.isKeyDown(JUMP_KEY) && !keyLocker.isKeyLocked(JUMP_KEY)) || (Keyboard.isKeyDown(upKey) && !keyLocker.isKeyLocked(upKey)) || (Keyboard.isKeyDown(spaceKey) && !keyLocker.isKeyLocked(spaceKey))) {
+        else if ((Keyboard.isKeyDown(JUMP_KEY) && !keyLocker.isActionLocked(JUMP_KEY)) || (Keyboard.isKeyDown(upKey) && !keyLocker.isActionLocked(upKey)) || (Keyboard.isKeyDown(spaceKey) && !keyLocker.isActionLocked(spaceKey))) {
             keyLocker.lockKey(JUMP_KEY);
             keyLocker.lockKey(upKey);
             keyLocker.lockKey(spaceKey);
@@ -224,7 +220,7 @@ public abstract class Player extends GameObject {
         }
 
         // if jump key is pressed, player enters JUMPING state
-        if ((Keyboard.isKeyDown(JUMP_KEY) && !keyLocker.isKeyLocked(JUMP_KEY)) || (Keyboard.isKeyDown(upKey) && !keyLocker.isKeyLocked(upKey)) || (Keyboard.isKeyDown(spaceKey) && !keyLocker.isKeyLocked(spaceKey))) {
+        if ((Keyboard.isKeyDown(JUMP_KEY) && !keyLocker.isActionLocked(JUMP_KEY)) || (Keyboard.isKeyDown(upKey) && !keyLocker.isActionLocked(upKey)) || (Keyboard.isKeyDown(spaceKey) && !keyLocker.isActionLocked(spaceKey))) {
             keyLocker.lockKey(JUMP_KEY);
             keyLocker.lockKey(upKey);
             keyLocker.lockKey(spaceKey);
@@ -256,7 +252,7 @@ public abstract class Player extends GameObject {
         }
 
         // if jump key is pressed, player enters JUMPING state
-        if ((Keyboard.isKeyDown(JUMP_KEY) && !keyLocker.isKeyLocked(JUMP_KEY)) || (Keyboard.isKeyDown(upKey) && !keyLocker.isKeyLocked(upKey)) || (Keyboard.isKeyDown(spaceKey) && !keyLocker.isKeyLocked(spaceKey))) {
+        if ((Keyboard.isKeyDown(JUMP_KEY) && !keyLocker.isActionLocked(JUMP_KEY)) || (Keyboard.isKeyDown(upKey) && !keyLocker.isActionLocked(upKey)) || (Keyboard.isKeyDown(spaceKey) && !keyLocker.isActionLocked(spaceKey))) {
             keyLocker.lockKey(JUMP_KEY);
             keyLocker.lockKey(upKey);
             keyLocker.lockKey(spaceKey);

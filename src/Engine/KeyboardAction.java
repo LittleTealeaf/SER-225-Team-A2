@@ -3,7 +3,7 @@ package Engine;
 /**
  * List of "categories" and functions to ask whether any key in that selection is pressed down
  */
-public enum KeyboardAdapter {
+public enum KeyboardAction {
     MENU_ENTER(Key.ENTER, Key.SPACE),
     MENU_UP(Key.UP,Key.W),
     MENU_DOWN(Key.DOWN,Key.S),
@@ -22,7 +22,7 @@ public enum KeyboardAdapter {
 
     Key[] keys;
 
-    KeyboardAdapter(Key... keys) {
+    KeyboardAction(Key... keys) {
         this.keys = keys;
     }
 
