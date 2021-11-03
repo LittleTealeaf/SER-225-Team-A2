@@ -21,6 +21,7 @@ public enum KeyboardAction {
     GAME_SPRINT(Key.SHIFT);
 
     Key[] keys;
+    int[] codes;
 
     KeyboardAction(Key... keys) {
         this.keys = keys;
