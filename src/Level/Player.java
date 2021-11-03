@@ -2,7 +2,6 @@ package Level;
 
 import Engine.KeyLocker;
 import Engine.KeyboardAction;
-import Game.GameState;
 import GameObject.GameObject;
 import GameObject.SpriteSheet;
 import Utils.AirGroundState;
@@ -43,9 +42,7 @@ public abstract class Player extends GameObject {
     protected Stopwatch attackCooldown = new Stopwatch();
 
     // values used to keep track of player's current state
-    protected GameState levelTwo;
     protected PlayerState playerState;
-    protected PlayerState previousPlayerState;
     protected Direction facingDirection;
     protected AirGroundState airGroundState;
     protected AirGroundState previousAirGroundState;
@@ -68,7 +65,6 @@ public abstract class Player extends GameObject {
         airGroundState = AirGroundState.AIR;
         previousAirGroundState = airGroundState;
         playerState = PlayerState.STANDING;
-        previousPlayerState = playerState;
         levelState = LevelState.RUNNING;
         this.x =  x;
         this.y = y;
