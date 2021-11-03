@@ -331,7 +331,7 @@ public abstract class Player extends GameObject {
 				PlayerAttack projectile = new PlayerAttack(new Point(attackX, attackY), movementSpeed, 1000);
 				currentProjectile = projectile;
 
-				// add projectile enemy to the map for it to offically spawn in the level
+				// add projectile enemy to the map for it to officially spawn in the level
 				map.addEnemy(projectile);
 
 				attackCooldown.setWaitTime(1500);
