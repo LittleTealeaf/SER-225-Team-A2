@@ -11,11 +11,6 @@ import java.util.Set;
 public class KeyLocker {
     private Set<KeyboardAction> lockedAdapters = new HashSet<>();
 
-
-    public void setKeys(KeyboardAction... adapters) {
-        Collections.addAll(lockedAdapters, adapters);
-    }
-
     public void setAction(KeyboardAction... keyboardActions) {
         for(KeyboardAction keyboardAction : keyboardActions) {
             if(keyboardAction.isDown()) {

@@ -93,13 +93,11 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                     player.update();
                     loadedMap.update(player);
                 }
-                keyLocker.setKeys(KeyboardAction.GAME_PAUSE, KeyboardAction.GAME_INSTRUCTIONS);
             }
             case INSTRUCTIONS -> {
                 if (KeyboardAction.GAME_INSTRUCTIONS.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_INSTRUCTIONS)) {
                     screenState = State.RUNNING;
                 }
-                keyLocker.setKeys(KeyboardAction.GAME_INSTRUCTIONS);
             }
             case PAUSE -> {
                 alternateScreen.update();
@@ -122,6 +120,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                 }
             }
         }
+        keyLocker.setAction(KeyboardAction.GAME_INSTRUCTIONS,KeyboardAction.GAME_PAUSE);
     }
 
     @Override
