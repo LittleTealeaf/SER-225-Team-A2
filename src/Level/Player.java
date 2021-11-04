@@ -28,7 +28,9 @@ public abstract class Player extends GameObject {
     protected float jumpHeight = 0;
     protected float jumpDegrade = 0;
     protected float terminalVelocityX = 0;
-    protected int playerHealth = 3;
+    
+    // Number of times a player can be hit by a projectile before dying
+    public static int playerHealth = 3;
     
     protected float momentumXIncrease = 0;
 
@@ -84,6 +86,8 @@ public abstract class Player extends GameObject {
         playerState = PlayerState.STANDING;
         previousPlayerState = playerState;
         levelState = LevelState.RUNNING;
+        this.x =  x;
+        this.y = y;
         
         // 11/19
         currentProjectile = null;
@@ -549,9 +553,7 @@ public abstract class Player extends GameObject {
 
     public void addListener(PlayerListener listener) {
         listeners.add(listener);
-    } 
-    
-    
+    }     
 }
 
 
