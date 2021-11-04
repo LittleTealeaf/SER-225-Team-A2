@@ -20,24 +20,25 @@ public enum KeyboardAction {
     GAME_ATTACK(Key.E),
     GAME_SPRINT(Key.SHIFT);
 
-    Key[] keys;
-    int[] codes;
+    int[] keys;
 
     KeyboardAction(Key... keys) {
+        this.keys = new int[keys.length];
+        for(int i = 0; i < keys.length; i++) {
+            this.keys[i] = keys[i].getKeyCode();
+        }
+    }
+
+    KeyboardAction(int... keys) {
         this.keys = keys;
     }
 
-    public Key[] getKeys() {
+    public int[] getKeys() {
         return keys;
     }
 
     public boolean isDown() {
-        for(Key key : keys) {
-            if(Keyboard.isKeyDown(key)) {
-                return true;
-            }
-        }
-        return false;
+        return Keyboard.isKeyDown(keys);
     }
 
 
