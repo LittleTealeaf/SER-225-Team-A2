@@ -1,8 +1,8 @@
 package Engine;
 
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -13,26 +13,26 @@ import java.util.Set;
 public class Keyboard {
 
 	// hashmaps keep track of if a key is currently down or up
-	private static final Set<Integer> keysDown = new HashSet<>();
+	private static final Set<Integer> keysDown;
 
-	private static final KeyListener keyListener = new KeyListener() {
-        @Override
-        public void keyTyped(KeyEvent e) {}
+	private static final KeyListener keyListener;
 
-        @Override
-        public void keyPressed(KeyEvent e) {
-        	// when key is pressed, set its keyDown state to true and its keyUp state to false
-            int keyCode = e.getKeyCode();
-            keysDown.add(keyCode);
-        }
+	static {
+		keyListener = new KeyAdapter() {
 
-        @Override
-        public void keyReleased(KeyEvent e) {
-			// when key is released, set its keyDown state to false and its keyUp state to true
-			int keyCode = e.getKeyCode();
-            keysDown.remove(keyCode);
-        }
-    };
+			@Override
+			public void keyPressed(KeyEvent e) {
+				keysDown.add(e.getKeyCode());
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				keysDown.remove(e.getKeyCode());
+			}
+		};
+
+		keysDown = new HashSet<>();
+	}
 
 	// prevents Keyboard from being instantiated -- it's my way of making a "static" class like C# has
 	private Keyboard() { }
@@ -49,26 +49,6 @@ public class Keyboard {
     // returns if a key is currently not being pressed
     public static boolean isKeyUp(Key key) {
     	return !keysDown.contains(key.getKeyCode());
-    }
-
-    // checks if multiple keys are being pressed at the same time
-    public static boolean areKeysDown(Key[] keys) {
-    	for (Key key : keys) {
-    		if(!keysDown.contains(key.getKeyCode())){
-				return false;
-			}
-    	}
-    	return true;
-    }
-
-	// checks if multiple keys are not being pressed at the same time
-	public static boolean areKeysUp(Key[] keys) {
-    	for (Key key : keys) {
-    		if (keysDown.contains(key.getKeyCode())) {
-    			return false;
-    		}
-    	}
-    	return true;
     }
 
 	/**
