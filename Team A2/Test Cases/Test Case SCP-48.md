@@ -9,11 +9,11 @@
 
 |Step | Action | Expected Result | Pass/Fail     |
 |:---:| :---        |    :----  | :---: |
-|1| Run the map editor| The map editor successfully opens |P|
-|2| Click the drop down arrow under level select| The drop down menu opens     |N|
-|3| Find and click on the tutorial map | The tutorial map is in the list and can be selected | [RESULT] |
-|4| Select any tile in the map editor and place in on the map | The map tile has changed to the new tile | [RESULT] |
-|5| Save the change compare the old txt file with the new one | The txt file has been changed | [RESULT] |
+|1| Run the map editor| The map editor successfully opens ||
+|2| Click the drop down arrow under level select| The drop down menu opens     ||
+|3| Find and click on the tutorial map | The tutorial map is in the list and can be selected ||
+|4| Select any tile in the map editor and place in on the map | The map tile has changed to the new tile ||
+|5| Save the change compare the old txt file with the new one | The txt file has been changed ||
 
 ### Test Completion
 - **Tester**: [TESTER NAME]
