@@ -456,6 +456,7 @@ public abstract class Player extends GameObject {
 
     // other entities can call this method to hurt the player
     public void hurtPlayer(MapEntity mapEntity) {
+        System.out.println("Player Hurt by " + mapEntity.getClass());
         if (!isInvincible) {
             // if map entity is an enemy, kill player on touch
             if (mapEntity instanceof Enemy) {
