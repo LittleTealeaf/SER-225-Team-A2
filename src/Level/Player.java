@@ -150,7 +150,7 @@ public abstract class Player extends GameObject {
             case JUMPING:
                 playerJumping();
                 break;
-            // 11/19    
+            // 11/19
             case ATTACKING:
             	playerAttacking();
             	break;
@@ -449,8 +449,6 @@ public abstract class Player extends GameObject {
         }
         if (hasCollided && MapTileCollisionHandler.lastCollidedTileY != null) {
     		if (MapTileCollisionHandler.lastCollidedTileY.getTileType() == TileType.LETHAL) {
-//                System.out.println("Died from lethal tile: " + MapTileCollisionHandler.lastCollidedTileY.getClass() + " " + MapTileCollisionHandler.lastCollidedTileY.getTileIndex() + " " + MapTileCollisionHandler.lastCollidedTileY.toString());
-//                System.out.println("Player location " + this.x + " " + this.y);
     			levelState = LevelState.PLAYER_DEAD;
     		}
     	}
