@@ -449,6 +449,7 @@ public abstract class Player extends GameObject {
         }
         if (hasCollided && MapTileCollisionHandler.lastCollidedTileY != null) {
     		if (MapTileCollisionHandler.lastCollidedTileY.getTileType() == TileType.LETHAL) {
+                System.out.println("Died from lethal tile");
     			levelState = LevelState.PLAYER_DEAD;
     		}
     	}
