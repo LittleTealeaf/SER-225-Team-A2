@@ -18,7 +18,8 @@ public enum KeyboardAction {
     GAME_INTERACT(Key.SPACE),
     GAME_CROUCH(Key.S,Key.DOWN),
     GAME_ATTACK(Key.E),
-    GAME_SPRINT(Key.SHIFT);
+    GAME_SPRINT(Key.SHIFT),
+    GAME_RESPAWN(Key.SPACE);
 
     int[] keys;
 
