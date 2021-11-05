@@ -33,12 +33,15 @@
 |23|Tap E|The character shoots||
 |24|Tap Escape|The pause menu displays||
 |25|Tap Escape|The pause menu hides||
-|26|Tap P, then tap escape|The pause menu is displayed, then is hidden||
-|27|Hold shift, and then press D|The player moves faster to the right||
-|28|Hold shift, and the press A|The player moves faster to the left||
-
-[comment]: <> (Update this file with any additional keybinds to implement)
-
+|26|Tap P, then tap escape|The pause menu is displayed when the player hits P, then is hidden when the player hits escape||
+|27|Tap X|The instructions menu is displayed when the player hits X||
+|28|Tap X again|The instructions menu is hidden when the player hits X again||
+|29|Hold shift, and then press D|The player moves faster to the right||
+|30|Hold shift, and the press A|The player moves faster to the left||
+|31|Press down and hold the S key for a few seconds|The player crouches when the key is held down||
+|32|Press down and hold the down arrow for a few seconds|The player crouches when the key is held down||
+|33|Navigate and run into the bug to die, and hit space to respawn|The player dies, and then the level is restarted after the player hits space||
+|34|Navigate and run into the bug to die, and hit escape to go back to the main menu|The player dies, and then the main menu is displayed after the player hits escape||
 
 ### Test Completion
 - **Tester**: (Tester Name)
