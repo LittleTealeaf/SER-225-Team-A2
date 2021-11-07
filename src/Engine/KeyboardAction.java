@@ -3,7 +3,7 @@ package Engine;
 /**
  * List of "categories" and functions to ask whether any key in that selection is pressed down
  */
-public enum KeyboardAdapter {
+public enum KeyboardAction {
     MENU_ENTER(Key.ENTER, Key.SPACE),
     MENU_UP(Key.UP,Key.W),
     MENU_DOWN(Key.DOWN,Key.S),
@@ -14,25 +14,32 @@ public enum KeyboardAdapter {
     GAME_MOVE_LEFT(Key.A,Key.LEFT),
     GAME_MOVE_RIGHT(Key.D,Key.RIGHT),
     GAME_JUMP(Key.W,Key.SPACE,Key.UP),
-    GAME_INSTRUCTIONS(Key.X);
+    GAME_INSTRUCTIONS(Key.X),
+    GAME_INTERACT(Key.SPACE),
+    GAME_CROUCH(Key.S,Key.DOWN),
+    GAME_ATTACK(Key.E),
+    GAME_SPRINT(Key.SHIFT),
+    GAME_RESPAWN(Key.SPACE);
 
-    Key[] keys;
+    int[] keys;
 
-    KeyboardAdapter(Key... keys) {
+    KeyboardAction(Key... keys) {
+        this.keys = new int[keys.length];
+        for(int i = 0; i < keys.length; i++) {
+            this.keys[i] = keys[i].getKeyCode();
+        }
+    }
+
+    KeyboardAction(int... keys) {
         this.keys = keys;
     }
 
-    public Key[] getKeys() {
+    public int[] getKeys() {
         return keys;
     }
 
     public boolean isDown() {
-        for(Key key : keys) {
-            if(Keyboard.isKeyDown(key)) {
-                return true;
-            }
-        }
-        return false;
+        return Keyboard.isKeyDown(keys);
     }
 
 

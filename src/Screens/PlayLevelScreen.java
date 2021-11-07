@@ -85,21 +85,19 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
     public void update() {
         switch (screenState) {
             case RUNNING -> {
-                if (KeyboardAdapter.GAME_PAUSE.isDown() && !keyLocker.isKeyLocked(KeyboardAdapter.GAME_PAUSE)) {
+                if (KeyboardAction.GAME_PAUSE.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_PAUSE)) {
                     screenState = State.PAUSE;
-                } else if (KeyboardAdapter.GAME_INSTRUCTIONS.isDown() && !keyLocker.isKeyLocked(KeyboardAdapter.GAME_INSTRUCTIONS)) {
+                } else if (KeyboardAction.GAME_INSTRUCTIONS.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_INSTRUCTIONS)) {
                     screenState = State.INSTRUCTIONS;
                 } else {
                     player.update();
                     loadedMap.update(player);
                 }
-                keyLocker.setKeys(KeyboardAdapter.GAME_PAUSE, KeyboardAdapter.GAME_INSTRUCTIONS);
             }
             case INSTRUCTIONS -> {
-                if (KeyboardAdapter.GAME_INSTRUCTIONS.isDown() && !keyLocker.isKeyLocked(KeyboardAdapter.GAME_INSTRUCTIONS)) {
+                if (KeyboardAction.GAME_INSTRUCTIONS.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_INSTRUCTIONS)) {
                     screenState = State.RUNNING;
                 }
-                keyLocker.setKeys(KeyboardAdapter.GAME_INSTRUCTIONS);
             }
             case PAUSE,LEVEL_LOSE_MESSAGE -> alternateScreen.update();
             case PLAYER_DEAD -> screenState = State.LEVEL_LOSE_MESSAGE;
@@ -117,6 +115,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                 }
             }
         }
+        keyLocker.setAction(KeyboardAction.GAME_INSTRUCTIONS,KeyboardAction.GAME_PAUSE);
     }
 
     @Override

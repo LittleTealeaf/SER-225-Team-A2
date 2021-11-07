@@ -46,7 +46,7 @@ public abstract class Menu extends Screen {
     }
 
     protected void updateMenuEscape() {
-        if (KeyboardAdapter.MENU_ESCAPE.isDown()) {
+        if (KeyboardAction.MENU_ESCAPE.isDown()) {
             GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
         }
     }
@@ -62,24 +62,24 @@ public abstract class Menu extends Screen {
             previousMouse = p;
 
             //Move Direction
-            if (KeyboardAdapter.MENU_DOWN.isDown() && keyTimer.isTimeUp()) {
+            if (KeyboardAction.MENU_DOWN.isDown() && keyTimer.isTimeUp()) {
                 keyTimer.reset();
                 moveDirection(Direction.DOWN);
-            } else if (KeyboardAdapter.MENU_UP.isDown() && keyTimer.isTimeUp()) {
+            } else if (KeyboardAction.MENU_UP.isDown() && keyTimer.isTimeUp()) {
                 keyTimer.reset();
                 moveDirection(Direction.UP);
-            } else if (KeyboardAdapter.MENU_LEFT.isDown() && keyTimer.isTimeUp()) {
+            } else if (KeyboardAction.MENU_LEFT.isDown() && keyTimer.isTimeUp()) {
                 keyTimer.reset();
                 moveDirection(Direction.LEFT);
-            } else if (KeyboardAdapter.MENU_RIGHT.isDown() && keyTimer.isTimeUp()) {
+            } else if (KeyboardAction.MENU_RIGHT.isDown() && keyTimer.isTimeUp()) {
                 keyTimer.reset();
                 moveDirection(Direction.RIGHT);
             }
 
             //Menu Enter
-            if (!KeyboardAdapter.MENU_ENTER.isDown()) {
+            if (!KeyboardAction.MENU_ENTER.isDown()) {
                 selectionDown = false;
-            } else if (!selectionDown && KeyboardAdapter.MENU_ENTER.isDown()) {
+            } else if (!selectionDown && KeyboardAction.MENU_ENTER.isDown()) {
                 selectedItem.execute();
             }
         }
