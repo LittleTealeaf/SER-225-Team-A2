@@ -1,9 +1,7 @@
 package Level;
 
-import Engine.Key;
 import Engine.KeyLocker;
-import Engine.Keyboard;
-import Game.GameState;
+import Engine.KeyboardAction;
 import GameObject.GameObject;
 import GameObject.SpriteSheet;
 import Utils.AirGroundState;
@@ -12,10 +10,6 @@ import Utils.Point;
 import Utils.Stopwatch;
 
 import java.util.ArrayList;
-
-import Projectiles.Fireball;
-import Projectiles.LazerBeam;
-import Enemies.DinosaurEnemy.DinosaurState;
 
 public abstract class Player extends GameObject {
     // values that affect player movement
@@ -48,9 +42,7 @@ public abstract class Player extends GameObject {
     protected Stopwatch attackCooldown = new Stopwatch();
 
     // values used to keep track of player's current state
-    protected GameState levelTwo;
     protected PlayerState playerState;
-    protected PlayerState previousPlayerState;
     protected Direction facingDirection;
     protected AirGroundState airGroundState;
     protected AirGroundState previousAirGroundState;
@@ -61,17 +53,6 @@ public abstract class Player extends GameObject {
 
     // define keys
     protected KeyLocker keyLocker = new KeyLocker();
-    protected Key JUMP_KEY = Key.UP;
-    protected Key MOVE_LEFT_KEY = Key.LEFT;
-    protected Key MOVE_RIGHT_KEY = Key.RIGHT;
-    protected Key CROUCH_KEY = Key.DOWN;
-    protected Key rightKey = Key.D;
-    protected Key leftKey = Key.A;
-    protected Key upKey = Key.W;
-    protected Key downKey = Key.S;
-    protected Key spaceKey = Key.SPACE;
-    protected Key attackKey = Key.E;
-    protected Key shiftKey = Key.SHIFT;
 
     // if true, player cannot be hurt by enemies (good for testing)
     protected boolean isInvincible = false;
@@ -84,7 +65,6 @@ public abstract class Player extends GameObject {
         airGroundState = AirGroundState.AIR;
         previousAirGroundState = airGroundState;
         playerState = PlayerState.STANDING;
-        previousPlayerState = playerState;
         levelState = LevelState.RUNNING;
         this.x =  x;
         this.y = y;
@@ -101,11 +81,7 @@ public abstract class Player extends GameObject {
         if (levelState == LevelState.RUNNING) {
             applyGravity();
 
-            // update player's state and current actions, which includes things like determining how much it should move each frame and if its walking or jumping
-            do {
-                previousPlayerState = playerState;
-                handlePlayerState();
-            } while (previousPlayerState != playerState);
+            handlePlayerState();
 
             previousAirGroundState = airGroundState;
 
@@ -150,7 +126,7 @@ public abstract class Player extends GameObject {
             case JUMPING:
                 playerJumping();
                 break;
-            // 11/19    
+            // 11/19
             case ATTACKING:
             	playerAttacking();
             	break;
@@ -163,25 +139,22 @@ public abstract class Player extends GameObject {
         currentAnimationName = facingDirection == Direction.RIGHT ? "STAND_RIGHT" : "STAND_LEFT";
 
         // if walk left or walk right key is pressed, player enters WALKING state
-        if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(MOVE_RIGHT_KEY) || Keyboard.isKeyDown(rightKey) || Keyboard.isKeyDown(leftKey)) {
+        if (KeyboardAction.GAME_MOVE_LEFT.isDown() || KeyboardAction.GAME_MOVE_RIGHT.isDown()) {
             playerState = PlayerState.WALKING;
         }
 
         // if jump key is pressed, player enters JUMPING state
-        else if ((Keyboard.isKeyDown(JUMP_KEY) && !keyLocker.isKeyLocked(JUMP_KEY)) || (Keyboard.isKeyDown(upKey) && !keyLocker.isKeyLocked(upKey)) || (Keyboard.isKeyDown(spaceKey) && !keyLocker.isKeyLocked(spaceKey))) {
-            keyLocker.lockKey(JUMP_KEY);
-            keyLocker.lockKey(upKey);
-            keyLocker.lockKey(spaceKey);
+        else if (KeyboardAction.GAME_JUMP.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_JUMP)) {
             playerState = PlayerState.JUMPING;
         }
 
         // if crouch key is pressed, player enters CROUCHING state
-        else if (Keyboard.isKeyDown(CROUCH_KEY) || Keyboard.isKeyDown(downKey)) {
+        else if (KeyboardAction.GAME_CROUCH.isDown()) {
             playerState = PlayerState.CROUCHING;
         }
         
         // enter the attacking state if the attack key is pressed and the attack cooldown is up
-        else if(Keyboard.isKeyDown(attackKey) && attackCooldown.isTimeUp()) {
+        else if(KeyboardAction.GAME_ATTACK.isDown() && attackCooldown.isTimeUp()) {
         	//keyLocker.lockKey(attackKey);
         	playerState = PlayerState.ATTACKING;
         	//System.out.println(previousPlayerState.toString());
@@ -194,7 +167,7 @@ public abstract class Player extends GameObject {
         currentAnimationName = facingDirection == Direction.RIGHT ? "WALK_RIGHT" : "WALK_LEFT";
 
         // if the running key, shift, is held down acceleration the walk speed until the character reaches the max speed
-        if (Keyboard.isKeyDown(shiftKey))
+        if (KeyboardAction.GAME_SPRINT.isDown())
         {
         	if (walkSpeed < maxWalkSpeed)
         	{
@@ -203,43 +176,38 @@ public abstract class Player extends GameObject {
         	
         }
         // once the user lets go of the running key reset the walk speed
-        else if (Keyboard.isKeyUp(shiftKey))
-        {
-        	walkSpeed = minWalkSpeed;
-        }  
+        else {
+            walkSpeed = minWalkSpeed;
+        }
         
-        if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(leftKey)) {
+        if (KeyboardAction.GAME_MOVE_LEFT.isDown()) {
         	//System.out.println("s");
             moveAmountX -= walkSpeed;
             facingDirection = Direction.LEFT;
         }
         
         // if walk right key is pressed, move player to the right
-        else if (Keyboard.isKeyDown(MOVE_RIGHT_KEY) || Keyboard.isKeyDown(rightKey)) {
+        else if (KeyboardAction.GAME_MOVE_RIGHT.isDown()) {
         	//System.out.println("d");
         	moveAmountX += walkSpeed;
             facingDirection = Direction.RIGHT;
-        } else if (Keyboard.isKeyUp(MOVE_LEFT_KEY) && Keyboard.isKeyUp(MOVE_RIGHT_KEY) && Keyboard.isKeyUp(rightKey) && Keyboard.isKeyUp(leftKey)) {
-        	playerState = PlayerState.STANDING;
+        } else {
+            playerState = PlayerState.STANDING;
         }
 
         // if jump key is pressed, player enters JUMPING state
-        if ((Keyboard.isKeyDown(JUMP_KEY) && !keyLocker.isKeyLocked(JUMP_KEY)) || (Keyboard.isKeyDown(upKey) && !keyLocker.isKeyLocked(upKey)) || (Keyboard.isKeyDown(spaceKey) && !keyLocker.isKeyLocked(spaceKey))) {
-            keyLocker.lockKey(JUMP_KEY);
-            keyLocker.lockKey(upKey);
-            keyLocker.lockKey(spaceKey);
+        if (KeyboardAction.GAME_JUMP.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_JUMP)) {
             //System.out.println("w");
             playerState = PlayerState.JUMPING;
         }
 
         // if crouch key is pressed,
-        else if (Keyboard.isKeyDown(CROUCH_KEY) || Keyboard.isKeyDown(downKey)) {
+        else if (KeyboardAction.GAME_CROUCH.isDown()) {
             playerState = PlayerState.CROUCHING;
         }
         
         // enter the attacking state if the attack key is pressed and the attack cooldown is up
-        else if(Keyboard.isKeyDown(attackKey) && attackCooldown.isTimeUp()) {
-        	keyLocker.lockKey(attackKey);
+        else if(KeyboardAction.GAME_ATTACK.isDown() && attackCooldown.isTimeUp()) {
         	playerState = PlayerState.ATTACKING;
         	//System.out.println(previousPlayerState.toString());
         }
@@ -251,15 +219,12 @@ public abstract class Player extends GameObject {
         currentAnimationName = facingDirection == Direction.RIGHT ? "CROUCH_RIGHT" : "CROUCH_LEFT";
 
         // if crouch key is released, player enters STANDING state
-        if (Keyboard.isKeyUp(CROUCH_KEY) && Keyboard.isKeyUp(downKey)) {
+        if (!KeyboardAction.GAME_CROUCH.isDown()) {
             playerState = PlayerState.STANDING;
         }
 
         // if jump key is pressed, player enters JUMPING state
-        if ((Keyboard.isKeyDown(JUMP_KEY) && !keyLocker.isKeyLocked(JUMP_KEY)) || (Keyboard.isKeyDown(upKey) && !keyLocker.isKeyLocked(upKey)) || (Keyboard.isKeyDown(spaceKey) && !keyLocker.isKeyLocked(spaceKey))) {
-            keyLocker.lockKey(JUMP_KEY);
-            keyLocker.lockKey(upKey);
-            keyLocker.lockKey(spaceKey);
+        if (KeyboardAction.GAME_JUMP.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_JUMP)) {
             playerState = PlayerState.JUMPING;
         }
     }
@@ -283,7 +248,7 @@ public abstract class Player extends GameObject {
             }
         }
         // if the player is no longer holding any of the jump keys set the jump force to 0 to stop the jump this allows the player to control how high they want to jump
-        if (!(Keyboard.isKeyDown(JUMP_KEY) || (Keyboard.isKeyDown(upKey)) || Keyboard.isKeyDown(spaceKey)))
+        if (!KeyboardAction.GAME_JUMP.isDown())
         {
         	jumpForce = 0;
         }
@@ -307,12 +272,12 @@ public abstract class Player extends GameObject {
             }
 
             // allows you to move left and right while in the air
-            if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(leftKey)) {
+            if (KeyboardAction.GAME_MOVE_LEFT.isDown()) {
                 moveAmountX -= walkSpeed;
                 facingDirection = Direction.LEFT;
             }             
             
-            else if (Keyboard.isKeyDown(MOVE_RIGHT_KEY) || Keyboard.isKeyDown(rightKey)) {
+            else if (KeyboardAction.GAME_MOVE_RIGHT.isDown()) {
                 moveAmountX += walkSpeed;
                 facingDirection = Direction.RIGHT;
             }
@@ -335,11 +300,11 @@ public abstract class Player extends GameObject {
     	if (playerState == PlayerState.ATTACKING) {
     		
     		// this allows the player to still move left or right will in the attacking state
-    		 if (Keyboard.isKeyDown(MOVE_LEFT_KEY) || Keyboard.isKeyDown(leftKey)) {
+    		 if (KeyboardAction.GAME_MOVE_LEFT.isDown()) {
                  moveAmountX -= walkSpeed;
                  facingDirection = Direction.LEFT;
              } 
-             else if (Keyboard.isKeyDown(MOVE_RIGHT_KEY) || Keyboard.isKeyDown(rightKey)) {
+             else if (KeyboardAction.GAME_MOVE_RIGHT.isDown()) {
                  moveAmountX += walkSpeed;
                  facingDirection = Direction.RIGHT;
              }
@@ -366,7 +331,7 @@ public abstract class Player extends GameObject {
 				PlayerAttack projectile = new PlayerAttack(new Point(attackX, attackY), movementSpeed, 1000);
 				currentProjectile = projectile;
 
-				// add projectile enemy to the map for it to offically spawn in the level
+				// add projectile enemy to the map for it to officially spawn in the level
 				map.addEnemy(projectile);
 
 				attackCooldown.setWaitTime(1500);
@@ -393,15 +358,7 @@ public abstract class Player extends GameObject {
     }
 
     protected void updateLockedKeys() {
-        if (Keyboard.isKeyUp(JUMP_KEY) && Keyboard.isKeyUp(upKey) && Keyboard.isKeyUp(spaceKey)) {
-            keyLocker.unlockKey(JUMP_KEY);
-            keyLocker.unlockKey(upKey);
-            keyLocker.unlockKey(spaceKey);
-        }
-        // 11/19
-        else if (Keyboard.isKeyUp(attackKey)) {
-        	keyLocker.unlockKey(attackKey);
-        }
+        keyLocker.setAction(KeyboardAction.GAME_JUMP,KeyboardAction.GAME_ATTACK);
     }
 
     @Override

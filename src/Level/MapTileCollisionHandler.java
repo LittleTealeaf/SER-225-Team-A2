@@ -60,6 +60,7 @@ public class MapTileCollisionHandler {
         }
         for (EnhancedMapTile enhancedMapTile : map.getActiveEnhancedMapTiles()) {
             if (hasCollidedWithMapTile(gameObject, enhancedMapTile, direction)) {
+                lastCollidedTileY = enhancedMapTile;
                 if (direction == Direction.DOWN) {
                     float boundsDifference = gameObject.getScaledY2() - gameObject.getScaledBoundsY2();
                     return enhancedMapTile.getScaledBoundsY1() - gameObject.getScaledHeight() + boundsDifference;
@@ -74,18 +75,11 @@ public class MapTileCollisionHandler {
 
     // based on tile type, perform logic to determine if a collision did occur with an intersecting tile or not
     private static boolean hasCollidedWithMapTile(GameObject gameObject, MapTile mapTile, Direction direction) {
-        switch (mapTile.getTileType()) {
-            case PASSABLE:
-                return false;
-            case NOT_PASSABLE:
-                return gameObject.intersects(mapTile);
-            case JUMP_THROUGH_PLATFORM:
-                return direction == Direction.DOWN && gameObject.intersects(mapTile) &&
-                        Math.round(gameObject.getScaledBoundsY2() - 1) == Math.round(mapTile.getScaledBoundsY1());
-            case LETHAL:
-            	return gameObject.intersects(mapTile);    
-            default:
-                return false;
-        }
+        return switch (mapTile.getTileType()) {
+            case NOT_PASSABLE, LETHAL -> gameObject.intersects(mapTile);
+            case JUMP_THROUGH_PLATFORM -> direction == Direction.DOWN && gameObject.intersects(mapTile) && Math.round(
+                    gameObject.getScaledBoundsY2() - 1) == Math.round(mapTile.getScaledBoundsY1());
+            default -> false;
+        };
     }
 }
