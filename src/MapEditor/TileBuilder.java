@@ -98,7 +98,7 @@ public class TileBuilder extends JPanel {
             MapTile newMapTile =  map.getTileset().getTile(controlPanelHolder.getSelectedTileIndex()).build(oldMapTile.getX(), oldMapTile.getY());
             newMapTile.setMap(map);
             map.getMapTiles()[selectedTileIndex] = newMapTile;
-
+            
         }
         repaint();
     }
