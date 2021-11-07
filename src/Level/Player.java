@@ -150,7 +150,7 @@ public abstract class Player extends GameObject {
             case JUMPING:
                 playerJumping();
                 break;
-            // 11/19    
+            // 11/19
             case ATTACKING:
             	playerAttacking();
             	break;
