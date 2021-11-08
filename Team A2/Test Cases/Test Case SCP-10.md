@@ -11,13 +11,10 @@
 |Step | Action | Expected Result | Pass/Fail     |
 |:---:| :---        |    :----  | :---: |
 |1| Run the game| The game successfully opens |P|
-|2| Press the spacebar to start the game.| The game starts and the character is loaded into the first level.     |N|
-|3| See Walrus within Level 1 | Player successfully interacts with the walrus | [RESULT] |
-|4| Complete Level 1 | The User is able to complete the level and move on to the next level | [RESULT] |
-|5| Enter Next Level | The Player enters the game on the next level | [RESULT] |
-|6| See Walrus within the next level | Player successfully interacts with the walrus on the next level | [RESULT] |
-|7| Complete the Level | The User is able to complete the level and move on to the next level | [RESULT] |
-|8| Successfully repeat steps 5-7 for the rest of the levels | User will see walrus in every level giving more backstory each level | [RESULT] |
+|2| Navigate to the Narrative menu option | The User will enter into the Narrative option within the main menu | [Result] |
+|3| User will read the Narrative Screen | User will read the narrative backstory and understand the games background | [RESULT] |
+|4| User will complete the rest of the game | The User will be able to complete the rest of the game and complete the backstory | [RESULT] |
+
 
 ### Test Completion
 - **Tester**: [TESTER NAME]

@@ -10,6 +10,7 @@ import GameObject.AnimatedSprite;
 import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
+import Maps.LevelSelectMap;
 import SpriteFont.SpriteFont;
 import Utils.Stopwatch;
 
@@ -17,7 +18,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
-public class OpeningScreen extends Screen {
+public class OpeningScreen extends Screen{
 
 
     private AnimatedSprite cat;
@@ -40,31 +41,31 @@ public class OpeningScreen extends Screen {
     public void initialize() {
         SpriteSheet catSpriteSheet = new SpriteSheet(ImageLoader.load("Cat.png"), 24, 24);
 
-        story = new SpriteFont("CAT NEEDS YOUR HELP!", 55, 100, "Comic Sans", 60, new Color(255, 0, 0));
+        story = new SpriteFont("I NEED YOUR HELP!", 55, 100, "Comic Sans", 60, new Color(255, 0, 0));
         story.setOutlineColor(Color.black);
         story.setOutlineThickness(3);
 
-        story1 = new SpriteFont("HELP! I was catnapped and I am trying", 170, 140, "Comic Sans", 25, new Color(255, 215, 0));
+        story1 = new SpriteFont("HELP! I was taken by a group of catnappers", 170, 140, "Comic Sans", 25, new Color(255, 215, 0));
         story1.setOutlineColor(Color.black);
         story1.setOutlineThickness(3);
 
-        story2 = new SpriteFont("to get back to my cat family. The catnappers", 170, 180, "Comic Sans", 25, new Color(255, 215, 0));
+        story2 = new SpriteFont("trying to take me away from my family!", 170, 180, "Comic Sans", 25, new Color(255, 215, 0));
         story2.setOutlineColor(Color.black);
         story2.setOutlineThickness(3);
 
-        story3 = new SpriteFont("brought me across all these obstacles that I", 170, 220, "Comic Sans", 25, new Color(255, 215, 0));
+        story3 = new SpriteFont("Please help me get past them as well as", 170, 220, "Comic Sans", 25, new Color(255, 215, 0));
         story3.setOutlineColor(Color.black);
         story3.setOutlineThickness(3);
 
-        story4 = new SpriteFont("need to cross by myself to get back. I need", 170, 260, "Comic Sans", 25, new Color(255, 215, 0));
+        story4 = new SpriteFont("the final boss, 'Big Dog' to get back! ", 170, 260, "Comic Sans", 25, new Color(255, 215, 0));
         story4.setOutlineColor(Color.black);
         story4.setOutlineThickness(3);
 
-        story5 = new SpriteFont("your assistance to get back to the rest", 170, 300, "Comic Sans", 25, new Color(255, 215, 0));
+        story5 = new SpriteFont("Please help me in my quest to return to", 170, 300, "Comic Sans", 25, new Color(255, 215, 0));
         story5.setOutlineColor(Color.black);
         story5.setOutlineThickness(3);
 
-        story6 = new SpriteFont("of my CAT FAMILY!", 230, 340, "Comic Sans", 25, new Color(255, 215, 0));
+        story6 = new SpriteFont("my CAT FAMILY!", 260, 340, "Comic Sans", 25, new Color(255, 215, 0));
         story6.setOutlineColor(Color.black);
         story6.setOutlineThickness(3);
 

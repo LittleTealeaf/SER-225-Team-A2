@@ -1,6 +1,8 @@
 package Engine;
 
 
+import Level.Map;
+
 import java.awt.event.MouseEvent;
 
 // Base Screen class
@@ -11,4 +13,8 @@ public abstract class Screen {
     public abstract void update();
     public abstract void draw(GraphicsHandler graphicsHandler);
     public abstract void mouseClicked(MouseEvent e);
+    private Map background;
+    protected void setBackground(Map background) {
+        this.background = background;
+    }
 }

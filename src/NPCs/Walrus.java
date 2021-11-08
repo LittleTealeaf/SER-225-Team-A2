@@ -24,7 +24,7 @@ public class Walrus extends NPC {
 
     @Override
     protected SpriteFont createMessage() {
-        return new SpriteFont("Hello!", getX(), getY() - 10, "Arial", 12, Color.BLACK);
+        return new SpriteFont("Good Luck on your quest!", getX(), getY() - 10, "Arial", 12, Color.BLACK);
     }
 
     public void update(Player player) {
@@ -63,7 +63,7 @@ public class Walrus extends NPC {
     @Override
     public void drawMessage(GraphicsHandler graphicsHandler) {
         // draws a box with a border (think like a speech box)
-        graphicsHandler.drawFilledRectangleWithBorder(Math.round(getCalibratedXLocation() - 2), Math.round(getCalibratedYLocation() - 24), 40, 25, Color.WHITE, Color.BLACK, 2);
+        graphicsHandler.drawFilledRectangleWithBorder(Math.round(getCalibratedXLocation() - 2), Math.round(getCalibratedYLocation() - 24), 70, 25, Color.WHITE, Color.BLACK, 2);
 
         // draws message "Hello" in the above speech box
         message.setLocation(getCalibratedXLocation() + 2, getCalibratedYLocation() - 8);
