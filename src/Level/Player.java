@@ -371,7 +371,7 @@ public abstract class Player extends GameObject {
     			hasCollided = true;
     			momentumX = 0;
     			setX(0);
-    		} else if (x > rightBound && levelState != LevelState.LEVEL_COMPLETED) {
+    		} else if (levelState != LevelState.LEVEL_COMPLETED && x > rightBound) {
     			hasCollided = true;
     			momentumX = 0;
                 setX(rightBound);
