@@ -1,19 +1,13 @@
 package Engine;
 
 import GameObject.Rectangle;
-
-
-
-
+import Level.Player;
 import SpriteFont.SpriteFont;
 import Utils.Colors;
 import Utils.Stopwatch;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.*;
 //import sun.audio.AudioData;
-import javax.sound.sampled.FloatControl;
 import javax.swing.*;
 
 import Game.GameState;
@@ -22,7 +16,9 @@ import Game.ScreenCoordinator;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.IOException;
 
 /*
  * This is where the game loop starts
@@ -44,6 +40,8 @@ public class GamePanel extends JPanel {
 	protected static GameWindow gameWindow;
 	private static ScreenCoordinator coordinator;
 	public static Clip clip;
+	private Point previousMousePoint = new Point(0,0);
+	private JLabel health;
 
 	
 	/*
@@ -53,6 +51,9 @@ public class GamePanel extends JPanel {
 		super();
 		this.gameWindow = gameWindow;
 		this.setDoubleBuffered(true);
+		
+		health = new JLabel();
+		add(health);
 
 		this.setSize(Config.WIDTH, Config.HEIGHT);
 		// attaches Keyboard class's keyListener to this JPanel
@@ -63,12 +64,20 @@ public class GamePanel extends JPanel {
 		screenManager = new ScreenManager();
 		coordinator = c1;
 
+
 	
 		
 
 		timer = new Timer(1000 / Config.FPS, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				update();
+				changeHealth();
+				if(coordinator.getGameState() == GameState.LEVEL) {
+					health.show();
+				}
+				else {
+					health.hide();
+				}
 				repaint();
 			}
 		});
@@ -91,33 +100,32 @@ public class GamePanel extends JPanel {
 		return gameWindow;
 	}
 	
-	public static void music(String filepath, double gain) {
-	
-		try {
-			AudioInputStream audioInput = AudioSystem.getAudioInputStream(new File(filepath));
-			clip = AudioSystem.getClip();
-			clip.open(audioInput);
-			setVolume(gain);
-			clip.start();
-	
-			clip.loop(Clip.LOOP_CONTINUOUSLY);
-			
-			
+	public static void music(String filepath, double gain) throws LineUnavailableException, UnsupportedAudioFileException, IOException {
 
-		} catch (Exception ex) {
-			System.out.println("No audio found!");
-			ex.printStackTrace();
+		AudioInputStream audioInput = AudioSystem.getAudioInputStream(new File(filepath));
+		clip = AudioSystem.getClip();
+		clip.open(audioInput);
+		setVolume(gain);
+		clip.start();
 
-		}
+		clip.loop(Clip.LOOP_CONTINUOUSLY);
 		
 	}
 	public static void setVolume(double gain) {
-		FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
-		float dB = (float) (Math.log(gain) / Math.log(10.0) * 20.0);
-		gainControl.setValue(dB);
+		try {
+			FloatControl gainControl = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+			float dB = (float) (Math.log(gain) / Math.log(10.0) * 20.0);
+			gainControl.setValue(dB);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 	}
 
+	public static void setVolumeOff() {
+
+		setVolume(0);
+	}
 	public static void setVolumeLow() {
 		
 		setVolume(.5);
@@ -137,7 +145,15 @@ public class GamePanel extends JPanel {
 	public void startGame() {
 		timer.start();
 
-		music("src/Blossoming Inspiration Loop (online-audio-converter.com).wav",1);
+		try {
+			music("Resources/Music/music.wav",1);
+		} catch(Exception e) {
+			try {
+				music("Resources/Music/music.mp3",1);
+			} catch(Exception f) {
+
+			}
+		}
 	}
 
 	public ScreenManager getScreenManager() {
@@ -153,6 +169,31 @@ public class GamePanel extends JPanel {
 
 
 	}
+	
+	// Checks the players health and accordingly changes to the image with the corresponding number of hearts
+	public void changeHealth() {
+		if(coordinator.getGameState() == GameState.LEVEL) {
+			if(Player.playerHealth == 3) { 
+				health.setIcon(new ImageIcon(ImageLoader.load("3 Hearts.png")));
+			}
+			
+			else if(Player.playerHealth == 2) { 
+				health.setIcon(new ImageIcon(ImageLoader.load("2 Hearts.png")));
+			}
+			
+			else if(Player.playerHealth == 1) { 
+				health.setIcon(new ImageIcon(ImageLoader.load("1 Heart.png")));
+			}
+			
+			else { 
+				health.setIcon(new ImageIcon(ImageLoader.load("0 Hearts.png")));
+			}
+		}
+		
+		if(coordinator.getGameState() == GameState.MENU) {
+			Player.playerHealth = 3;
+		}
+	}
 
 	@Override
 	protected void paintComponent(Graphics g) {
@@ -166,7 +207,10 @@ public class GamePanel extends JPanel {
 		}
 
 	}
-	
-	
+
+	public static void mouseClicked(MouseEvent e) {
+//		System.out.println("Click: " + e.getPoint());
+		coordinator.mouseClicked(e);
+	}
 
 }

@@ -1,4 +1,4 @@
-package Enemies;
+package Projectiles;
 
 import Builders.FrameBuilder;
 import Engine.ImageLoader;
@@ -7,6 +7,7 @@ import GameObject.SpriteSheet;
 import Level.Enemy;
 import Level.MapEntityStatus;
 import Level.Player;
+import Level.Projectile;
 import Utils.Direction;
 import Utils.Point;
 import Utils.Stopwatch;
@@ -16,7 +17,7 @@ import java.util.HashMap;
 // This class is for the fireball enemy that the DinosaurEnemy class shoots out
 // it will travel in a straight line (x axis) for a set time before disappearing
 // it will disappear early if it collides with a solid map tile
-public class Fireball extends Enemy {
+public class Fireball extends Projectile {
     private float movementSpeed;
     private Stopwatch existenceTimer = new Stopwatch();
 

@@ -99,4 +99,8 @@ public class GraphicsHandler {
         g.setStroke(originalStroke);
         g.setRenderingHints(originalHints);
     }
+
+    public Graphics2D getGraphics2D() {
+        return this.g;
+    }
 }
