@@ -218,7 +218,16 @@ public class CommonTileset extends Tileset {
                 .withTileType(TileType.NOT_PASSABLE);
 
         mapTiles.add(greyRockTile);
+        
+        // lethal spike
+        Frame lethalSpikeFrame = new FrameBuilder(getSubImage(3, 3), 0)
+                .withScale(tileScale)
+                .build();
 
+        MapTileBuilder lethalSpikeTile = new MapTileBuilder(lethalSpikeFrame)
+                .withTileType(TileType.LETHAL);
+
+        mapTiles.add(lethalSpikeTile);
         return mapTiles;
     }
 }

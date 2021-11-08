@@ -44,10 +44,10 @@ public class PauseScreen extends Menu {
      */
     public void update() {
         updateMenu();
-        if (menuEscape && KeyboardAdapter.GAME_PAUSE.isDown()) {
+        if (menuEscape && KeyboardAction.GAME_PAUSE.isDown()) {
             playLevelScreen.resume();
         }
-        if (!KeyboardAdapter.GAME_PAUSE.isDown()) {
+        if (!KeyboardAction.GAME_PAUSE.isDown()) {
             menuEscape = true;
         }
     }
