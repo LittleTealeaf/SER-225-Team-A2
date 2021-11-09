@@ -10,13 +10,13 @@
 
 |Step | Action | Expected Result | Pass/Fail     |
 |:---:| :---        |    :----  | :---: |
-|1| Run the game| The game successfully opens |P|
-|2| Navigate to Instructions Menu | User will enter into the instructions menu | [RESULT] |
-|3| Go through the instructions | The User will be able to properly learn how to play the game | [RESULT] |
-|4| Enter Level 1 | The User will enter level 1 | [RESULT] |
-|5| Check in game instructions | The User will be able to press 'x' to see in game instructions | [RESULT] |
+|1| Run the game| The game successfully opens |Pass|
+|2| Navigate to Instructions Menu | User will enter into the instructions menu | Pass |
+|3| Go through the instructions | The User will be able to properly learn how to play the game | Pass |
+|4| Enter Level 1 | The User will enter level 1 | Pass |
+|5| Check in game instructions | The User will be able to press 'x' to see in game instructions | Pass |
 
 ### Test Completion
-- **Tester**: [TESTER NAME]
-- **Date of Test**: DATE OF TEST
-- **Test Result**: TEST RESULT
+- **Tester**: Thomas Kwashnak
+- **Date of Test**: 11/9/2021
+- **Test Result**: Passed
