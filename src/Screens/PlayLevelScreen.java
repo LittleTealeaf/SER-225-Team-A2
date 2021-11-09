@@ -33,7 +33,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
          * This is some new java funky stuff :D
          */
         MAPS = new MapFactory[]{
-                TestTutorial::new, TestMap::new, TestMap2::new, TestMap3::new, TestMap4::new, TestMap5::new, TestMap6::new, TestMap7::new
+                TestTutorial::new, TestMap::new, TestMap2::new, TestMap3::new, TestMap4::new, TestMap5::new, TestMap6::new, TestMap7::new, BossBattle::new
         };
 
         SPRITE_FONT_PAUSE = new SpriteFont("Pause", 350, 250, "Comic Sans", 30, Color.white);

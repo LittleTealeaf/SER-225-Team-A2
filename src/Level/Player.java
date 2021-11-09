@@ -429,6 +429,7 @@ public abstract class Player extends GameObject {
             if(mapEntity instanceof Bone) {
             	canJump = false;
             	boneEffect.setWaitTime(5000);
+            	playerHealth -= 1;
             }
             if (playerHealth <= 0) {
             	levelState = LevelState.PLAYER_DEAD;
