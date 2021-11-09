@@ -11,12 +11,13 @@
 |Step | Action | Expected Result | Pass/Fail     |
 |:---:| :---        |    :----  | :---: |
 |1| Run the game| The game successfully opens |P|
-|2| Check the base volume| User will be able to comfortably navigate menus without having music too loud | [RESULT] |
-|3| Enter Level 1 | The User enters the game on level 1 | [RESULT] |
-|4| Complete Level 1 | The User is able to complete the level | [RESULT] |
-|5| Check base volume | The User will be able to comfortable play the game without having the music too loud | [RESULT] |
+|2| Check the base volume| User will be able to comfortably navigate menus without having music too loud | Pass |
+|3| Enter Level 1 | The User enters the game on level 1 | Pass |
+|4| Complete Level 1 | The User is able to complete the level | Pass |
+|5| Check base volume | The User will be able to comfortable play the game without having the music too loud | Pass |
 
 ### Test Completion
-- **Tester**: [TESTER NAME]
-- **Date of Test**: DATE OF TEST
-- **Test Result**: TEST RESULT
+- **Tester**: Thomas Kwashnak
+- **Date of Test**: 11/9/2021
+- **Test Result**: Passed
+- **Notes:** *Thank god this is done now*
