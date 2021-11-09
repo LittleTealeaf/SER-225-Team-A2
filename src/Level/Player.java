@@ -4,6 +4,7 @@ import Engine.KeyLocker;
 import Engine.KeyboardAction;
 import GameObject.GameObject;
 import GameObject.SpriteSheet;
+import Projectiles.Bone;
 import Utils.AirGroundState;
 import Utils.Direction;
 import Utils.Point;
@@ -40,6 +41,10 @@ public abstract class Player extends GameObject {
     protected float moveAmountX, moveAmountY;
     
     protected Stopwatch attackCooldown = new Stopwatch();
+    
+    // Variables used to apply effect to player from the Boss' bone
+    protected Stopwatch boneEffect = new Stopwatch();
+    protected boolean canJump = true;
 
     // values used to keep track of player's current state
     protected PlayerState playerState;
@@ -196,7 +201,7 @@ public abstract class Player extends GameObject {
         }
 
         // if jump key is pressed, player enters JUMPING state
-        if (KeyboardAction.GAME_JUMP.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_JUMP)) {
+        if (KeyboardAction.GAME_JUMP.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_JUMP) && canJump == true) {
             //System.out.println("w");
             playerState = PlayerState.JUMPING;
         }
@@ -420,6 +425,10 @@ public abstract class Player extends GameObject {
             }
             if (mapEntity instanceof Projectile) {
             	playerHealth -= 1;
+            }
+            if(mapEntity instanceof Bone) {
+            	canJump = false;
+            	boneEffect.setWaitTime(5000);
             }
             if (playerHealth <= 0) {
             	levelState = LevelState.PLAYER_DEAD;
