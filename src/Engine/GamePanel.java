@@ -133,16 +133,16 @@ public class GamePanel extends JPanel {
 	}
 	public static void setVolumeLow() {
 		
-		setVolume(.5);
+		setVolume(.05);
 	}
 
 	public static void setVolumeMed() {
-		setVolume(1);
+		setVolume(.1);
 		
 	}
 
 	public static void setVolumeHigh() {
-		setVolume(2);
+		setVolume(.3);
 		
 	}
 
@@ -151,10 +151,10 @@ public class GamePanel extends JPanel {
 		timer.start();
 
 		try {
-			music("Resources/Music/music.wav",1);
+			music("Resources/Music/music.wav",.05);
 		} catch(Exception e) {
 			try {
-				music("Resources/Music/music.mp3",1);
+				music("Resources/Music/music.mp3",.05);
 			} catch(Exception f) {
 
 			}
