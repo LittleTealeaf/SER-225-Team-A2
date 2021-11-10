@@ -379,17 +379,17 @@ public abstract class Player extends GameObject {
     @Override
     public void onEndCollisionCheckX(boolean hasCollided, Direction direction) {
     	// if the player collides with the coordinates specified below, it either stops (beginning of level) or goes back to the start (end of level)
+
     	if (direction == Direction.LEFT || direction == Direction.RIGHT) {
+            int rightBound = map.getWidthPixels() - map.getTileset().getScaledSpriteWidth();
     		if (x < 0) {
     			hasCollided = true;
     			momentumX = 0;
     			setX(0);
-    		}
-    		else if (x > 2500) {
+    		} else if (levelState != LevelState.LEVEL_COMPLETED && x > rightBound) {
     			hasCollided = true;
     			momentumX = 0;
-    			setX(0);
-    			setY(0);
+                setX(rightBound);
     		}
     	}
     	if (hasCollided && MapTileCollisionHandler.lastCollidedTileX != null) {

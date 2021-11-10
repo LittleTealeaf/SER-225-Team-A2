@@ -2,10 +2,14 @@ package Engine;
 
 import GameObject.Rectangle;
 import Level.Player;
+import Players.Avatar;
+import Players.Cat;
+import Screens.OptionsScreen;
 import SpriteFont.SpriteFont;
 import Utils.Colors;
 import Utils.Stopwatch;
 
+import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
 //import sun.audio.AudioData;
 import javax.swing.*;
@@ -17,6 +21,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -128,16 +133,16 @@ public class GamePanel extends JPanel {
 	}
 	public static void setVolumeLow() {
 		
-		setVolume(.5);
+		setVolume(.05);
 	}
 
 	public static void setVolumeMed() {
-		setVolume(1);
+		setVolume(.1);
 		
 	}
 
 	public static void setVolumeHigh() {
-		setVolume(2);
+		setVolume(.3);
 		
 	}
 
@@ -146,10 +151,10 @@ public class GamePanel extends JPanel {
 		timer.start();
 
 		try {
-			music("Resources/Music/music.wav",1);
+			music("Resources/Music/music.wav",.05);
 		} catch(Exception e) {
 			try {
-				music("Resources/Music/music.mp3",1);
+				music("Resources/Music/music.mp3",.05);
 			} catch(Exception f) {
 
 			}
@@ -205,7 +210,6 @@ public class GamePanel extends JPanel {
 		if (doPaint) {
 			draw();
 		}
-
 	}
 
 	public static void mouseClicked(MouseEvent e) {
