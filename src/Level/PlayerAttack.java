@@ -2,6 +2,7 @@ package Level;
 
 
 import Builders.FrameBuilder;
+import Enemies.Dog;
 import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.SpriteSheet;
@@ -21,6 +22,7 @@ import java.util.HashMap;
 public class PlayerAttack extends Enemy {
     private float movementSpeed;
     private Stopwatch existenceTimer = new Stopwatch();
+    public static int dogHealth = 8;
 
     public PlayerAttack(Point location, float movementSpeed, int existenceTime) {
         super(location.x, location.y, new SpriteSheet(ImageLoader.load("Fireball.png"), 7, 7), "DEFAULT");
@@ -47,7 +49,16 @@ public class PlayerAttack extends Enemy {
             super.update(player);
             ArrayList<Enemy> enemies = map.getActiveEnemies();
             for (int i = 0; i < enemies.size(); i++) {
-            	if (intersects(enemies.get(i)) && !(enemies.get(i) instanceof PlayerAttack)) {
+            	if(intersects(enemies.get(i)) && enemies.get(i) instanceof Dog) {
+            		this.mapEntityStatus = MapEntityStatus.REMOVED;
+            		dogHealth -= 1;
+            		System.out.println(dogHealth);
+            		if(dogHealth == 0) {
+            			enemies.get(i).mapEntityStatus = MapEntityStatus.REMOVED;
+            		}
+            	}
+            	if (intersects(enemies.get(i)) && !(enemies.get(i) instanceof PlayerAttack) && !(enemies.get(i) instanceof Dog)) {
+            		this.mapEntityStatus = MapEntityStatus.REMOVED;
             		enemies.get(i).mapEntityStatus = MapEntityStatus.REMOVED;
             	}
             }

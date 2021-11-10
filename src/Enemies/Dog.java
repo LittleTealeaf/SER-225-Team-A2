@@ -37,7 +37,7 @@ public class Dog extends Enemy {
     protected dogState previousdogState;
 
     public Dog(Point startLocation, Point endLocation, Direction facingDirection) {
-        super(startLocation.x, startLocation.y, new SpriteSheet(ImageLoader.load("dogEnemy.png"), 14, 17), "WALK_RIGHT");
+        super(startLocation.x, startLocation.y, new SpriteSheet(ImageLoader.load("Dog.png"), 30, 26), "WALK_RIGHT");
         this.startLocation = startLocation;
         this.endLocation = endLocation;
         this.startFacingDirection = facingDirection;
@@ -120,7 +120,7 @@ public class Dog extends Enemy {
                 int boneY = Math.round(getY()) + 4;
 
                 // create bone enemy
-                Bone bone = new Bone(new Point(boneX, boneY), movementSpeed, 1000);
+                Bone bone = new Bone(new Point(boneX, boneY), movementSpeed, 2000);
 
                 // add bone enemy to the map for it to offically spawn in the level
                 map.addProjectile(bone);
@@ -152,45 +152,45 @@ public class Dog extends Enemy {
         return new HashMap<String, Frame[]>() {{
             put("WALK_LEFT", new Frame[]{
                     new FrameBuilder(spriteSheet.getSprite(0, 0), 200)
-                            .withScale(3)
-                            .withBounds(4, 2, 5, 13)
+                            .withScale(2)
+                            .withBounds(0, 0, 30, 13)
                             .build(),
-                    new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
-                            .withScale(3)
-                            .withBounds(4, 2, 5, 13)
+                    new FrameBuilder(spriteSheet.getSprite(0, 1), 200)
+                            .withScale(2)
+                            .withBounds(0, 0, 30, 13)
                             .build(),
-                    new FrameBuilder(spriteSheet.getSprite(2, 0), 200)
-                            .withScale(3)
-                            .withBounds(4, 2, 5, 13)
+                    new FrameBuilder(spriteSheet.getSprite(0, 2), 200)
+                            .withScale(2)
+                            .withBounds(0, 0, 30, 13)
                             .build()
             });
 
             put("WALK_RIGHT", new Frame[]{
-            		new FrameBuilder(spriteSheet.getSprite(0, 1), 200)
-		                    .withScale(3)
-		                    .withBounds(4, 2, 5, 13)
+            		new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
+		                    .withScale(2)
+		                    .withBounds(0, 0, 30, 13)
 		                    .build(),
 		            new FrameBuilder(spriteSheet.getSprite(1, 1), 200)
-		                    .withScale(3)
-		                    .withBounds(4, 2, 5, 13)
+		                    .withScale(2)
+		                    .withBounds(0, 0, 30, 13)
 		                    .build(),
-		            new FrameBuilder(spriteSheet.getSprite(2, 1), 200)
-		                    .withScale(3)
-		                    .withBounds(4, 2, 5, 13)
+		            new FrameBuilder(spriteSheet.getSprite(1, 2), 200)
+		                    .withScale(2)
+		                    .withBounds(0, 0, 30, 13)
 		                    .build()
             });
 
             put("SHOOT_LEFT", new Frame[]{
-                    new FrameBuilder(spriteSheet.getSprite(1, 3), 0)
-                            .withScale(3)
-                            .withBounds(4, 2, 5, 13)
+                    new FrameBuilder(spriteSheet.getSprite(0, 2), 0)
+                            .withScale(2)
+                            .withBounds(30, 0, 30, 13)
                             .build(),
             });
 
             put("SHOOT_RIGHT", new Frame[]{
-                    new FrameBuilder(spriteSheet.getSprite(2, 3), 0)
-                            .withScale(3)
-                            .withBounds(4, 2, 5, 13)
+                    new FrameBuilder(spriteSheet.getSprite(1, 2), 0)
+                            .withScale(2)
+                            .withBounds(0, 0, 30, 13)
                             .build(),
             });
         }};

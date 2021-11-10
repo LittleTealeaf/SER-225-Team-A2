@@ -22,7 +22,7 @@ public class Bone extends Projectile {
     private Stopwatch existenceTimer = new Stopwatch();
 
     public Bone(Point location, float movementSpeed, int existenceTime) {
-        super(location.x, location.y, new SpriteSheet(ImageLoader.load("Bone.png"), 14, 14), "DEFAULT");
+        super(location.x, location.y, new SpriteSheet(ImageLoader.load("Bone.png"), 13, 13), "DEFAULT");
         this.movementSpeed = movementSpeed;
 
         // how long the bone will exist for before disappearing
@@ -70,22 +70,22 @@ public class Bone extends Projectile {
     public HashMap<String, Frame[]> getAnimations(SpriteSheet spriteSheet) {
         return new HashMap<String, Frame[]>() {{
             put("DEFAULT", new Frame[]{
-                    new FrameBuilder(spriteSheet.getSprite(0, 0), 0)
-                            .withScale(3)
-                            .withBounds(1, 1, 5, 5)
+            		new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
+		                    .withScale(2)
+		                    .withBounds(1, 1, 13, 13)
+		                    .build(),
+                    new FrameBuilder(spriteSheet.getSprite(0, 0), 200)
+                            .withScale(2)
+                            .withBounds(1, 1, 13, 13)
                             .build(),
-                    new FrameBuilder(spriteSheet.getSprite(0, 1), 0)
-                            .withScale(3)
-                            .withBounds(1, 1, 5, 5)
+                    new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
+                            .withScale(2)
+                            .withBounds(1, 1, 13, 13)
                             .build(),
-                    new FrameBuilder(spriteSheet.getSprite(0, 0), 0)
-                            .withScale(3)
-                            .withBounds(1, 1, 5, 5)
-                            .build(),
-                    new FrameBuilder(spriteSheet.getSprite(0, 1), 0)
-                            .withScale(3)
+                    new FrameBuilder(spriteSheet.getSprite(0, 0), 200)
+                            .withScale(2)
                             .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                            .withBounds(1, 1, 5, 5)
+                            .withBounds(1, 1, 13, 13)
                             .build()
             });
         }};

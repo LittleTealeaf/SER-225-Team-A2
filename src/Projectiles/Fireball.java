@@ -61,10 +61,6 @@ public class Fireball extends Projectile {
         super.touchedPlayer(player);
         this.mapEntityStatus = MapEntityStatus.REMOVED;
     }
-    
-    public void touchedEnemy(Enemy enemy) {
-    	
-    }
 
     @Override
     public HashMap<String, Frame[]> getAnimations(SpriteSheet spriteSheet) {
