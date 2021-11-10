@@ -1,6 +1,5 @@
 ### Test Case Information
 
-\
 | TEST CASE ID | SCP-9 |
 | :--- | :--- |
 | Owner of Test | JACOB CONRAD |
