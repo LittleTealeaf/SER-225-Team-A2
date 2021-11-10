@@ -10,13 +10,20 @@ import Menu.Direction;
 import Menu.Menu;
 import Menu.MenuOption;
 import Players.Avatar;
+import Players.Cat;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class OptionsScreen extends Menu {
 	private MenuOption[][] items;
 	private BufferedImage cat;
 	public static int catColor;
+
     public OptionsScreen() {
         setBackground(new LevelSelectMap());
         items = new MenuOption[][]{
@@ -37,6 +44,7 @@ public class OptionsScreen extends Menu {
                 }
         };
         setMenuItemsAsGrid(items);
+        
 
         //Sets the smaller fonts
         Font smallerFont = new Font("Comic Sans", Font.PLAIN, 24);

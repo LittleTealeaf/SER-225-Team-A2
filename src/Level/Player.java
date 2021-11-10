@@ -4,6 +4,8 @@ import Engine.KeyLocker;
 import Engine.KeyboardAction;
 import GameObject.GameObject;
 import GameObject.SpriteSheet;
+import Projectiles.Bone;
+import Projectiles.Fireball;
 import Utils.AirGroundState;
 import Utils.Direction;
 import Utils.Point;
@@ -40,6 +42,10 @@ public abstract class Player extends GameObject {
     protected float moveAmountX, moveAmountY;
     
     protected Stopwatch attackCooldown = new Stopwatch();
+    
+    // Variables used to apply effect to player from the Boss' bone
+    protected Stopwatch boneEffect = new Stopwatch();
+    protected boolean canJump = true;
 
     // values used to keep track of player's current state
     protected PlayerState playerState;
@@ -104,6 +110,15 @@ public abstract class Player extends GameObject {
         else if (levelState == LevelState.PLAYER_DEAD) {
             updatePlayerDead();
         }
+        
+        if(boneEffect.isTimeUp()) {
+        	canJump = true;
+        }
+        
+        if(PlayerAttack.dogHealth == 0) {
+        	canJump = true;
+        	jumpHeight = 16;
+        }
     }
 
     // add gravity to player, which is a downward force
@@ -144,7 +159,7 @@ public abstract class Player extends GameObject {
         }
 
         // if jump key is pressed, player enters JUMPING state
-        else if (KeyboardAction.GAME_JUMP.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_JUMP)) {
+        else if (KeyboardAction.GAME_JUMP.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_JUMP) && canJump == true) {
             playerState = PlayerState.JUMPING;
         }
 
@@ -196,7 +211,7 @@ public abstract class Player extends GameObject {
         }
 
         // if jump key is pressed, player enters JUMPING state
-        if (KeyboardAction.GAME_JUMP.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_JUMP)) {
+        if (KeyboardAction.GAME_JUMP.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_JUMP) && canJump == true) {
             //System.out.println("w");
             playerState = PlayerState.JUMPING;
         }
@@ -232,7 +247,7 @@ public abstract class Player extends GameObject {
     // player JUMPING state logic
     protected void playerJumping() {
         // if last frame player was on ground and this frame player is still on ground, the jump needs to be setup
-        if (previousAirGroundState == AirGroundState.GROUND && airGroundState == AirGroundState.GROUND) {
+        if (previousAirGroundState == AirGroundState.GROUND && airGroundState == AirGroundState.GROUND && canJump == true) {
             // sets animation to a JUMP animation based on which way player is facing
             currentAnimationName = facingDirection == Direction.RIGHT ? "JUMP_RIGHT" : "JUMP_LEFT";
 
@@ -415,11 +430,15 @@ public abstract class Player extends GameObject {
     public void hurtPlayer(MapEntity mapEntity) {
         if (!isInvincible) {
             // if map entity is an enemy, kill player on touch
-            if (mapEntity instanceof Enemy) {
+        	if (mapEntity instanceof Enemy) {
             	playerHealth = 0;
             }
             if (mapEntity instanceof Projectile) {
             	playerHealth -= 1;
+            }
+            if(mapEntity instanceof Bone) {
+            	canJump = false;
+            	boneEffect.setWaitTime(5000);
             }
             if (playerHealth <= 0) {
             	levelState = LevelState.PLAYER_DEAD;
