@@ -1,5 +1,5 @@
 ### Test Case Information
-| TEST CASE ID | SCP-10|
+| TEST CASE ID | SCP-32|
 | :--- | :--- |
 | Owner of Test | Ty Hutchison|
 | Test Name | Update Instructions |
