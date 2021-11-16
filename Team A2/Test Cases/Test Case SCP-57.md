@@ -6,6 +6,14 @@
 | Date of Last Revision | 11/16/2021 |
 | Test Objective | Ensure that all current functionalities of the player is implemented in new Player class and still functional |
 
+Functionality of `Player.java` tested:
+ - Movement, and movement animations
+ - Jumping, including gravity and hitting floor
+ - Animation while jumping
+ - Collision with enemies
+ - Shooting, including animations while standing still and moving
+ - Collision with map boundaries and map walls
+
 ### Procedure
 
 |Step | Action | Expected Result | Pass/Fail     |
