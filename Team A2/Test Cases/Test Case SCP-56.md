@@ -5,7 +5,7 @@
 | Test Name | Test Game Speed |
 | Date of Last Revision | 11/16/2021 |
 | Test Objective | Ensure that the game runs consistently through multiple distributions |
-| Testing Notes| Due to the nature of this test, multiple tests must be made before the test can be considered complete. Testing must be performed on multiple devices with varied operating system and configuration|
+| Test Notes| Due to the nature of this test, multiple tests must be made before the test can be considered complete. Testing must be performed on multiple devices with varied operating system and configuration|
 
 ### Procedure
 
