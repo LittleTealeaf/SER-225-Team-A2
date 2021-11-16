@@ -1,15 +1,10 @@
 package Engine;
 
 import GameObject.Rectangle;
-import Level.Player;
-import Players.Avatar;
-import Players.Cat;
-import Screens.OptionsScreen;
-import SpriteFont.SpriteFont;
+import Level.Player_Old;
 import Utils.Colors;
 import Utils.Stopwatch;
 
-import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
 //import sun.audio.AudioData;
 import javax.swing.*;
@@ -21,7 +16,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -178,15 +172,15 @@ public class GamePanel extends JPanel {
 	// Checks the players health and accordingly changes to the image with the corresponding number of hearts
 	public void changeHealth() {
 		if(coordinator.getGameState() == GameState.LEVEL) {
-			if(Player.playerHealth == 3) { 
+			if(Player_Old.playerHealth == 3) {
 				health.setIcon(new ImageIcon(ImageLoader.load("3 Hearts.png")));
 			}
 			
-			else if(Player.playerHealth == 2) { 
+			else if(Player_Old.playerHealth == 2) {
 				health.setIcon(new ImageIcon(ImageLoader.load("2 Hearts.png")));
 			}
 			
-			else if(Player.playerHealth == 1) { 
+			else if(Player_Old.playerHealth == 1) {
 				health.setIcon(new ImageIcon(ImageLoader.load("1 Heart.png")));
 			}
 			
@@ -196,7 +190,7 @@ public class GamePanel extends JPanel {
 		}
 		
 		if(coordinator.getGameState() == GameState.MENU) {
-			Player.playerHealth = 3;
+            Player_Old.playerHealth = 3;
 		}
 	}
 

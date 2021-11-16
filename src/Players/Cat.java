@@ -6,14 +6,14 @@ import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
-import Level.Player;
+import Level.Player_Old;
 import Utils.Point;
 
 import java.util.HashMap;
 
 // This is the class for the Cat player character
 // basically just sets some values for physics and then defines animations
-public class Cat extends Player {
+public class Cat extends Player_Old {
 
     public Cat(String name, Point point) {
         this(name,point.x,point.y);

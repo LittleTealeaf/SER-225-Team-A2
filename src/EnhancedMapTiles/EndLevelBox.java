@@ -5,7 +5,7 @@ import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.SpriteSheet;
 import Level.EnhancedMapTile;
-import Level.Player;
+import Level.Player_Old;
 import Level.TileType;
 import Utils.Point;
 
@@ -19,7 +19,7 @@ public class EndLevelBox extends EnhancedMapTile {
     }
 
     @Override
-    public void update(Player player) {
+    public void update(Player_Old player) {
         super.update(player);
         if (intersects(player)) {
             player.completeLevel();

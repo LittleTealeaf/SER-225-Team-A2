@@ -333,7 +333,7 @@ public abstract class Map implements Drawable {
         this.adjustCamera = adjustCamera;
     }
 
-    public void update(Player player) {
+    public void update(Player_Old player) {
         if (adjustCamera) {
             adjustMovementY(player);
             adjustMovementX(player);
@@ -343,7 +343,7 @@ public abstract class Map implements Drawable {
 
     // based on the player's current X position (which in a level can potentially be updated each frame),
     // adjust the player's and camera's positions accordingly in order to properly create the map "scrolling" effect
-    private void adjustMovementX(Player player) {
+    private void adjustMovementX(Player_Old player) {
         // if player goes past center screen (on the right side) and there is more map to show on the right side, push player back to center and move camera forward
         if (player.getCalibratedXLocation() > xMidPoint && camera.getEndBoundX() < endBoundX) {
             float xMidPointDifference = xMidPoint - player.getCalibratedXLocation();
@@ -370,7 +370,7 @@ public abstract class Map implements Drawable {
 
     // based on the player's current Y position (which in a level can potentially be updated each frame),
     // adjust the player's and camera's positions accordingly in order to properly create the map "scrolling" effect
-    private void adjustMovementY(Player player) {
+    private void adjustMovementY(Player_Old player) {
         // if player goes past center screen (below) and there is more map to show below, push player back to center and move camera upward
         if (player.getCalibratedYLocation() > yMidPoint && camera.getEndBoundY() < endBoundY) {
             float yMidPointDifference = yMidPoint - player.getCalibratedYLocation();

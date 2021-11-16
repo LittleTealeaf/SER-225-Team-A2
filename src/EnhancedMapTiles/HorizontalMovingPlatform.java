@@ -4,7 +4,7 @@ import Engine.GraphicsHandler;
 import GameObject.ImageEffect;
 import GameObject.Rectangle;
 import Level.EnhancedMapTile;
-import Level.Player;
+import Level.Player_Old;
 import Level.TileType;
 import Utils.AirGroundState;
 import Utils.Direction;
@@ -37,7 +37,7 @@ public class HorizontalMovingPlatform extends EnhancedMapTile {
     }
 
     @Override
-    public void update(Player player) {
+    public void update(Player_Old player) {
         float startBound = startLocation.x;
         float endBound = endLocation.x;
 

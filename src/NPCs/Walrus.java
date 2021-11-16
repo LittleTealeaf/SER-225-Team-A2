@@ -8,7 +8,7 @@ import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.Map;
 import Level.NPC;
-import Level.Player;
+import Level.Player_Old;
 import SpriteFont.SpriteFont;
 import Utils.Point;
 
@@ -27,7 +27,7 @@ public class Walrus extends NPC {
         return new SpriteFont("Good Luck on your quest!", getX(), getY() - 10, "Arial", 12, Color.BLACK);
     }
 
-    public void update(Player player) {
+    public void update(Player_Old player) {
         // while npc is being talked to, it raises its tail up (in excitement?)
         if (talkedTo) {
             currentAnimationName = "TAIL_UP";

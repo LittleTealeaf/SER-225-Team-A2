@@ -6,13 +6,10 @@ import Enemies.Dog;
 import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.SpriteSheet;
-import Level.Enemy;
-import Level.MapEntityStatus;
-import Level.Player;
 import Utils.Direction;
 import Utils.Point;
 import Utils.Stopwatch;
-import Level.Map;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -38,7 +35,7 @@ public class PlayerAttack extends Enemy {
     }
 
     @Override
-    public void update(Player player) {
+    public void update(Player_Old player) {
         // if timer is up, set map entity status to REMOVED
         // the camera class will see this next frame and remove it permanently from the map
         if (existenceTimer.isTimeUp()) {
@@ -74,7 +71,7 @@ public class PlayerAttack extends Enemy {
     }
 
     @Override
-    public void touchedPlayer(Player player) {
+    public void touchedPlayer(Player_Old player) {
         // if fireball touches player, it disappears
         //super.touchedPlayer(player);
         //this.mapEntityStatus = MapEntityStatus.REMOVED;

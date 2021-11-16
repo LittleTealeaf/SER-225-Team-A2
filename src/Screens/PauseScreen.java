@@ -3,7 +3,7 @@ package Screens;
 import Engine.*;
 import Game.GameState;
 import Level.Map;
-import Level.Player;
+import Level.Player_Old;
 import Menu.Menu;
 import Menu.MenuOption;
 import SpriteFont.SpriteFont;
@@ -24,7 +24,7 @@ public class PauseScreen extends Menu {
     private final PlayLevelScreen playLevelScreen;
     private boolean menuEscape;
 
-    public PauseScreen(Map map, Player player, PlayLevelScreen playLevelScreen) {
+    public PauseScreen(Map map, Player_Old player, PlayLevelScreen playLevelScreen) {
         this.playLevelScreen = playLevelScreen;
         menuEscape = false;
         setDrawables(new Drawable[]{

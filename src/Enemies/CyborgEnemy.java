@@ -6,7 +6,7 @@ import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.Enemy;
-import Level.Player;
+import Level.Player_Old;
 import Projectiles.LazerBeam;
 import Utils.AirGroundState;
 import Utils.Direction;
@@ -14,7 +14,6 @@ import Utils.Point;
 import Utils.Stopwatch;
 
 import java.util.HashMap;
-import java.util.Timer;
 
 // This class is for the cyborg
 // It walks back and forth between two set points (startLocation and endLocation)
@@ -69,7 +68,7 @@ public class CyborgEnemy extends Enemy {
     }
 
     @Override
-    public void update(Player player) {
+    public void update(Player_Old player) {
         float startBound = startLocation.x;
         float endBound = endLocation.x;
 

@@ -1,7 +1,7 @@
 package Players;
 
 
-import Level.Player;
+import Level.Player_Old;
 import Utils.Point;
 
 //TODO make this the new Cat Options with a factory to create the player
@@ -17,11 +17,11 @@ public enum Avatar {
         this.factory = factory;
     }
 
-    public Player generatePlayer(Point startingPoint) {
+    public Player_Old generatePlayer(Point startingPoint) {
         return factory.generatePlayer(startingPoint);
     }
 
     public interface PlayerFactory {
-        Player generatePlayer(Point startingPoint);
+        Player_Old generatePlayer(Point startingPoint);
     }
 }

@@ -2,7 +2,7 @@ package Screens;
 
 import Engine.Drawable;
 import Engine.KeyboardAction;
-import Level.Player;
+import Level.Player_Old;
 import Level.PlayerAttack;
 import Menu.Menu;
 import SpriteFont.SpriteFont;
@@ -26,7 +26,7 @@ public class LevelLoseScreen extends Menu {
         super.update();
         if (KeyboardAction.GAME_RESPAWN.isDown()) {
             playLevelScreen.resetLevel();
-            Player.playerHealth = 3;
+            Player_Old.playerHealth = 3;
             PlayerAttack.dogHealth = 8;
         }
     }

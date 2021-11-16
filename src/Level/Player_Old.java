@@ -13,7 +13,8 @@ import Utils.Stopwatch;
 
 import java.util.ArrayList;
 
-public abstract class Player extends GameObject {
+@Deprecated
+public abstract class Player_Old extends GameObject {
     // values that affect player movement
     // these should be set in a subclass
     protected float walkSpeed = 0;
@@ -65,7 +66,7 @@ public abstract class Player extends GameObject {
     // added 11/19
 	protected PlayerAttack currentProjectile;
 
-    public Player(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
+    public Player_Old(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
         super(spriteSheet, x, y, startingAnimationName);
         facingDirection = Direction.RIGHT;
         airGroundState = AirGroundState.AIR;

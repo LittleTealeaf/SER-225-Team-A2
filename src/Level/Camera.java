@@ -1,6 +1,5 @@
 package Level;
 
-import Engine.Config;
 import Engine.GraphicsHandler;
 import Engine.ScreenManager;
 import GameObject.GameObject;
@@ -50,7 +49,7 @@ public class Camera extends Rectangle {
         
     }
 
-    public void update(Player player) {
+    public void update(Player_Old player) {
         updateMapTiles();
         updateMapEntities(player);
     }
@@ -70,7 +69,7 @@ public class Camera extends Rectangle {
 
     // update map entities currently a part of the update/draw cycle
     // active entities are calculated each frame using the loadActiveEntity methods below
-    public void updateMapEntities(Player player) {
+    public void updateMapEntities(Player_Old player) {
         activeEnemies = loadActiveEnemies();
         activeProjectiles = loadActiveProjectiles();
         activeEnhancedMapTiles = loadActiveEnhancedMapTiles();
