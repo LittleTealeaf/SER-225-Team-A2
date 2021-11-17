@@ -21,7 +21,7 @@ public abstract class Player extends GameObject {
     public static int PLAYER_HEALTH = 3;
     protected float gravity, jumpHeight, walkSpeed, sprintSpeed, sprintAcceleration;
     private final List<PlayerListener> playerListeners = new ArrayList<>();
-    private final Stopwatch attackDelay, jumpDelay;
+    private final Stopwatch attackDelay = new Stopwatch(), jumpDelay = new Stopwatch();
     private PlayerState playerState;
     private Facing facing;
     private LevelState levelState;
@@ -34,9 +34,6 @@ public abstract class Player extends GameObject {
         playerState = PlayerState.STAND;
         levelState = LevelState.PLAYING;
         facing = Facing.RIGHT;
-
-        attackDelay = new Stopwatch();
-        jumpDelay = new Stopwatch();
     }
 
     public void update() {
@@ -55,7 +52,7 @@ public abstract class Player extends GameObject {
 
         //Update Player Action and Direction
         boolean moveLeftDown = KeyboardAction.GAME_MOVE_LEFT.isDown();
-        boolean playerMove = moveLeftDown ^ KeyboardAction.GAME_MOVE_RIGHT.isDown();
+        boolean playerMove = moveLeftDown ^ KeyboardAction.GAME_MOVE_RIGHT.isDown(); //Only true if the player is moving in a direction
         facing = playerMove ? moveLeftDown ? Facing.LEFT : Facing.RIGHT : facing; //Update facing if the player moved
         //Only move if the player moved and is not going out of bounds
         if (playerMove && ((facing == Facing.LEFT && x > 0) ^ (facing == Facing.RIGHT && x < map.getRightBound()))) {
@@ -64,10 +61,10 @@ public abstract class Player extends GameObject {
                 if (absVelocityX < sprintSpeed) {
                     absVelocityX *= sprintAcceleration;
                 }
-            } else {
+            } else { //If player is not sprinting, or if the player started off sprinting from rest (where velocityX is 0)
                 absVelocityX = walkSpeed;
             }
-        } else {
+        } else { //Player is not moving
             absVelocityX = 0;
             playerState = PlayerState.STAND;
         }
