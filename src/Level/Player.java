@@ -196,6 +196,10 @@ public abstract class Player extends GameObject {
         playerListeners.add(listener);
     }
 
+    public void setJumpHeight(int height) {
+        this.jumpHeight = jumpHeight;
+    }
+
     @Override
     public void onEndCollisionCheckY(boolean hasCollided, Direction direction) {
         if(hasCollided) {
