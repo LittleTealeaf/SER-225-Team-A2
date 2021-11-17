@@ -86,7 +86,7 @@ Values set by the cat class
         //Update Animation
         setCurrentAnimationName(playerState.get(facing));
 
-        //List of keys that require to be tapped
+        //Lock Binds
         keyLocker.setAction(KeyboardAction.GAME_JUMP);
     }
 
@@ -120,8 +120,10 @@ Values set by the cat class
         //Update Jump
         if(KeyboardAction.GAME_JUMP.isDown()) {
             jump();
-        } else if(velocityY < 0) { //if the player releases while velocity is still up, cut short, remember that velocityY is inverse
-            velocityY = 0;
+        } else {
+            if(velocityY < 0) { //if the player releases while velocity is still up, cut short, remember that velocityY is inverse
+                velocityY = 0;
+            }
         }
 
         //Update Attack
@@ -162,6 +164,7 @@ Values set by the cat class
     private void jump() {
         if(canJump() && keyLocker.isActionUnlocked(KeyboardAction.GAME_JUMP)) {
             velocityY = -jumpHeight;
+            keyLocker.setAction(KeyboardAction.GAME_JUMP);
         }
     }
 
@@ -229,6 +232,9 @@ Values set by the cat class
     public void onEndCollisionCheckX(boolean hasCollided, Direction direction) {
         if(hasCollided) {
             handleCollision(MapTileCollisionHandler.lastCollidedTileX);
+            if(playerState == PlayerState.WALK) {
+                playerState = PlayerState.STAND;
+            }
         }
     }
 
