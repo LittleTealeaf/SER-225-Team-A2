@@ -137,7 +137,7 @@ public abstract class Player extends GameObject {
 
     private void updateDead() {
         playerState = PlayerState.DEATH;
-        if(currentFrameIndex == getCurrentAnimation().length - 1) {
+        if(currentFrameIndex > 0) {
             if(map.getCamera().containsDraw(this)) {
                 applyGravity(MAX_DEATH_FALL_VELOCITY);
             } else for(PlayerListener listener :playerListeners) {
