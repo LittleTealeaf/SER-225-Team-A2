@@ -16,6 +16,7 @@ public abstract class Player extends GameObject {
 
     //Static Values
     private static final int ATTACK_DELAY = 1500, JUMP_DELAY = 5000;
+    private static final float MAX_FALL_VELOCITY = 6f;
 
 /*
 Values set by the cat class
@@ -37,7 +38,7 @@ Values set by the cat class
 
      */
 
-    protected float gravity, jumpHeight;
+    protected float gravity, jumpHeight, walkSpeed, sprintSpeed, sprintAcceleration;
 
     public static int PLAYER_HEALTH = 3;
 
@@ -52,7 +53,11 @@ Values set by the cat class
     protected boolean inAir, invincible;
 
     // Velocities
-    protected float velocityX, velocityY;
+    /**
+     * VelocityX is absolute, and direction is decided from the facing.mod
+     */
+    private float velocityX,
+            velocityY;
 
     private final List<PlayerListener> playerListeners = new ArrayList<>();
 
@@ -97,9 +102,19 @@ Values set by the cat class
         if(move_leftDown ^ KeyboardAction.GAME_MOVE_RIGHT.isDown()) {
             facing = move_leftDown ? Facing.LEFT : Facing.RIGHT;
             playerState = PlayerState.WALK;
-        }
 
-        //Update Player X Direction
+            if(KeyboardAction.GAME_SPRINT.isDown()) {
+                if(velocityX < walkSpeed) {
+                    velocityX = walkSpeed;
+                } else if(velocityX < sprintSpeed) {
+                    velocityX *= sprintAcceleration;
+                }
+            } else {
+                velocityX = walkSpeed;
+            }
+        } else {
+            velocityX = 0;
+        }
 
 
         //Update Jump
@@ -116,7 +131,7 @@ Values set by the cat class
 
         //If the player is in the air, set its animation based on velocityY
         if(inAir) {
-            playerState = velocityY > 0 ? PlayerState.JUMP : PlayerState.FALL;
+            playerState = velocityY < 0 ? PlayerState.JUMP : PlayerState.FALL;
         }
 
         //Updates player to death if their health hits 0
@@ -125,7 +140,7 @@ Values set by the cat class
         }
 
         super.moveYHandleCollision(velocityY);
-        super.moveXHandleCollision(velocityX);
+        super.moveXHandleCollision(velocityX * facing.mod);
     }
 
     private void attack() {
@@ -159,8 +174,9 @@ Values set by the cat class
     }
 
     private void applyGravity() {
-        //Legacy code multiplies velocity by 2 beforehand
-        velocityY += gravity;
+        if(velocityY < MAX_FALL_VELOCITY) {
+            velocityY += gravity;
+        }
     }
 
     public void hurtPlayer(MapEntity mapEntity) {

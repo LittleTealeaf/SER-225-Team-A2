@@ -25,6 +25,9 @@ public class Cat extends Player {
        
         gravity = .5f;
         jumpHeight = 14.5f;
+        walkSpeed = 2.1f;
+        sprintSpeed = 3.3f;
+        sprintAcceleration = 1.05f;
 //        terminalVelocityY = 6f;
 //        jumpHeight = 14.5f;
 //        jumpDegrade = .5f;
