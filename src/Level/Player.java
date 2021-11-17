@@ -153,10 +153,7 @@ public abstract class Player extends GameObject {
                     listener.onDeath();
                 }
             }
-        } else {
-            velocityY = 0;
         }
-
         setY(y + velocityY);
     }
 
