@@ -9,7 +9,6 @@ import GameObject.SpriteSheet;
 import Level.Map;
 import Level.NPC;
 import Level.Player;
-import Level.Player_Old;
 import SpriteFont.SpriteFont;
 import Utils.Point;
 

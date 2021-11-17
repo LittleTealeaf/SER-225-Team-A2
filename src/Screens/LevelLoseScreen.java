@@ -3,7 +3,6 @@ package Screens;
 import Engine.Drawable;
 import Engine.KeyboardAction;
 import Level.Player;
-import Level.Player_Old;
 import Level.PlayerAttack;
 import Menu.Menu;
 import SpriteFont.SpriteFont;

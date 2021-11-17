@@ -2,7 +2,6 @@ package Engine;
 
 import GameObject.Rectangle;
 import Level.Player;
-import Level.Player_Old;
 import Utils.Colors;
 import Utils.Stopwatch;
 

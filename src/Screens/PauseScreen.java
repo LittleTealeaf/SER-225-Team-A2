@@ -4,7 +4,6 @@ import Engine.*;
 import Game.GameState;
 import Level.Map;
 import Level.Player;
-import Level.Player_Old;
 import Menu.Menu;
 import Menu.MenuOption;
 import SpriteFont.SpriteFont;

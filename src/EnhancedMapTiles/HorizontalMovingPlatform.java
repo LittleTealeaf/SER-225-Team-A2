@@ -5,9 +5,7 @@ import GameObject.ImageEffect;
 import GameObject.Rectangle;
 import Level.EnhancedMapTile;
 import Level.Player;
-import Level.Player_Old;
 import Level.TileType;
-import Utils.AirGroundState;
 import Utils.Direction;
 import Utils.Point;
 

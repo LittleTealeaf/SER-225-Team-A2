@@ -2,7 +2,6 @@ package Players;
 
 
 import Level.Player;
-import Level.Player_Old;
 import Utils.Point;
 
 //TODO make this the new Cat Options with a factory to create the player
