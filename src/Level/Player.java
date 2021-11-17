@@ -90,20 +90,22 @@ Values set by the cat class
         applyGravity();
         keepInBounds();
 
+        playerState = PlayerState.STAND;
+
         //Update Player Action and Direction
-        if(KeyboardAction.GAME_MOVE_LEFT.isDown()) {
-            facing = Facing.LEFT;
+        boolean move_leftDown = KeyboardAction.GAME_MOVE_LEFT.isDown();
+        if(move_leftDown ^ KeyboardAction.GAME_MOVE_RIGHT.isDown()) {
+            facing = move_leftDown ? Facing.LEFT : Facing.RIGHT;
             playerState = PlayerState.WALK;
         }
-        if(KeyboardAction.GAME_MOVE_RIGHT.isDown()) {
-            facing = Facing.RIGHT;
-            playerState = PlayerState.WALK;
-        }
+
+        //Update Player X Direction
+
 
         //Update Jump
         if(KeyboardAction.GAME_JUMP.isDown()) {
             jump();
-        } else if(velocityY > 0) { //if the player releases while velocity is still up, cut short
+        } else if(velocityY < 0) { //if the player releases while velocity is still up, cut short, remember that velocityY is inverse
             velocityY = 0;
         }
 
@@ -122,17 +124,13 @@ Values set by the cat class
             levelState = LevelState.DEAD;
         }
 
-        applyVelocity();
+        super.moveYHandleCollision(velocityY);
+        super.moveXHandleCollision(velocityX);
     }
 
     private void attack() {
         int attackX = facing == Facing.RIGHT ? Math.round(getX()) + getScaledWidth() - 20 : Math.round(getX());
-        int attackY = Math.round(getY()) + 10;
-        float movementSpeed = facing == Facing.RIGHT ? 1.5f : -1.5f;
-
-        PlayerAttack projectile = new PlayerAttack(new Point(attackX, attackY), movementSpeed, 1000);
-
-        map.addEnemy(projectile);
+        map.addEnemy(new PlayerAttack(new Point(attackX, Math.round(getY()) + 10), facing.mod * 1.5f, 1000));
         attackDelay.setWaitTime(ATTACK_DELAY);
     }
 
@@ -148,7 +146,7 @@ Values set by the cat class
 
     private void jump() {
         if(canJump() && keyLocker.isActionUnlocked(KeyboardAction.GAME_JUMP)) {
-            velocityY = jumpHeight;
+            velocityY = -jumpHeight;
         }
     }
 
@@ -162,13 +160,7 @@ Values set by the cat class
 
     private void applyGravity() {
         //Legacy code multiplies velocity by 2 beforehand
-        velocityY *= 2;
         velocityY += gravity;
-    }
-
-    private void applyVelocity() {
-        setX(x + velocityX);
-        setY(y + velocityY);
     }
 
     public void hurtPlayer(MapEntity mapEntity) {
@@ -206,6 +198,7 @@ Values set by the cat class
         playerListeners.add(listener);
     }
 
+    @Override
     public void onEndCollisionCheckY(boolean hasCollided, Direction direction) {
         if(direction == Direction.DOWN) {
             inAir = !hasCollided;
@@ -216,6 +209,7 @@ Values set by the cat class
         }
     }
 
+    @Override
     public void onEndCollisionCheckX(boolean hasCollided, Direction direction) {
         if(hasCollided) {
             handleCollision(MapTileCollisionHandler.lastCollidedTileX);

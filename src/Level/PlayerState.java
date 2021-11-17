@@ -27,6 +27,11 @@ public enum PlayerState {
     }
 
     public enum Facing {
-        LEFT,RIGHT
+        LEFT(-1),RIGHT(1);
+
+        public final int mod;
+        Facing(int i) {
+            this.mod = i;
+        }
     }
 }
