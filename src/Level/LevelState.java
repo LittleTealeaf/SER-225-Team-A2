@@ -1,7 +1,17 @@
 package Level;
 
 // This enum represents the potential states a level can be
-@Deprecated
 public enum LevelState {
-    RUNNING, LEVEL_COMPLETED, PLAYER_DEAD, LEVEL_WIN_MESSAGE, LEVEL_LOSE_MESSAGE
+    @Deprecated
+    RUNNING,
+    @Deprecated
+    LEVEL_COMPLETED,
+    @Deprecated
+    PLAYER_DEAD,
+    @Deprecated
+    LEVEL_WIN_MESSAGE,
+    @Deprecated
+    LEVEL_LOSE_MESSAGE,
+//    New values
+    PLAYING,DEAD,WIN
 }

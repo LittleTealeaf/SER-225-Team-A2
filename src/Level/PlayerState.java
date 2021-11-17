@@ -2,5 +2,31 @@ package Level;
 
 // This enum represents different states the Player can be in
 public enum PlayerState {
-    STANDING, WALKING, JUMPING, CROUCHING, ATTACKING, DYING, WINNING
+    STAND, WALK, JUMP, CROUCH,
+    DEATH,
+    @Deprecated
+    ATTACKING;
+
+    private String left,right;
+
+    PlayerState() {
+        left = this + "_LEFT";
+        right = this + "_RIGHT";
+    }
+
+    public String getLeft() {
+        return left;
+    }
+
+    public String getRight() {
+        return right;
+    }
+
+    public String get(Facing facing) {
+        return facing == Facing.LEFT ? left : right;
+    }
+
+    public enum Facing {
+        LEFT,RIGHT
+    }
 }

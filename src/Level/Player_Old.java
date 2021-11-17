@@ -5,7 +5,6 @@ import Engine.KeyboardAction;
 import GameObject.GameObject;
 import GameObject.SpriteSheet;
 import Projectiles.Bone;
-import Projectiles.Fireball;
 import Utils.AirGroundState;
 import Utils.Direction;
 import Utils.Point;
@@ -71,7 +70,7 @@ public abstract class Player_Old extends GameObject {
         facingDirection = Direction.RIGHT;
         airGroundState = AirGroundState.AIR;
         previousAirGroundState = airGroundState;
-        playerState = PlayerState.STANDING;
+        playerState = PlayerState.STAND;
         levelState = LevelState.RUNNING;
         this.x =  x;
         this.y = y;
@@ -130,16 +129,16 @@ public abstract class Player_Old extends GameObject {
     // based on player's current state, call appropriate player state handling method
     protected void handlePlayerState() {
         switch (playerState) {
-            case STANDING:
+            case STAND:
                 playerStanding();
                 break;
-            case WALKING:
+            case WALK:
                 playerWalking();
                 break;
-            case CROUCHING:
+            case CROUCH:
                 playerCrouching();
                 break;
-            case JUMPING:
+            case JUMP:
                 playerJumping();
                 break;
             // 11/19
@@ -156,17 +155,17 @@ public abstract class Player_Old extends GameObject {
 
         // if walk left or walk right key is pressed, player enters WALKING state
         if (KeyboardAction.GAME_MOVE_LEFT.isDown() || KeyboardAction.GAME_MOVE_RIGHT.isDown()) {
-            playerState = PlayerState.WALKING;
+            playerState = PlayerState.WALK;
         }
 
         // if jump key is pressed, player enters JUMPING state
         else if (KeyboardAction.GAME_JUMP.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_JUMP) && canJump == true) {
-            playerState = PlayerState.JUMPING;
+            playerState = PlayerState.JUMP;
         }
 
         // if crouch key is pressed, player enters CROUCHING state
         else if (KeyboardAction.GAME_CROUCH.isDown()) {
-            playerState = PlayerState.CROUCHING;
+            playerState = PlayerState.CROUCH;
         }
         
         // enter the attacking state if the attack key is pressed and the attack cooldown is up
@@ -208,18 +207,18 @@ public abstract class Player_Old extends GameObject {
         	moveAmountX += walkSpeed;
             facingDirection = Direction.RIGHT;
         } else {
-            playerState = PlayerState.STANDING;
+            playerState = PlayerState.STAND;
         }
 
         // if jump key is pressed, player enters JUMPING state
         if (KeyboardAction.GAME_JUMP.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_JUMP) && canJump == true) {
             //System.out.println("w");
-            playerState = PlayerState.JUMPING;
+            playerState = PlayerState.JUMP;
         }
 
         // if crouch key is pressed,
         else if (KeyboardAction.GAME_CROUCH.isDown()) {
-            playerState = PlayerState.CROUCHING;
+            playerState = PlayerState.CROUCH;
         }
         
         // enter the attacking state if the attack key is pressed and the attack cooldown is up
@@ -236,12 +235,12 @@ public abstract class Player_Old extends GameObject {
 
         // if crouch key is released, player enters STANDING state
         if (!KeyboardAction.GAME_CROUCH.isDown()) {
-            playerState = PlayerState.STANDING;
+            playerState = PlayerState.STAND;
         }
 
         // if jump key is pressed, player enters JUMPING state
         if (KeyboardAction.GAME_JUMP.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_JUMP)) {
-            playerState = PlayerState.JUMPING;
+            playerState = PlayerState.JUMP;
         }
     }
 
@@ -306,7 +305,7 @@ public abstract class Player_Old extends GameObject {
 
         // if player last frame was in air and this frame is now on ground, player enters STANDING state
         else if (previousAirGroundState == AirGroundState.AIR && airGroundState == AirGroundState.GROUND) {
-            playerState = PlayerState.STANDING;
+            playerState = PlayerState.STAND;
             
         }
     }
@@ -353,7 +352,7 @@ public abstract class Player_Old extends GameObject {
 				attackCooldown.setWaitTime(1500);
                 
                // after an attack finished set the player to a standing state
-                playerState = PlayerState.STANDING;
+                playerState = PlayerState.STAND;
                
             }
     }
@@ -409,7 +408,7 @@ public abstract class Player_Old extends GameObject {
                 momentumY = 0;
                 airGroundState = AirGroundState.GROUND;
             } else {
-                playerState = PlayerState.JUMPING;
+                playerState = PlayerState.JUMP;
                 airGroundState = AirGroundState.AIR;
             }
         }
