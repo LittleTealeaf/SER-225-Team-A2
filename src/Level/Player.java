@@ -95,7 +95,7 @@ public abstract class Player extends GameObject {
             levelState = LevelState.DEAD;
         }
 
-        inAir = true; //air is decided in the next line
+        inAir = true; //air is decided in moveYHandleCollision()
         super.moveYHandleCollision(velocityY);
         super.moveXHandleCollision(absVelocityX * facing.mod);
     }
@@ -169,12 +169,8 @@ public abstract class Player extends GameObject {
         switch (mapEntity.getCollisionType()) {
             case DAMAGE -> PLAYER_HEALTH -= 1;
             case INSTANT_DEATH -> PLAYER_HEALTH = 0;
-            case PREVENT_JUMP -> preventJump();
+            case PREVENT_JUMP -> jumpDelay.setWaitTime(JUMP_DELAY);
         }
-    }
-
-    public void preventJump() {
-        jumpDelay.setWaitTime(JUMP_DELAY);
     }
 
     public void completeLevel() {
