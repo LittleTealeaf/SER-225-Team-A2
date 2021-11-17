@@ -11,6 +11,9 @@ import Utils.Stopwatch;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author Thomas Kwashnak
+ */
 public abstract class Player extends GameObject {
 
     private static final int ATTACK_DELAY = 1500, JUMP_DELAY = 5000;
@@ -125,10 +128,8 @@ public abstract class Player extends GameObject {
                 playerState = PlayerState.WALK;
                 moveXHandleCollision(walkSpeed);
             }
-        } else {
-            for (PlayerListener listener : playerListeners) {
-                listener.onLevelCompleted();
-            }
+        } else for (PlayerListener listener : playerListeners) {
+            listener.onLevelCompleted();
         }
     }
 
