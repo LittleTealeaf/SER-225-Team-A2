@@ -29,9 +29,9 @@ Instances of tests are listed in table below (template provided). Measurements l
 **Overall Test Completion** indicates whether all steps were completed and no errors / inability to follow instructions occurred.
 
 
-|Date of Test|Tester Name|Computer Configuration | Measurement 1|Measurement 2|Measurement 3|Measurement 4| Overall Test Completion|
+|Date|Name|Device Information | Measure 1|Measure 2|Measure 3|Measure 4|Pass/Fail|
 |:---:|:---|:---|:---:|:---:|:---:|:---:|:---:|
-|[DATE]|[TESTER]|[CONFIG]|[MEASURE 1]|[MEASURE 2]|[MEASURE 3]|[MEASURE 4]|[PASS/FAIL]|
+|[DATE]|[TESTER_NAME]|[CONFIG]|[MEASURE 1]|[MEASURE 2]|[MEASURE 3]|[MEASURE 4]|[PASS/FAIL]|
 
 [comment]: <> (Add test rows to end here ^^)
 
