@@ -14,25 +14,22 @@ import java.util.List;
 
 public abstract class Player extends GameObject {
 
-    //Static Values
     private static final int ATTACK_DELAY = 1500, JUMP_DELAY = 5000;
-    private static final float MAX_FALL_VELOCITY = 6f;
+    private static final float MAX_FALL_VELOCITY = 6f, MAX_DEATH_FALL_VELOCITY = 10f , DEATH_Y_VELOCITY = -2.5f;
 
     protected float gravity, jumpHeight, walkSpeed, sprintSpeed, sprintAcceleration;
 
     public static int PLAYER_HEALTH = 3;
 
     protected Stopwatch attackDelay, jumpDelay;
-    private KeyLocker keyLocker = new KeyLocker();
 
 
     protected PlayerState playerState;
     protected Facing facing;
     protected LevelState levelState;
 
-    protected boolean inAir, invincible;
+    protected boolean inAir;
 
-    // Velocities
     /**
      * VelocityX is absolute, and direction is decided from the facing.mod
      */
@@ -65,14 +62,11 @@ public abstract class Player extends GameObject {
 
         //Update Animation
         setCurrentAnimationName(playerState.get(facing));
-
-        //Lock Binds
-        keyLocker.setAction(KeyboardAction.GAME_JUMP);
     }
 
 
     private void updatePlaying() {
-        applyGravity();
+        applyGravity(MAX_FALL_VELOCITY);
         keepInBounds();
 
         playerState = PlayerState.STAND;
@@ -96,12 +90,10 @@ public abstract class Player extends GameObject {
             velocityX = 0;
         }
 
-
         //Update Jump
         if(KeyboardAction.GAME_JUMP.isDown()) {
             if(jumpDelay.isTimeUp() && !inAir) {
                 velocityY = -jumpHeight;
-                keyLocker.setAction(KeyboardAction.GAME_JUMP);
             }
         } else if(velocityY < 0) { //if the player releases while velocity is still up, cut short, remember that velocityY is inverse
             velocityY = 0;
@@ -147,12 +139,12 @@ public abstract class Player extends GameObject {
         playerState = PlayerState.DEATH;
         if(currentFrameIndex == getCurrentAnimation().length - 1) {
             if(map.getCamera().containsDraw(this)) {
-                velocityY += gravity;
-            } else {
-                for(PlayerListener listener :playerListeners) {
-                    listener.onDeath();
-                }
+                applyGravity(MAX_DEATH_FALL_VELOCITY);
+            } else for(PlayerListener listener :playerListeners) {
+                listener.onDeath();
             }
+        } else {
+            velocityY = DEATH_Y_VELOCITY;
         }
         setY(y + velocityY);
     }
@@ -162,7 +154,7 @@ public abstract class Player extends GameObject {
             facing = Facing.RIGHT;
             if(inAir) {
                 playerState = PlayerState.FALL;
-                applyGravity();
+                applyGravity(MAX_FALL_VELOCITY);
                 moveYHandleCollision(velocityY);
             } else {
                 playerState = PlayerState.WALK;
@@ -173,8 +165,8 @@ public abstract class Player extends GameObject {
         }
     }
 
-    private void applyGravity() {
-        if(velocityY < MAX_FALL_VELOCITY) {
+    private void applyGravity(float maxFallVelocity) {
+        if(velocityY < maxFallVelocity) {
             velocityY += gravity;
         }
     }
