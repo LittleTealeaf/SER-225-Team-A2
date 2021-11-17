@@ -5,6 +5,7 @@ import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.SpriteSheet;
 import Level.Enemy;
+import Level.Player;
 import Level.Player_Old;
 import Projectiles.Bone;
 import Utils.AirGroundState;
@@ -62,7 +63,7 @@ public class Dog extends Enemy {
     }
 
     @Override
-    public void update(Player_Old player) {
+    public void update(Player player) {
         float startBound = startLocation.x;
         float endBound = endLocation.x;
 

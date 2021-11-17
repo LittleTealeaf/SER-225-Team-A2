@@ -3,6 +3,7 @@ package Screens;
 import Engine.*;
 import Game.GameState;
 import Level.Map;
+import Level.Player;
 import Level.Player_Old;
 import Level.PlayerListener;
 import Maps.*;
@@ -22,7 +23,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
     private static final Color COLOR_GREY_BACKGROUND;
     private static Map loadedMap;
     private static Screen alternateScreen;
-    private static Player_Old player;
+    private static Player player;
 
     static {
         screenTimer = new Stopwatch();

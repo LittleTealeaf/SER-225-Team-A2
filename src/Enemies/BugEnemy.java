@@ -6,6 +6,7 @@ import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.Enemy;
+import Level.Player;
 import Level.Player_Old;
 import Utils.AirGroundState;
 import Utils.Direction;
@@ -43,7 +44,7 @@ public class BugEnemy extends Enemy {
     }
 
     @Override
-    public void update(Player_Old player) {
+    public void update(Player player) {
         float moveAmountX = 0;
         float moveAmountY = 0;
 

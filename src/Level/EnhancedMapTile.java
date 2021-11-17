@@ -46,7 +46,7 @@ public class EnhancedMapTile extends MapTile {
     }
 
 
-    public void update(Player_Old player) {
+    public void update(Player player) {
         super.update();
     }
 

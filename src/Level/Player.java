@@ -6,12 +6,16 @@ import GameObject.GameObject;
 import GameObject.SpriteSheet;
 import Level.PlayerState.Facing;
 import Utils.Direction;
+import Utils.Point;
 import Utils.Stopwatch;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Player extends GameObject {
+
+    //Static Values
+    private static final int ATTACK_DELAY = 1500, JUMP_DELAY = 5000;
 
 /*
 Values set by the cat class
@@ -33,7 +37,7 @@ Values set by the cat class
 
      */
 
-    protected float gravity;
+    protected float gravity, jumpHeight;
 
     public static int PLAYER_HEALTH = 3;
 
@@ -84,11 +88,72 @@ Values set by the cat class
 
     private void updatePlaying() {
         applyGravity();
+        keepInBounds();
 
+        //Update Player Action and Direction
+        if(KeyboardAction.GAME_MOVE_LEFT.isDown()) {
+            facing = Facing.LEFT;
+            playerState = PlayerState.WALK;
+        }
+        if(KeyboardAction.GAME_MOVE_RIGHT.isDown()) {
+            facing = Facing.RIGHT;
+            playerState = PlayerState.WALK;
+        }
+
+        //Update Jump
+        if(KeyboardAction.GAME_JUMP.isDown()) {
+            jump();
+        } else if(velocityY > 0) { //if the player releases while velocity is still up, cut short
+            velocityY = 0;
+        }
+
+        //Update Attack
+        if(KeyboardAction.GAME_ATTACK.isDown() && attackDelay.isTimeUp()) {
+            attack();
+        }
+
+        //If the player is in the air, set its animation based on velocityY
+        if(inAir) {
+            playerState = velocityY > 0 ? PlayerState.JUMP : PlayerState.FALL;
+        }
+
+        //Updates player to death if their health hits 0
+        if(PLAYER_HEALTH <= 0) {
+            levelState = LevelState.DEAD;
+        }
+
+        applyVelocity();
+    }
+
+    private void attack() {
+        int attackX = facing == Facing.RIGHT ? Math.round(getX()) + getScaledWidth() - 20 : Math.round(getX());
+        int attackY = Math.round(getY()) + 10;
+        float movementSpeed = facing == Facing.RIGHT ? 1.5f : -1.5f;
+
+        PlayerAttack projectile = new PlayerAttack(new Point(attackX, attackY), movementSpeed, 1000);
+
+        map.addEnemy(projectile);
+        attackDelay.setWaitTime(ATTACK_DELAY);
+    }
+
+    private void keepInBounds() {
+        if(x < 0) {
+            velocityX = 0;
+            setX(0);
+        } else if(levelState != LevelState.WIN && x > map.getRightBound()) {
+            velocityX = 0;
+            setX(map.getRightBound());
+        }
+    }
+
+    private void jump() {
+        if(canJump() && keyLocker.isActionUnlocked(KeyboardAction.GAME_JUMP)) {
+            velocityY = jumpHeight;
+        }
     }
 
     private void updateDead() {
-
+        playerState = PlayerState.DEATH;
     }
 
     private void updateWin() {
@@ -99,6 +164,11 @@ Values set by the cat class
         //Legacy code multiplies velocity by 2 beforehand
         velocityY *= 2;
         velocityY += gravity;
+    }
+
+    private void applyVelocity() {
+        setX(x + velocityX);
+        setY(y + velocityY);
     }
 
     public void hurtPlayer(MapEntity mapEntity) {
@@ -121,7 +191,7 @@ Values set by the cat class
     }
 
     public void preventJump(int time) {
-        jumpDelay.setWaitTime(5000);
+        jumpDelay.setWaitTime(JUMP_DELAY);
     }
 
     public void completeLevel() {
@@ -138,9 +208,24 @@ Values set by the cat class
 
     public void onEndCollisionCheckY(boolean hasCollided, Direction direction) {
         if(direction == Direction.DOWN) {
-            if(hasCollided) {
-                velocityY = 0;
-            }
+            inAir = !hasCollided;
+        }
+        if(hasCollided) {
+            velocityY = 0;
+            handleCollision(MapTileCollisionHandler.lastCollidedTileY);
         }
     }
+
+    public void onEndCollisionCheckX(boolean hasCollided, Direction direction) {
+        if(hasCollided) {
+            handleCollision(MapTileCollisionHandler.lastCollidedTileX);
+        }
+    }
+
+    private void handleCollision(MapTile tile) {
+        if(tile != null && tile.getTileType() == TileType.LETHAL) {
+            levelState = LevelState.DEAD;
+        }
+    }
+
 }

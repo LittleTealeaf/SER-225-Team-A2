@@ -4,10 +4,7 @@ import Builders.FrameBuilder;
 import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.SpriteSheet;
-import Level.Enemy;
-import Level.MapEntityStatus;
-import Level.Player_Old;
-import Level.Projectile;
+import Level.*;
 import Utils.Direction;
 import Utils.Point;
 import Utils.Stopwatch;
@@ -34,7 +31,7 @@ public class LazerBeam extends Projectile {
     }
 
     @Override
-    public void update(Player_Old player) {
+    public void update(Player player) {
         // if timer is up, set map entity status to REMOVED
         // the camera class will see this next frame and remove it permanently from the map
         if (existenceTimer.isTimeUp()) {
@@ -55,7 +52,7 @@ public class LazerBeam extends Projectile {
     }
 
     @Override
-    public void touchedPlayer(Player_Old player) {
+    public void touchedPlayer(Player player) {
         // if lazer beam touches player, it disappears
         super.touchedPlayer(player);
         this.mapEntityStatus = MapEntityStatus.REMOVED;

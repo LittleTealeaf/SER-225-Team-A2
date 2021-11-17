@@ -4,6 +4,7 @@ import Engine.GraphicsHandler;
 import GameObject.ImageEffect;
 import GameObject.Rectangle;
 import Level.EnhancedMapTile;
+import Level.Player;
 import Level.Player_Old;
 import Level.TileType;
 import Utils.AirGroundState;
@@ -37,7 +38,7 @@ public class HorizontalMovingPlatform extends EnhancedMapTile {
     }
 
     @Override
-    public void update(Player_Old player) {
+    public void update(Player player) {
         float startBound = startLocation.x;
         float endBound = endLocation.x;
 
@@ -78,7 +79,7 @@ public class HorizontalMovingPlatform extends EnhancedMapTile {
         // if player is on standing on top of platform, move player by the amount the platform is moving
         // this will cause the player to "ride" with the moving platform
         // without this code, the platform would slide right out from under the player
-        if (overlaps(player) && player.getScaledBoundsY2() == getScaledBoundsY1() && player.getAirGroundState() == AirGroundState.GROUND) {
+        if (overlaps(player) && player.getScaledBoundsY2() == getScaledBoundsY1() && !player.isInAir()) {
             player.moveXHandleCollision(moveAmountX);
         }
 

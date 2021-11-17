@@ -383,11 +383,9 @@ public abstract class Player_Old extends GameObject {
     	if (direction == Direction.LEFT || direction == Direction.RIGHT) {
             int rightBound = map.getWidthPixels() - map.getTileset().getScaledSpriteWidth();
     		if (x < 0) {
-    			hasCollided = true;
     			momentumX = 0;
     			setX(0);
     		} else if (levelState != LevelState.LEVEL_COMPLETED && x > rightBound) {
-    			hasCollided = true;
     			momentumX = 0;
                 setX(rightBound);
     		}

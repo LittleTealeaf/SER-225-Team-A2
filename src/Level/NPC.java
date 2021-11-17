@@ -65,12 +65,12 @@ public class NPC extends MapEntity {
         return null;
     }
 
-    public void update(Player_Old player) {
+    public void update(Player player) {
         super.update();
         checkTalkedTo(player);
     }
 
-    public void checkTalkedTo(Player_Old player) {
+    public void checkTalkedTo(Player player) {
         if (intersects(player) && KeyboardAction.GAME_INTERACT.isDown()) {
             talkedTo = true;
             timer.setWaitTime(talkedToTime);

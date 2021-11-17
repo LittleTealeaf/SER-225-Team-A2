@@ -44,7 +44,7 @@ public class Enemy extends MapEntity {
         super.initialize();
     }
 
-    public void update(Player_Old player) {
+    public void update(Player player) {
         super.update();
         if (intersects(player)) {
             touchedPlayer(player);
@@ -52,7 +52,7 @@ public class Enemy extends MapEntity {
     }
 
     // A subclass can override this method to specify what it does when it touches the player
-    public void touchedPlayer(Player_Old player) {
+    public void touchedPlayer(Player player) {
         player.hurtPlayer(this);
     }
  

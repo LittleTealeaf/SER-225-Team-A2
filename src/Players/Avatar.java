@@ -1,14 +1,15 @@
 package Players;
 
 
+import Level.Player;
 import Level.Player_Old;
 import Utils.Point;
 
 //TODO make this the new Cat Options with a factory to create the player
 public enum Avatar {
-    CAT_ORANGE(p -> new Cat_Old("Cat.png", p)),
-    CAT_BLUE(p -> new Cat_Old("CatBlue.png", p)),
-    CAT_GREEN(p -> new Cat_Old("CatGreen.png", p));
+    CAT_ORANGE(p -> new Cat("Cat.png", p)),
+    CAT_BLUE(p -> new Cat("CatBlue.png", p)),
+    CAT_GREEN(p -> new Cat("CatGreen.png", p));
 
 
     private PlayerFactory factory;
@@ -17,11 +18,11 @@ public enum Avatar {
         this.factory = factory;
     }
 
-    public Player_Old generatePlayer(Point startingPoint) {
+    public Player generatePlayer(Point startingPoint) {
         return factory.generatePlayer(startingPoint);
     }
 
     public interface PlayerFactory {
-        Player_Old generatePlayer(Point startingPoint);
+        Player generatePlayer(Point startingPoint);
     }
 }

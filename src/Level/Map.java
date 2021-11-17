@@ -31,6 +31,9 @@ public abstract class Map implements Drawable {
     protected int width;
     protected int height;
 
+    //right most bound
+    private int rightBound;
+
     // the tileset this map uses for its map tiles
     protected Tileset tileset;
 
@@ -72,6 +75,7 @@ public abstract class Map implements Drawable {
         this.xMidPoint = ScreenManager.getScreenWidth() / 2;
         this.yMidPoint = (ScreenManager.getScreenHeight() / 2);
         this.playerStartTile = playerStartTile;
+        rightBound = getWidthPixels() - getTileset().getScaledSpriteWidth();
     }
 
     // sets up map by reading in the map file to create the tile map
@@ -333,7 +337,7 @@ public abstract class Map implements Drawable {
         this.adjustCamera = adjustCamera;
     }
 
-    public void update(Player_Old player) {
+    public void update(Player player) {
         if (adjustCamera) {
             adjustMovementY(player);
             adjustMovementX(player);
@@ -343,7 +347,7 @@ public abstract class Map implements Drawable {
 
     // based on the player's current X position (which in a level can potentially be updated each frame),
     // adjust the player's and camera's positions accordingly in order to properly create the map "scrolling" effect
-    private void adjustMovementX(Player_Old player) {
+    private void adjustMovementX(Player player) {
         // if player goes past center screen (on the right side) and there is more map to show on the right side, push player back to center and move camera forward
         if (player.getCalibratedXLocation() > xMidPoint && camera.getEndBoundX() < endBoundX) {
             float xMidPointDifference = xMidPoint - player.getCalibratedXLocation();
@@ -370,7 +374,7 @@ public abstract class Map implements Drawable {
 
     // based on the player's current Y position (which in a level can potentially be updated each frame),
     // adjust the player's and camera's positions accordingly in order to properly create the map "scrolling" effect
-    private void adjustMovementY(Player_Old player) {
+    private void adjustMovementY(Player player) {
         // if player goes past center screen (below) and there is more map to show below, push player back to center and move camera upward
         if (player.getCalibratedYLocation() > yMidPoint && camera.getEndBoundY() < endBoundY) {
             float yMidPointDifference = yMidPoint - player.getCalibratedYLocation();
@@ -401,5 +405,9 @@ public abstract class Map implements Drawable {
 
     public void draw(GraphicsHandler graphicsHandler) {
         camera.draw(graphicsHandler);
+    }
+
+    public int getRightBound() {
+        return rightBound;
     }
 }

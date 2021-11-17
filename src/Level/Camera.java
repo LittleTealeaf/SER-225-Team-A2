@@ -49,7 +49,7 @@ public class Camera extends Rectangle {
         
     }
 
-    public void update(Player_Old player) {
+    public void update(Player player) {
         updateMapTiles();
         updateMapEntities(player);
     }
@@ -69,7 +69,7 @@ public class Camera extends Rectangle {
 
     // update map entities currently a part of the update/draw cycle
     // active entities are calculated each frame using the loadActiveEntity methods below
-    public void updateMapEntities(Player_Old player) {
+    public void updateMapEntities(Player player) {
         activeEnemies = loadActiveEnemies();
         activeProjectiles = loadActiveProjectiles();
         activeEnhancedMapTiles = loadActiveEnhancedMapTiles();
