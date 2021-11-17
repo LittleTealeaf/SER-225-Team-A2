@@ -50,7 +50,15 @@ public abstract class Player extends GameObject {
 
     private void updatePlaying() {
         applyGravity(MAX_FALL_VELOCITY);
-        keepInBounds();
+
+//      Keep player in bounds
+        if (x < 0) {
+            absVelocityX = 0;
+            setX(0);
+        } else if (levelState != LevelState.WIN && x > map.getRightBound()) {
+            absVelocityX = 0;
+            setX(map.getRightBound());
+        }
 
         playerState = PlayerState.STAND;
 
@@ -141,16 +149,6 @@ public abstract class Player extends GameObject {
     private void applyGravity(float maxFallVelocity) {
         if (velocityY < maxFallVelocity) {
             velocityY += gravity;
-        }
-    }
-
-    private void keepInBounds() {
-        if (x < 0) {
-            absVelocityX = 0;
-            setX(0);
-        } else if (levelState != LevelState.WIN && x > map.getRightBound()) {
-            absVelocityX = 0;
-            setX(map.getRightBound());
         }
     }
 
