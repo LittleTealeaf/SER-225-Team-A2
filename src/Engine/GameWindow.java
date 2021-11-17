@@ -26,7 +26,6 @@ public class GameWindow {
 				GamePanel.mouseClicked(e);
 			}
 		});
-
 		gamePanel = new GamePanel(c1,this);
 		gamePanel.setFocusable(true);
 		gamePanel.requestFocusInWindow();

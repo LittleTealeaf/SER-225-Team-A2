@@ -47,6 +47,7 @@ public class GamePanel extends JPanel {
 	public static Clip clip;
 	private Point previousMousePoint = new Point(0,0);
 	private JLabel health;
+	private long lastFrame;
 
 	
 	/*
@@ -71,7 +72,6 @@ public class GamePanel extends JPanel {
 
 
 	
-		
 
 		timer = new Timer(1000 / Config.FPS, new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -84,6 +84,8 @@ public class GamePanel extends JPanel {
 					health.hide();
 				}
 				repaint();
+				System.out.println((System.currentTimeMillis() - lastFrame));
+				lastFrame = System.currentTimeMillis();
 			}
 		});
 		timer.setRepeats(true);
@@ -99,8 +101,8 @@ public class GamePanel extends JPanel {
 		setBackground(Colors.CORNFLOWER_BLUE);
 		screenManager.initialize(new Rectangle(getX(), getY(), getWidth(), getHeight()));
 		doPaint = true;
-
 	}
+
 	public static GameWindow getGameWindow() {
 		return gameWindow;
 	}
