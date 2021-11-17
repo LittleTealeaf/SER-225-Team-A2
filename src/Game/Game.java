@@ -23,7 +23,6 @@ public class Game {
         gameWindow.startGame();
         ScreenManager screenManager = gameWindow.getScreenManager();
         screenManager.setCurrentScreen(c1);
-        new GameTick();
 //        DEBUG USE ONLY
 //        screenManager.setCurrentScreen(new DebugScreen());
     }
