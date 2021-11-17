@@ -1,6 +1,7 @@
 package Projectiles;
 
 import Builders.FrameBuilder;
+import Engine.CollisionType;
 import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.ImageEffect;
@@ -29,6 +30,7 @@ public class Bone extends Projectile {
         isRespawnable = false;
 
         initialize();
+        collisionType = CollisionType.PREVENT_JUMP;
     }
 
     @Override

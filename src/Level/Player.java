@@ -18,26 +18,6 @@ public abstract class Player extends GameObject {
     private static final int ATTACK_DELAY = 1500, JUMP_DELAY = 5000;
     private static final float MAX_FALL_VELOCITY = 6f;
 
-/*
-Values set by the cat class
-        gravity = .5f; -> amount that the velocity moves in the y direction
-        terminalVelocityY = 6f;
-        jumpHeight = 14.5f;
-        jumpDegrade = .5f;
-        walkSpeed = 2.1f;
-        minWalkSpeed = 2.1f;
-        maxWalkSpeed = 3.3f;
-        walkAcceleration = 1.05f;
-        momentumYIncrease = .5f;
- */
-
-    /*
-    Ideas for how to manage movement with minimal modifications:
-    Point velocity -> current velocity, modified by gravity, etc.
-    float gravity -> gravity force
-
-     */
-
     protected float gravity, jumpHeight, walkSpeed, sprintSpeed, sprintAcceleration;
 
     public static int PLAYER_HEALTH = 3;
@@ -119,11 +99,12 @@ Values set by the cat class
 
         //Update Jump
         if(KeyboardAction.GAME_JUMP.isDown()) {
-            jump();
-        } else {
-            if(velocityY < 0) { //if the player releases while velocity is still up, cut short, remember that velocityY is inverse
-                velocityY = 0;
+            if(jumpDelay.isTimeUp() && !isInAir()) {
+                velocityY = -jumpHeight;
+                keyLocker.setAction(KeyboardAction.GAME_JUMP);
             }
+        } else if(velocityY < 0) { //if the player releases while velocity is still up, cut short, remember that velocityY is inverse
+            velocityY = 0;
         }
 
         //Update Attack
@@ -141,6 +122,7 @@ Values set by the cat class
             levelState = LevelState.DEAD;
         }
 
+        inAir = true;
         super.moveYHandleCollision(velocityY);
         super.moveXHandleCollision(velocityX * facing.mod);
     }
@@ -161,13 +143,6 @@ Values set by the cat class
         }
     }
 
-    private void jump() {
-        if(canJump() && keyLocker.isActionUnlocked(KeyboardAction.GAME_JUMP)) {
-            velocityY = -jumpHeight;
-            keyLocker.setAction(KeyboardAction.GAME_JUMP);
-        }
-    }
-
     private void updateDead() {
         playerState = PlayerState.DEATH;
     }
@@ -183,22 +158,12 @@ Values set by the cat class
     }
 
     public void hurtPlayer(MapEntity mapEntity) {
-//        Do we even still need the invincible value?
-        if(!invincible) {
-            switch(mapEntity.getCollisionType()) {
-                case DAMAGE -> PLAYER_HEALTH -= 1;
-                case INSTANT_DEATH -> PLAYER_HEALTH = 0;
-                case PREVENT_JUMP -> preventJump(5000);
-                case DEFAULT -> {}
-            }
+        switch(mapEntity.getCollisionType()) {
+            case DAMAGE -> PLAYER_HEALTH -= 1;
+            case INSTANT_DEATH -> PLAYER_HEALTH = 0;
+            case PREVENT_JUMP -> preventJump(5000);
+            case DEFAULT -> {}
         }
-    }
-
-    /**
-     * @return {@code True} when the player is allowed to jump, and is on the ground
-     */
-    public boolean canJump() {
-        return jumpDelay.isTimeUp() && !isInAir();
     }
 
     public void preventJump(int time) {
@@ -219,10 +184,10 @@ Values set by the cat class
 
     @Override
     public void onEndCollisionCheckY(boolean hasCollided, Direction direction) {
-        if(direction == Direction.DOWN) {
-            inAir = !hasCollided;
-        }
         if(hasCollided) {
+            if(direction == Direction.DOWN) {
+                inAir = false;
+            }
             velocityY = 0;
             handleCollision(MapTileCollisionHandler.lastCollidedTileY);
         }
