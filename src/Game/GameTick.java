@@ -41,6 +41,7 @@ public class GameTick implements Runnable {
 
     public GameTick(Runnable runnable) {
         thread = new Thread(this);
+        this.runnable = runnable;
     }
 
     public void start() {
