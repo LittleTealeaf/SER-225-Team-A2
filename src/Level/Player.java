@@ -23,8 +23,7 @@ public abstract class Player extends GameObject {
     protected Facing facing;
     protected LevelState levelState;
     protected boolean inAir;
-    //VelocityX is absolute, and direction is derived from the facing.mod
-    private float velocityX, velocityY;
+    private float absVelocityX, velocityY;
 
     public Player(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
         super(spriteSheet, x, y, startingAnimationName);
@@ -62,16 +61,16 @@ public abstract class Player extends GameObject {
             playerState = PlayerState.WALK;
 
             if (KeyboardAction.GAME_SPRINT.isDown()) {
-                if (velocityX < walkSpeed) {
-                    velocityX = walkSpeed;
-                } else if (velocityX < sprintSpeed) {
-                    velocityX *= sprintAcceleration;
+                if (absVelocityX < walkSpeed) {
+                    absVelocityX = walkSpeed;
+                } else if (absVelocityX < sprintSpeed) {
+                    absVelocityX *= sprintAcceleration;
                 }
             } else {
-                velocityX = walkSpeed;
+                absVelocityX = walkSpeed;
             }
         } else {
-            velocityX = 0;
+            absVelocityX = 0;
         }
 
         //Update Jump
@@ -102,7 +101,7 @@ public abstract class Player extends GameObject {
 
         inAir = true; //air is decided in the next line
         super.moveYHandleCollision(velocityY);
-        super.moveXHandleCollision(velocityX * facing.mod);
+        super.moveXHandleCollision(absVelocityX * facing.mod);
     }
 
     private void updateDead() {
@@ -147,10 +146,10 @@ public abstract class Player extends GameObject {
 
     private void keepInBounds() {
         if (x < 0) {
-            velocityX = 0;
+            absVelocityX = 0;
             setX(0);
         } else if (levelState != LevelState.WIN && x > map.getRightBound()) {
-            velocityX = 0;
+            absVelocityX = 0;
             setX(map.getRightBound());
         }
     }
