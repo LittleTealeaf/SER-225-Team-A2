@@ -88,6 +88,9 @@ public abstract class Player extends GameObject {
         //If the player is in the air, set its animation based on velocityY
         if (inAir) {
             playerState = velocityY < 0 ? PlayerState.JUMP : PlayerState.FALL;
+        } else if(KeyboardAction.GAME_CROUCH.isDown()) {
+            absVelocityX = 0;
+            playerState = PlayerState.CROUCH;
         }
 
         //Updates player to death if their health hits 0
