@@ -16,13 +16,13 @@ public abstract class Player extends GameObject {
     private static final int ATTACK_DELAY = 1500, JUMP_DELAY = 5000;
     private static final float MAX_FALL_VELOCITY = 6f, MAX_DEATH_FALL_VELOCITY = 10f, DEATH_Y_VELOCITY = -2.5f;
     public static int PLAYER_HEALTH = 3;
-    private final List<PlayerListener> playerListeners = new ArrayList<>();
     protected float gravity, jumpHeight, walkSpeed, sprintSpeed, sprintAcceleration;
-    protected Stopwatch attackDelay, jumpDelay;
-    protected PlayerState playerState;
-    protected Facing facing;
-    protected LevelState levelState;
-    protected boolean inAir;
+    private final List<PlayerListener> playerListeners = new ArrayList<>();
+    private final Stopwatch attackDelay, jumpDelay;
+    private PlayerState playerState;
+    private Facing facing;
+    private LevelState levelState;
+    private boolean inAir;
     private float absVelocityX, velocityY;
 
     public Player(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
@@ -47,31 +47,18 @@ public abstract class Player extends GameObject {
         setCurrentAnimationName(playerState.get(facing));
     }
 
-
     private void updatePlaying() {
         applyGravity(MAX_FALL_VELOCITY);
 
-//      Keep player in bounds
-        if (x < 0) {
-            absVelocityX = 0;
-            setX(0);
-        } else if (levelState != LevelState.WIN && x > map.getRightBound()) {
-            absVelocityX = 0;
-            setX(map.getRightBound());
-        }
-
-        playerState = PlayerState.STAND;
-
         //Update Player Action and Direction
-        boolean move_leftDown = KeyboardAction.GAME_MOVE_LEFT.isDown();
-        if (move_leftDown ^ KeyboardAction.GAME_MOVE_RIGHT.isDown()) {
-            facing = move_leftDown ? Facing.LEFT : Facing.RIGHT;
+        boolean moveLeftDown = KeyboardAction.GAME_MOVE_LEFT.isDown();
+        boolean playerMove = moveLeftDown ^ KeyboardAction.GAME_MOVE_RIGHT.isDown();
+        facing = playerMove ? moveLeftDown ? Facing.LEFT : Facing.RIGHT : facing; //Update facing if the player moved
+        //Only move if the player moved and is not going out of bounds
+        if (playerMove && ((facing == Facing.LEFT && x > 0) ^ (facing == Facing.RIGHT && x < map.getRightBound()))) {
             playerState = PlayerState.WALK;
-
-            if (KeyboardAction.GAME_SPRINT.isDown()) {
-                if (absVelocityX < walkSpeed) {
-                    absVelocityX = walkSpeed;
-                } else if (absVelocityX < sprintSpeed) {
+            if (KeyboardAction.GAME_SPRINT.isDown() && absVelocityX >= walkSpeed) {
+                if (absVelocityX < sprintSpeed) {
                     absVelocityX *= sprintAcceleration;
                 }
             } else {
@@ -79,6 +66,7 @@ public abstract class Player extends GameObject {
             }
         } else {
             absVelocityX = 0;
+            playerState = PlayerState.STAND;
         }
 
         //Update Jump
@@ -117,10 +105,8 @@ public abstract class Player extends GameObject {
         if (currentFrameIndex > 0) {
             if (map.getCamera().containsDraw(this)) {
                 applyGravity(MAX_DEATH_FALL_VELOCITY);
-            } else {
-                for (PlayerListener listener : playerListeners) {
-                    listener.onDeath();
-                }
+            } else for (PlayerListener listener : playerListeners) {
+                listener.onDeath();
             }
         } else {
             velocityY = DEATH_Y_VELOCITY;
