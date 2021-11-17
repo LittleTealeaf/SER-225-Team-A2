@@ -6,7 +6,7 @@
 | Date of Last Revision | 11/16/2021 |
 | Test Objective | Ensure that the game runs consistently through multiple distributions |
 | Test Notes| Due to the nature of this test case, multiple runs of the test must be conducted on various machines of different make and models. Measurements will be taken using a recording software, and should not be expected to be perfect|
-|Software Required|Screen recording software: Needs to be able to record the screen such that the tester can go back and accurately measure the time between events|
+|Software Requirement|**Screen recording software:** Needs to be able to record the screen such that the tester can go back and accurately measure the time between events. *Suggested:* OBS|
 
 
 ### Procedure
