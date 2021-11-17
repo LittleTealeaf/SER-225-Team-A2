@@ -13,6 +13,7 @@ Functionality of `Player.java` tested:
  - Collision with enemies
  - Shooting, including animations while standing still and moving
  - Collision with map boundaries and map walls
+ - Ability to complete all levels with physics
 
 ### Procedure
 
@@ -42,6 +43,9 @@ Functionality of `Player.java` tested:
 |21|Navigate and run into a projectile from an enemy|The player's health is now 2 (reduced by 1)||
 |22|Navigate and attempt to run off the right-most edge of the map (*without hitting the gold level-complete box*)|The player is stopped and cannot run off of the map||
 |23|Hit the complete-level gold box|The level is completed and the player walks off to the right of the screen||
+|24|Hit Escape, go back to main menu|The main menu is displayed||
+|25|Hit "Play Game"|The first level is loaded||
+|26|Play all levels of the game|Each level is completable||
 
 
 
