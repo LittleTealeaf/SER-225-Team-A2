@@ -23,9 +23,7 @@ public abstract class Player extends GameObject {
     protected Facing facing;
     protected LevelState levelState;
     protected boolean inAir;
-    /**
-     * VelocityX is absolute, and direction is decided from the facing.mod
-     */
+    //VelocityX is absolute, and direction is derived from the facing.mod
     private float velocityX, velocityY;
 
     public Player(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
@@ -40,16 +38,13 @@ public abstract class Player extends GameObject {
     }
 
     public void update() {
-        //Is the super.update() ordering specific? Unsure?
         super.update();
-
         switch (levelState) {
             case PLAYING -> updatePlaying();
             case DEAD -> updateDead();
             case WIN -> updateWin();
         }
 
-        //Update Animation
         setCurrentAnimationName(playerState.get(facing));
     }
 
@@ -90,7 +85,9 @@ public abstract class Player extends GameObject {
 
         //Update Attack
         if (KeyboardAction.GAME_ATTACK.isDown() && attackDelay.isTimeUp()) {
-            attack();
+            int attackX = facing == Facing.RIGHT ? Math.round(getX()) + getScaledWidth() - 20 : Math.round(getX());
+            map.addEnemy(new PlayerAttack(new Point(attackX, Math.round(getY()) + 10), facing.mod * 1.5f, 1000));
+            attackDelay.setWaitTime(ATTACK_DELAY);
         }
 
         //If the player is in the air, set its animation based on velocityY
@@ -103,7 +100,7 @@ public abstract class Player extends GameObject {
             levelState = LevelState.DEAD;
         }
 
-        inAir = true;
+        inAir = true; //air is decided in the next line
         super.moveYHandleCollision(velocityY);
         super.moveXHandleCollision(velocityX * facing.mod);
     }
@@ -156,12 +153,6 @@ public abstract class Player extends GameObject {
             velocityX = 0;
             setX(map.getRightBound());
         }
-    }
-
-    private void attack() {
-        int attackX = facing == Facing.RIGHT ? Math.round(getX()) + getScaledWidth() - 20 : Math.round(getX());
-        map.addEnemy(new PlayerAttack(new Point(attackX, Math.round(getY()) + 10), facing.mod * 1.5f, 1000));
-        attackDelay.setWaitTime(ATTACK_DELAY);
     }
 
     @Override
