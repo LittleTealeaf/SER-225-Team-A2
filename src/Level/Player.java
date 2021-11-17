@@ -99,7 +99,7 @@ public abstract class Player extends GameObject {
 
         //Update Jump
         if(KeyboardAction.GAME_JUMP.isDown()) {
-            if(jumpDelay.isTimeUp() && !isInAir()) {
+            if(jumpDelay.isTimeUp() && !inAir) {
                 velocityY = -jumpHeight;
                 keyLocker.setAction(KeyboardAction.GAME_JUMP);
             }
@@ -158,7 +158,19 @@ public abstract class Player extends GameObject {
     }
 
     private void updateWin() {
-
+        if(map.getCamera().containsDraw(this)) {
+            facing = Facing.RIGHT;
+            if(inAir) {
+                playerState = PlayerState.FALL;
+                applyGravity();
+                moveYHandleCollision(velocityY);
+            } else {
+                playerState = PlayerState.WALK;
+                moveXHandleCollision(walkSpeed);
+            }
+        } else for(PlayerListener listener : playerListeners) {
+            listener.onLevelCompleted();
+        }
     }
 
     private void applyGravity() {
