@@ -186,8 +186,6 @@ public abstract class Player extends GameObject {
             case DAMAGE -> PLAYER_HEALTH -= 1;
             case INSTANT_DEATH -> PLAYER_HEALTH = 0;
             case PREVENT_JUMP -> preventJump();
-            case DEFAULT -> {
-            }
         }
     }
 
