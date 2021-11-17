@@ -145,6 +145,19 @@ public abstract class Player extends GameObject {
 
     private void updateDead() {
         playerState = PlayerState.DEATH;
+        if(currentFrameIndex == getCurrentAnimation().length - 1) {
+            if(map.getCamera().containsDraw(this)) {
+                velocityY += gravity;
+            } else {
+                for(PlayerListener listener :playerListeners) {
+                    listener.onDeath();
+                }
+            }
+        } else {
+            velocityY = 0;
+        }
+
+        setY(y + velocityY);
     }
 
     private void updateWin() {
