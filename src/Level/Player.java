@@ -44,7 +44,6 @@ public abstract class Player extends GameObject {
             case DEAD -> updateDead();
             case WIN -> updateWin();
         }
-
         setCurrentAnimationName(playerState.get(facing));
     }
 
@@ -100,7 +99,16 @@ public abstract class Player extends GameObject {
         }
 
         inAir = true; //air is decided in moveYHandleCollision()
+        /*
+        So what's happening here is that the player never actually "hits" the block until the velocity gets enough to actually
+        change the player's Y position (since it rounds movement to an int)
+        Thus, as the gravity increases the veloctyY, it still thinks its in the air as the player doesn't actually "hit" anything
+        (movement is set to 0). Something that might fix would be to make internal movements stored in floats, and then have
+        the rendering be "truncated" to ints? or maybe it also does floats?
+        Basically we're going away from int locations? Would need to keep some things as ints to allow for
+         */
         super.moveYHandleCollision(velocityY * GameThread.getScale());
+        System.out.println(velocityY * GameThread.getScale() + " " + inAir);
         super.moveXHandleCollision(absVelocityX * facing.mod * GameThread.getScale());
     }
 

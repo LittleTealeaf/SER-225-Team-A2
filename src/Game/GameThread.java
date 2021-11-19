@@ -30,7 +30,7 @@ public class GameThread extends ThreadManager {
     }
 
     public static float getScale() {
-        return ((float) instance.elapsedTick) / 15;
+        return ((float) instance.elapsedTick) / 10;
     }
 
 }
