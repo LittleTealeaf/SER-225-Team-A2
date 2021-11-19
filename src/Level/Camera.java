@@ -1,6 +1,5 @@
 package Level;
 
-import Engine.Config;
 import Engine.GraphicsHandler;
 import Engine.ScreenManager;
 import GameObject.GameObject;

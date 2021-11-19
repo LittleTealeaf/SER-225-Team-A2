@@ -1,5 +1,6 @@
 package Level;
 
+import Engine.CollisionType;
 import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.Rectangle;
@@ -41,6 +42,7 @@ public class Projectile extends MapEntity {
     @Override
     public void initialize() {
         super.initialize();
+        collisionType = CollisionType.DAMAGE;
     }
 
     public void update(Player player) {

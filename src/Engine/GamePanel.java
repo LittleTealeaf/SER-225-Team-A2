@@ -181,15 +181,15 @@ public class GamePanel extends JPanel {
 	// Checks the players health and accordingly changes to the image with the corresponding number of hearts
 	public void changeHealth() {
 		if(coordinator.getGameState() == GameState.LEVEL) {
-			if(Player.playerHealth == 3) { 
+			if(Player.PLAYER_HEALTH == 3) {
 				health.setIcon(new ImageIcon(ImageLoader.load("3 Hearts.png")));
 			}
 			
-			else if(Player.playerHealth == 2) { 
+			else if(Player.PLAYER_HEALTH == 2) {
 				health.setIcon(new ImageIcon(ImageLoader.load("2 Hearts.png")));
 			}
 			
-			else if(Player.playerHealth == 1) { 
+			else if(Player.PLAYER_HEALTH == 1) {
 				health.setIcon(new ImageIcon(ImageLoader.load("1 Heart.png")));
 			}
 			
@@ -199,7 +199,7 @@ public class GamePanel extends JPanel {
 		}
 		
 		if(coordinator.getGameState() == GameState.MENU) {
-			Player.playerHealth = 3;
+			Player.PLAYER_HEALTH = 3;
 		}
 	}
 
