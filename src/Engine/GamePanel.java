@@ -60,6 +60,12 @@ public class GamePanel extends JPanel {
 		renderThread = new RenderThread(() -> {
 			repaint();
 		});
+		//WORKS
+		/*
+		However, current plan should be as follows:
+		 - First get the system to work on a single thread (with the dynamic speed and such)
+		 - THEN get the system to work on multiple threads for painting / etc
+		 */
 
 //		timer = new Timer(1000 / Config.FPS, new ActionListener() {
 //			public void actionPerformed(ActionEvent e) {
