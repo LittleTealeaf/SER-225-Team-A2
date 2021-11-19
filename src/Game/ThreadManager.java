@@ -6,7 +6,8 @@ package Game;
 public class ThreadManager implements Runnable {
 
     private Thread thread;
-    private long tickDelay, lastTick, elapsedTick;
+    protected long lastTick, elapsedTick;
+    private final long tickDelay;
     private boolean running = true;
     private Runnable runnable;
 
@@ -29,8 +30,8 @@ public class ThreadManager implements Runnable {
         lastTick = System.currentTimeMillis();
         while(running) {
             if(elapsedTick > tickDelay) {
-                elapsedTick = 0;
                 runnable.run();
+                elapsedTick = 0;
             }
 
             long currentTick = System.currentTimeMillis();
