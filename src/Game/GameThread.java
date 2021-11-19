@@ -24,7 +24,8 @@ public class GameThread extends ThreadManager {
     }
 
     public GameThread(Runnable runnable) {
-        super(runnable,0);
+        super(runnable,5);
+        //Somehow setting tickDelay to 0 causes the game to break in some way?
         instance = this;
     }
 
