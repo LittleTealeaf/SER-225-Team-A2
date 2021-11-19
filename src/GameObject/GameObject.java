@@ -3,6 +3,7 @@ package GameObject;
 import Builders.FrameBuilder;
 import Engine.Drawable;
 import Engine.GraphicsHandler;
+import Engine.Vector;
 import Level.Map;
 import Level.MapTileCollisionHandler;
 import Utils.Direction;
@@ -33,6 +34,8 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	// important to keep track of this as it's what allows the special draw logic to work
 	protected float startPositionX, startPositionY;
 
+	protected Vector startPosition, amountMoved, previousPosition;
+
 	// how much game object's position has changed from start position over time
 	// also important to keep track of for the special draw logic
 	protected float amountMovedX, amountMovedY;
@@ -47,8 +50,10 @@ public class GameObject extends AnimatedSprite implements Drawable {
 
 	public GameObject(SpriteSheet spriteSheet, float x, float y, String startingAnimation) {
 		super(spriteSheet, x, y, startingAnimation);
+		startPosition = new Vector(x, y);
 		this.startPositionX = x;
 		this.startPositionY = y;
+		previousPosition = new Vector(x, y);
 		this.previousX = x;
 		this.previousY = y;
 	}

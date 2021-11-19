@@ -73,12 +73,7 @@ public class MapTileCollisionHandler {
 
             if (mapTile != null && hasCollidedWithMapTile(gameObject, mapTile, direction)) { /* Checks if there's a tile there, and if it's collided*/
             	lastCollidedTileY = mapTile; /*Update tile*/
-
-                /*
-                Normalizes the distance based on the direction + bounds of the block
-
-                hmm.. I wonder how this could be made simpler
-                */
+                /*Normalizes the distance based on the direction + bounds of the block*/
                 if (direction == Direction.DOWN) {
                     float boundsDifference = gameObject.getScaledY2() - gameObject.getScaledBoundsY2();
                     return mapTile.getScaledBoundsY1() - gameObject.getScaledHeight() + boundsDifference;
