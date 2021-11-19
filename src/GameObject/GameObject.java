@@ -162,10 +162,14 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		}
 	}
 
+	private int magnitudeToInt(float magnitude) {
+		return (int) magnitude;
+	}
+
 	// performs collision check logic for moving along the x axis against the map's tiles
 	public float handleCollisionX(float moveAmountX) {
 		// determines amount to move (whole number)
-		int amountToMove = (int)Math.abs(moveAmountX);
+		int amountToMove = magnitudeToInt(moveAmountX);
 
 		// gets decimal remainder from amount to move
 		float moveAmountXRemainder = MathUtils.getRemainder(moveAmountX);
@@ -212,7 +216,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	// performs collision check logic for moving along the y axis against the map's tiles
 	public float handleCollisionY(float moveAmountY) {
 		// determines amount to move (whole number)
-		int amountToMove = (int)Math.abs(moveAmountY);
+		int amountToMove = magnitudeToInt(moveAmountY);
 
 		// gets decimal remainder from amount to move
 		float moveAmountYRemainder = MathUtils.getRemainder(moveAmountY);

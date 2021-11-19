@@ -108,7 +108,7 @@ public abstract class Player extends GameObject {
         Basically we're going away from int locations? Would need to keep some things as ints to allow for
          */
         super.moveYHandleCollision(velocityY * GameThread.getScale());
-        System.out.println(velocityY * GameThread.getScale() + " " + inAir);
+//        System.out.println(velocityY * GameThread.getScale() + " " + inAir);
         super.moveXHandleCollision(absVelocityX * facing.mod * GameThread.getScale());
     }
 
