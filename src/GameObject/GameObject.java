@@ -12,7 +12,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
-/*
+/**
 	The all important GameObject class is what every "entity" used in this game should be based off of
 	It encapsulates all the other class logic in the GameObject package to be a "one stop shop" for all entity needs
 	This includes:
@@ -20,6 +20,12 @@ import java.util.HashMap;
 	2. animation logic for the sprite
 	3. collision detection with a map
 	4. performing proper draw logic based on camera movement
+ */
+
+/*
+ * GOALS with a potential rewrite
+ *  - Enable float-based locations -> more accurate positioning
+ *  - Add "move velocity" to move a specific velocity, scale it with the current time difference, and check collisions
  */
 public class GameObject extends AnimatedSprite implements Drawable {
 
