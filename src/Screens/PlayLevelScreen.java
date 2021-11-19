@@ -100,7 +100,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                     screenState = State.RUNNING;
                 }
             }
-            case PAUSE,LEVEL_LOSE_MESSAGE -> alternateScreen.update();
+            case PAUSE,LEVEL_LOSE_MESSAGE -> alternateScreen.update(); //TODO for some reason this breaks..
             case PLAYER_DEAD -> screenState = State.LEVEL_LOSE_MESSAGE;
             case LEVEL_COMPLETED -> {
                 alternateScreen = new LevelClearedScreen();

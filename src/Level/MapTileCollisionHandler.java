@@ -4,8 +4,16 @@ import GameObject.GameObject;
 import Utils.Direction;
 import Utils.Point;
 
-// This class has methods to check if a game object has collided with a map tile
-// it is used by the game object class to determine if a collision occurred
+
+
+/*
+ * Why is this a static class
+ */
+
+/**
+ * This class has methods to check if a game object has collided with a map tile
+ *  it is used by the game object class to determine if a collision occurred
+ */
 public class MapTileCollisionHandler {
 	
 	public static MapTile lastCollidedTileX, lastCollidedTileY;
@@ -41,14 +49,36 @@ public class MapTileCollisionHandler {
         return 0;
     }
 
+    /**
+     * Firstly, totally going to be changing this in velocities
+     *
+     * Checks collisions between a list of tiles and enhanced tile-sets, returns 0 if no collision, or the new Y value if a collision does occur.
+     * @param gameObject Object to check collision
+     * @param map Map the object is on
+     * @param direction Direction the object is moving in
+     * @return
+     */
     public static float getAdjustedPositionAfterCollisionCheckY(GameObject gameObject, Map map, Direction direction) {
+        //Tiles to check? getting a list of tiles
         int numberOfTilesToCheck = Math.max(gameObject.getScaledBounds().getWidth() / map.getTileset().getScaledSpriteWidth(), 1);
         float edgeBoundY = direction == Direction.UP ? gameObject.getScaledBounds().getY() : gameObject.getScaledBounds().getY2();
-        Point tileIndex = map.getTileIndexByPosition(gameObject.getScaledBounds().getX1(), edgeBoundY);
-        for (int j = -1; j <= numberOfTilesToCheck + 1; j++) {
-            MapTile mapTile = map.getMapTile(Math.round(tileIndex.x) + j, Math.round(tileIndex.y));
-            if (mapTile != null && hasCollidedWithMapTile(gameObject, mapTile, direction)) {
-            	lastCollidedTileY = mapTile;
+        /*Get the edge bounds... ok?*/
+        Point tileIndex = map.getTileIndexByPosition(gameObject.getScaledBounds().getX1(), edgeBoundY); /*Gets the uh, bottom left item? */
+        for (int j = -1; j <= numberOfTilesToCheck + 1; j++) { /*Get only immediately surrounding map tiles. AHA */
+            /*
+            So the bottom message rounds to a whole number to check the tile at that location
+             */
+            MapTile mapTile = map.getMapTile(/*converts / grabs based on array*/Math.round(tileIndex.x) + j, Math.round(tileIndex.y)); /*Grab the map
+            tile relative to the gameObject position*/
+
+            if (mapTile != null && hasCollidedWithMapTile(gameObject, mapTile, direction)) { /* Checks if there's a tile there, and if it's collided*/
+            	lastCollidedTileY = mapTile; /*Update tile*/
+
+                /*
+                Normalizes the distance based on the direction + bounds of the block
+
+                hmm.. I wonder how this could be made simpler
+                */
                 if (direction == Direction.DOWN) {
                     float boundsDifference = gameObject.getScaledY2() - gameObject.getScaledBoundsY2();
                     return mapTile.getScaledBoundsY1() - gameObject.getScaledHeight() + boundsDifference;

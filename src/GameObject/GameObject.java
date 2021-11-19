@@ -233,37 +233,48 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		// moves game object one pixel at a time until total move amount is reached
 		// if at any point a map tile collision is determined to have occurred from the move,
 		// move player back to right in front of the "solid" map tile's position, and stop attempting to move further
-		float amountMoved = 0;
+//		float amountMoved = 0;
+//		boolean hasCollided = false;
+//		for (int i = 0; i < amountToMove; i++) {
+//			moveY(direction.getVelocity());
+//			float newLocation = MapTileCollisionHandler.getAdjustedPositionAfterCollisionCheckY(this, map, direction);
+//			if (newLocation != 0) {
+//				hasCollided = true;
+//				setY(newLocation);
+//				break;
+//			}
+//			amountMoved = (i + 1) * direction.getVelocity();
+//		}
+//
+//		// if no collision occurred in the above steps, this deals with the decimal remainder from the original move amount (stored in moveAmountYRemainder)
+//		// it starts by moving the game object by that decimal amount
+//		// it then does one more check for a collision in the case that this added decimal amount was enough to change the rounding and move the game object to the next pixel over
+//		// if a collision occurs from this move, the player is moved back to right in front of the "solid" map tile's position
+//		if (!hasCollided) {
+//			moveY(moveAmountYRemainder * direction.getVelocity());
+//			float newLocation = MapTileCollisionHandler.getAdjustedPositionAfterCollisionCheckY(this, map, direction);
+//			if (newLocation != 0) {
+//				hasCollided = true;
+//				setY(newLocation);
+//			}
+//		}
 		boolean hasCollided = false;
-		for (int i = 0; i < amountToMove; i++) {
-			moveY(direction.getVelocity());
-			float newLocation = MapTileCollisionHandler.getAdjustedPositionAfterCollisionCheckY(this, map, direction);
-			if (newLocation != 0) {
-				hasCollided = true;
-				setY(newLocation);
-				break;
-			}
-			amountMoved = (i + 1) * direction.getVelocity();
+
+
+		setY(moveAmountY + y);
+		float newLocation = MapTileCollisionHandler.getAdjustedPositionAfterCollisionCheckY(this,map,direction);
+		if(newLocation != 0) {
+			setY(newLocation);
+//			System.out.println(newLocation);
+			hasCollided = true;
 		}
 
-		// if no collision occurred in the above steps, this deals with the decimal remainder from the original move amount (stored in moveAmountYRemainder)
-		// it starts by moving the game object by that decimal amount
-		// it then does one more check for a collision in the case that this added decimal amount was enough to change the rounding and move the game object to the next pixel over
-		// if a collision occurs from this move, the player is moved back to right in front of the "solid" map tile's position
-		if (!hasCollided) {
-			moveY(moveAmountYRemainder * direction.getVelocity());
-			float newLocation = MapTileCollisionHandler.getAdjustedPositionAfterCollisionCheckY(this, map, direction);
-			if (newLocation != 0) {
-				hasCollided = true;
-				setY(newLocation);
-			}
-		}
 
 		// call this method which a game object subclass can override to listen for collision events and react accordingly
 		onEndCollisionCheckY(hasCollided, direction);
 
 		// returns the amount actually moved -- this isn't really used by the game, but I have it here for debug purposes
-		return amountMoved + (moveAmountYRemainder * direction.getVelocity());
+		return (moveAmountYRemainder * direction.getVelocity());
 	}
 
 	// game object subclass can override this method to listen for x axis collision events and react accordingly after calling "moveXHandleCollision"

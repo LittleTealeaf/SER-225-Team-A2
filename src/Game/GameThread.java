@@ -24,8 +24,13 @@ public class GameThread extends ThreadManager {
     }
 
     public GameThread(Runnable runnable) {
-        super(runnable,1);
+        super(runnable,5);
         //Somehow setting tickDelay to 0 causes the game to break in some way?
+        //somehow even 1 is bad.... SOMETHING.. is going on here
+        /*
+        That something is probably due to the fact that rendering (painting) is done on a run-later class, so the updates is still technically
+        multithreaded in a way, so something's going wonky here..
+         */
         instance = this;
     }
 
