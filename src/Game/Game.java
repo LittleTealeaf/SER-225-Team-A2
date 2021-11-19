@@ -11,6 +11,10 @@ import Engine.ScreenManager;
  */
 public class Game {
 
+    public static ThreadManager thread;
+
+
+
     public static void main(String[] args) {
         new Game();
     }
@@ -18,12 +22,12 @@ public class Game {
     public Game() {
     	ScreenCoordinator c1 = new ScreenCoordinator();
         GameWindow gameWindow = new GameWindow(c1);
-
-        new RenderThread(null);
         gameWindow.startGame();
         ScreenManager screenManager = gameWindow.getScreenManager();
         screenManager.setCurrentScreen(c1);
 //        DEBUG USE ONLY
 //        screenManager.setCurrentScreen(new DebugScreen());
     }
+
+
 }

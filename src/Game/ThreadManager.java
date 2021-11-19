@@ -40,4 +40,8 @@ public class ThreadManager implements Runnable {
         }
         running = true;
     }
+
+    public static float getTimeScale() {
+        return 0f;
+    }
 }

@@ -56,9 +56,10 @@ public class GamePanel extends JPanel {
 
 		gameThread = new GameThread(() -> {
 			update();
+			repaint();
 		});
 		renderThread = new RenderThread(() -> {
-			repaint();
+
 		});
 		//WORKS
 		/*
@@ -156,7 +157,7 @@ public class GamePanel extends JPanel {
 	public void startGame() {
 //		timer.start();
 		gameThread.start();
-		renderThread.start();
+//		renderThread.start();
 
 		try {
 			music("Resources/Music/music.wav",.05);
