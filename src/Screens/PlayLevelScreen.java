@@ -64,7 +64,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
         COLOR_GREY_BACKGROUND = new Color(0, 0, 0, 100);
     }
 
-    private State screenState;
+    private State screenState = State.RUNNING;
     private int currentMap;
 
     public PlayLevelScreen() {
@@ -80,7 +80,6 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
     @Override
     public void initialize() {
         loadMap(currentMap);
-        screenState = State.RUNNING;
     }
 
     @Override

@@ -1,27 +1,16 @@
 package Engine;
 
+import Game.*;
 import GameObject.Rectangle;
 import Level.Player;
-import Players.Avatar;
-import Players.Cat;
-import Screens.OptionsScreen;
-import SpriteFont.SpriteFont;
 import Utils.Colors;
-import Utils.Stopwatch;
 
-import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
 //import sun.audio.AudioData;
 import javax.swing.*;
 
-import Game.GameState;
-import Game.ScreenCoordinator;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -30,24 +19,17 @@ import java.io.IOException;
  * The JPanel uses a timer to continually call cycles of update and draw
  */
 public class GamePanel extends JPanel {
-	// loads Screens on to the JPanel
-	// each screen has its own update and draw methods defined to handle a "section"
-	// of the game.
-	protected KeyLocker keyLocker = new KeyLocker();
-	private ScreenManager screenManager;
+	private final ScreenManager screenManager;
 	// used to create the game loop and cycle between update and draw calls
 	private Timer timer;
 	// used to draw graphics to the panel
-	private GraphicsHandler graphicsHandler;
+	private final GraphicsHandler graphicsHandler;
 	private boolean doPaint = false;
-	protected int pointerLocationX, pointerLocationY;	
-	protected Stopwatch keyTimer = new Stopwatch();
 	protected static GameWindow gameWindow;
 	private static ScreenCoordinator coordinator;
 	public static Clip clip;
-	private Point previousMousePoint = new Point(0,0);
-	private JLabel health;
-	private long lastFrame;
+	private final JLabel health;
+	private ThreadManager gameThread, renderThread;
 
 	
 	/*
@@ -71,23 +53,40 @@ public class GamePanel extends JPanel {
 		coordinator = c1;
 
 
-	
 
-		timer = new Timer(1000 / Config.FPS, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				update();
-				changeHealth();
-				if(coordinator.getGameState() == GameState.LEVEL) {
-					health.show();
-				}
-				else {
-					health.hide();
-				}
-				repaint();
-				lastFrame = System.currentTimeMillis();
-			}
+		gameThread = new GameThread(() -> {
+			update();
 		});
-		timer.setRepeats(true);
+		renderThread = new RenderThread(() -> {
+			repaint();
+		});
+
+//		timer = new Timer(1000 / Config.FPS, new ActionListener() {
+//			public void actionPerformed(ActionEvent e) {
+//				update();
+//				changeHealth();
+//				if(coordinator.getGameState() == GameState.LEVEL) {
+//					health.show();
+//				}
+//				else {
+//					health.hide();
+//				}
+//				repaint();
+//			}
+//		});
+//		timer.setRepeats(true);
+//		tickGame = new GameTick(new Runnable() {
+//			@Override
+//			public void run() {
+//				update();
+//			}
+//		});
+//		tickRender = new GameTick(new Runnable() {
+//			@Override
+//			public void run() {
+//				repaint();
+//			}
+//		});
 	}
 
 	public static ScreenCoordinator getScreenCoordinator() {
@@ -149,7 +148,9 @@ public class GamePanel extends JPanel {
 
 	// this starts the timer (the game loop is started here
 	public void startGame() {
-		timer.start();
+//		timer.start();
+		gameThread.start();
+		renderThread.start();
 
 		try {
 			music("Resources/Music/music.wav",.05);
@@ -168,6 +169,7 @@ public class GamePanel extends JPanel {
 
 	public void update() {
 			screenManager.update();
+			changeHealth();
 	}
 
 	public void draw() {
