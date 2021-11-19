@@ -11,10 +11,6 @@ import Engine.ScreenManager;
  */
 public class Game {
 
-    public static ThreadManager thread;
-
-
-
     public static void main(String[] args) {
         new Game();
     }
