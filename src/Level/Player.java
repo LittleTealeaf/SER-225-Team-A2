@@ -124,10 +124,10 @@ public abstract class Player extends GameObject {
             if (inAir) {
                 playerState = PlayerState.FALL;
                 applyGravity(MAX_FALL_VELOCITY);
-                moveYHandleCollision(velocityY);
+                moveYHandleCollision(velocityY * GameThread.getScale());
             } else {
                 playerState = PlayerState.WALK;
-                moveXHandleCollision(walkSpeed);
+                moveXHandleCollision(walkSpeed * GameThread.getScale());
             }
         } else for (PlayerListener listener : playerListeners) {
             listener.onLevelCompleted();
