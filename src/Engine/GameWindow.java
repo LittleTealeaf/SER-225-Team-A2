@@ -16,8 +16,6 @@ public class GameWindow {
 	private JFrame gameWindow;
 	private GamePanel gamePanel;
 	
-	
-	
 
 	public GameWindow(ScreenCoordinator c1) {
 		gameWindow = new JFrame("Game");

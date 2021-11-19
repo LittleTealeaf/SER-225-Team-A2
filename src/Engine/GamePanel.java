@@ -29,7 +29,8 @@ public class GamePanel extends JPanel {
 	private static ScreenCoordinator coordinator;
 	public static Clip clip;
 	private final JLabel health;
-	private ThreadManager gameThread, renderThread;
+	private ThreadManager gameThread;
+//	private ThreadManager renderThread;
 
 	
 	/*
@@ -58,9 +59,9 @@ public class GamePanel extends JPanel {
 			update();
 			repaint();
 		});
-		renderThread = new RenderThread(() -> {
-
-		});
+//		renderThread = new RenderThread(() -> {
+//
+//		});
 		//WORKS
 		/*
 		However, current plan should be as follows:
