@@ -1,6 +1,7 @@
 package Level;
 
 import Engine.KeyboardAction;
+import Game.GameThread;
 import GameObject.GameObject;
 import GameObject.SpriteSheet;
 import Level.PlayerState.Facing;
@@ -99,8 +100,8 @@ public abstract class Player extends GameObject {
         }
 
         inAir = true; //air is decided in moveYHandleCollision()
-        super.moveYHandleCollision(velocityY);
-        super.moveXHandleCollision(absVelocityX * facing.mod);
+        super.moveYHandleCollision(velocityY * GameThread.getScale());
+        super.moveXHandleCollision(absVelocityX * facing.mod * GameThread.getScale());
     }
 
     private void updateDead() {
@@ -114,7 +115,7 @@ public abstract class Player extends GameObject {
         } else {
             velocityY = DEATH_Y_VELOCITY;
         }
-        setY(y + velocityY);
+        setY(y + velocityY * GameThread.getScale());
     }
 
     private void updateWin() {
@@ -135,7 +136,7 @@ public abstract class Player extends GameObject {
 
     private void applyGravity(float maxFallVelocity) {
         if (velocityY < maxFallVelocity) {
-            velocityY += gravity;
+            velocityY += gravity * GameThread.getScale();
         }
     }
 
