@@ -84,7 +84,6 @@ public class GamePanel extends JPanel {
 					health.hide();
 				}
 				repaint();
-				System.out.println((System.currentTimeMillis() - lastFrame));
 				lastFrame = System.currentTimeMillis();
 			}
 		});
