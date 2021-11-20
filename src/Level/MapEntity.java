@@ -1,6 +1,7 @@
 package Level;
 
 import Engine.CollisionType;
+import Engine.Vector;
 import GameObject.*;
 
 import java.awt.image.BufferedImage;
@@ -13,7 +14,7 @@ public class MapEntity extends GameObject {
     protected CollisionType collisionType = CollisionType.DEFAULT;
 
     // if true, if entity goes out of the camera's update range, and then ends up back in range, the entity will "respawn" back to its starting parameters
-    protected boolean isRespawnable = true;
+    protected boolean respawnEnabled = true;
 
     // if true, enemy cannot go out of camera's update range
     protected boolean isUpdateOffScreen = false;
@@ -47,12 +48,9 @@ public class MapEntity extends GameObject {
     }
 
     public void initialize() {
-        this.x = startPositionX;
-        this.y = startPositionY;
-        this.amountMovedX = 0;
-        this.amountMovedY = 0;
-        this.previousX = startPositionX;
-        this.previousY = startPositionY;
+        pos.set(startPosition);
+        amountMoved = new Vector(0, 0);
+        previousPosition.set(pos);
         updateCurrentFrame();
     }
 
@@ -64,12 +62,12 @@ public class MapEntity extends GameObject {
         this.mapEntityStatus = mapEntityStatus;
     }
 
-    public boolean isRespawnable() {
-        return isRespawnable;
+    public boolean isRespawnEnabled() {
+        return respawnEnabled;
     }
 
     public void setIsRespawnable(boolean isRespawnable) {
-        this.isRespawnable = isRespawnable;
+        this.respawnEnabled = isRespawnable;
     }
 
     public boolean isUpdateOffScreen() {

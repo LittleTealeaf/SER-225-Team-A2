@@ -32,16 +32,16 @@ public class GameObject extends AnimatedSprite implements Drawable {
 
 	// stores game object's start position
 	// important to keep track of this as it's what allows the special draw logic to work
-	protected float startPositionX, startPositionY;
+//	protected float startPositionX, startPositionY;
 
 	protected Vector startPosition, amountMoved, previousPosition;
-
-	// how much game object's position has changed from start position over time
-	// also important to keep track of for the special draw logic
-	protected float amountMovedX, amountMovedY;
-
-	// previous location the game object was in from the last frame
-	protected float previousX, previousY;
+//
+//	// how much game object's position has changed from start position over time
+//	// also important to keep track of for the special draw logic
+//	protected float amountMovedX, amountMovedY;
+//
+//	// previous location the game object was in from the last frame
+//	protected float previousX, previousY;
 
 
 
@@ -51,27 +51,19 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	public GameObject(SpriteSheet spriteSheet, float x, float y, String startingAnimation) {
 		super(spriteSheet, x, y, startingAnimation);
 		startPosition = new Vector(x, y);
-		this.startPositionX = x;
-		this.startPositionY = y;
 		previousPosition = new Vector(x, y);
-		this.previousX = x;
-		this.previousY = y;
 	}
 
 	public GameObject(float x, float y, HashMap<String, Frame[]> animations, String startingAnimation) {
 		super(x, y, animations, startingAnimation);
-		this.startPositionX = x;
-		this.startPositionY = y;
-		this.previousX = x;
-		this.previousY = y;
+		startPosition = new Vector(x, y);
+		previousPosition = new Vector(x, y);
 	}
 
 	public GameObject(BufferedImage image, float x, float y, String startingAnimation) {
 		super(image, x, y, startingAnimation);
-		this.startPositionX = x;
-		this.startPositionY = y;
-		this.previousX = x;
-		this.previousY = y;
+		startPosition = new Vector(x, y);
+		previousPosition = new Vector(x, y);
 	}
 
 	public GameObject(BufferedImage image, float x, float y) {
@@ -83,10 +75,8 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		}};
 		this.currentAnimationName = "DEFAULT";
 		updateCurrentFrame();
-		this.startPositionX = x;
-		this.startPositionY = y;
-		this.previousX = x;
-		this.previousY = y;
+		startPosition = new Vector(x, y);
+		previousPosition = new Vector(x, y);
 	}
 
 	public GameObject(BufferedImage image, float x, float y, float scale) {
@@ -100,10 +90,8 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		}};
 		this.currentAnimationName = "DEFAULT";
 		updateCurrentFrame();
-		this.startPositionX = x;
-		this.startPositionY = y;
-		this.previousX = x;
-		this.previousY = y;
+		startPosition = new Vector(x, y);
+		previousPosition = new Vector(x, y);
 	}
 
 	public GameObject(BufferedImage image, float x, float y, float scale, ImageEffect imageEffect) {
@@ -118,10 +106,8 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		}};
 		this.currentAnimationName = "DEFAULT";
 		updateCurrentFrame();
-		this.startPositionX = x;
-		this.startPositionY = y;
-		this.previousX = x;
-		this.previousY = y;
+		startPosition = new Vector(x, y);
+		previousPosition = new Vector(x, y);
 	}
 
 	public GameObject(BufferedImage image, float x, float y, float scale, ImageEffect imageEffect, Rectangle bounds) {
@@ -137,10 +123,8 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		}};
 		this.currentAnimationName = "DEFAULT";
 		updateCurrentFrame();
-		this.startPositionX = x;
-		this.startPositionY = y;
-		this.previousX = x;
-		this.previousY = y;
+		startPosition = new Vector(x, y);
+		previousPosition = new Vector(x, y);
 	}
 
 	@Override
@@ -149,8 +133,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		super.update();
 
 		// update previous position to be the current position
-		previousX = x;
-		previousY = y;
+		previousPosition.set(pos);
 	}
 
 	// move game object along the x axis
@@ -266,7 +249,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		boolean hasCollided = false;
 
 
-		setY(moveAmountY + y);
+		setY(moveAmountY + pos.getY());
 		float newLocation = MapTileCollisionHandler.getAdjustedPositionAfterCollisionCheckY(this,map,direction);
 		if(newLocation != 0) {
 			setY(newLocation);
@@ -291,7 +274,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	// gets x location taking into account map camera position
 	public float getCalibratedXLocation() {
 		if (map != null) {
-			return x - map.getCamera().getX();
+			return pos.getX() - map.getCamera().getX();
 		} else {
 			return getX();
 		}
@@ -300,7 +283,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	// gets y location taking into account map camera position
 	public float getCalibratedYLocation() {
 		if (map != null) {
-			return y - map.getCamera().getY();
+			return pos.getY() - map.getCamera().getY();
 		} else {
 			return getY();
 		}
@@ -351,4 +334,9 @@ public class GameObject extends AnimatedSprite implements Drawable {
 			super.drawBounds(graphicsHandler, color);
 		}
 	}
+
+	public Map getMap() {
+		return map;
+	}
+
 }

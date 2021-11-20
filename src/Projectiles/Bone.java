@@ -27,7 +27,7 @@ public class Bone extends Projectile {
         existenceTimer.setWaitTime(existenceTime);
 
         // this will not respawn after it has been removed
-        isRespawnable = false;
+        respawnEnabled = false;
 
         initialize();
         collisionType = CollisionType.PREVENT_JUMP;

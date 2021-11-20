@@ -1,6 +1,7 @@
 package GameObject;
 
 import Engine.GraphicsHandler;
+import Engine.Vector;
 import Utils.Stopwatch;
 
 import java.awt.*;
@@ -16,7 +17,11 @@ import java.util.HashMap;
 */
 public class AnimatedSprite implements IntersectableRectangle {
 	// location of entity
-	protected float x, y;
+//	protected float x, y;
+	/**
+	 * Position of the Animated Sprite
+	 */
+	protected Vector pos;
 
 	// maps animation name to an array of Frames representing one animation
 	protected HashMap<String, Frame[]> animations;
@@ -39,24 +44,21 @@ public class AnimatedSprite implements IntersectableRectangle {
 	private Stopwatch frameTimer = new Stopwatch();
 
 	public AnimatedSprite(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
-		this.x = x;
-		this.y = y;
+		pos = new Vector(x, y);
 		this.animations = getAnimations(spriteSheet);
 		this.currentAnimationName = startingAnimationName;
 		updateCurrentFrame();
 	}
 
     public AnimatedSprite(float x, float y, HashMap<String, Frame[]> animations, String startingAnimationName) {
-        this.x = x;
-        this.y = y;
+		pos = new Vector(x, y);
         this.animations = animations;
         this.currentAnimationName = startingAnimationName;
         updateCurrentFrame();
     }
 
 	public AnimatedSprite(BufferedImage image, float x, float y, String startingAnimationName) {
-		this.x = x;
-		this.y = y;
+		pos = new Vector(x, y);
 		SpriteSheet spriteSheet = new SpriteSheet(image, image.getWidth(), image.getHeight());
         this.animations = getAnimations(spriteSheet);
         this.currentAnimationName = startingAnimationName;
@@ -64,8 +66,7 @@ public class AnimatedSprite implements IntersectableRectangle {
 	}
 
     public AnimatedSprite(float x, float y) {
-        this.x = x;
-        this.y = y;
+		pos = new Vector(x, y);
         this.animations = new HashMap<>();
         this.currentAnimationName = "";
     }
@@ -113,8 +114,8 @@ public class AnimatedSprite implements IntersectableRectangle {
 	// and location updated to match any changes to the animated sprite class
 	protected void updateCurrentFrame() {
 		currentFrame = getCurrentFrame();
-		currentFrame.setX(x);
-		currentFrame.setY(y);
+		currentFrame.setX(pos.getX());
+		currentFrame.setY(pos.getY());
 	}
 
 	// gets the frame from current animation that the animated sprite class is currently using
@@ -143,11 +144,11 @@ public class AnimatedSprite implements IntersectableRectangle {
 	public float getScaledY2() { return currentFrame.getScaledY2(); }
 
 	public void setX(float x) {
-		this.x = x;
+		pos.setX(x);
 		currentFrame.setX(x);
 	}
 	public void setY(float y) {
-		this.y = y;
+		pos.setY(y);
 		currentFrame.setY(y);
 	}
 
@@ -157,32 +158,32 @@ public class AnimatedSprite implements IntersectableRectangle {
 	}
 
 	public void moveX(float dx) {
-		this.x += dx;
+		this.pos.addX(dx);
 		currentFrame.moveX(dx);
 	}
 
 	public void moveRight(float dx) {
-		this.x += dx;
+		this.pos.addX(dx);
 		currentFrame.moveRight(dx);
 	}
 
 	public void moveLeft(float dx) {
-		this.x -= dx;
+		this.pos.addX(-dx);
 		currentFrame.moveLeft(dx);
 	}
 
 	public void moveY(float dy) {
-		this.y += dy;
+		this.pos.addY(dy);
 		currentFrame.moveY(dy);
 	}
 
 	public void moveDown(float dy) {
-		this.y += dy;
+		this.pos.addY(dy);
 		currentFrame.moveDown(dy);
 	}
 
 	public void moveUp(float dy) {
-		this.y -= dy;
+		this.pos.addY(-dy);
 		currentFrame.moveUp(dy);
 	}
 
@@ -270,12 +271,20 @@ public class AnimatedSprite implements IntersectableRectangle {
 
 	@Override
 	public String toString() {
-		return String.format("Current Sprite: x=%s y=%s width=%s height=%s bounds=(%s, %s, %s, %s)", x, y, getScaledWidth(), getScaledHeight(), getScaledBoundsX1(), getScaledBoundsY1(), getScaledBounds().getWidth(), getScaledBounds().getHeight());
+		return String.format("Current Sprite: x=%s y=%s width=%s height=%s bounds=(%s, %s, %s, %s)", pos.getX(), pos.getY(), getScaledWidth(),
+							 getScaledHeight(), getScaledBoundsX1(), getScaledBoundsY1(), getScaledBounds().getWidth(), getScaledBounds().getHeight());
 	}
 	
 	public void setCurrentAnimationName(String name) {
 		this.currentAnimationName = name;
 	}
-	
+
+	public Vector getPos() {
+		return pos;
+	}
+
+	public void move(Vector vector) {
+		pos.add(vector);
+	}
 	
 }

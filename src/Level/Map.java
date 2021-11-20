@@ -1,9 +1,6 @@
 package Level;
 
-import Engine.Config;
-import Engine.Drawable;
-import Engine.GraphicsHandler;
-import Engine.ScreenManager;
+import Engine.*;
 import Utils.Point;
 
 import java.io.File;
@@ -233,6 +230,12 @@ public abstract class Map implements Drawable {
         } else {
             return null;
         }
+    }
+
+    public Point getTileIndexByPosition(Vector vector) {
+        int xIndex = Math.round(vector.getX() / tileset.getScaledSpriteWidth());
+        int yIndex = Math.round(vector.getY()) / tileset.getScaledSpriteHeight();
+        return new Point(xIndex,yIndex);
     }
 
     // returns the index of a tile (x index and y index) based on a position in the map

@@ -14,10 +14,11 @@ import Utils.Point;
  * This class has methods to check if a game object has collided with a map tile
  *  it is used by the game object class to determine if a collision occurred
  */
+@Deprecated
 public class MapTileCollisionHandler {
 	
 	public static MapTile lastCollidedTileX, lastCollidedTileY;
-	
+
     public static float getAdjustedPositionAfterCollisionCheckX(GameObject gameObject, Map map, Direction direction) {
         int numberOfTilesToCheck = Math.max(gameObject.getScaledBounds().getHeight() / map.getTileset().getScaledSpriteHeight(), 1);
         float edgeBoundX = direction == Direction.LEFT ? gameObject.getScaledBounds().getX1() : gameObject.getScaledBounds().getX2();

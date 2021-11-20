@@ -55,7 +55,7 @@ public abstract class Player extends GameObject {
         boolean playerMove = moveLeftDown ^ KeyboardAction.GAME_MOVE_RIGHT.isDown(); //Only true if the player is moving in a direction
         facing = playerMove ? moveLeftDown ? Facing.LEFT : Facing.RIGHT : facing; //Update facing if the player moved
         //Only move if the player moved and is not going out of bounds
-        if (playerMove && ((facing == Facing.LEFT && x > 0) ^ (facing == Facing.RIGHT && x < map.getRightBound()))) {
+        if (playerMove && ((facing == Facing.LEFT && pos.getX() > 0) ^ (facing == Facing.RIGHT && pos.getY() < map.getRightBound()))) {
             playerState = PlayerState.WALK;
             if (KeyboardAction.GAME_SPRINT.isDown() && absVelocityX >= walkSpeed) {
                 if (absVelocityX < sprintSpeed) {
@@ -123,7 +123,7 @@ public abstract class Player extends GameObject {
         } else {
             velocityY = DEATH_Y_VELOCITY;
         }
-        setY(y + velocityY * GameThread.getScale());
+        setY(getY() + velocityY * GameThread.getScale());
     }
 
     private void updateWin() {

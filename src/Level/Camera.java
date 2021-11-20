@@ -111,7 +111,7 @@ public class Camera extends Rectangle {
                 }
             } else if (enemy.getMapEntityStatus() == MapEntityStatus.ACTIVE) {
                 enemy.setMapEntityStatus(MapEntityStatus.INACTIVE);
-                if (enemy.isRespawnable()) {
+                if (enemy.isRespawnEnabled()) {
                     enemy.initialize();
                 }
             } else if (enemy.getMapEntityStatus() == MapEntityStatus.REMOVED) {
@@ -133,7 +133,7 @@ public class Camera extends Rectangle {
                 }
             } else if (projectile.getMapEntityStatus() == MapEntityStatus.ACTIVE) {
                 projectile.setMapEntityStatus(MapEntityStatus.INACTIVE);
-                if (projectile.isRespawnable()) {
+                if (projectile.isRespawnEnabled()) {
                     projectile.initialize();
                 }
             } else if (projectile.getMapEntityStatus() == MapEntityStatus.REMOVED) {
@@ -162,7 +162,7 @@ public class Camera extends Rectangle {
                 }
             } else if (enhancedMapTile.getMapEntityStatus() == MapEntityStatus.ACTIVE) {
                 enhancedMapTile.setMapEntityStatus(MapEntityStatus.INACTIVE);
-                if (enhancedMapTile.isRespawnable()) {
+                if (enhancedMapTile.isRespawnEnabled()) {
                     enhancedMapTile.initialize();
                 }
             } else if (enhancedMapTile.getMapEntityStatus() == MapEntityStatus.REMOVED) {
@@ -191,7 +191,7 @@ public class Camera extends Rectangle {
                 }
             } else if (npc.getMapEntityStatus() == MapEntityStatus.ACTIVE) {
                 npc.setMapEntityStatus(MapEntityStatus.INACTIVE);
-                if (npc.isRespawnable()) {
+                if (npc.isRespawnEnabled()) {
                     npc.initialize();
                 }
             } else if (npc.getMapEntityStatus() == MapEntityStatus.REMOVED) {
