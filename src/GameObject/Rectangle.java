@@ -190,4 +190,13 @@ public class Rectangle implements IntersectableRectangle {
 		return Math.round(intersectRectangle.getX1()) <= Math.round(otherIntersectRectangle.getX2()) && Math.round(intersectRectangle.getX2()) >= Math.round(otherIntersectRectangle.getX1()) &&
 				Math.round(intersectRectangle.getY1()) <= Math.round(otherIntersectRectangle.getY2()) && Math.round(intersectRectangle.getY2()) >= Math.round(otherIntersectRectangle.getY1());
 	}
+
+	//TODO reduce calls
+	public Vector getPos1() {
+		return new Vector(getX1(), getY1());
+	}
+
+	public Vector getPos2() {
+		return new Vector(getX2(), getY2());
+	}
 }

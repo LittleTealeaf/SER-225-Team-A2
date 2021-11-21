@@ -1,5 +1,7 @@
 package Engine;
 
+import Utils.Point;
+
 public class Vector {
     private float x,y;
 
@@ -64,9 +66,10 @@ public class Vector {
         return getDivided(Math.abs(getMagnitude()));
     }
 
-    public void add(Vector vector) {
+    public Vector add(Vector vector) {
         this.x += vector.x;
         this.y += vector.y;
+        return this;
     }
 
     public Vector multiply(float factor) {
@@ -83,6 +86,14 @@ public class Vector {
 
     public Vector subtract(float magnitude) {
         return add(-magnitude);
+    }
+
+    public Vector subtract(Vector vector) {
+        return add(vector.getNegative());
+    }
+
+    public Vector getSubtracted(Vector vector) {
+        return clone().subtract(vector);
     }
 
     public Vector add(float magnitude) {
@@ -110,6 +121,10 @@ public class Vector {
 
     public Vector getNegative() {
         return clone().multiply(-1);
+    }
+
+    public Point toPoint() {
+        return new Point(x, y);
     }
 
     public String toString() {

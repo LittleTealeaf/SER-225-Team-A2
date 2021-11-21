@@ -50,7 +50,6 @@ public class MapEntity extends GameObject {
     public void initialize() {
         pos.set(startPosition);
         amountMoved = new Vector(0, 0);
-        previousPosition.set(pos);
         updateCurrentFrame();
     }
 

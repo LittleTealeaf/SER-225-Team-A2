@@ -4,23 +4,29 @@ import Builders.FrameBuilder;
 import Engine.Drawable;
 import Engine.GraphicsHandler;
 import Engine.Vector;
+import Game.GameThread;
 import Level.Map;
+import Level.MapTile;
 import Level.MapTileCollisionHandler;
 import Utils.Direction;
 import Utils.MathUtils;
+import Utils.Point;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 /**
-	The all important GameObject class is what every "entity" used in this game should be based off of
-	It encapsulates all the other class logic in the GameObject package to be a "one stop shop" for all entity needs
-	This includes:
-	1. displaying an image (as a sprite) to represent the entity
-	2. animation logic for the sprite
-	3. collision detection with a map
-	4. performing proper draw logic based on camera movement
+ * The all important GameObject class is what every "entity" used in this game should be based off of
+ * 	It encapsulates all the other class logic in the GameObject package to be a "one stop shop" for all entity needs
+ * 	This includes:
+ * 	1. displaying an image (as a sprite) to represent the entity
+ * 	2. animation logic for the sprite
+ * 	3. collision detection with a map
+ * 	4. performing proper draw logic based on camera movement
+ *
+ * @author Thomas Kwashnak
+ * @author Alex Thimineur + Others
  */
 
 /*
@@ -30,20 +36,9 @@ import java.util.HashMap;
  */
 public class GameObject extends AnimatedSprite implements Drawable {
 
-	// stores game object's start position
-	// important to keep track of this as it's what allows the special draw logic to work
-//	protected float startPositionX, startPositionY;
+	protected Vector startPosition, amountMoved;
 
-	protected Vector startPosition, amountMoved, previousPosition;
-//
-//	// how much game object's position has changed from start position over time
-//	// also important to keep track of for the special draw logic
-//	protected float amountMovedX, amountMovedY;
-//
-//	// previous location the game object was in from the last frame
-//	protected float previousX, previousY;
-
-
+	protected MapTile lastCollided;
 
 	// the map instance this game object "belongs" to.
 	protected Map map;
@@ -51,19 +46,16 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	public GameObject(SpriteSheet spriteSheet, float x, float y, String startingAnimation) {
 		super(spriteSheet, x, y, startingAnimation);
 		startPosition = new Vector(x, y);
-		previousPosition = new Vector(x, y);
 	}
 
 	public GameObject(float x, float y, HashMap<String, Frame[]> animations, String startingAnimation) {
 		super(x, y, animations, startingAnimation);
 		startPosition = new Vector(x, y);
-		previousPosition = new Vector(x, y);
 	}
 
 	public GameObject(BufferedImage image, float x, float y, String startingAnimation) {
 		super(image, x, y, startingAnimation);
 		startPosition = new Vector(x, y);
-		previousPosition = new Vector(x, y);
 	}
 
 	public GameObject(BufferedImage image, float x, float y) {
@@ -76,7 +68,6 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		this.currentAnimationName = "DEFAULT";
 		updateCurrentFrame();
 		startPosition = new Vector(x, y);
-		previousPosition = new Vector(x, y);
 	}
 
 	public GameObject(BufferedImage image, float x, float y, float scale) {
@@ -91,7 +82,6 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		this.currentAnimationName = "DEFAULT";
 		updateCurrentFrame();
 		startPosition = new Vector(x, y);
-		previousPosition = new Vector(x, y);
 	}
 
 	public GameObject(BufferedImage image, float x, float y, float scale, ImageEffect imageEffect) {
@@ -107,7 +97,6 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		this.currentAnimationName = "DEFAULT";
 		updateCurrentFrame();
 		startPosition = new Vector(x, y);
-		previousPosition = new Vector(x, y);
 	}
 
 	public GameObject(BufferedImage image, float x, float y, float scale, ImageEffect imageEffect, Rectangle bounds) {
@@ -124,16 +113,113 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		this.currentAnimationName = "DEFAULT";
 		updateCurrentFrame();
 		startPosition = new Vector(x, y);
-		previousPosition = new Vector(x, y);
 	}
 
-	@Override
-	public void update() {
-		// call to animation logic
-		super.update();
+//	@Override
+//	public void update() {
+//		// call to animation logic
+//		super.update();
+//
+//		// update previous position to be the current position
+//
+//	}
 
-		// update previous position to be the current position
-		previousPosition.set(pos);
+	/**
+	 * Moves the game object by a given velocity, barring impacts from collisions (within the map instance)
+	 * @param providedVelocity Amount to move. Will not be modified during movement. Will scale down to the current scale from
+	 * {@link GameThread#getScale()}
+	 * @author Thomas Kwashnak
+	 */
+	public void moveHandleCollision(Vector providedVelocity) {
+
+
+		//Copies the velocity scaled with current frame time
+		Vector velocity = providedVelocity.getMultiplied(GameThread.getScale());
+		//Gets the unit vector, which is basically the unit-circle direction that the velocity is pointing towards
+		final Vector unit = providedVelocity.getUnit();
+		final Vector negativeUnit = unit.getNegative();
+
+
+		//Inch the object by integer increments to get closer to the position
+		int intIterations = (int) velocity.getMagnitude();
+		for(int i = 0; i < intIterations; i++) {
+			//Moves a unit closer and reduces the "velocity left" by 1
+			move(unit);
+			velocity.add(negativeUnit);
+			MapTile collision = getCollision(unit);
+			if(collision != null) {
+				//Move back and then break out of the loop
+				velocity.add(unit);
+				move(negativeUnit);
+				break;
+			}
+		}
+
+
+	}
+
+	/**
+	 * Checks if the game object has collided with any map tiles, and returns the collided map-tile if it has. Otherwise, returns null
+	 *
+	 * Copied from CollisionHandler
+	 * @param velocity
+	 * @return
+	 */
+	private MapTile getCollision(Vector velocity) {
+		//TODO modify / recreate this code to iterate through all neighbor blocks only in the half direction of the velocity
+//		int numberOfTilesToCheck = Math.max(getScaledBounds().getWidth() / getMap().getTileset().getScaledSpriteWidth() + 2, 3);
+
+		Point tileIndex = getMap().getTileIndexByPosition(getScaledBounds().getPos1());
+
+		int rangeWidth = getScaledBounds().getWidth() / map.getTileset().getScaledSpriteWidth() + 3;
+		int rangeHeight = getScaledBounds().getHeight() / map.getTileset().getScaledSpriteHeight() + 3;
+
+		MapTile[] tiles = map.getTilesInBounds((int) tileIndex.x - 1, (int) tileIndex.y - 1, rangeWidth, rangeHeight);
+
+		for(MapTile tile : tiles) {
+			if(checkCollision(tile,velocity)) {
+				return tile;
+			}
+		}
+
+//		MapTile[] tiles = map.getRange((int) tileIndex.x - 1, (int) tileIndex.y - 1,
+//									   getScaledBounds().getWidth() / map.getTileset().getScaledSpriteWidth() + 2, )
+
+//		for(int i = -1; i < numberOfTilesToCheck + 1; i++) {
+//			for(int j = -1;j < numberOfTilesToCheck + 1; j++) {
+//				MapTile mapTile = getMap().getTileByPosition((int) tileIndex.x + i, (int) tileIndex.y + j);
+//				System.out.println((tileIndex.x + i) + " " + (tileIndex.y + j) + " " + mapTile.getTileIndex());
+//				if(checkCollision(mapTile, velocity)) {
+//					return mapTile;
+//				}
+//			}
+//		}
+		return null;
+	}
+
+//	/**
+//	 * Copied from CollisionHandler
+//	 * @param mapTile
+//	 * @param velocity
+//	 * @return
+//	 */
+//	private boolean checkCollision(MapTile mapTile, Vector velocity) {
+//		return mapTile != null && hasCollidedWithMapTile(mapTile,velocity);
+//	}
+
+	/**
+	 * Copied from CollisionHandler
+	 * @param mapTile
+	 * @param velocity
+	 * @return
+	 */
+	private boolean checkCollision(MapTile mapTile, Vector velocity) {
+		return mapTile != null && switch (mapTile.getTileType()) {
+			case NOT_PASSABLE, LETHAL -> intersects(mapTile);
+			case JUMP_THROUGH_PLATFORM -> velocity.getY() > 0 && intersects(mapTile) && Math.round(getScaledBoundsY2() -1) == Math.round(
+					mapTile.getScaledBoundsY1());
+			case PASSABLE -> false;
+		};
 	}
 
 	// move game object along the x axis

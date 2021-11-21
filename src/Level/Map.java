@@ -223,25 +223,46 @@ public abstract class Map implements Drawable {
     }
 
     // returns a tile based on a position in the map
+    @Deprecated
+    /**
+     * uhh.. doesn't work?
+     */
     public MapTile getTileByPosition(int xPosition, int yPosition) {
+        System.out.println(xPosition + " " + yPosition);
         Point tileIndex = getTileIndexByPosition(xPosition, yPosition);
-        if (isInBounds(Math.round(tileIndex.x), Math.round(tileIndex.y))) {
+        if (isInBounds(Math.round(tileIndex.x), Math.round(tileIndex.y))) { //useless as it already checks within getMapTile?
             return getMapTile(Math.round(tileIndex.x), Math.round(tileIndex.y));
         } else {
             return null;
         }
     }
 
+    /**
+     * Returns a list of Tiles within the bounds listed starting at x,y and going height,width
+     * @param x
+     * @param y
+     * @param width
+     * @param height
+     * @return
+     */
+    public MapTile[] getTilesInBounds(int x, int y, int width, int height) {
+        MapTile[] ret = new MapTile[width * height];
+        for(int i = 0; i < ret.length; i++) {
+            ret[i] = getMapTile(x + i / width, y + i % width);
+        }
+        return ret;
+    }
+
     public Point getTileIndexByPosition(Vector vector) {
         int xIndex = Math.round(vector.getX() / tileset.getScaledSpriteWidth());
-        int yIndex = Math.round(vector.getY()) / tileset.getScaledSpriteHeight();
+        int yIndex = Math.round(vector.getY() / tileset.getScaledSpriteHeight());
         return new Point(xIndex,yIndex);
     }
 
     // returns the index of a tile (x index and y index) based on a position in the map
     public Point getTileIndexByPosition(float xPosition, float yPosition) {
-        int xIndex = Math.round(xPosition) / tileset.getScaledSpriteWidth();
-        int yIndex = Math.round(yPosition) / tileset.getScaledSpriteHeight();
+        int xIndex = Math.round(xPosition / tileset.getScaledSpriteWidth());
+        int yIndex = Math.round(yPosition / tileset.getScaledSpriteHeight());
         return new Point(xIndex, yIndex);
     }
 

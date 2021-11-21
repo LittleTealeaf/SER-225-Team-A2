@@ -115,7 +115,8 @@ public abstract class Player extends GameObject {
 //        super.moveYHandleCollision(velocityY * GameThread.getScale());
 //        System.out.println(velocityY * GameThread.getScale() + " " + inAir);
 //        super.moveXHandleCollision(absVelocityX * facing.mod * GameThread.getScale());
-        collisionHandler.getAdjustedMovement(new Vector(absVelocityX * facing.mod, velocityY));
+//        collisionHandler.getAdjustedMovement(new Vector(absVelocityX * facing.mod, velocityY));
+        moveHandleCollision(new Vector(absVelocityX * facing.mod, velocityY));
     }
 
     private void updateDead() {
