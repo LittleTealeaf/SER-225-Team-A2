@@ -111,4 +111,8 @@ public class Vector {
     public Vector getNegative() {
         return clone().multiply(-1);
     }
+
+    public String toString() {
+        return "(" + x + ", " + y + ")";
+    }
 }

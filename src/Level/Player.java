@@ -1,6 +1,7 @@
 package Level;
 
 import Engine.KeyboardAction;
+import Engine.Vector;
 import Game.GameThread;
 import GameObject.GameObject;
 import GameObject.SpriteSheet;
@@ -28,6 +29,7 @@ public abstract class Player extends GameObject {
     private LevelState levelState;
     private boolean inAir;
     private float absVelocityX, velocityY;
+    private CollisionHandler collisionHandler;
 
     public Player(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
         super(spriteSheet, x, y, startingAnimationName);
@@ -35,6 +37,7 @@ public abstract class Player extends GameObject {
         playerState = PlayerState.STAND;
         levelState = LevelState.PLAYING;
         facing = Facing.RIGHT;
+        collisionHandler = new CollisionHandler(this);
     }
 
     public void update() {
@@ -107,9 +110,12 @@ public abstract class Player extends GameObject {
         the rendering be "truncated" to ints? or maybe it also does floats?
         Basically we're going away from int locations? Would need to keep some things as ints to allow for
          */
-        super.moveYHandleCollision(velocityY * GameThread.getScale());
+
+
+//        super.moveYHandleCollision(velocityY * GameThread.getScale());
 //        System.out.println(velocityY * GameThread.getScale() + " " + inAir);
-        super.moveXHandleCollision(absVelocityX * facing.mod * GameThread.getScale());
+//        super.moveXHandleCollision(absVelocityX * facing.mod * GameThread.getScale());
+        collisionHandler.getAdjustedMovement(new Vector(absVelocityX * facing.mod, velocityY));
     }
 
     private void updateDead() {

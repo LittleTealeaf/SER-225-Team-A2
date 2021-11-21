@@ -138,6 +138,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 
 	// move game object along the x axis
 	// will stop object from moving based on map collision logic (such as if it hits a solid tile)
+	@Deprecated
 	public void moveXHandleCollision(float dx) {
 		if (map != null) {
 			handleCollisionX(dx);
@@ -148,6 +149,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 
 	// move game object along the y axis
 	// will stop object from moving based on map collision logic (such as if it hits a solid tile)
+	@Deprecated
 	public void moveYHandleCollision(float dy) {
 		if (map != null) {
 			handleCollisionY(dy);
@@ -156,11 +158,13 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		}
 	}
 
+	@Deprecated
 	private int magnitudeToInt(float magnitude) {
 		return (int) magnitude;
 	}
 
 	// performs collision check logic for moving along the x axis against the map's tiles
+	@Deprecated
 	public float handleCollisionX(float moveAmountX) {
 		// determines amount to move (whole number)
 		int amountToMove = magnitudeToInt(moveAmountX);
@@ -208,6 +212,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	}
 
 	// performs collision check logic for moving along the y axis against the map's tiles
+	@Deprecated
 	public float handleCollisionY(float moveAmountY) {
 		// determines amount to move (whole number)
 		int amountToMove = magnitudeToInt(moveAmountY);
@@ -266,12 +271,16 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	}
 
 	// game object subclass can override this method to listen for x axis collision events and react accordingly after calling "moveXHandleCollision"
+	@Deprecated
 	public void onEndCollisionCheckX(boolean hasCollided, Direction direction) { }
 
 	// game object subclass can override this method to listen for y axis collision events and react accordingly after calling "moveYHandleCollision"
+	@Deprecated
 	public void onEndCollisionCheckY(boolean hasCollided, Direction direction) { }
 
 	// gets x location taking into account map camera position
+	@Deprecated
+	//TODO change to vector
 	public float getCalibratedXLocation() {
 		if (map != null) {
 			return pos.getX() - map.getCamera().getX();
@@ -281,6 +290,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	}
 
 	// gets y location taking into account map camera position
+	@Deprecated
 	public float getCalibratedYLocation() {
 		if (map != null) {
 			return pos.getY() - map.getCamera().getY();

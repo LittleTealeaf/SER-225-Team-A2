@@ -1,6 +1,7 @@
 package Level;
 
 import Engine.Vector;
+import Game.GameThread;
 import GameObject.GameObject;
 import Utils.Point;
 
@@ -10,16 +11,18 @@ import Utils.Point;
 public class CollisionHandler {
 
     private GameObject gameObject;
-    private Map map;
     private MapTile lastCollidedTile;
 
     public CollisionHandler(GameObject gameObject) {
         this.gameObject = gameObject;
-        this.map = gameObject.getMap();
     }
 
+    public Map getMap() {
+        return gameObject.getMap();
+    }
 
     public Vector getAdjustedMovement(Vector velocity) {
+        velocity.multiply(GameThread.getScale());
         Vector unit = velocity.getUnit(), cloned = velocity.clone();
         Vector originalPos = gameObject.getPos().clone();
 
@@ -34,12 +37,11 @@ public class CollisionHandler {
                 return modifiedVelocity(collision,cloned);
             }
         }
-
         return velocity;
     }
 
-    public Vector modifiedVelocity(MapTile collided, Vector velocity) {
-
+    private Vector modifiedVelocity(MapTile collided, Vector velocity) {
+        System.out.println(velocity);
         return null;
     }
 
@@ -49,11 +51,11 @@ public class CollisionHandler {
      * @return
      */
     private MapTile getCollision(Vector velocity) {
-        int numberOfTilesToCheck = Math.max(gameObject.getScaledBounds().getWidth() / map.getTileset().getScaledSpriteWidth(),1);
-        Point tileIndex = map.getTileIndexByPosition(gameObject.getPos());
+        int numberOfTilesToCheck = Math.max(gameObject.getScaledBounds().getWidth() / getMap().getTileset().getScaledSpriteWidth(),1);
+        Point tileIndex = getMap().getTileIndexByPosition(gameObject.getPos());
         for(int i = -1;i < numberOfTilesToCheck + 1; i++) {
             for(int j = -1;j < numberOfTilesToCheck + 1; j++) {
-                MapTile mapTile = map.getTileByPosition((int) tileIndex.x + i, (int) tileIndex.y + j);
+                MapTile mapTile = getMap().getTileByPosition((int) tileIndex.x + i, (int) tileIndex.y + j);
                 if(checkCollision(mapTile, velocity)) {
                     return mapTile;
                 }
