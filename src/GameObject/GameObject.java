@@ -39,6 +39,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	protected Vector startPosition, amountMoved;
 
 	protected MapTile lastCollided;
+	protected boolean inAir;
 
 	// the map instance this game object "belongs" to.
 	protected Map map;
@@ -155,7 +156,6 @@ public class GameObject extends AnimatedSprite implements Drawable {
 			}
 		}
 
-
 	}
 
 	/**
@@ -182,18 +182,12 @@ public class GameObject extends AnimatedSprite implements Drawable {
 			}
 		}
 
-//		MapTile[] tiles = map.getRange((int) tileIndex.x - 1, (int) tileIndex.y - 1,
-//									   getScaledBounds().getWidth() / map.getTileset().getScaledSpriteWidth() + 2, )
+		for(MapTile enhancedTile : map.getEnhancedMapTiles()) {
+			if(checkCollision(enhancedTile,velocity)) {
+				return enhancedTile;
+			}
+		}
 
-//		for(int i = -1; i < numberOfTilesToCheck + 1; i++) {
-//			for(int j = -1;j < numberOfTilesToCheck + 1; j++) {
-//				MapTile mapTile = getMap().getTileByPosition((int) tileIndex.x + i, (int) tileIndex.y + j);
-//				System.out.println((tileIndex.x + i) + " " + (tileIndex.y + j) + " " + mapTile.getTileIndex());
-//				if(checkCollision(mapTile, velocity)) {
-//					return mapTile;
-//				}
-//			}
-//		}
 		return null;
 	}
 

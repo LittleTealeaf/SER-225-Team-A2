@@ -27,7 +27,6 @@ public abstract class Player extends GameObject {
     private PlayerState playerState;
     private Facing facing;
     private LevelState levelState;
-    private boolean inAir;
     private float absVelocityX, velocityY;
     private CollisionHandler collisionHandler;
 
