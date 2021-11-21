@@ -132,10 +132,8 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	 * @author Thomas Kwashnak
 	 */
 	public void moveHandleCollision(Vector providedVelocity) {
-
-
 		//Copies the velocity scaled with current frame time
-		Vector velocity = providedVelocity.getMultiplied(GameThread.getScale());
+		final Vector velocity = providedVelocity.getMultiplied(GameThread.getScale());
 		//Gets the unit vector, which is basically the unit-circle direction that the velocity is pointing towards
 		final Vector unit = providedVelocity.getUnit();
 		final Vector negativeUnit = unit.getNegative();
@@ -150,12 +148,32 @@ public class GameObject extends AnimatedSprite implements Drawable {
 			MapTile collision = getCollision(unit);
 			if(collision != null) {
 				//Move back and then break out of the loop
-				velocity.add(unit);
+//				velocity.add(unit);
+				velocity.set(unit);
 				move(negativeUnit);
+
 				break;
 			}
 		}
+		move(velocity);
+		//TODO find out why this doesn't work
+		if((lastCollided = getCollision(unit)) != null) {
+			float xScale = 0, yScale = 0;
 
+			if(velocity.getX() != 0) { //Preventing div by 0
+				float xCol = velocity.getX() > 0 ? lastCollided.getBounds().getX1() : -lastCollided.getBounds().getX2();
+				float xObj = velocity.getX() > 0 ? getBounds().getX2() : -getBounds().getX1();
+				xScale = (xObj - xCol) / unit.getX();
+			}
+
+			if(velocity.getY() != 0) {
+				float yCol = velocity.getY() > 0 ? lastCollided.getBounds().getY1() : -lastCollided.getBounds().getY2();
+				float yObj = velocity.getY() > 0 ? getBounds().getY2() : -getBounds().getY1();
+				yScale = (yObj - yCol) / unit.getY();
+			}
+//			System.out.println(yScale + " " + velocity.getMagnitude());
+			move(negativeUnit.getMultiplied(Math.max(xScale,yScale)));
+		}
 	}
 
 	/**
