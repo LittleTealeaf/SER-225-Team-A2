@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -223,12 +224,11 @@ public abstract class Map implements Drawable {
     }
 
     // returns a tile based on a position in the map
-    @Deprecated
     /**
      * uhh.. doesn't work?
      */
-    public MapTile getTileByPosition(int xPosition, int yPosition) {
-        System.out.println(xPosition + " " + yPosition);
+    @Deprecated
+    public MapTile getTileByIntPosition(int xPosition, int yPosition) {
         Point tileIndex = getTileIndexByPosition(xPosition, yPosition);
         if (isInBounds(Math.round(tileIndex.x), Math.round(tileIndex.y))) { //useless as it already checks within getMapTile?
             return getMapTile(Math.round(tileIndex.x), Math.round(tileIndex.y));
@@ -245,12 +245,50 @@ public abstract class Map implements Drawable {
      * @param height
      * @return
      */
-    public MapTile[] getTilesInBounds(int x, int y, int width, int height) {
+    @Deprecated
+    public MapTile[] getTilesInIndexBounds(int x, int y, int width, int height) {
         MapTile[] ret = new MapTile[width * height];
         for(int i = 0; i < ret.length; i++) {
             ret[i] = getMapTile(x + i / width, y + i % width);
         }
         return ret;
+    }
+
+    public MapTile[] getTilesInBounds(Vector start, int width, int height) {
+        MapTile[] ret = new MapTile[width * height];
+        Point s = getTileIndexByPosition(start);
+        int x = (int) s.x, y = (int) s.y;
+        for(int i = 0; i < ret.length; i++) {
+            ret[i] = getMapTile(x + i / width, y + i % width);
+        }
+        return ret;
+    }
+
+    /**
+     * Cuts down the list of mapTiles to only ones that are at most 2 * length distance away. Also includes enhancedMapTiles
+     * @param origin
+     * @param length
+     * @return
+     */
+    public List<MapTile> getMapTilesInRange(Vector origin, float length) {
+        List<MapTile> tiles = new ArrayList<>((int) (4 * length * length / tileset.getScaledSpriteHeight() / tileset.getScaledSpriteWidth()));
+        for(MapTile tile : mapTiles) {
+            if(Math.min(Math.abs(tile.getCenter().getX() - origin.getX()), Math.abs(tile.getCenter().getY() - origin.getY())) < length) {
+                tiles.add(tile);
+            }
+        }
+        for(MapTile tile : enhancedMapTiles) {
+            if(Math.min(Math.abs(tile.getCenter().getX() - origin.getX()), Math.abs(tile.getCenter().getY() - origin.getY())) < length) {
+                tiles.add(tile);
+            }
+        }
+        return tiles;
+    }
+
+    public MapTile getTileByPosition(Vector position) {
+        int xIndex = (int) (position.getX() / tileset.getScaledSpriteWidth());
+        int yIndex = (int) (position.getY() / tileset.getScaledSpriteHeight());
+        return getMapTile(xIndex,yIndex);
     }
 
     public Point getTileIndexByPosition(Vector vector) {

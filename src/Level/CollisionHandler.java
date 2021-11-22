@@ -2,7 +2,6 @@ package Level;
 
 import Engine.Vector;
 import Game.GameThread;
-import Game.GameThreadDeprecated;
 import GameObject.GameObject;
 import Utils.Point;
 
@@ -56,7 +55,7 @@ public class CollisionHandler {
         Point tileIndex = getMap().getTileIndexByPosition(gameObject.getPos());
         for(int i = -1;i < numberOfTilesToCheck + 1; i++) {
             for(int j = -1;j < numberOfTilesToCheck + 1; j++) {
-                MapTile mapTile = getMap().getTileByPosition((int) tileIndex.x + i, (int) tileIndex.y + j);
+                MapTile mapTile = getMap().getTileByIntPosition((int) tileIndex.x + i, (int) tileIndex.y + j);
                 if(checkCollision(mapTile, velocity)) {
                     return mapTile;
                 }

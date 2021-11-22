@@ -17,6 +17,7 @@ import Utils.Point;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * The all important GameObject class is what every "entity" used in this game should be based off of
@@ -140,10 +141,15 @@ public class GameObject extends AnimatedSprite implements Drawable {
 
 		Point tileIndex = getMap().getTileIndexByPosition(getScaledBounds().getPos1());
 
-		int rangeWidth = getScaledBounds().getWidth() / map.getTileset().getScaledSpriteWidth() + 3;
-		int rangeHeight = getScaledBounds().getHeight() / map.getTileset().getScaledSpriteHeight() + 3;
+//		int rangeWidth = getScaledBounds().getWidth() / map.getTileset().getScaledSpriteWidth() + 3;
+//		int rangeHeight = getScaledBounds().getHeight() / map.getTileset().getScaledSpriteHeight() + 3;
 
-		MapTile[] tiles = map.getTilesInBounds((int) tileIndex.x - 1, (int) tileIndex.y - 1, rangeWidth, rangeHeight);
+		float boundingVelocity = (float) Math.max(velocity.getMagnitude(),getBounds().getWidth() * 1.5);
+
+//		int rangeHeight = (int) ( (boundingVelocity + getBounds().getHeight()) / map.getTileset().getScaledSpriteHeight()) * 2;
+//		int rangeWidth = (int) ( (boundingVelocity + getBounds().getWidth()) / map.getTileset().getScaledSpriteWidth()) * 2;
+
+		List<MapTile> tiles = map.getMapTilesInRange(getCenter(), boundingVelocity);
 
 		//this doesn't seem to work
 
@@ -152,10 +158,10 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		for(MapTile mapTile : tiles) {
 			checkMapTile(startingPoints,velocity,mapTile);
 		}
-
-		for(MapTile mapTile : map.getEnhancedMapTiles()) {
-			checkMapTile(startingPoints,velocity,mapTile);
-		}
+//
+//		for(MapTile mapTile : map.getEnhancedMapTiles()) {
+//			checkMapTile(startingPoints,velocity,mapTile);
+//		}
 
 		System.out.println("Update Velocity: " + velocity);
 		move(velocity);
@@ -182,7 +188,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 //	}
 
 	private void checkMapTile(Vector[] startingPoints, Vector velocity, MapTile mapTile) {
-		if(mapTile.getTileType() == TileType.NOT_PASSABLE || (mapTile.getTileType() == TileType.JUMP_THROUGH_PLATFORM && velocity.getY() > 0)) {
+		if(mapTile != null && (mapTile.getTileType() == TileType.NOT_PASSABLE || (mapTile.getTileType() == TileType.JUMP_THROUGH_PLATFORM && velocity.getY() > 0))) {
 			updateVelocity(startingPoints,velocity,mapTile);
 		}
 	}
@@ -192,7 +198,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		float y1 = mapTile.getPos().getY(), y2 = mapTile.getPos().getY() + mapTile.getBounds().getHeight();
 
 		for(Vector start : startingPoints) {
-			System.out.println(velocity + " " + start + " " + x1 + " " + x2 + " " + y1 + " " + y2);
+			System.out.print(velocity + " " + start + " " + x1 + " " + x2 + " " + y1 + " " + y2);
 			float xLambda = Math.min(findCoefficient(start,velocity,x1,y1,y2),findCoefficient(start,velocity,x2,y1,y2));
 			float yLambda = Math.min(findCoefficient(start.getFlipped(),velocity.getFlipped(),y1,x1,x2),
 									 findCoefficient(start.getFlipped(),velocity.getFlipped(),y2,x1,x2));
@@ -205,6 +211,8 @@ public class GameObject extends AnimatedSprite implements Drawable {
 				velocity.multiplyY(Math.min(findCoefficient(start.getFlipped(),velocity.getFlipped(),y1,x1,x2),
 											findCoefficient(start.getFlipped(),velocity.getFlipped(),y2,x1,x2)));
 			}
+
+			System.out.println(" " + xLambda + " " + yLambda);
 
 //			if(Math.abs(start.getX() - mapTile.getX()) > Math.abs(start.getY() - mapTile.getY())) {
 //
@@ -219,6 +227,11 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	}
 
 	private float findCoefficient(Vector startPosition, Vector velocity, float v, float lowerBound, float upperBound) {
+
+		if(velocity.getX() == 0) {
+			return 1;
+		}
+
 		float lambda = (v - startPosition.getX()) / velocity.getX();
 		float y = velocity.getY() * lambda + startPosition.getY();
 		//return lambda only if it is less than 1 and the y position is within the bounds
@@ -315,7 +328,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		int rangeWidth = getScaledBounds().getWidth() / map.getTileset().getScaledSpriteWidth() + 3;
 		int rangeHeight = getScaledBounds().getHeight() / map.getTileset().getScaledSpriteHeight() + 3;
 
-		MapTile[] tiles = map.getTilesInBounds((int) tileIndex.x - 1, (int) tileIndex.y - 1, rangeWidth, rangeHeight);
+		MapTile[] tiles = map.getTilesInIndexBounds((int) tileIndex.x - 1, (int) tileIndex.y - 1, rangeWidth, rangeHeight);
 
 		for(MapTile tile : tiles) {
 			if(checkCollisionBounds(tile, velocity)) {
@@ -569,6 +582,10 @@ public class GameObject extends AnimatedSprite implements Drawable {
 
 	public Map getMap() {
 		return map;
+	}
+
+	public Vector getCenter() {
+		return pos.getAdd(new Vector(getBounds().getWidth() / 2f, getBounds().getHeight() / 2f));
 	}
 
 }
