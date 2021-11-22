@@ -30,12 +30,13 @@ public class GameThread extends ThreadManager {
         /*
         That something is probably due to the fact that rendering (painting) is done on a run-later class, so the updates is still technically
         multithreaded in a way, so something's going wonky here..
+        AND SOMEHOW THIS IS LAGGING ON LEVEL LOAD
          */
         instance = this;
     }
 
     public static float getScale() {
-        return ((float) instance.elapsedTick) / 10;
+        return ((float) instance.elapsedTick) / 1000;
     }
 
 }

@@ -138,9 +138,13 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		final Vector unit = providedVelocity.getUnit();
 		final Vector negativeUnit = unit.getNegative();
 
+		System.out.println("Start Movement:\nVelocity = " + providedVelocity + ", Scaled = " + velocity);
+		System.out.println("Scale: " + GameThread.getScale());
+
 
 		//Inch the object by integer increments to get closer to the position
 		int intIterations = (int) velocity.getMagnitude();
+		System.out.println(intIterations + " iterations");
 		for(int i = 0; i < intIterations; i++) {
 			//Moves a unit closer and reduces the "velocity left" by 1
 			move(unit);
@@ -155,6 +159,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 				break;
 			}
 		}
+		System.out.println("Configure Velocity: " + velocity);
 		move(velocity);
 		//TODO find out why this doesn't work
 		if((lastCollided = getCollision(unit)) != null) {

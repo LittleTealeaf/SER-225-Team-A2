@@ -28,7 +28,8 @@ public abstract class Player extends GameObject {
     private Facing facing;
     private LevelState levelState;
     private float absVelocityX, velocityY;
-    private CollisionHandler collisionHandler;
+    private int moveDelay = 2;
+
 
     public Player(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
         super(spriteSheet, x, y, startingAnimationName);
@@ -36,7 +37,6 @@ public abstract class Player extends GameObject {
         playerState = PlayerState.STAND;
         levelState = LevelState.PLAYING;
         facing = Facing.RIGHT;
-        collisionHandler = new CollisionHandler(this);
     }
 
     public void update() {
@@ -115,7 +115,11 @@ public abstract class Player extends GameObject {
 //        System.out.println(velocityY * GameThread.getScale() + " " + inAir);
 //        super.moveXHandleCollision(absVelocityX * facing.mod * GameThread.getScale());
 //        collisionHandler.getAdjustedMovement(new Vector(absVelocityX * facing.mod, velocityY));
-        moveHandleCollision(new Vector(absVelocityX * facing.mod, velocityY));
+        if(moveDelay > 0) {
+            moveDelay--;
+        } else {
+            moveHandleCollision(new Vector(absVelocityX * facing.mod, velocityY));
+        }
     }
 
     private void updateDead() {
