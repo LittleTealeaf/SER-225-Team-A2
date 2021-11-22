@@ -161,14 +161,10 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		}
 		System.out.println("Configure Velocity: " + velocity);
 		move(velocity);
-		//TODO find out why this doesn't work
 		if((lastCollided = getCollision(unit)) != null) {
 			float xScale = 0, yScale = 0;
 
 			if(velocity.getX() != 0) { //Preventing div by 0
-//				float xCol = velocity.getX() > 0 ? lastCollided.getBounds().getX1() : -lastCollided.getBounds().getX2();
-//				float xObj = velocity.getX() > 0 ? getBounds().getX2() : -getBounds().getX1();
-//				xScale = (xObj - xCol) / unit.getX();
 				float xCol, xObj;
 				if(velocity.getX() > 0) {
 					xCol = lastCollided.getPos().getX();
@@ -183,8 +179,6 @@ public class GameObject extends AnimatedSprite implements Drawable {
 			}
 
 			if(velocity.getY() != 0) {
-//				float yCol = velocity.getY() > 0 ? lastCollided.getBounds().getY1() : -lastCollided.getBounds().getY2();
-//				float yObj = velocity.getY() > 0 ? getBounds().getY2() : -getBounds().getY1();
 				float yCol, yObj;
 				if(velocity.getY() > 0) {
 					yCol = lastCollided.getPos().getY();
@@ -196,9 +190,10 @@ public class GameObject extends AnimatedSprite implements Drawable {
 				if(yObj > yCol) {
 					yScale = (yObj - yCol) / unit.getY();
 				}
+				System.out.println(yCol + "  " + yObj);
 			}
-//			System.out.println(yScale + " " + velocity.getMagnitude());
-//			System.out.println(negativeUnit.getMultiplied(Math.max(xScale,yScale)));
+			inAir = xScale > yScale;
+
 			move(negativeUnit.getMultiplied(Math.max(xScale,yScale)));
 		}
 	}
