@@ -165,6 +165,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 
 		System.out.println("Update Velocity: " + velocity);
 		move(velocity);
+		inAir = velocity.getY() != 0;
 	}
 //
 //	/**
@@ -235,7 +236,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		float lambda = (v - startPosition.getX()) / velocity.getX();
 		float y = velocity.getY() * lambda + startPosition.getY();
 		//return lambda only if it is less than 1 and the y position is within the bounds
-		return (lambda >= 0 && lambda < 1 && (y <= upperBound && y >= lowerBound)) ? lambda : 1;
+		return (lambda >= 0 && lambda < 1 && (y < upperBound && y > lowerBound)) ? lambda : 1;
 	}
 
 	/**
