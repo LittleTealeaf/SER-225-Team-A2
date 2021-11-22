@@ -3,6 +3,7 @@ package Level;
 import Engine.KeyboardAction;
 import Engine.Vector;
 import Game.GameThread;
+import Game.GameThreadDeprecated;
 import GameObject.GameObject;
 import GameObject.SpriteSheet;
 import Level.PlayerState.Facing;
@@ -133,7 +134,7 @@ public abstract class Player extends GameObject {
         } else {
             velocityY = DEATH_Y_VELOCITY;
         }
-        setY(getY() + velocityY * GameThread.getScale());
+        setY(getY() + velocityY * GameThread.UPDATE_FACTOR);
     }
 
     private void updateWin() {
@@ -142,10 +143,10 @@ public abstract class Player extends GameObject {
             if (inAir) {
                 playerState = PlayerState.FALL;
                 applyGravity(MAX_FALL_VELOCITY);
-                moveYHandleCollision(velocityY * GameThread.getScale());
+                moveYHandleCollision(velocityY * GameThread.UPDATE_FACTOR);
             } else {
                 playerState = PlayerState.WALK;
-                moveXHandleCollision(walkSpeed * GameThread.getScale());
+                moveXHandleCollision(walkSpeed * GameThread.UPDATE_FACTOR);
             }
         } else for (PlayerListener listener : playerListeners) {
             listener.onLevelCompleted();
@@ -154,7 +155,7 @@ public abstract class Player extends GameObject {
 
     private void applyGravity(float maxFallVelocity) {
         if (velocityY < maxFallVelocity) {
-            velocityY += gravity * GameThread.getScale();
+            velocityY += gravity * GameThread.UPDATE_FACTOR;
         }
     }
 

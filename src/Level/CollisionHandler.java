@@ -2,6 +2,7 @@ package Level;
 
 import Engine.Vector;
 import Game.GameThread;
+import Game.GameThreadDeprecated;
 import GameObject.GameObject;
 import Utils.Point;
 
@@ -22,7 +23,7 @@ public class CollisionHandler {
     }
 
     public Vector getAdjustedMovement(Vector velocity) {
-        velocity.multiply(GameThread.getScale());
+        velocity.multiply(GameThread.UPDATE_FACTOR);
         Vector unit = velocity.getUnit(), cloned = velocity.clone();
         Vector originalPos = gameObject.getPos().clone();
 

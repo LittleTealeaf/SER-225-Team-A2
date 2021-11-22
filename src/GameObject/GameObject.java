@@ -5,6 +5,7 @@ import Engine.Drawable;
 import Engine.GraphicsHandler;
 import Engine.Vector;
 import Game.GameThread;
+import Game.GameThreadDeprecated;
 import Level.Map;
 import Level.MapTile;
 import Level.MapTileCollisionHandler;
@@ -128,18 +129,17 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	/**
 	 * Moves the game object by a given velocity, barring impacts from collisions (within the map instance)
 	 * @param providedVelocity Amount to move. Will not be modified during movement. Will scale down to the current scale from
-	 * {@link GameThread#getScale()}
+	 * {@link GameThreadDeprecated#getScale()}
 	 * @author Thomas Kwashnak
 	 */
 	public void moveHandleCollision(Vector providedVelocity) {
 		//Copies the velocity scaled with current frame time
-		final Vector velocity = providedVelocity.getMultiplied(GameThread.getScale());
+		final Vector velocity = providedVelocity.getMultiplied(GameThread.UPDATE_FACTOR);
 		//Gets the unit vector, which is basically the unit-circle direction that the velocity is pointing towards
 		final Vector unit = providedVelocity.getUnit();
 		final Vector negativeUnit = unit.getNegative();
 
 		System.out.println("Start Movement:\nVelocity = " + providedVelocity + ", Scaled = " + velocity);
-		System.out.println("Scale: " + GameThread.getScale());
 
 
 		//Inch the object by integer increments to get closer to the position

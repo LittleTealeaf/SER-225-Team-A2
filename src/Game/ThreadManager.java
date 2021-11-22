@@ -3,6 +3,7 @@ package Game;
 /**
  * @author Thomas Kwashnak
  */
+@Deprecated
 public class ThreadManager implements Runnable {
 
     private Thread thread;
