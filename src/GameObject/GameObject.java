@@ -166,17 +166,39 @@ public class GameObject extends AnimatedSprite implements Drawable {
 			float xScale = 0, yScale = 0;
 
 			if(velocity.getX() != 0) { //Preventing div by 0
-				float xCol = velocity.getX() > 0 ? lastCollided.getBounds().getX1() : -lastCollided.getBounds().getX2();
-				float xObj = velocity.getX() > 0 ? getBounds().getX2() : -getBounds().getX1();
-				xScale = (xObj - xCol) / unit.getX();
+//				float xCol = velocity.getX() > 0 ? lastCollided.getBounds().getX1() : -lastCollided.getBounds().getX2();
+//				float xObj = velocity.getX() > 0 ? getBounds().getX2() : -getBounds().getX1();
+//				xScale = (xObj - xCol) / unit.getX();
+				float xCol, xObj;
+				if(velocity.getX() > 0) {
+					xCol = lastCollided.getPos().getX();
+					xObj = pos.getX() + getBounds().getWidth();
+				} else {
+					xCol = lastCollided.getPos().getX() + lastCollided.getBounds().getWidth();
+					xObj = pos.getX();
+				}
+				if(xObj > xCol) {
+					xScale = (xObj - xCol) / unit.getX();
+				}
 			}
 
 			if(velocity.getY() != 0) {
-				float yCol = velocity.getY() > 0 ? lastCollided.getBounds().getY1() : -lastCollided.getBounds().getY2();
-				float yObj = velocity.getY() > 0 ? getBounds().getY2() : -getBounds().getY1();
-				yScale = (yObj - yCol) / unit.getY();
+//				float yCol = velocity.getY() > 0 ? lastCollided.getBounds().getY1() : -lastCollided.getBounds().getY2();
+//				float yObj = velocity.getY() > 0 ? getBounds().getY2() : -getBounds().getY1();
+				float yCol, yObj;
+				if(velocity.getY() > 0) {
+					yCol = lastCollided.getPos().getY();
+					yObj = pos.getY() + getBounds().getHeight();
+				} else {
+					yCol = lastCollided.getPos().getY() + lastCollided.getBounds().getHeight();
+					yObj = pos.getY();
+				}
+				if(yObj > yCol) {
+					yScale = (yObj - yCol) / unit.getY();
+				}
 			}
 //			System.out.println(yScale + " " + velocity.getMagnitude());
+//			System.out.println(negativeUnit.getMultiplied(Math.max(xScale,yScale)));
 			move(negativeUnit.getMultiplied(Math.max(xScale,yScale)));
 		}
 	}
