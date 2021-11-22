@@ -3,7 +3,6 @@ package Level;
 import Engine.KeyboardAction;
 import Engine.Vector;
 import Game.GameThread;
-import Game.GameThreadDeprecated;
 import GameObject.GameObject;
 import GameObject.SpriteSheet;
 import Level.PlayerState.Facing;

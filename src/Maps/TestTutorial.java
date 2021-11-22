@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class TestTutorial extends Map {
 
     public TestTutorial() {
-        super("test_tutorial.txt", new CommonTileset(), new Point(1, 11));
+        super("test_tutorial.txt", new CommonTileset(), new Point(1, 8));
     }
 
     @Override

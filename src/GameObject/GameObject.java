@@ -9,6 +9,7 @@ import Game.GameThreadDeprecated;
 import Level.Map;
 import Level.MapTile;
 import Level.MapTileCollisionHandler;
+import Level.TileType;
 import Utils.Direction;
 import Utils.MathUtils;
 import Utils.Point;
@@ -126,13 +127,112 @@ public class GameObject extends AnimatedSprite implements Drawable {
 //
 //	}
 
+	public void moveHandleCollision(Vector providedVelocity) {
+		Vector velocity = providedVelocity.getMultiplied(GameThread.UPDATE_FACTOR);
+		Vector originalVelocity = velocity.clone();
+		Vector unit = velocity.getUnit();
+
+		Vector[] startingPoints = new Vector[] {
+				pos, pos.getAdd(new Vector(getBounds().getWidth(),0)), pos.getAdd(new Vector(0,getBounds().getHeight())),
+				pos.getAdd(new Vector(getBounds().getWidth(),getBounds().getHeight()))
+		};
+
+
+		Point tileIndex = getMap().getTileIndexByPosition(getScaledBounds().getPos1());
+
+		int rangeWidth = getScaledBounds().getWidth() / map.getTileset().getScaledSpriteWidth() + 3;
+		int rangeHeight = getScaledBounds().getHeight() / map.getTileset().getScaledSpriteHeight() + 3;
+
+		MapTile[] tiles = map.getTilesInBounds((int) tileIndex.x - 1, (int) tileIndex.y - 1, rangeWidth, rangeHeight);
+
+		//this doesn't seem to work
+
+		System.out.println("Velocity: " + velocity);
+
+		for(MapTile mapTile : tiles) {
+			checkMapTile(startingPoints,velocity,mapTile);
+		}
+
+		for(MapTile mapTile : map.getEnhancedMapTiles()) {
+			checkMapTile(startingPoints,velocity,mapTile);
+		}
+
+		System.out.println("Update Velocity: " + velocity);
+		move(velocity);
+	}
+//
+//	/**
+//	 *
+//	 * @param startPosition
+//	 * @param velocity
+//	 * @param mapTile
+//	 * @return
+//	 */
+//	private boolean rayIntersects(Vector startPosition, Vector velocity, MapTile mapTile) {
+
+//		float ySlope = velocity.getY() / velocity.getX(), xSlope = velocity.getX() / velocity.getY();
+//
+//		//Check left bound
+//		float y = ySlope * (x1 - startPosition.getX()) + startPosition.getY();
+//		boolean intersectsLeft = y <= y2 && y >= y1;
+//		y = ySlope * (x2 - startPosition.getX()) + startPosition.getY();
+//		boolean intersectsRight = y <= y2 && y >= y1;
+//
+//		return false;
+//	}
+
+	private void checkMapTile(Vector[] startingPoints, Vector velocity, MapTile mapTile) {
+		if(mapTile.getTileType() == TileType.NOT_PASSABLE || (mapTile.getTileType() == TileType.JUMP_THROUGH_PLATFORM && velocity.getY() > 0)) {
+			updateVelocity(startingPoints,velocity,mapTile);
+		}
+	}
+
+	private void updateVelocity(Vector[] startingPoints, Vector velocity, MapTile mapTile) {
+		float x1 = mapTile.getPos().getX(), x2 = mapTile.getPos().getX() + mapTile.getBounds().getWidth();
+		float y1 = mapTile.getPos().getY(), y2 = mapTile.getPos().getY() + mapTile.getBounds().getHeight();
+
+		for(Vector start : startingPoints) {
+			System.out.println(velocity + " " + start + " " + x1 + " " + x2 + " " + y1 + " " + y2);
+			float xLambda = Math.min(findCoefficient(start,velocity,x1,y1,y2),findCoefficient(start,velocity,x2,y1,y2));
+			float yLambda = Math.min(findCoefficient(start.getFlipped(),velocity.getFlipped(),y1,x1,x2),
+									 findCoefficient(start.getFlipped(),velocity.getFlipped(),y2,x1,x2));
+
+			if(xLambda > yLambda) {
+				velocity.multiplyY(yLambda);
+				velocity.multiplyX( Math.min(findCoefficient(start,velocity,x1,y1,y2),findCoefficient(start,velocity,x2,y1,y2)));
+			} else {
+				velocity.multiplyX(xLambda);
+				velocity.multiplyY(Math.min(findCoefficient(start.getFlipped(),velocity.getFlipped(),y1,x1,x2),
+											findCoefficient(start.getFlipped(),velocity.getFlipped(),y2,x1,x2)));
+			}
+
+//			if(Math.abs(start.getX() - mapTile.getX()) > Math.abs(start.getY() - mapTile.getY())) {
+//
+//
+//				velocity.multiplyY();
+//			} else {
+//				velocity.multiplyY(Math.min(findCoefficient(start.getFlipped(),velocity.getFlipped(),y1,x1,x2),
+//											findCoefficient(start.getFlipped(),velocity.getFlipped(),y2,x1,x2)));
+//				velocity.multiplyX(Math.min(findCoefficient(start,velocity,x1,y1,y2),findCoefficient(start,velocity,x2,y1,y2)));
+//			}
+		}
+	}
+
+	private float findCoefficient(Vector startPosition, Vector velocity, float v, float lowerBound, float upperBound) {
+		float lambda = (v - startPosition.getX()) / velocity.getX();
+		float y = velocity.getY() * lambda + startPosition.getY();
+		//return lambda only if it is less than 1 and the y position is within the bounds
+		return (lambda >= 0 && lambda < 1 && (y <= upperBound && y >= lowerBound)) ? lambda : 1;
+	}
+
 	/**
 	 * Moves the game object by a given velocity, barring impacts from collisions (within the map instance)
 	 * @param providedVelocity Amount to move. Will not be modified during movement. Will scale down to the current scale from
 	 * {@link GameThreadDeprecated#getScale()}
 	 * @author Thomas Kwashnak
 	 */
-	public void moveHandleCollision(Vector providedVelocity) {
+	@Deprecated
+	public void moveHandleCollisionIterative(Vector providedVelocity) {
 		//Copies the velocity scaled with current frame time
 		final Vector velocity = providedVelocity.getMultiplied(GameThread.UPDATE_FACTOR);
 		//Gets the unit vector, which is basically the unit-circle direction that the velocity is pointing towards
@@ -149,7 +249,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 			//Moves a unit closer and reduces the "velocity left" by 1
 			move(unit);
 			velocity.add(negativeUnit);
-			MapTile collision = getCollision(unit);
+			MapTile collision = getCollisionBounds(unit);
 			if(collision != null) {
 				//Move back and then break out of the loop
 //				velocity.add(unit);
@@ -161,7 +261,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		}
 		System.out.println("Configure Velocity: " + velocity);
 		move(velocity);
-		if((lastCollided = getCollision(unit)) != null) {
+		if((lastCollided = getCollisionBounds(unit)) != null) {
 			float xScale = 0, yScale = 0;
 
 			if(velocity.getX() != 0) { //Preventing div by 0
@@ -205,7 +305,8 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	 * @param velocity
 	 * @return
 	 */
-	private MapTile getCollision(Vector velocity) {
+	@Deprecated
+	private MapTile getCollisionBounds(Vector velocity) {
 		//TODO modify / recreate this code to iterate through all neighbor blocks only in the half direction of the velocity
 //		int numberOfTilesToCheck = Math.max(getScaledBounds().getWidth() / getMap().getTileset().getScaledSpriteWidth() + 2, 3);
 
@@ -217,13 +318,13 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		MapTile[] tiles = map.getTilesInBounds((int) tileIndex.x - 1, (int) tileIndex.y - 1, rangeWidth, rangeHeight);
 
 		for(MapTile tile : tiles) {
-			if(checkCollision(tile,velocity)) {
+			if(checkCollisionBounds(tile, velocity)) {
 				return tile;
 			}
 		}
 
 		for(MapTile enhancedTile : map.getEnhancedMapTiles()) {
-			if(checkCollision(enhancedTile,velocity)) {
+			if(checkCollisionBounds(enhancedTile, velocity)) {
 				return enhancedTile;
 			}
 		}
@@ -247,7 +348,8 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	 * @param velocity
 	 * @return
 	 */
-	private boolean checkCollision(MapTile mapTile, Vector velocity) {
+	@Deprecated
+	private boolean checkCollisionBounds(MapTile mapTile, Vector velocity) {
 		return mapTile != null && switch (mapTile.getTileType()) {
 			case NOT_PASSABLE, LETHAL -> intersects(mapTile);
 			case JUMP_THROUGH_PLATFORM -> velocity.getY() > 0 && intersects(mapTile) && Math.round(getScaledBoundsY2() -1) == Math.round(

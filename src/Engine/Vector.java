@@ -15,6 +15,11 @@ public class Vector {
         this.y = y;
     }
 
+    public Vector(Point point) {
+        this.x = point.x;
+        this.y = point.y;
+    }
+
     public float getX() {
         return x;
     }
@@ -101,6 +106,10 @@ public class Vector {
         return this;
     }
 
+    public Vector getAdd(Vector vector) {
+        return new Vector(x + vector.x, y + vector.y);
+    }
+
     public Vector clone() {
         return new Vector(x,y);
     }
@@ -129,5 +138,21 @@ public class Vector {
 
     public String toString() {
         return "(" + x + ", " + y + ")";
+    }
+
+    public Vector getFlipped() {
+        return new Vector(y,x);
+    }
+
+    public boolean equals(Object other) {
+        return other instanceof Vector && ((Vector) other).x == this.x && ((Vector) other).y == this.y;
+    }
+
+    public void multiplyX(float magnitude) {
+        x *= magnitude;
+    }
+
+    public void multiplyY(float magnitude) {
+        y *= magnitude;
     }
 }
