@@ -3,7 +3,7 @@ package Level;
 import Engine.CollisionType;
 import GameObject.Frame;
 import GameObject.ImageEffect;
-import GameObject.Rectangle;
+import GameObject.RectangleOld;
 import GameObject.SpriteSheet;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
@@ -35,7 +35,7 @@ public class Projectile extends MapEntity {
         super(image, x, y, scale, imageEffect);
     }
 
-    public Projectile(BufferedImage image, float x, float y, float scale, ImageEffect imageEffect, Rectangle bounds) {
+    public Projectile(BufferedImage image, float x, float y, float scale, ImageEffect imageEffect, RectangleOld bounds) {
         super(image, x, y, scale, imageEffect, bounds);
     }
 

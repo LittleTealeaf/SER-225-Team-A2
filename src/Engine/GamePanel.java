@@ -3,7 +3,7 @@ package Engine;
 import Game.GameState;
 import Game.GameThread;
 import Game.ScreenCoordinator;
-import GameObject.Rectangle;
+import GameObject.RectangleOld;
 import Level.Player;
 import Utils.Colors;
 
@@ -170,7 +170,7 @@ public class GamePanel extends JPanel {
     // JPanel's width and height, which aren't available in the constructor
     public void setupGame() {
         setBackground(Colors.CORNFLOWER_BLUE);
-        screenManager.initialize(new Rectangle(getX(), getY(), getWidth(), getHeight()));
+        screenManager.initialize(new RectangleOld(getX(), getY(), getWidth(), getHeight()));
         doPaint = true;
     }
 

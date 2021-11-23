@@ -103,7 +103,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		startPosition = new Vector(x, y);
 	}
 
-	public GameObject(BufferedImage image, float x, float y, float scale, ImageEffect imageEffect, Rectangle bounds) {
+	public GameObject(BufferedImage image, float x, float y, float scale, ImageEffect imageEffect, RectangleOld bounds) {
 		super(x, y);
 		this.animations = new HashMap<String, Frame[]>() {{
 			put("DEFAULT", new Frame[]{
@@ -190,42 +190,61 @@ public class GameObject extends AnimatedSprite implements Drawable {
 
 	private void checkMapTile(Vector[] startingPoints, Vector velocity, MapTile mapTile) {
 		if(mapTile != null && (mapTile.getTileType() == TileType.NOT_PASSABLE || (mapTile.getTileType() == TileType.JUMP_THROUGH_PLATFORM && velocity.getY() > 0))) {
-			updateVelocity(startingPoints,velocity,mapTile);
+			updateVelocityOld(startingPoints, velocity, mapTile);
 		}
 	}
 
 	private void updateVelocity(Vector[] startingPoints, Vector velocity, MapTile mapTile) {
+
+//		//x1 x2 y1 y2 are ordered values where x1 < x2 and y1 < y2. These indicate the x and y values of the edges of the bounding box
+//		float x1 = mapTile.getPos().getX(), x2 = mapTile.getPos().getX() + mapTile.getBounds().getWidth();
+//		float y1 = mapTile.getPos().getY(), y2 = mapTile.getPos().getY() + mapTile.getBounds().getHeight();
+//		/*
+//		xTest and yTest are the two faces that we will test intersections with (aka: the two faces that the velocity will hit first)
+//		xTestObj and yTestObj are the same thing except for this GameObject
+//		 */
+//		float xTest = x2, yTest = y2, xTestObj = pos.getX(), yTestObj = pos.getY();
+//		if(velocity.getX() > 0) {
+//			xTest = x1;
+//			xTestObj += getBounds().getWidth();
+//		}
+//		if(velocity.getY() > 0) {
+//			yTest = y1;
+//			yTestObj += getBounds().getHeight();
+//		}
+
+
+
+
+	}
+
+	@Deprecated
+	private void updateVelocityOld(Vector[] startingPoints, Vector velocity, MapTile mapTile) {
 		float x1 = mapTile.getPos().getX(), x2 = mapTile.getPos().getX() + mapTile.getBounds().getWidth();
 		float y1 = mapTile.getPos().getY(), y2 = mapTile.getPos().getY() + mapTile.getBounds().getHeight();
 
 		for(Vector start : startingPoints) {
 			System.out.print(velocity + " " + start + " " + x1 + " " + x2 + " " + y1 + " " + y2);
-			float xLambda = Math.min(findCoefficient(start,velocity,x1,y1,y2),findCoefficient(start,velocity,x2,y1,y2));
-			float yLambda = Math.min(findCoefficient(start.getFlipped(),velocity.getFlipped(),y1,x1,x2),
-									 findCoefficient(start.getFlipped(),velocity.getFlipped(),y2,x1,x2));
+			float xLambda = Math.min(findCoefficient(start, velocity, x1, y1, y2), findCoefficient(start, velocity, x2, y1, y2));
+			float yLambda = Math.min(
+					findCoefficient(start.getFlipped(), velocity.getFlipped(), y1, x1, x2),
+					findCoefficient(start.getFlipped(), velocity.getFlipped(), y2, x1, x2));
 
 			if(xLambda > yLambda) {
 				velocity.multiplyY(yLambda);
-				velocity.multiplyX( Math.min(findCoefficient(start,velocity,x1,y1,y2),findCoefficient(start,velocity,x2,y1,y2)));
+				velocity.multiplyX( Math.min(findCoefficient(start, velocity, x1, y1, y2), findCoefficient(start, velocity, x2, y1, y2)));
 			} else {
 				velocity.multiplyX(xLambda);
-				velocity.multiplyY(Math.min(findCoefficient(start.getFlipped(),velocity.getFlipped(),y1,x1,x2),
-											findCoefficient(start.getFlipped(),velocity.getFlipped(),y2,x1,x2)));
+				velocity.multiplyY(Math.min(
+						findCoefficient(start.getFlipped(), velocity.getFlipped(), y1, x1, x2),
+						findCoefficient(start.getFlipped(), velocity.getFlipped(), y2, x1, x2)));
 			}
 
 			System.out.println(" " + xLambda + " " + yLambda);
-
-//			if(Math.abs(start.getX() - mapTile.getX()) > Math.abs(start.getY() - mapTile.getY())) {
-//
-//
-//				velocity.multiplyY();
-//			} else {
-//				velocity.multiplyY(Math.min(findCoefficient(start.getFlipped(),velocity.getFlipped(),y1,x1,x2),
-//											findCoefficient(start.getFlipped(),velocity.getFlipped(),y2,x1,x2)));
-//				velocity.multiplyX(Math.min(findCoefficient(start,velocity,x1,y1,y2),findCoefficient(start,velocity,x2,y1,y2)));
-//			}
 		}
 	}
+
+
 
 	private float findCoefficient(Vector startPosition, Vector velocity, float v, float lowerBound, float upperBound) {
 
@@ -536,10 +555,10 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	}
 
 	// gets scaled bounds taking into account map camera position
-	public Rectangle getCalibratedScaledBounds() {
+	public RectangleOld getCalibratedScaledBounds() {
 		if (map != null) {
-			Rectangle scaledBounds = getScaledBounds();
-			return new Rectangle(
+			RectangleOld scaledBounds = getScaledBounds();
+			return new RectangleOld(
 					scaledBounds.getX1() - map.getCamera().getX(),
 					scaledBounds.getY1() - map.getCamera().getY(),
 					scaledBounds.getScaledWidth(),
@@ -573,7 +592,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	@Override
 	public void drawBounds(GraphicsHandler graphicsHandler, Color color) {
 		if (map != null) {
-			Rectangle scaledCalibratedBounds = getCalibratedScaledBounds();
+			RectangleOld scaledCalibratedBounds = getCalibratedScaledBounds();
 			scaledCalibratedBounds.setColor(color);
 			scaledCalibratedBounds.draw(graphicsHandler);
 		} else {

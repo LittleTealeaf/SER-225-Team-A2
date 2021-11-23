@@ -3,7 +3,7 @@ package Level;
 import Engine.GraphicsHandler;
 import GameObject.Frame;
 import GameObject.ImageEffect;
-import GameObject.Rectangle;
+import GameObject.RectangleOld;
 import GameObject.SpriteSheet;
 
 import java.awt.image.BufferedImage;
@@ -52,7 +52,7 @@ public class MapTile extends MapEntity {
         this.tileType = tileType;
     }
 
-    public MapTile(BufferedImage image, float x, float y, float scale, ImageEffect imageEffect, Rectangle bounds, TileType tileType) {
+    public MapTile(BufferedImage image, float x, float y, float scale, ImageEffect imageEffect, RectangleOld bounds, TileType tileType) {
         super(image, x, y, scale, imageEffect, bounds);
         this.tileType = tileType;
     }

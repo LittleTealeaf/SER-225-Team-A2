@@ -15,7 +15,7 @@ import java.util.HashMap;
 	Subclasses need to call down to this class's update method in order for animation logic to be performed
 	While this calls does not extend from Sprite, it is set up in a way where it is still treated by other classes as if it is a singular sprite (based on value of currentFrame)
 */
-public class AnimatedSprite implements IntersectableRectangle {
+public class AnimatedSprite implements IntersectableRectangleOld {
 	// location of entity
 //	protected float x, y;
 	/**
@@ -214,11 +214,11 @@ public class AnimatedSprite implements IntersectableRectangle {
 		return currentFrame.getScaledHeight();
 	}
 
-	public Rectangle getBounds() {
+	public RectangleOld getBounds() {
 		return currentFrame.getBounds();
 	}
 
-	public Rectangle getScaledBounds() {
+	public RectangleOld getScaledBounds() {
 		return currentFrame.getScaledBounds();
 	}
 
@@ -254,20 +254,20 @@ public class AnimatedSprite implements IntersectableRectangle {
         return currentFrame.getScaledBoundsY2();
     }
 
-	public void setBounds(Rectangle bounds) {
+	public void setBounds(RectangleOld bounds) {
 		currentFrame.setBounds(bounds);
 	}
 
 	@Override
-    public Rectangle getIntersectRectangle() {
+    public RectangleOld getIntersectRectangle() {
 	    return currentFrame.getIntersectRectangle();
     }
 
-    public boolean intersects(IntersectableRectangle other) {
+    public boolean intersects(IntersectableRectangleOld other) {
         return currentFrame.intersects(other);
     }
 
-	public boolean overlaps(IntersectableRectangle other) { return currentFrame.overlaps(other); }
+	public boolean overlaps(IntersectableRectangleOld other) { return currentFrame.overlaps(other); }
 
 	@Override
 	public String toString() {

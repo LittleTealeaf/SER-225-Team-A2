@@ -3,7 +3,7 @@ package Level;
 import Engine.CollisionType;
 import GameObject.Frame;
 import GameObject.ImageEffect;
-import GameObject.Rectangle;
+import GameObject.RectangleOld;
 import GameObject.SpriteSheet;
 
 import java.awt.image.BufferedImage;
@@ -36,7 +36,7 @@ public class Enemy extends MapEntity {
         super(image, x, y, scale, imageEffect);
     }
 
-    public Enemy(BufferedImage image, float x, float y, float scale, ImageEffect imageEffect, Rectangle bounds) {
+    public Enemy(BufferedImage image, float x, float y, float scale, ImageEffect imageEffect, RectangleOld bounds) {
         super(image, x, y, scale, imageEffect, bounds);
     }
 

@@ -1,15 +1,13 @@
 package Maps;
 
-import Enemies.BugEnemy;
 import Enemies.DinosaurEnemy;
 import Enemies.Dog;
 import Enemies.CyborgEnemy;
 import Engine.ImageLoader;
 import EnhancedMapTiles.EndLevelBox;
 import EnhancedMapTiles.HorizontalMovingPlatform;
-import GameObject.Rectangle;
+import GameObject.RectangleOld;
 import Level.*;
-import NPCs.Walrus;
 import Tilesets.CommonTileset;
 import Utils.Direction;
 import Utils.Point;
@@ -46,7 +44,7 @@ public class BossBattle extends Map {
                 getPositionByTileIndex(42, 13),
                 TileType.JUMP_THROUGH_PLATFORM,
                 3,
-                new Rectangle(0, 6,16,4),
+                new RectangleOld(0, 6, 16, 4),
                 Direction.RIGHT
         ));
         

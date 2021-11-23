@@ -137,7 +137,7 @@ public class Vector {
     }
 
     public String toString() {
-        return "(" + x + ", " + y + ")";
+        return String.format("(%s,%s)",x,y);
     }
 
     public Vector getFlipped() {
