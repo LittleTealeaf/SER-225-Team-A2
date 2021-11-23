@@ -14,7 +14,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
 
-/*
+/**
  * This is where the game loop starts
  * The JPanel uses a timer to continually call cycles of update and draw
  */
@@ -29,10 +29,10 @@ public class GamePanel extends JPanel {
 	private static ScreenCoordinator coordinator;
 	public static Clip clip;
 	private final JLabel health;
-	private GameThread gameThread;
+	private final GameThread gameThread;
 
 	
-	/*
+	/**
 	 * The JPanel and various important class instances are setup here
 	 */
 	public GamePanel(ScreenCoordinator c1,GameWindow gameWindow) {
@@ -52,36 +52,7 @@ public class GamePanel extends JPanel {
 		screenManager = new ScreenManager();
 		coordinator = c1;
 
-
-
 		gameThread = new GameThread(this::repaint, this::update);
-
-//		timer = new Timer(1000 / Config.FPS, new ActionListener() {
-//			public void actionPerformed(ActionEvent e) {
-//				update();
-//				changeHealth();
-//				if(coordinator.getGameState() == GameState.LEVEL) {
-//					health.show();
-//				}
-//				else {
-//					health.hide();
-//				}
-//				repaint();
-//			}
-//		});
-//		timer.setRepeats(true);
-//		tickGame = new GameTick(new Runnable() {
-//			@Override
-//			public void run() {
-//				update();
-//			}
-//		});
-//		tickRender = new GameTick(new Runnable() {
-//			@Override
-//			public void run() {
-//				repaint();
-//			}
-//		});
 	}
 
 	public static ScreenCoordinator getScreenCoordinator() {
@@ -143,7 +114,6 @@ public class GamePanel extends JPanel {
 
 	// this starts the timer (the game loop is started here
 	public void startGame() {
-//		timer.start();
 		gameThread.start();
 
 		try {
@@ -162,14 +132,12 @@ public class GamePanel extends JPanel {
 	}
 
 	public void update() {
-			screenManager.update();
-			changeHealth();
+		screenManager.update();
+		changeHealth();
 	}
 
 	public void draw() {
 		screenManager.draw(graphicsHandler);
-
-
 	}
 	
 	// Checks the players health and accordingly changes to the image with the corresponding number of hearts
@@ -210,7 +178,6 @@ public class GamePanel extends JPanel {
 	}
 
 	public static void mouseClicked(MouseEvent e) {
-//		System.out.println("Click: " + e.getPoint());
 		coordinator.mouseClicked(e);
 	}
 
