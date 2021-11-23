@@ -1,5 +1,6 @@
 package GameObject;
 
+import Engine.Drawable;
 import Engine.GraphicsHandler;
 import Engine.Vector;
 import Utils.Stopwatch;
@@ -16,7 +17,7 @@ import java.util.HashMap;
  * While this calls does not extend from Sprite, it is set up in a way where it is still treated by other classes as if it is a singular sprite
  * (based on value of currentFrame)<br>
  */
-public class AnimatedSprite implements Intersectable, Overlappable {
+public class AnimatedSprite implements Intersectable, Overlappable, Drawable {
 
     /**
      * Position of the Animated Sprite

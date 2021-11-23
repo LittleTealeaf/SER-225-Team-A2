@@ -14,7 +14,7 @@ public class Sprite extends Rectangle {
 
     protected BufferedImage image;
     protected ImageEffect imageEffect;
-    protected Rectangle bounds;
+    protected Rectangle bounds, scaledBounds;
 
     public Sprite(BufferedImage image, float scale) {
         this(image, scale, ImageEffect.NONE);
@@ -33,6 +33,7 @@ public class Sprite extends Rectangle {
         this.image = image;
         this.imageEffect = imageEffect;
         bounds = new Rectangle(new Vector(0,0),dimension.clone());
+        scaledBounds = scaleBounds(bounds);
     }
 
     public BufferedImage getImage() {
@@ -65,7 +66,7 @@ public class Sprite extends Rectangle {
     }
 
     public void drawBounds(GraphicsHandler graphicsHandler, Color color) {
-        Rectangle scaledBounds = getBounds().getScaled();
+        Rectangle scaledBounds = getScaledBounds();
         scaledBounds.setColor(color);
         scaledBounds.draw(graphicsHandler);
     }
@@ -75,10 +76,25 @@ public class Sprite extends Rectangle {
     }
 
     public Rectangle getScaledBounds() {
-        return new Rectangle(location.getAdd(bounds.location.getMultiplied(bounds.scale)),bounds.dimension.getMultiplied(bounds.scale));
+        return new Rectangle(location.getAdd(scaledBounds.location),scaledBounds.dimension);
     }
 
     public void setBounds(Rectangle bounds) {
         this.bounds = bounds;
+        scaledBounds = scaleBounds(bounds);
     }
+
+    public boolean intersects(Intersectable other) {
+        return getScaledBounds().intersects(other);
+    }
+
+    /**
+     * Returns the scaled bounds of the given bounds
+     * @param bounds Bounds to scale to scale = 1
+     * @return Scaled bounds where both the location and dimension are scaled
+     */
+    private Rectangle scaleBounds(Rectangle bounds) {
+        return new Rectangle(bounds.location.getMultiplied(bounds.scale), bounds.dimension.getMultiplied(bounds.scale));
+    }
+
 }
