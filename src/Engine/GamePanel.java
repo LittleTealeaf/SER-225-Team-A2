@@ -20,9 +20,6 @@ import java.io.IOException;
  */
 public class GamePanel extends JPanel {
 	private final ScreenManager screenManager;
-	// used to create the game loop and cycle between update and draw calls
-	private Timer timer;
-	// used to draw graphics to the panel
 	private final GraphicsHandler graphicsHandler;
 	private boolean doPaint = false;
 	protected static GameWindow gameWindow;
