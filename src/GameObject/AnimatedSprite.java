@@ -114,7 +114,7 @@ public class AnimatedSprite implements Intersectable, Overlappable {
 	// and location updated to match any changes to the animated sprite class
 	protected void updateCurrentFrame() {
 		currentFrame = getCurrentFrame();
-		currentFrame.setLocation(pos.clone());
+		currentFrame.setLocationReference(pos);
 	}
 
 	// gets the frame from current animation that the animated sprite class is currently using
@@ -144,11 +144,13 @@ public class AnimatedSprite implements Intersectable, Overlappable {
 
 	public void setX(float x) {
 		pos.setX(x);
-		currentFrame.getLocation().setX(x);
 	}
 	public void setY(float y) {
 		pos.setY(y);
-		currentFrame.getLocation().setY(y);
+	}
+
+	public void setLocation(Vector location) {
+		pos.set(location);
 	}
 
 	public void setLocation(float x, float y) {
@@ -157,8 +159,7 @@ public class AnimatedSprite implements Intersectable, Overlappable {
 	}
 
 	public void moveX(float dx) {
-		this.pos.addX(dx);
-		currentFrame.move(new Vector(dx,0));
+		move(new Vector(dx,0));
 	}
 
 	public void moveRight(float dx) {

@@ -139,7 +139,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 //				pos.getAdd(new Vector(getBounds().getWidth(),getBounds().getHeight()))
 //		};
 
-		float boundingVelocity = Math.max(velocity.getMagnitude(),getBounds().getScaledWidth() * 7);
+		float boundingVelocity = Math.max(velocity.getMagnitude(),getMap().getTileset().getScaledSpriteWidth() * 3);
 
 		List<MapTile> tiles = map.getMapTilesInRange(getCenter(), boundingVelocity);
 
@@ -159,22 +159,17 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		if ((lastCollided = getCollidedTile(tiles,velocity)) != null) {
 			handleCollision(lastCollided,velocity);
 			System.out.println("Player = " + getPos() + ", Block = " + lastCollided.getPos());
-			move(velocity.getNegative());
+//			move(unit.getNegative());
 		}
 
-
+		inAir = lastCollided == null;
 	}
 
 	private MapTile getCollidedTile(List<MapTile> mapTiles, Vector velocity) {
-		System.out.println("Player: " + pos);
+		System.out.println("\nPlayer: " + pos);
 		for(MapTile mapTile : mapTiles) {
-			if((mapTile.getTileType() == TileType.NOT_PASSABLE || (mapTile.getTileType() == TileType.JUMP_THROUGH_PLATFORM && velocity.getY() > 0))) {
-//				return mapTile;
-				System.out.println(mapTile.pos);
-				if(intersects(mapTile)) {
-					System.out.println("Intersects");
-					return mapTile;
-				}
+			if((mapTile.getTileType() == TileType.NOT_PASSABLE || (mapTile.getTileType() == TileType.JUMP_THROUGH_PLATFORM && velocity.getY() > 0)) && intersects(mapTile)) {
+				return mapTile;
 			}
 		}
 		return null;
