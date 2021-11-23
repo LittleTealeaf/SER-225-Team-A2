@@ -4,16 +4,18 @@ package Utils;
 public class Stopwatch {
     private long beforeTime = System.currentTimeMillis();
     private int millisecondsToWait = 0;
+    private boolean timeUp = true;
 
     // tell stopwatch how many milliseconds to "time"
     public void setWaitTime(int millisecondsToWait) {
         this.millisecondsToWait = millisecondsToWait;
         beforeTime = System.currentTimeMillis();
+        timeUp = false;
     }
 
     // will return true or false based on if the "time" is up (a specified number of milliseconds have passed)
     public boolean isTimeUp() {
-        return System.currentTimeMillis() - beforeTime > millisecondsToWait;
+        return timeUp || (timeUp = System.currentTimeMillis() - beforeTime > millisecondsToWait);
     }
 
     // reset timer to wait again for specified number of milliseconds

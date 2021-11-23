@@ -10,14 +10,9 @@ import Menu.Direction;
 import Menu.Menu;
 import Menu.MenuOption;
 import Players.Avatar;
-import Players.Cat;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 public class OptionsScreen extends Menu {
 	private MenuOption[][] items;

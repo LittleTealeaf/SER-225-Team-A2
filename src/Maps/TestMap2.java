@@ -2,12 +2,11 @@ package Maps;
 
 import Enemies.BugEnemy;
 import Enemies.DinosaurEnemy;
-import Engine.ImageLoader;
 import EnhancedMapTiles.EndLevelBox;
-import EnhancedMapTiles.HorizontalMovingPlatform;
-import GameObject.Rectangle;
-import Level.*;
-import NPCs.Walrus;
+import Level.Enemy;
+import Level.EnhancedMapTile;
+import Level.Map;
+import Level.NPC;
 import Tilesets.CommonTileset;
 import Utils.Direction;
 import Utils.Point;

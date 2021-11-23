@@ -1,9 +1,11 @@
 package Level;
 
+import Engine.CollisionType;
 import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.Rectangle;
 import GameObject.SpriteSheet;
+
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
@@ -41,6 +43,7 @@ public class Projectile extends MapEntity {
     @Override
     public void initialize() {
         super.initialize();
+        collisionType = CollisionType.DAMAGE;
     }
 
     public void update(Player player) {

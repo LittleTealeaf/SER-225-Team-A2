@@ -26,7 +26,7 @@ public class LevelLoseScreen extends Menu {
         super.update();
         if (KeyboardAction.GAME_RESPAWN.isDown()) {
             playLevelScreen.resetLevel();
-            Player.playerHealth = 3;
+            Player.PLAYER_HEALTH = 3;
             PlayerAttack.dogHealth = 8;
         }
     }

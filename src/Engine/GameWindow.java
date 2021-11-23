@@ -1,12 +1,11 @@
 package Engine;
 
+import Game.ScreenCoordinator;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import javax.swing.*;
-
-import Game.ScreenCoordinator;
 
 /*
  * The JFrame that holds the GamePanel
@@ -26,7 +25,6 @@ public class GameWindow {
 				GamePanel.mouseClicked(e);
 			}
 		});
-
 		gamePanel = new GamePanel(c1,this);
 		gamePanel.setFocusable(true);
 		gamePanel.requestFocusInWindow();

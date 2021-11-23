@@ -31,6 +31,9 @@ public abstract class Map implements Drawable {
     protected int width;
     protected int height;
 
+    //right most bound
+    private int rightBound;
+
     // the tileset this map uses for its map tiles
     protected Tileset tileset;
 
@@ -72,6 +75,7 @@ public abstract class Map implements Drawable {
         this.xMidPoint = ScreenManager.getScreenWidth() / 2;
         this.yMidPoint = (ScreenManager.getScreenHeight() / 2);
         this.playerStartTile = playerStartTile;
+        rightBound = getWidthPixels() - getTileset().getScaledSpriteWidth();
     }
 
     // sets up map by reading in the map file to create the tile map
@@ -401,5 +405,9 @@ public abstract class Map implements Drawable {
 
     public void draw(GraphicsHandler graphicsHandler) {
         camera.draw(graphicsHandler);
+    }
+
+    public int getRightBound() {
+        return rightBound;
     }
 }
