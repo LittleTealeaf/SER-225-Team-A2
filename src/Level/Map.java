@@ -272,13 +272,16 @@ public abstract class Map implements Drawable {
      */
     public List<MapTile> getMapTilesInRange(Vector origin, float length) {
         List<MapTile> tiles = new ArrayList<>((int) (4 * length * length / tileset.getScaledSpriteHeight() / tileset.getScaledSpriteWidth()));
+        float lSquared = length * length;
         for(MapTile tile : mapTiles) {
-            if(Math.min(Math.abs(tile.getCenter().getX() - origin.getX()), Math.abs(tile.getCenter().getY() - origin.getY())) < length) {
+            float dx = tile.getX() - origin.getX(), dy = tile.getY() - origin.getY();
+            if(dx * dx + dy * dy < lSquared) {
                 tiles.add(tile);
             }
         }
         for(MapTile tile : enhancedMapTiles) {
-            if(Math.min(Math.abs(tile.getCenter().getX() - origin.getX()), Math.abs(tile.getCenter().getY() - origin.getY())) < length) {
+            float dx = tile.getX() - origin.getX(), dy = tile.getY() - origin.getY();
+            if(dx * dx + dy * dy < lSquared) {
                 tiles.add(tile);
             }
         }

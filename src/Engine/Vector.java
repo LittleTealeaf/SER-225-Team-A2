@@ -53,10 +53,9 @@ public class Vector {
         this.y = y;
     }
 
-    public Vector set(Vector location) {
+    public void set(Vector location) {
         this.x = location.x;
         this.y = location.y;
-        return this;
     }
 
     public Vector getDivided(float divisor) {

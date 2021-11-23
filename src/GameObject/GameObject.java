@@ -28,8 +28,8 @@ import java.util.List;
  * 	3. collision detection with a map
  * 	4. performing proper draw logic based on camera movement
  *
- * @author Thomas Kwashnak
- * @author Alex Thimineur + Others
+ * @author Thomas Kwashnak (Modified)
+ * @author Alex Thimineur (plus extra)
  */
 
 /*
@@ -130,42 +130,58 @@ public class GameObject extends AnimatedSprite implements Drawable {
 
 	public void moveHandleCollision(Vector providedVelocity) {
 		Vector velocity = providedVelocity.getMultiplied(GameThread.UPDATE_FACTOR);
-		Vector originalVelocity = velocity.clone();
+		Vector oVelocity = velocity.clone();
+		Vector oPosition = pos.clone();
 		Vector unit = velocity.getUnit();
 
-		Vector[] startingPoints = new Vector[] {
-				pos, pos.getAdd(new Vector(getBounds().getWidth(),0)), pos.getAdd(new Vector(0,getBounds().getHeight())),
-				pos.getAdd(new Vector(getBounds().getWidth(),getBounds().getHeight()))
-		};
+//		Vector[] startingPoints = new Vector[] {
+//				pos, pos.getAdd(new Vector(getBounds().getWidth(),0)), pos.getAdd(new Vector(0,getBounds().getHeight())),
+//				pos.getAdd(new Vector(getBounds().getWidth(),getBounds().getHeight()))
+//		};
 
-
-		Point tileIndex = getMap().getTileIndexByPosition(getScaledBounds().getLocation());
-
-//		int rangeWidth = getScaledBounds().getWidth() / map.getTileset().getScaledSpriteWidth() + 3;
-//		int rangeHeight = getScaledBounds().getHeight() / map.getTileset().getScaledSpriteHeight() + 3;
-
-		float boundingVelocity = (float) Math.max(velocity.getMagnitude(),getBounds().getWidth() * 1.5);
-
-//		int rangeHeight = (int) ( (boundingVelocity + getBounds().getHeight()) / map.getTileset().getScaledSpriteHeight()) * 2;
-//		int rangeWidth = (int) ( (boundingVelocity + getBounds().getWidth()) / map.getTileset().getScaledSpriteWidth()) * 2;
+		float boundingVelocity = Math.max(velocity.getMagnitude(),getBounds().getScaledWidth() * 7);
 
 		List<MapTile> tiles = map.getMapTilesInRange(getCenter(), boundingVelocity);
 
-		//this doesn't seem to work
-
-		System.out.println("Velocity: " + velocity);
-
-		for(MapTile mapTile : tiles) {
-			checkMapTile(startingPoints,velocity,mapTile);
+		while(velocity.getMagnitude() > 1) {
+			move(unit); //Move 1 unit ahead
+			velocity.subtract(1);
+			//If it collides, moves one back, sets lastCollided to that, set magnitude to 1
+			if(getCollidedTile(tiles,velocity) != null) {
+				move(unit.getNegative());
+				velocity.set(unit);
+				break;
+			}
 		}
-//
-//		for(MapTile mapTile : map.getEnhancedMapTiles()) {
-//			checkMapTile(startingPoints,velocity,mapTile);
-//		}
 
-		System.out.println("Update Velocity: " + velocity);
+//		see if it collides
 		move(velocity);
-		inAir = velocity.getY() != 0;
+		if ((lastCollided = getCollidedTile(tiles,velocity)) != null) {
+			handleCollision(lastCollided,velocity);
+			System.out.println("Player = " + getPos() + ", Block = " + lastCollided.getPos());
+			move(velocity.getNegative());
+		}
+
+
+	}
+
+	private MapTile getCollidedTile(List<MapTile> mapTiles, Vector velocity) {
+		System.out.println("Player: " + pos);
+		for(MapTile mapTile : mapTiles) {
+			if((mapTile.getTileType() == TileType.NOT_PASSABLE || (mapTile.getTileType() == TileType.JUMP_THROUGH_PLATFORM && velocity.getY() > 0))) {
+//				return mapTile;
+				System.out.println(mapTile.pos);
+				if(intersects(mapTile)) {
+					System.out.println("Intersects");
+					return mapTile;
+				}
+			}
+		}
+		return null;
+	}
+
+	private void handleCollision(MapTile mapTile, Vector velocity) {
+
 	}
 //
 //	/**
@@ -188,12 +204,14 @@ public class GameObject extends AnimatedSprite implements Drawable {
 //		return false;
 //	}
 
-	private void checkMapTile(Vector[] startingPoints, Vector velocity, MapTile mapTile) {
+	@Deprecated
+	private void checkMapTileOld(Vector[] startingPoints, Vector velocity, MapTile mapTile) {
 		if(mapTile != null && (mapTile.getTileType() == TileType.NOT_PASSABLE || (mapTile.getTileType() == TileType.JUMP_THROUGH_PLATFORM && velocity.getY() > 0))) {
 			updateVelocityOld(startingPoints, velocity, mapTile);
 		}
 	}
 
+	@Deprecated
 	private void updateVelocity(Vector[] startingPoints, Vector velocity, MapTile mapTile) {
 
 //		//x1 x2 y1 y2 are ordered values where x1 < x2 and y1 < y2. These indicate the x and y values of the edges of the bounding box
@@ -212,7 +230,6 @@ public class GameObject extends AnimatedSprite implements Drawable {
 //			yTest = y1;
 //			yTestObj += getBounds().getHeight();
 //		}
-
 
 
 
