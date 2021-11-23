@@ -103,7 +103,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		startPosition = new Vector(x, y);
 	}
 
-	public GameObject(BufferedImage image, float x, float y, float scale, ImageEffect imageEffect, RectangleOld bounds) {
+	public GameObject(BufferedImage image, float x, float y, float scale, ImageEffect imageEffect, Rectangle bounds) {
 		super(x, y);
 		this.animations = new HashMap<String, Frame[]>() {{
 			put("DEFAULT", new Frame[]{
@@ -139,7 +139,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		};
 
 
-		Point tileIndex = getMap().getTileIndexByPosition(getScaledBounds().getPos1());
+		Point tileIndex = getMap().getTileIndexByPosition(getScaledBounds().getLocation());
 
 //		int rangeWidth = getScaledBounds().getWidth() / map.getTileset().getScaledSpriteWidth() + 3;
 //		int rangeHeight = getScaledBounds().getHeight() / map.getTileset().getScaledSpriteHeight() + 3;
@@ -335,6 +335,8 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	 * Checks if the game object has collided with any map tiles, and returns the collided map-tile if it has. Otherwise, returns null
 	 *
 	 * Copied from CollisionHandler
+	 *
+	 * Deprecated, no longer works with changes to {@link Rectangle}
 	 * @param velocity
 	 * @return
 	 */
@@ -343,10 +345,10 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		//TODO modify / recreate this code to iterate through all neighbor blocks only in the half direction of the velocity
 //		int numberOfTilesToCheck = Math.max(getScaledBounds().getWidth() / getMap().getTileset().getScaledSpriteWidth() + 2, 3);
 
-		Point tileIndex = getMap().getTileIndexByPosition(getScaledBounds().getPos1());
+		Point tileIndex = getMap().getTileIndexByPosition(getScaledBounds().getLocation());
 
-		int rangeWidth = getScaledBounds().getWidth() / map.getTileset().getScaledSpriteWidth() + 3;
-		int rangeHeight = getScaledBounds().getHeight() / map.getTileset().getScaledSpriteHeight() + 3;
+		int rangeWidth = (int) getScaledBounds().getWidth() / map.getTileset().getScaledSpriteWidth() + 3;
+		int rangeHeight = (int) getScaledBounds().getHeight() / map.getTileset().getScaledSpriteHeight() + 3;
 
 		MapTile[] tiles = map.getTilesInIndexBounds((int) tileIndex.x - 1, (int) tileIndex.y - 1, rangeWidth, rangeHeight);
 
@@ -365,15 +367,6 @@ public class GameObject extends AnimatedSprite implements Drawable {
 		return null;
 	}
 
-//	/**
-//	 * Copied from CollisionHandler
-//	 * @param mapTile
-//	 * @param velocity
-//	 * @return
-//	 */
-//	private boolean checkCollision(MapTile mapTile, Vector velocity) {
-//		return mapTile != null && hasCollidedWithMapTile(mapTile,velocity);
-//	}
 
 	/**
 	 * Copied from CollisionHandler
@@ -555,10 +548,10 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	}
 
 	// gets scaled bounds taking into account map camera position
-	public RectangleOld getCalibratedScaledBounds() {
+	public Rectangle getCalibratedScaledBounds() {
 		if (map != null) {
-			RectangleOld scaledBounds = getScaledBounds();
-			return new RectangleOld(
+			Rectangle scaledBounds = getScaledBounds();
+			return new Rectangle(
 					scaledBounds.getX1() - map.getCamera().getX(),
 					scaledBounds.getY1() - map.getCamera().getY(),
 					scaledBounds.getScaledWidth(),
@@ -581,8 +574,8 @@ public class GameObject extends AnimatedSprite implements Drawable {
 					currentFrame.getImage(),
 					Math.round(getCalibratedXLocation()),
 					Math.round(getCalibratedYLocation()),
-					currentFrame.getScaledWidth(),
-					currentFrame.getScaledHeight(),
+					Math.round(currentFrame.getScaledWidth()),
+					Math.round(currentFrame.getScaledHeight()),
 					currentFrame.getImageEffect());
 		} else {
 			super.draw(graphicsHandler);
@@ -592,7 +585,7 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	@Override
 	public void drawBounds(GraphicsHandler graphicsHandler, Color color) {
 		if (map != null) {
-			RectangleOld scaledCalibratedBounds = getCalibratedScaledBounds();
+			Rectangle scaledCalibratedBounds = getCalibratedScaledBounds();
 			scaledCalibratedBounds.setColor(color);
 			scaledCalibratedBounds.draw(graphicsHandler);
 		} else {

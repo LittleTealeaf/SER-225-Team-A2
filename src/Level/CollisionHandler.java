@@ -8,6 +8,7 @@ import Utils.Point;
 /**
  *
  */
+@Deprecated
 public class CollisionHandler {
 
     private GameObject gameObject;
@@ -51,7 +52,7 @@ public class CollisionHandler {
      * @return
      */
     private MapTile getCollision(Vector velocity) {
-        int numberOfTilesToCheck = Math.max(gameObject.getScaledBounds().getWidth() / getMap().getTileset().getScaledSpriteWidth(),1);
+        int numberOfTilesToCheck = Math.max((int) gameObject.getScaledBounds().getWidth() / getMap().getTileset().getScaledSpriteWidth(),1);
         Point tileIndex = getMap().getTileIndexByPosition(gameObject.getPos());
         for(int i = -1;i < numberOfTilesToCheck + 1; i++) {
             for(int j = -1;j < numberOfTilesToCheck + 1; j++) {

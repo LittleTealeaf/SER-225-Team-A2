@@ -2,15 +2,16 @@ package Maps;
 
 import Enemies.BugEnemy;
 import Enemies.DinosaurEnemy;
-import Engine.*;
+import Engine.GraphicsHandler;
+import Engine.ImageLoader;
 import EnhancedMapTiles.EndLevelBox;
 import EnhancedMapTiles.HorizontalMovingPlatform;
-import GameObject.RectangleOld;
+import GameObject.Rectangle;
 import Level.*;
+import SpriteFont.SpriteFont;
 import Tilesets.CommonTileset;
 import Utils.Direction;
 import Utils.Point;
-import SpriteFont.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -40,7 +41,7 @@ public class TestTutorial extends Map {
                 getPositionByTileIndex(27, 6),
                 TileType.JUMP_THROUGH_PLATFORM,
                 3,
-                new RectangleOld(0, 6, 16, 4),
+                new Rectangle(0, 6, 16, 4),
                 Direction.RIGHT
         ));
 

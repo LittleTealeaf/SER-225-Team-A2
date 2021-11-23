@@ -4,7 +4,7 @@ import Engine.GraphicsHandler;
 import Engine.KeyboardAction;
 import GameObject.Frame;
 import GameObject.ImageEffect;
-import GameObject.RectangleOld;
+import GameObject.Rectangle;
 import GameObject.SpriteSheet;
 import SpriteFont.SpriteFont;
 import Utils.Stopwatch;
@@ -55,7 +55,7 @@ public class NPC extends MapEntity {
         this.talkedToTime = talkedToTime;
     }
 
-    public NPC(BufferedImage image, float x, float y, int talkedToTime, float scale, ImageEffect imageEffect, RectangleOld bounds) {
+    public NPC(BufferedImage image, float x, float y, int talkedToTime, float scale, ImageEffect imageEffect, Rectangle bounds) {
         super(image, x, y, scale, imageEffect, bounds);
         this.message = createMessage();
         this.talkedToTime = talkedToTime;

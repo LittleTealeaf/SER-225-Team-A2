@@ -15,7 +15,7 @@ import java.util.HashMap;
 	Subclasses need to call down to this class's update method in order for animation logic to be performed
 	While this calls does not extend from Sprite, it is set up in a way where it is still treated by other classes as if it is a singular sprite (based on value of currentFrame)
 */
-public class AnimatedSprite implements IntersectableRectangleOld {
+public class AnimatedSprite implements Intersectable, Overlappable {
 	// location of entity
 //	protected float x, y;
 	/**
@@ -114,8 +114,7 @@ public class AnimatedSprite implements IntersectableRectangleOld {
 	// and location updated to match any changes to the animated sprite class
 	protected void updateCurrentFrame() {
 		currentFrame = getCurrentFrame();
-		currentFrame.setX(pos.getX());
-		currentFrame.setY(pos.getY());
+		currentFrame.setLocation(pos.clone());
 	}
 
 	// gets the frame from current animation that the animated sprite class is currently using
@@ -134,8 +133,8 @@ public class AnimatedSprite implements IntersectableRectangleOld {
 		currentFrame.drawBounds(graphicsHandler, color);
     }
 
-	public float getX() { return currentFrame.getX(); }
-	public float getY() { return currentFrame.getY(); }
+	public float getX() { return currentFrame.getX1(); }
+	public float getY() { return currentFrame.getY1(); }
 	public float getX1() { return currentFrame.getX1(); }
 	public float getY1() { return currentFrame.getY1(); }
 	public float getX2() { return currentFrame.getX2(); }
@@ -145,11 +144,11 @@ public class AnimatedSprite implements IntersectableRectangleOld {
 
 	public void setX(float x) {
 		pos.setX(x);
-		currentFrame.setX(x);
+		currentFrame.getLocation().setX(x);
 	}
 	public void setY(float y) {
 		pos.setY(y);
-		currentFrame.setY(y);
+		currentFrame.getLocation().setY(y);
 	}
 
 	public void setLocation(float x, float y) {
@@ -159,32 +158,28 @@ public class AnimatedSprite implements IntersectableRectangleOld {
 
 	public void moveX(float dx) {
 		this.pos.addX(dx);
-		currentFrame.moveX(dx);
+		currentFrame.move(new Vector(dx,0));
 	}
 
 	public void moveRight(float dx) {
-		this.pos.addX(dx);
-		currentFrame.moveRight(dx);
+		moveX(dx);
 	}
 
 	public void moveLeft(float dx) {
-		this.pos.addX(-dx);
-		currentFrame.moveLeft(dx);
+		moveX(-dx);
 	}
 
 	public void moveY(float dy) {
 		this.pos.addY(dy);
-		currentFrame.moveY(dy);
+		currentFrame.move(new Vector(0,dy));
 	}
 
 	public void moveDown(float dy) {
-		this.pos.addY(dy);
-		currentFrame.moveDown(dy);
+		moveY(dy);
 	}
 
 	public void moveUp(float dy) {
-		this.pos.addY(-dy);
-		currentFrame.moveUp(dy);
+		moveY(-dy);
 	}
 
 	public float getScale() {
@@ -195,30 +190,30 @@ public class AnimatedSprite implements IntersectableRectangleOld {
 		currentFrame.setScale(scale);
 	}
 
-	public int getWidth() {
+	public float getWidth() {
 		return currentFrame.getWidth();
 	}
-	public int getHeight() {
+	public float getHeight() {
 		return currentFrame.getHeight();
 	}
-	public void setWidth(int width) {
+	public void setWidth(float width) {
 		currentFrame.setWidth(width);
 	}
-	public void setHeight(int height) {
+	public void setHeight(float height) {
 		currentFrame.setHeight(height);
 	}
-	public int getScaledWidth() {
+	public float getScaledWidth() {
 		return currentFrame.getScaledWidth();
 	}
-	public int getScaledHeight() {
+	public float getScaledHeight() {
 		return currentFrame.getScaledHeight();
 	}
 
-	public RectangleOld getBounds() {
+	public Rectangle getBounds() {
 		return currentFrame.getBounds();
 	}
 
-	public RectangleOld getScaledBounds() {
+	public Rectangle getScaledBounds() {
 		return currentFrame.getScaledBounds();
 	}
 
@@ -254,20 +249,15 @@ public class AnimatedSprite implements IntersectableRectangleOld {
         return currentFrame.getScaledBoundsY2();
     }
 
-	public void setBounds(RectangleOld bounds) {
+	public void setBounds(Rectangle bounds) {
 		currentFrame.setBounds(bounds);
 	}
 
-	@Override
-    public RectangleOld getIntersectRectangle() {
-	    return currentFrame.getIntersectRectangle();
-    }
-
-    public boolean intersects(IntersectableRectangleOld other) {
+    public boolean intersects(Intersectable other) {
         return currentFrame.intersects(other);
     }
 
-	public boolean overlaps(IntersectableRectangleOld other) { return currentFrame.overlaps(other); }
+	public boolean overlaps(Overlappable other) { return currentFrame.overlaps(other); }
 
 	@Override
 	public String toString() {
@@ -286,5 +276,14 @@ public class AnimatedSprite implements IntersectableRectangleOld {
 	public void move(Vector vector) {
 		pos.add(vector);
 	}
-	
+
+	@Override
+	public Vector getMinLocation() {
+		return currentFrame.getMinLocation();
+	}
+
+	@Override
+	public Vector getMaxLocation() {
+		return currentFrame.getMaxLocation();
+	}
 }

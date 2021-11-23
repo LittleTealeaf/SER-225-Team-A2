@@ -107,7 +107,7 @@ public class Dog extends Enemy {
                 int boneX;
                 float movementSpeed;
                 if (facingDirection == Direction.RIGHT) {
-                    boneX = Math.round(getX()) + getScaledWidth();
+                    boneX = Math.round(getX() + getScaledWidth());
                     movementSpeed = 1.5f;
                 } else {
                     boneX = Math.round(getX());

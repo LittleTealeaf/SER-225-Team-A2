@@ -1,13 +1,16 @@
 package Maps;
 
 import Enemies.BugEnemy;
-import Enemies.DinosaurEnemy;
 import Enemies.CyborgEnemy;
+import Enemies.DinosaurEnemy;
 import Engine.ImageLoader;
 import EnhancedMapTiles.EndLevelBox;
 import EnhancedMapTiles.HorizontalMovingPlatform;
-import GameObject.RectangleOld;
-import Level.*;
+import GameObject.Rectangle;
+import Level.Enemy;
+import Level.EnhancedMapTile;
+import Level.Map;
+import Level.TileType;
 import Tilesets.CommonTileset;
 import Utils.Direction;
 import Utils.Point;
@@ -42,7 +45,7 @@ public class TestMap6 extends Map {
                 getPositionByTileIndex(11, 8),
                 TileType.JUMP_THROUGH_PLATFORM,
                 3,
-                new RectangleOld(0, 6, 16, 4),
+                new Rectangle(0, 6, 16, 4),
                 Direction.RIGHT
         ));
         
@@ -52,7 +55,7 @@ public class TestMap6 extends Map {
                 getPositionByTileIndex(14, 5),
                 TileType.JUMP_THROUGH_PLATFORM,
                 3,
-                new RectangleOld(0, 6, 16, 4),
+                new Rectangle(0, 6, 16, 4),
                 Direction.LEFT
         ));
         
@@ -62,7 +65,7 @@ public class TestMap6 extends Map {
                 getPositionByTileIndex(38, 5),
                 TileType.JUMP_THROUGH_PLATFORM,
                 3,
-                new RectangleOld(0, 6, 16, 4),
+                new Rectangle(0, 6, 16, 4),
                 Direction.LEFT
         ));
 

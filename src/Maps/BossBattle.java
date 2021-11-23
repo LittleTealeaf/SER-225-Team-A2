@@ -1,16 +1,17 @@
 package Maps;
 
+import Enemies.CyborgEnemy;
 import Enemies.DinosaurEnemy;
 import Enemies.Dog;
-import Enemies.CyborgEnemy;
 import Engine.ImageLoader;
 import EnhancedMapTiles.EndLevelBox;
 import EnhancedMapTiles.HorizontalMovingPlatform;
-import GameObject.RectangleOld;
+import GameObject.Rectangle;
 import Level.*;
 import Tilesets.CommonTileset;
 import Utils.Direction;
 import Utils.Point;
+
 import java.util.ArrayList;
 
 // Represents a test map to be used in a level
@@ -44,7 +45,7 @@ public class BossBattle extends Map {
                 getPositionByTileIndex(42, 13),
                 TileType.JUMP_THROUGH_PLATFORM,
                 3,
-                new RectangleOld(0, 6, 16, 4),
+                new Rectangle(0, 6, 16, 4),
                 Direction.RIGHT
         ));
         

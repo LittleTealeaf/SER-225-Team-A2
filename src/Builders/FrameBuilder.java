@@ -2,7 +2,7 @@ package Builders;
 
 import GameObject.Frame;
 import GameObject.ImageEffect;
-import GameObject.RectangleOld;
+import GameObject.Rectangle;
 
 import java.awt.image.BufferedImage;
 
@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 public class FrameBuilder {
     private BufferedImage image;
     private int delay;
-    private RectangleOld bounds;
+    private Rectangle bounds;
     private float scale;
     private ImageEffect imageEffect;
 
@@ -24,13 +24,13 @@ public class FrameBuilder {
         this.imageEffect = ImageEffect.NONE;
     }
 
-    public FrameBuilder withBounds(RectangleOld bounds) {
+    public FrameBuilder withBounds(Rectangle bounds) {
         this.bounds = bounds;
         return this;
     }
 
     public FrameBuilder withBounds(float x, float y, int width, int height) {
-        this.bounds = new RectangleOld(Math.round(x), Math.round(y), width, height);
+        this.bounds = new Rectangle(Math.round(x), Math.round(y), width, height);
         return this;
     }
 

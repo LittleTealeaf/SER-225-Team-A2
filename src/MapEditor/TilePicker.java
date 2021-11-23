@@ -89,8 +89,8 @@ public class TilePicker extends JPanel {
         graphicsHandler.drawRectangle(
                 Math.round(selectedTile.getX()) - 2,
                 Math.round(selectedTile.getY()) - 2,
-                selectedTile.getScaledWidth() + 4,
-                selectedTile.getScaledHeight() + 4,
+                Math.round(selectedTile.getScaledWidth() + 4),
+                Math.round(selectedTile.getScaledHeight() + 4),
                 Color.YELLOW,
                 4
         );

@@ -13,9 +13,9 @@ public class Rectangle implements Drawable, Intersectable, Overlappable {
 
     private static final int BORDER_THICKNESS = 0;
 
-    private Vector location, dimension;
-    private float scale;
-    private Color color, borderColor;
+    protected Vector location, dimension;
+    protected float scale;
+    protected Color color, borderColor;
 
     public Rectangle(float x, float y, float width, float height) {
         this(new Vector(x,y), new Vector(width,height));
@@ -140,5 +140,21 @@ public class Rectangle implements Drawable, Intersectable, Overlappable {
 
     public void setBorderColor(Color borderColor) {
         this.borderColor = borderColor;
+    }
+
+    public float getWidth() {
+        return dimension.getX();
+    }
+
+    public float getHeight() {
+        return dimension.getY();
+    }
+
+    public void setWidth(float width) {
+        dimension.setX(width);
+    }
+
+    public void setHeight(float height) {
+        dimension.setY(height);
     }
 }

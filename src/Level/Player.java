@@ -82,7 +82,7 @@ public abstract class Player extends GameObject {
 
         //Update Attack
         if (KeyboardAction.GAME_ATTACK.isDown() && attackDelay.isTimeUp()) {
-            int attackX = facing == Facing.RIGHT ? Math.round(getX()) + getScaledWidth() - 20 : Math.round(getX());
+            int attackX = facing == Facing.RIGHT ? Math.round(getX() + getScaledWidth() - 20) : Math.round(getX());
             map.addEnemy(new PlayerAttack(new Point(attackX, Math.round(getY()) + 10), facing.mod * 1.5f, 1000));
             attackDelay.setWaitTime(ATTACK_DELAY);
         }

@@ -43,7 +43,7 @@ public class MapEntity extends GameObject {
         super(image, x, y, scale, imageEffect);
     }
 
-    public MapEntity(BufferedImage image, float x, float y, float scale, ImageEffect imageEffect, RectangleOld bounds) {
+    public MapEntity(BufferedImage image, float x, float y, float scale, ImageEffect imageEffect, Rectangle bounds) {
         super(image, x, y, scale, imageEffect, bounds);
     }
 

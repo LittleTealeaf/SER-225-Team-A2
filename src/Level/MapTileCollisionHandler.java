@@ -20,7 +20,7 @@ public class MapTileCollisionHandler {
 	public static MapTile lastCollidedTileX, lastCollidedTileY;
 
     public static float getAdjustedPositionAfterCollisionCheckX(GameObject gameObject, Map map, Direction direction) {
-        int numberOfTilesToCheck = Math.max(gameObject.getScaledBounds().getHeight() / map.getTileset().getScaledSpriteHeight(), 1);
+        int numberOfTilesToCheck = (int) Math.max(gameObject.getScaledBounds().getHeight() / map.getTileset().getScaledSpriteHeight(), 1);
         float edgeBoundX = direction == Direction.LEFT ? gameObject.getScaledBounds().getX1() : gameObject.getScaledBounds().getX2();
         Point tileIndex = map.getTileIndexByPosition(edgeBoundX, gameObject.getScaledBounds().getY1());
         for (int j = -1; j <= numberOfTilesToCheck + 1; j++) {
@@ -61,8 +61,8 @@ public class MapTileCollisionHandler {
      */
     public static float getAdjustedPositionAfterCollisionCheckY(GameObject gameObject, Map map, Direction direction) {
         //Tiles to check? getting a list of tiles
-        int numberOfTilesToCheck = Math.max(gameObject.getScaledBounds().getWidth() / map.getTileset().getScaledSpriteWidth(), 1);
-        float edgeBoundY = direction == Direction.UP ? gameObject.getScaledBounds().getY() : gameObject.getScaledBounds().getY2();
+        int numberOfTilesToCheck = (int) Math.max(gameObject.getScaledBounds().getWidth() / map.getTileset().getScaledSpriteWidth(), 1);
+        float edgeBoundY = direction == Direction.UP ? gameObject.getScaledBounds().getY1() : gameObject.getScaledBounds().getY2();
         /*Get the edge bounds... ok?*/
         Point tileIndex = map.getTileIndexByPosition(gameObject.getScaledBounds().getX1(), edgeBoundY); /*Gets the uh, bottom left item? */
         for (int j = -1; j <= numberOfTilesToCheck + 1; j++) { /*Get only immediately surrounding map tiles. AHA */
