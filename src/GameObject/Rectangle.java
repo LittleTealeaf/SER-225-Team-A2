@@ -1,189 +1,191 @@
 package GameObject;
 
-import Engine.Drawable;
 import Engine.GraphicsHandler;
-import Engine.Vector;
 
 import java.awt.*;
 
-/**
- * @author Thomas Kwashnak
- */
-public class Rectangle implements Drawable, Intersectable, Overlappable {
+// This class represents a rectangle, which at its core is (x, y, width, height)
+// it has some properties, rectangle math methods, and draw logic
+// the methods here are pretty self explanatory
+public class Rectangle implements IntersectableRectangle {
+    protected float x;
+	protected float y;
+	protected int width;
+	protected int height;
+	protected float scale;
+	protected Color color;
+	protected Color borderColor;
+	protected int borderThickness;
 
-    private static final int BORDER_THICKNESS = 0;
+	public Rectangle(float x, float y, int width, int height) {
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+		this.scale = 1;
+		this.color = Color.white;
+		this.borderColor = null;
+		this.borderThickness = 0;
+	}
 
-    protected Vector location, dimension;
-    protected float scale;
-    protected Color color, borderColor;
+	public Rectangle(float x, float y, int width, int height, float scale) {
+		this.x = x;
+		this.y = y;
+		this.width = width;
+		this.height = height;
+		this.scale = scale;
+		this.color = Color.white;
+		this.borderColor = null;
+		this.borderThickness = 0;
+	}
 
-    public Rectangle(float x, float y, float width, float height) {
-        this(new Vector(x, y), new Vector(width, height));
-    }
-
-    public Rectangle(Vector location, Vector dimension) {
-        this(location, dimension, 1);
-    }
-
-    public Rectangle(Vector location, Vector dimension, float scale) {
-        this.location = location;
-        this.dimension = dimension;
-        this.scale = scale;
-    }
-
-    public Rectangle(float x, float y, float width, float height, float scale) {
-        this(new Vector(x, y), new Vector(width, height), scale);
-    }
-
-    public float getX2() {
-        return location.getX() + dimension.getX();
-    }
-
-    public float getScaledX2() {
-        return location.getX() + (dimension.getX() * scale);
-    }
-
-    public float getY2() {
-        return location.getY() + dimension.getY();
-    }
-
-    public float getScaledY2() {
-        return location.getY() + (dimension.getY() * scale);
-    }
-
-    public void move(Vector displacement) {
-        location.add(displacement);
-    }
-
-    public Vector getDimension() {
-        return dimension;
-    }
-
-    public Vector getScaledDimension() {
-        return dimension.getMultiplied(scale);
-    }
-
-    public Vector getLocation() {
-        return location;
-    }
-
-    public void setLocation(Vector vector) {
-        this.location.set(vector);
-    }
-
-    public void setLocationReference(Vector location) {
-        this.location = location;
-    }
-
-    public void update() {
-    }
-
-    public boolean intersects(Intersectable other) {
-        Vector min = getMinLocation(), max = getMaxLocation(), minOther = other.getMinLocation(), maxOther = other.getMaxLocation();
-        boolean xIntersects = min.getX() > minOther.getX() && min.getX() < maxOther.getX();
-        xIntersects |= max.getX() > minOther.getX() && max.getX() < maxOther.getX();
-        xIntersects |= minOther.getX() > min.getX() && minOther.getX() < max.getX();
-        xIntersects |= maxOther.getX() > min.getX() && maxOther.getX() < max.getX();
-        boolean yIntersects = min.getY() > minOther.getY() && min.getY() < maxOther.getY();
-        yIntersects |= max.getY() > minOther.getY() && max.getY() < maxOther.getY();
-        yIntersects |= minOther.getY() > min.getY() && minOther.getY() < max.getY();
-        yIntersects |= maxOther.getY() > min.getY() && maxOther.getY() < max.getY();
-        return xIntersects && yIntersects;
-    }
-
-    public Vector getMinLocation() {
-        return location;
-    }
-
-    public Vector getMaxLocation() {
-        return location.getAdd(dimension);
-    }
-
-    public boolean overlaps(Overlappable other) {
-        Vector min = getMinLocation(), max = getMaxLocation(), minOther = other.getMinLocation(), maxOther = other.getMaxLocation();
-        boolean xIntersects = min.getX() >= minOther.getX() && min.getX() <= maxOther.getX();
-        xIntersects |= max.getX() > minOther.getX() && max.getX() <= maxOther.getX();
-        xIntersects |= minOther.getX() >= min.getX() && minOther.getX() <= max.getX();
-        xIntersects |= maxOther.getX() >= min.getX() && maxOther.getX() <= max.getX();
-        boolean yIntersects = min.getY() >= minOther.getY() && min.getY() <= maxOther.getY();
-        yIntersects |= max.getY() >= minOther.getY() && max.getY() <= maxOther.getY();
-        yIntersects |= minOther.getY() >= min.getY() && minOther.getY() <= max.getY();
-        yIntersects |= maxOther.getY() >= min.getY() && maxOther.getY() <= max.getY();
-        return xIntersects && yIntersects;
-    }
-
-    public void draw(GraphicsHandler graphicsHandler) {
-        graphicsHandler.drawFilledRectangle(
-                Math.round(getX1()), Math.round(getY1()), Math.round(getScaledWidth()), Math.round(getScaledHeight()), color);
-        if (borderColor != null && !borderColor.equals(color)) {
-            graphicsHandler.drawRectangle(
-                    Math.round(getX1()), Math.round(getY1()), Math.round(getScaledWidth()), Math.round(getScaledHeight()), borderColor,
-                    BORDER_THICKNESS
-                                         );
-        }
+    public float getX() {
+        return x;
     }
 
     public float getX1() {
-        return location.getX();
+        return x;
+    }
+
+    public float getX2() {
+        return x + width;
+    }
+
+    public float getScaledX2() {
+		return x + getScaledWidth();
+	}
+	
+	public void setX(float x) {
+		this.x = x;
+	}
+	
+	public void moveX(float dx) {
+		this.x += dx;
+	}
+
+	public void moveRight(float dx) {
+		this.x += dx;
+	}
+	
+	public void moveLeft(float dx) {
+		this.x -= dx;
+	}
+
+    public float getY() {
+        return y;
     }
 
     public float getY1() {
-        return location.getY();
+        return y;
     }
 
-    public float getScaledWidth() {
-        return dimension.getX() * scale;
+    public float getY2() {
+        return y + height;
     }
 
-    public float getScaledHeight() {
-        return dimension.getY() * scale;
+	public float getScaledY2() {
+		return y + getScaledHeight();
+	}
+
+    public void setY(float y) {
+		this.y = y;
+	}
+	
+	public void moveY(float dy) {
+		this.y += dy;
+	}
+	
+	public void moveDown(float dy) {
+		this.y += dy;
+	}
+	
+	public void moveUp(float dy) {
+		this.y -= dy;
+	}
+	
+	public void setLocation(float x, float y) {
+        this.x = x;
+        this.y = y;
+	}
+
+	public int getWidth() {
+	    return width;
     }
 
-    public String toString() {
-        return String.format("Rectangle: location = %s, dimensions = %s", location.toString(), dimension.toString());
-    }
+	public void setWidth(int width) {
+		this.width = width;
+	}
 
-    public Color getColor() {
-        return color;
+	public int getHeight() {
+	    return height;
     }
+	
+	public void setHeight(int height) {
+		this.height = height;
+	}
 
-    public void setColor(Color color) {
-        this.color = color;
-    }
+	public int getScaledWidth() {
+		return Math.round(width * scale);
+	}
 
-    public float getScale() {
-        return scale;
-    }
+	public int getScaledHeight() {
+		return Math.round(height * scale);
+	}
 
-    public void setScale(float scale) {
-        this.scale = scale;
-    }
+	public float getScale() { return scale; }
 
-    public Color getBorderColor() {
-        return borderColor;
-    }
+	public void setScale(float scale) {
+		this.scale = scale;
+	}
+	
+	public Color getColor() {
+		return color;
+	}
 
-    public void setBorderColor(Color borderColor) {
-        this.borderColor = borderColor;
-    }
+	public void setColor(Color color) {
+		this.color = color;
+	}
 
-    public float getWidth() {
-        return dimension.getX();
-    }
+	public void setBorderColor(Color borderColor) {
+		this.borderColor = borderColor;
+	}
 
-    public void setWidth(float width) {
-        dimension.setX(width);
-    }
+	public void setBorderThickness(int borderThickness) {
+		this.borderThickness = borderThickness;
+	}
 
-    public float getHeight() {
-        return dimension.getY();
-    }
+	@Override
+	public String toString() {
+		return String.format("Rectangle: x=%s y=%s width=%s height=%s", getX(), getY(), getScaledWidth(), getScaledHeight());
+	}
 
-    public void setHeight(float height) {
-        dimension.setY(height);
-    }
+	public void update() { }
 
-    public Rectangle getScaled() {
-        return new Rectangle(location,dimension.getMultiplied(scale));
-    }
+	public void draw(GraphicsHandler graphicsHandler) {
+		graphicsHandler.drawFilledRectangle(Math.round(getX()), Math.round(getY()), getScaledWidth(), getScaledHeight(), color);
+		if (borderColor != null && !borderColor.equals(color)) {
+			graphicsHandler.drawRectangle(Math.round(getX()), Math.round(getY()), getScaledWidth(), getScaledHeight(), borderColor, borderThickness);
+		}
+	}
+
+	@Override
+	public Rectangle getIntersectRectangle() {
+		return new Rectangle(x, y, getScaledWidth(), getScaledHeight());
+	}
+
+	// check if this intersects with another rectangle
+	public boolean intersects(IntersectableRectangle other) {
+		Rectangle intersectRectangle = getIntersectRectangle();
+		Rectangle otherIntersectRectangle = other.getIntersectRectangle();
+		return Math.round(intersectRectangle.getX1()) < Math.round(otherIntersectRectangle.getX2()) && Math.round(intersectRectangle.getX2()) > Math.round(otherIntersectRectangle.getX1()) &&
+				Math.round(intersectRectangle.getY1()) < Math.round(otherIntersectRectangle.getY2()) && Math.round(intersectRectangle.getY2()) > Math.round(otherIntersectRectangle.getY1());
+	}
+
+	// check if this overlaps with another rectangle
+	public boolean overlaps(IntersectableRectangle other) {
+		Rectangle intersectRectangle = getIntersectRectangle();
+		Rectangle otherIntersectRectangle = other.getIntersectRectangle();
+		return Math.round(intersectRectangle.getX1()) <= Math.round(otherIntersectRectangle.getX2()) && Math.round(intersectRectangle.getX2()) >= Math.round(otherIntersectRectangle.getX1()) &&
+				Math.round(intersectRectangle.getY1()) <= Math.round(otherIntersectRectangle.getY2()) && Math.round(intersectRectangle.getY2()) >= Math.round(otherIntersectRectangle.getY1());
+	}
 }

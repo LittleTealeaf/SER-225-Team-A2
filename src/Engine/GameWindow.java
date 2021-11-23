@@ -1,12 +1,11 @@
 package Engine;
 
+import Game.ScreenCoordinator;
+
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import javax.swing.*;
-
-import Game.ScreenCoordinator;
 
 /*
  * The JFrame that holds the GamePanel
@@ -15,6 +14,8 @@ import Game.ScreenCoordinator;
 public class GameWindow {
 	private JFrame gameWindow;
 	private GamePanel gamePanel;
+	
+	
 	
 
 	public GameWindow(ScreenCoordinator c1) {

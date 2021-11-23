@@ -35,12 +35,12 @@ public class ScreenManager {
 
     // gets width of currentScreen -- can be called from anywhere in an application
     public static int getScreenWidth() {
-        return Math.round(screenBounds.getWidth());
+        return screenBounds.getWidth();
     }
 
     // gets height of currentScreen -- can be called from anywhere in an application
     public static int getScreenHeight() {
-        return Math.round(screenBounds.getHeight());
+        return screenBounds.getHeight();
     }
 
     // gets bounds of currentScreen -- can be called from anywhere in an application

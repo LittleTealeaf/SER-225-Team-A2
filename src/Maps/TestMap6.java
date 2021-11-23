@@ -45,7 +45,7 @@ public class TestMap6 extends Map {
                 getPositionByTileIndex(11, 8),
                 TileType.JUMP_THROUGH_PLATFORM,
                 3,
-                new Rectangle(0, 6, 16, 4),
+                new Rectangle(0, 6,16,4),
                 Direction.RIGHT
         ));
         
@@ -55,7 +55,7 @@ public class TestMap6 extends Map {
                 getPositionByTileIndex(14, 5),
                 TileType.JUMP_THROUGH_PLATFORM,
                 3,
-                new Rectangle(0, 6, 16, 4),
+                new Rectangle(0, 6,16,4),
                 Direction.LEFT
         ));
         
@@ -65,7 +65,7 @@ public class TestMap6 extends Map {
                 getPositionByTileIndex(38, 5),
                 TileType.JUMP_THROUGH_PLATFORM,
                 3,
-                new Rectangle(0, 6, 16, 4),
+                new Rectangle(0, 6,16,4),
                 Direction.LEFT
         ));
 

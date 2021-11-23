@@ -39,7 +39,7 @@ public class TestMap4 extends Map {
                 getPositionByTileIndex(27, 6),
                 TileType.JUMP_THROUGH_PLATFORM,
                 3,
-                new Rectangle(0, 6, 16, 4),
+                new Rectangle(0, 6,16,4),
                 Direction.RIGHT
         ));
 

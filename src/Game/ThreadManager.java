@@ -3,7 +3,6 @@ package Game;
 /**
  * @author Thomas Kwashnak
  */
-@Deprecated
 public class ThreadManager implements Runnable {
 
     private Thread thread;
@@ -40,9 +39,5 @@ public class ThreadManager implements Runnable {
             lastTick = currentTick;
         }
         running = true;
-    }
-
-    public static float getTimeScale() {
-        return 0f;
     }
 }

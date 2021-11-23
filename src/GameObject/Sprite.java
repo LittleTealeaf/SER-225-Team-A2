@@ -1,100 +1,120 @@
 package GameObject;
 
 import Engine.GraphicsHandler;
-import Engine.Vector;
+import Engine.ImageLoader;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-/**
- * @author Thomas Kwashnak (re-wrote)
- * @author Alex Thimineur (original)
- */
-public class Sprite extends Rectangle {
-
-    protected BufferedImage image;
+// This class is for representing a Sprite, which is essentially a Rectangle with an image attached
+// it also includes an attribute for "bounds", which can be thought of a sub rectangle on the image where it can be interacted with (like for collisions)
+public class Sprite extends Rectangle implements IntersectableRectangle {
+	protected BufferedImage image;
+    protected Rectangle bounds;
     protected ImageEffect imageEffect;
-    protected Rectangle bounds, scaledBounds;
 
-    public Sprite(BufferedImage image, float scale) {
-        this(image, scale, ImageEffect.NONE);
-    }
-
-    public Sprite(BufferedImage image, float scale, ImageEffect imageEffect) {
-        this(image, 0, 0, scale, imageEffect);
+    public Sprite (BufferedImage image, float scale, ImageEffect imageEffect) {
+        super(0, 0, image.getWidth(), image.getHeight(), scale);
+        this.image = image;
+        this.bounds = new Rectangle(0, 0, image.getWidth(), image.getHeight(), scale);
+        this.imageEffect = imageEffect;
     }
 
     public Sprite(BufferedImage image, float x, float y, float scale, ImageEffect imageEffect) {
-        this(image, new Vector(x, y), scale, imageEffect);
-    }
-
-    public Sprite(BufferedImage image, Vector location, float scale, ImageEffect imageEffect) {
-        super(location, Vector.convertImageDimensions(image), scale);
+        super(x, y, image.getWidth(), image.getHeight(), scale);
         this.image = image;
+        this.bounds = new Rectangle(0, 0, image.getWidth(), image.getHeight(), scale);
         this.imageEffect = imageEffect;
-        bounds = new Rectangle(new Vector(0,0),dimension.clone());
-        scaledBounds = scaleBounds(bounds);
+    }
+	
+	public BufferedImage getImage() {
+		return image;
+	}
+	
+	public void setImage(String imageFileName) {
+		image = ImageLoader.load(imageFileName);
+	}
+
+    public void setImage(BufferedImage image) {
+        this.image = image;
     }
 
-    public BufferedImage getImage() {
-        return image;
+    public ImageEffect getImageEffect() { return imageEffect; }
+
+    public void setImageEffect(ImageEffect imageEffect) {
+        this.imageEffect = imageEffect;
     }
 
-    public ImageEffect getImageEffect() {
-        return imageEffect;
+    public Rectangle getBounds() {
+        return new Rectangle(getBoundsX1(), getBoundsY1(), bounds.getWidth(), bounds.getHeight(), scale);
     }
 
-    /*
-    Overrides the Rectangle to use bounds if a custom bounds was specified
-     */
+    public float getBoundsX1() {
+        return x + bounds.getX1();
+    }
+
+    public float getBoundsX2() {
+        return x + bounds.getX2();
+    }
+
+    public float getBoundsY1() {
+        return y + bounds.getY1();
+    }
+
+    public float getBoundsY2() {
+        return y + bounds.getY2();
+    }
+
+    public float getScaledBoundsX1() {
+        return getX() + (bounds.getX1() * scale);
+    }
+
+    public float getScaledBoundsX2() {
+        return getScaledBoundsX1() + bounds.getScaledWidth();
+    }
+
+    public float getScaledBoundsY1() {
+        return getY() + (bounds.getY1() * scale);
+    }
+
+    public float getScaledBoundsY2() {
+        return getScaledBoundsY1() + bounds.getScaledHeight();
+    }
+
+    public Rectangle getScaledBounds() {
+        return new Rectangle(getScaledBoundsX1(), getScaledBoundsY1(), bounds.getScaledWidth(), bounds.getScaledHeight());
+    }
+
+    public void setBounds(Rectangle bounds) {
+        this.bounds = new Rectangle(bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight(), scale);
+    }
+
+    public void setBounds(float x, float y, int width, int height) {
+        this.bounds = new Rectangle(x, y, width, height, scale);
+    }
+
+    public Rectangle getIntersectRectangle() {
+        return getScaledBounds();
+    }
+
     @Override
-    public Vector getMinLocation() {
-        return bounds.location;
-    }
+	public void update() {
+		super.update();
+	}
+	
+	@Override
+	public void draw(GraphicsHandler graphicsHandler) {
+		graphicsHandler.drawImage(image, Math.round(getX()), Math.round(getY()), getScaledWidth(), getScaledHeight(), imageEffect);
+	}
 
-    /*
-    Overrides the Rectangle to use bounds if a custom bounds was specified
-     */
-    @Override
-    public Vector getMaxLocation() {
-        return bounds.location.getAdd(dimension);
-    }
-
-    public void draw(GraphicsHandler graphicsHandler) {
-        graphicsHandler.drawImage(
-                image, Math.round(getX1()), Math.round(getY1()), Math.round(getScaledWidth()), Math.round(getScaledHeight()), imageEffect);
-    }
-
-    public void drawBounds(GraphicsHandler graphicsHandler, Color color) {
+	public void drawBounds(GraphicsHandler graphicsHandler, Color color) {
         Rectangle scaledBounds = getScaledBounds();
         scaledBounds.setColor(color);
         scaledBounds.draw(graphicsHandler);
     }
 
-    public Rectangle getBounds() {
-        return new Rectangle(location.getAdd(bounds.location),bounds.dimension,bounds.scale);
+    @Override
+    public String toString() {
+        return String.format("Sprite: x=%s y=%s width=%s height=%s bounds=(%s, %s, %s, %s)", getX(), getY(), getScaledWidth(), getScaledHeight(), getScaledBoundsX1(), getScaledBoundsY1(), getScaledBounds().getWidth(), getScaledBounds().getHeight());
     }
-
-    public Rectangle getScaledBounds() {
-        return new Rectangle(location.getAdd(scaledBounds.location),scaledBounds.dimension);
-    }
-
-    public void setBounds(Rectangle bounds) {
-        this.bounds = bounds;
-        scaledBounds = scaleBounds(bounds);
-    }
-
-    public boolean intersects(Intersectable other) {
-        return getScaledBounds().intersects(other);
-    }
-
-    /**
-     * Returns the scaled bounds of the given bounds
-     * @param bounds Bounds to scale to scale = 1
-     * @return Scaled bounds where both the location and dimension are scaled
-     */
-    private Rectangle scaleBounds(Rectangle bounds) {
-        return new Rectangle(bounds.location.getMultiplied(bounds.scale), bounds.dimension.getMultiplied(bounds.scale));
-    }
-
 }

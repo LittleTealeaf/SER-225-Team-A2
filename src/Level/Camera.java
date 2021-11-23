@@ -3,14 +3,14 @@ package Level;
 import Engine.GraphicsHandler;
 import Engine.ScreenManager;
 import GameObject.GameObject;
-import GameObject.RectangleOld;
+import GameObject.Rectangle;
 
 import java.awt.*;
 import java.util.ArrayList;
 
 // This class represents a Map's "Camera", aka a piece of the map that is currently included in a level's update/draw logic based on what should be shown on screen.
 // A majority of its job is just determining which map tiles, enemies, npcs, and enhanced map tiles are "active" each frame (active = included in update/draw cycle)
-public class Camera extends RectangleOld {
+public class Camera extends Rectangle {
 
     // the current map this camera is attached to
     private Map map;
@@ -111,7 +111,7 @@ public class Camera extends RectangleOld {
                 }
             } else if (enemy.getMapEntityStatus() == MapEntityStatus.ACTIVE) {
                 enemy.setMapEntityStatus(MapEntityStatus.INACTIVE);
-                if (enemy.isRespawnEnabled()) {
+                if (enemy.isRespawnable()) {
                     enemy.initialize();
                 }
             } else if (enemy.getMapEntityStatus() == MapEntityStatus.REMOVED) {
@@ -133,7 +133,7 @@ public class Camera extends RectangleOld {
                 }
             } else if (projectile.getMapEntityStatus() == MapEntityStatus.ACTIVE) {
                 projectile.setMapEntityStatus(MapEntityStatus.INACTIVE);
-                if (projectile.isRespawnEnabled()) {
+                if (projectile.isRespawnable()) {
                     projectile.initialize();
                 }
             } else if (projectile.getMapEntityStatus() == MapEntityStatus.REMOVED) {
@@ -162,7 +162,7 @@ public class Camera extends RectangleOld {
                 }
             } else if (enhancedMapTile.getMapEntityStatus() == MapEntityStatus.ACTIVE) {
                 enhancedMapTile.setMapEntityStatus(MapEntityStatus.INACTIVE);
-                if (enhancedMapTile.isRespawnEnabled()) {
+                if (enhancedMapTile.isRespawnable()) {
                     enhancedMapTile.initialize();
                 }
             } else if (enhancedMapTile.getMapEntityStatus() == MapEntityStatus.REMOVED) {
@@ -191,7 +191,7 @@ public class Camera extends RectangleOld {
                 }
             } else if (npc.getMapEntityStatus() == MapEntityStatus.ACTIVE) {
                 npc.setMapEntityStatus(MapEntityStatus.INACTIVE);
-                if (npc.isRespawnEnabled()) {
+                if (npc.isRespawnable()) {
                     npc.initialize();
                 }
             } else if (npc.getMapEntityStatus() == MapEntityStatus.REMOVED) {

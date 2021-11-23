@@ -33,8 +33,4 @@ public class Point {
     public Point subtractY(int y) {
         return new Point(this.x, this.y - y);
     }
-
-    public String toString() {
-        return "Point: " + x + ", " + y;
-    }
 }

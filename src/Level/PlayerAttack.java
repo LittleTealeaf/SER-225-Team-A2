@@ -29,7 +29,7 @@ public class PlayerAttack extends Enemy {
         existenceTimer.setWaitTime(existenceTime);
 
         // this enemy will not respawn after it has been removed
-        respawnEnabled = false;
+        isRespawnable = false;
 
         initialize();
     }

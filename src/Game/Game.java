@@ -1,7 +1,6 @@
 package Game;
 
 import Engine.GameWindow;
-
 import Engine.ScreenManager;
 
 /*
@@ -18,13 +17,12 @@ public class Game {
     public Game() {
     	ScreenCoordinator c1 = new ScreenCoordinator();
         GameWindow gameWindow = new GameWindow(c1);
+
+        new RenderThread(null);
+        gameWindow.startGame();
         ScreenManager screenManager = gameWindow.getScreenManager();
         screenManager.setCurrentScreen(c1);
-        gameWindow.startGame();
-
 //        DEBUG USE ONLY
 //        screenManager.setCurrentScreen(new DebugScreen());
     }
-
-
 }

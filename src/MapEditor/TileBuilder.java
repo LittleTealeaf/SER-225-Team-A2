@@ -76,8 +76,8 @@ public class TileBuilder extends JPanel {
             graphicsHandler.drawRectangle(
                     Math.round(hoveredMapTile.getX()) + 2,
                     Math.round(hoveredMapTile.getY()) + 2,
-                    Math.round(hoveredMapTile.getScaledWidth() - 5),
-                    Math.round(hoveredMapTile.getScaledHeight() - 5),
+                    hoveredMapTile.getScaledWidth() - 5,
+                    hoveredMapTile.getScaledHeight() - 5,
                     Color.YELLOW,
                     5
             );

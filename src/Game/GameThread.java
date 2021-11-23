@@ -9,7 +9,7 @@ public class GameThread implements Runnable {
     public static final float UPDATE_FACTOR;
 
     static {
-        UPDATE_FIXED_MS = 5;
+        UPDATE_FIXED_MS = 12;
         UPDATE_FACTOR = UPDATE_FIXED_MS / 15.0f;
     }
 
@@ -34,7 +34,7 @@ public class GameThread implements Runnable {
 
     @Override
     public void run() {
-//        lastTime = System.currentTimeMillis();
+        //        lastTime = System.currentTimeMillis();
         long nextUpdateTime = System.currentTimeMillis();
         long currentTime;
         while(running) {
@@ -45,17 +45,18 @@ public class GameThread implements Runnable {
             }
             render.run();
 
-//            delta_time = ((double) timePassed) / 1000;
-//            while(timePassed >= UPDATE_FIXED_MS) {
-//                timePassed -= UPDATE_FIXED_MS;
-//                update.run();
-//            }
-//
-//            render.run();
-//            currentTime = System.currentTimeMillis();
-//            timePassed += currentTime - lastTime;
-//            lastTime = currentTime;
+            //            delta_time = ((double) timePassed) / 1000;
+            //            while(timePassed >= UPDATE_FIXED_MS) {
+            //                timePassed -= UPDATE_FIXED_MS;
+            //                update.run();
+            //            }
+            //
+            //            render.run();
+            //            currentTime = System.currentTimeMillis();
+            //            timePassed += currentTime - lastTime;
+            //            lastTime = currentTime;
         }
         running = true;
     }
 }
+

@@ -6,7 +6,6 @@ import java.awt.*;
  * Responsible for the looping of the class and containing values such as time since last tick, etc.
  * @author Thomas Kwashnak
  */
-@Deprecated
 public class RenderThread extends ThreadManager {
 
     /**

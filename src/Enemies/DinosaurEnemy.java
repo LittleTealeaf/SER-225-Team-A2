@@ -109,7 +109,7 @@ public class DinosaurEnemy extends Enemy {
                 int fireballX;
                 float movementSpeed;
                 if (facingDirection == Direction.RIGHT) {
-                    fireballX = Math.round(getX() + getScaledWidth());
+                    fireballX = Math.round(getX()) + getScaledWidth();
                     movementSpeed = 1.5f;
                 } else {
                     fireballX = Math.round(getX());

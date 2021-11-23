@@ -1,8 +1,6 @@
 package Level;
 
 import Engine.KeyboardAction;
-import Engine.Vector;
-import Game.GameThread;
 import GameObject.GameObject;
 import GameObject.SpriteSheet;
 import Level.PlayerState.Facing;
@@ -27,9 +25,8 @@ public abstract class Player extends GameObject {
     private PlayerState playerState;
     private Facing facing;
     private LevelState levelState;
+    private boolean inAir;
     private float absVelocityX, velocityY;
-    private int moveDelay = 2;
-
 
     public Player(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
         super(spriteSheet, x, y, startingAnimationName);
@@ -46,6 +43,7 @@ public abstract class Player extends GameObject {
             case DEAD -> updateDead();
             case WIN -> updateWin();
         }
+
         setCurrentAnimationName(playerState.get(facing));
     }
 
@@ -57,7 +55,7 @@ public abstract class Player extends GameObject {
         boolean playerMove = moveLeftDown ^ KeyboardAction.GAME_MOVE_RIGHT.isDown(); //Only true if the player is moving in a direction
         facing = playerMove ? moveLeftDown ? Facing.LEFT : Facing.RIGHT : facing; //Update facing if the player moved
         //Only move if the player moved and is not going out of bounds
-        if (playerMove && ((facing == Facing.LEFT && pos.getX() > 0) ^ (facing == Facing.RIGHT && pos.getY() < map.getRightBound()))) {
+        if (playerMove && ((facing == Facing.LEFT && x > 0) ^ (facing == Facing.RIGHT && x < map.getRightBound()))) {
             playerState = PlayerState.WALK;
             if (KeyboardAction.GAME_SPRINT.isDown() && absVelocityX >= walkSpeed) {
                 if (absVelocityX < sprintSpeed) {
@@ -82,7 +80,7 @@ public abstract class Player extends GameObject {
 
         //Update Attack
         if (KeyboardAction.GAME_ATTACK.isDown() && attackDelay.isTimeUp()) {
-            int attackX = facing == Facing.RIGHT ? Math.round(getX() + getScaledWidth() - 20) : Math.round(getX());
+            int attackX = facing == Facing.RIGHT ? Math.round(getX()) + getScaledWidth() - 20 : Math.round(getX());
             map.addEnemy(new PlayerAttack(new Point(attackX, Math.round(getY()) + 10), facing.mod * 1.5f, 1000));
             attackDelay.setWaitTime(ATTACK_DELAY);
         }
@@ -101,25 +99,8 @@ public abstract class Player extends GameObject {
         }
 
         inAir = true; //air is decided in moveYHandleCollision()
-        /*
-        So what's happening here is that the player never actually "hits" the block until the velocity gets enough to actually
-        change the player's Y position (since it rounds movement to an int)
-        Thus, as the gravity increases the veloctyY, it still thinks its in the air as the player doesn't actually "hit" anything
-        (movement is set to 0). Something that might fix would be to make internal movements stored in floats, and then have
-        the rendering be "truncated" to ints? or maybe it also does floats?
-        Basically we're going away from int locations? Would need to keep some things as ints to allow for
-         */
-
-
-//        super.moveYHandleCollision(velocityY * GameThread.getScale());
-//        System.out.println(velocityY * GameThread.getScale() + " " + inAir);
-//        super.moveXHandleCollision(absVelocityX * facing.mod * GameThread.getScale());
-//        collisionHandler.getAdjustedMovement(new Vector(absVelocityX * facing.mod, velocityY));
-        if(moveDelay > 0) {
-            moveDelay--;
-        } else {
-            moveHandleCollision(new Vector(absVelocityX * facing.mod, velocityY));
-        }
+        super.moveYHandleCollision(velocityY);
+        super.moveXHandleCollision(absVelocityX * facing.mod);
     }
 
     private void updateDead() {
@@ -133,7 +114,7 @@ public abstract class Player extends GameObject {
         } else {
             velocityY = DEATH_Y_VELOCITY;
         }
-        setY(getY() + velocityY * GameThread.UPDATE_FACTOR);
+        setY(y + velocityY);
     }
 
     private void updateWin() {
@@ -142,10 +123,10 @@ public abstract class Player extends GameObject {
             if (inAir) {
                 playerState = PlayerState.FALL;
                 applyGravity(MAX_FALL_VELOCITY);
-                moveYHandleCollision(velocityY * GameThread.UPDATE_FACTOR);
+                moveYHandleCollision(velocityY);
             } else {
                 playerState = PlayerState.WALK;
-                moveXHandleCollision(walkSpeed * GameThread.UPDATE_FACTOR);
+                moveXHandleCollision(walkSpeed);
             }
         } else for (PlayerListener listener : playerListeners) {
             listener.onLevelCompleted();
@@ -154,7 +135,7 @@ public abstract class Player extends GameObject {
 
     private void applyGravity(float maxFallVelocity) {
         if (velocityY < maxFallVelocity) {
-            velocityY += gravity * GameThread.UPDATE_FACTOR;
+            velocityY += gravity;
         }
     }
 

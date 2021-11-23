@@ -1,6 +1,9 @@
 package Level;
 
-import Engine.*;
+import Engine.Config;
+import Engine.Drawable;
+import Engine.GraphicsHandler;
+import Engine.ScreenManager;
 import Utils.Point;
 
 import java.io.File;
@@ -8,7 +11,6 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 /*
@@ -224,86 +226,19 @@ public abstract class Map implements Drawable {
     }
 
     // returns a tile based on a position in the map
-    /**
-     * uhh.. doesn't work?
-     */
-    @Deprecated
-    public MapTile getTileByIntPosition(int xPosition, int yPosition) {
+    public MapTile getTileByPosition(int xPosition, int yPosition) {
         Point tileIndex = getTileIndexByPosition(xPosition, yPosition);
-        if (isInBounds(Math.round(tileIndex.x), Math.round(tileIndex.y))) { //useless as it already checks within getMapTile?
+        if (isInBounds(Math.round(tileIndex.x), Math.round(tileIndex.y))) {
             return getMapTile(Math.round(tileIndex.x), Math.round(tileIndex.y));
         } else {
             return null;
         }
     }
 
-    /**
-     * Returns a list of Tiles within the bounds listed starting at x,y and going height,width
-     * @param x
-     * @param y
-     * @param width
-     * @param height
-     * @return
-     */
-    @Deprecated
-    public MapTile[] getTilesInIndexBounds(int x, int y, int width, int height) {
-        MapTile[] ret = new MapTile[width * height];
-        for(int i = 0; i < ret.length; i++) {
-            ret[i] = getMapTile(x + i / width, y + i % width);
-        }
-        return ret;
-    }
-
-    public MapTile[] getTilesInBounds(Vector start, int width, int height) {
-        MapTile[] ret = new MapTile[width * height];
-        Point s = getTileIndexByPosition(start);
-        int x = (int) s.x, y = (int) s.y;
-        for(int i = 0; i < ret.length; i++) {
-            ret[i] = getMapTile(x + i / width, y + i % width);
-        }
-        return ret;
-    }
-
-    /**
-     * Cuts down the list of mapTiles to only ones that are at most 2 * length distance away. Also includes enhancedMapTiles
-     * @param origin
-     * @param length
-     * @return
-     */
-    public List<MapTile> getMapTilesInRange(Vector origin, float length) {
-        List<MapTile> tiles = new ArrayList<>((int) (4 * length * length / tileset.getScaledSpriteHeight() / tileset.getScaledSpriteWidth()));
-        float lSquared = length * length;
-        for(MapTile tile : mapTiles) {
-            float dx = tile.getX() - origin.getX(), dy = tile.getY() - origin.getY();
-            if(dx * dx + dy * dy < lSquared) {
-                tiles.add(tile);
-            }
-        }
-        for(MapTile tile : enhancedMapTiles) {
-            float dx = tile.getX() - origin.getX(), dy = tile.getY() - origin.getY();
-            if(dx * dx + dy * dy < lSquared) {
-                tiles.add(tile);
-            }
-        }
-        return tiles;
-    }
-
-    public MapTile getTileByPosition(Vector position) {
-        int xIndex = (int) (position.getX() / tileset.getScaledSpriteWidth());
-        int yIndex = (int) (position.getY() / tileset.getScaledSpriteHeight());
-        return getMapTile(xIndex,yIndex);
-    }
-
-    public Point getTileIndexByPosition(Vector vector) {
-        int xIndex = Math.round(vector.getX() / tileset.getScaledSpriteWidth());
-        int yIndex = Math.round(vector.getY() / tileset.getScaledSpriteHeight());
-        return new Point(xIndex,yIndex);
-    }
-
     // returns the index of a tile (x index and y index) based on a position in the map
     public Point getTileIndexByPosition(float xPosition, float yPosition) {
-        int xIndex = Math.round(xPosition / tileset.getScaledSpriteWidth());
-        int yIndex = Math.round(yPosition / tileset.getScaledSpriteHeight());
+        int xIndex = Math.round(xPosition) / tileset.getScaledSpriteWidth();
+        int yIndex = Math.round(yPosition) / tileset.getScaledSpriteHeight();
         return new Point(xIndex, yIndex);
     }
 
