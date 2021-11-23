@@ -88,7 +88,6 @@ public class Rectangle implements Drawable, Intersectable, Overlappable {
         yIntersects |= max.getY() > minOther.getY() && max.getY() < maxOther.getY();
         yIntersects |= minOther.getY() > min.getY() && minOther.getY() < max.getY();
         yIntersects |= maxOther.getY() > min.getY() && maxOther.getY() < max.getY();
-//        System.out.println(xIntersects + " " + yIntersects + " " + min + " " + max + " " + minOther + " " + maxOther);
         return xIntersects && yIntersects;
     }
 
@@ -110,7 +109,6 @@ public class Rectangle implements Drawable, Intersectable, Overlappable {
         yIntersects |= max.getY() >= minOther.getY() && max.getY() <= maxOther.getY();
         yIntersects |= minOther.getY() >= min.getY() && minOther.getY() <= max.getY();
         yIntersects |= maxOther.getY() >= min.getY() && maxOther.getY() <= max.getY();
-        //        System.out.println(xIntersects + " " + yIntersects + " " + min + " " + max + " " + minOther + " " + maxOther);
         return xIntersects && yIntersects;
     }
 
@@ -183,5 +181,9 @@ public class Rectangle implements Drawable, Intersectable, Overlappable {
 
     public void setHeight(float height) {
         dimension.setY(height);
+    }
+
+    public Rectangle getScaled() {
+        return new Rectangle(location,dimension.getMultiplied(scale));
     }
 }

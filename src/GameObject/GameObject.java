@@ -16,6 +16,7 @@ import Utils.Point;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -156,17 +157,16 @@ public class GameObject extends AnimatedSprite implements Drawable {
 
 //		see if it collides
 		move(velocity);
+		inAir = true;
 		if ((lastCollided = getCollidedTile(tiles,velocity)) != null) {
 			handleCollision(lastCollided,velocity);
 			System.out.println("Player = " + getPos() + ", Block = " + lastCollided.getPos());
 //			move(unit.getNegative());
 		}
-
-		inAir = lastCollided == null;
 	}
 
 	private MapTile getCollidedTile(List<MapTile> mapTiles, Vector velocity) {
-		System.out.println("\nPlayer: " + pos);
+		System.out.println("\nPlayer: " + pos + " " + velocity);
 		for(MapTile mapTile : mapTiles) {
 			if((mapTile.getTileType() == TileType.NOT_PASSABLE || (mapTile.getTileType() == TileType.JUMP_THROUGH_PLATFORM && velocity.getY() > 0)) && intersects(mapTile)) {
 				return mapTile;
@@ -176,7 +176,42 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	}
 
 	private void handleCollision(MapTile mapTile, Vector velocity) {
+		//initializing x1 x2 y1 y2 ox1 ox2 oy1 oy2
+		float x1 = getScaledBoundsX1(), x2 = getScaledBoundsX2(), y1 = getScaledBoundsY1(), y2 = getScaledBoundsY2();
+		float ox1 = mapTile.getScaledBoundsX1(), ox2 = mapTile.getScaledBoundsX2(), oy1 = mapTile.getScaledBoundsY1(), oy2 =
+				mapTile.getScaledBoundsY2();
+		System.out.println(x1 + " " + x2 + " " + y1 + " " + y2 + " | " + ox1 + " " + ox2 + " " + oy1 + " " + oy2);
+		System.out.println(getBounds() + " " + mapTile.getBounds());
+		if(getIntersected(x1,x2,ox1,ox2) > getIntersected(y1,y2,oy1,oy2)) {
+			//Vertical impact
+			if(y1 < oy1) {
+				//downwards
+				inAir = false;
+				move(new Vector(0,oy1 - y2));
+			} else {
+				move(new Vector(0,oy2 - y1));
+			}
 
+		} else {
+			//Horizontal impact
+			if(x1 < ox1) {
+				move(new Vector(ox1 - x2,0));
+			} else {
+				move(new Vector(ox2 - x1,0));
+			}
+
+		}
+	}
+
+	/**
+	 * Given 2 ranges that intersect, returns the amount of range intersected
+	 * <p>Given that {@code x1 < x2} and {@code ox1 < ox2}</p>
+	 * @param values
+	 * @return Amount of range intersected
+	 */
+	private static float getIntersected(float... values) {
+		Arrays.sort(values);
+		return values[2] - values[1];
 	}
 //
 //	/**

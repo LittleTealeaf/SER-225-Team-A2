@@ -2,6 +2,8 @@ package Engine;
 
 import Utils.Point;
 
+import java.awt.image.BufferedImage;
+
 public class Vector {
     private float x,y;
 
@@ -153,5 +155,9 @@ public class Vector {
 
     public void multiplyY(float magnitude) {
         y *= magnitude;
+    }
+
+    public static Vector convertImageDimensions(BufferedImage bufferedImage) {
+        return new Vector(bufferedImage.getWidth(), bufferedImage.getHeight());
     }
 }

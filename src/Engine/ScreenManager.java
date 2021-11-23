@@ -1,7 +1,7 @@
 package Engine;
 
 
-import GameObject.RectangleOld;
+import GameObject.Rectangle;
 
 /*
  * The game engine uses this class to start off the cascading Screen updating/drawing
@@ -11,9 +11,9 @@ import GameObject.RectangleOld;
 public class ScreenManager {
     private Screen currentScreen;
    
-    private static RectangleOld screenBounds = new RectangleOld(0, 0, 0, 0);
+    private static Rectangle screenBounds = new Rectangle(0, 0, 0, 0);
 
-    public void initialize(RectangleOld screenBounds) {
+    public void initialize(Rectangle screenBounds) {
         ScreenManager.screenBounds = screenBounds;
         setCurrentScreen(new DefaultScreen());
     }
@@ -35,16 +35,16 @@ public class ScreenManager {
 
     // gets width of currentScreen -- can be called from anywhere in an application
     public static int getScreenWidth() {
-        return screenBounds.getWidth();
+        return Math.round(screenBounds.getWidth());
     }
 
     // gets height of currentScreen -- can be called from anywhere in an application
     public static int getScreenHeight() {
-        return screenBounds.getHeight();
+        return Math.round(screenBounds.getHeight());
     }
 
     // gets bounds of currentScreen -- can be called from anywhere in an application
-    public static RectangleOld getScreenBounds() {
+    public static Rectangle getScreenBounds() {
         return screenBounds;
     }
 }
