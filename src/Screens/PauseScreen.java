@@ -32,7 +32,7 @@ public class PauseScreen extends Menu {
         });
         setMenuItemsAsGrid(new MenuOption[][]{
                 {
-                        new MenuOption("Return to Game", 100, 100, () -> this.playLevelScreen.resume())
+                        new MenuOption("Return to Game", 100, 100, this.playLevelScreen::resume)
                 }, {
                         new MenuOption("Back to Menu", 100, 200, () -> GamePanel.getScreenCoordinator().setGameState(GameState.MENU))
                 }

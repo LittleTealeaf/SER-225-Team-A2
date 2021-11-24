@@ -4,7 +4,6 @@ import Engine.Drawable;
 import Engine.GraphicsHandler;
 
 import java.awt.*;
-import java.awt.font.FontRenderContext;
 
 // This class represents a sprite font, which is graphic text (text drawn to the screen as if it were an image)
 public class SpriteFont implements Drawable {
@@ -17,6 +16,15 @@ public class SpriteFont implements Drawable {
 	protected Color outlineColor;
 	protected float outlineThickness = 1f;
 
+	public SpriteFont(String text, float x, float y, Font font, Color color) {
+		this.text = text;
+		this.font = font;
+		this.x = x;
+		this.y = y;
+		this.color = color;
+		updateDimensions();
+	}
+
 	public SpriteFont(String text, float x, float y, String fontName, int fontSize, Color color) {
 		this.text = text;
 		font = new Font(fontName, Font.PLAIN, fontSize);
@@ -28,6 +36,10 @@ public class SpriteFont implements Drawable {
 
 	public void setColor(Color color) {
 		this.color = color;
+	}
+
+	public Color getColor() {
+		return color;
 	}
 
 	public String getText() {
@@ -108,11 +120,13 @@ public class SpriteFont implements Drawable {
 		y -= dy;
 	}
 
+
+
 	public void draw(GraphicsHandler graphicsHandler) {
 		if (outlineColor != null && !outlineColor.equals(color)) {
-			graphicsHandler.drawStringWithOutline(text, Math.round(x), Math.round(y), font, color, outlineColor, outlineThickness);
+			graphicsHandler.drawStringWithOutline(getText(), Math.round(x), Math.round(y), font, color, outlineColor, outlineThickness);
 		} else {
-			graphicsHandler.drawString(text, Math.round(x), Math.round(y), font, color);
+			graphicsHandler.drawString(getText(), Math.round(x), Math.round(y), font, color);
 		}
 	}
 
@@ -126,7 +140,7 @@ public class SpriteFont implements Drawable {
 		if(width == -1) {
 			FontMetrics metrics = graphicsHandler.getGraphics2D().getFontMetrics(font);
 			height = metrics.getHeight();
-			width = metrics.stringWidth(text);
+			width = metrics.stringWidth(getText());
 		}
 
 

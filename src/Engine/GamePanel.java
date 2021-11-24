@@ -18,7 +18,7 @@ import java.io.IOException;
  * This is where the game loop starts
  * The JPanel uses a timer to continually call cycles of update and draw
  */
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements Updatable {
 	private final ScreenManager screenManager;
 	private final GraphicsHandler graphicsHandler;
 	private boolean doPaint = false;

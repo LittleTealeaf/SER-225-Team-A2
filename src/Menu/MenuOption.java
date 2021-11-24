@@ -1,11 +1,12 @@
 package Menu;
 
+import Engine.Drawable;
 import Engine.GraphicsHandler;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class MenuOption {
+public class MenuOption implements Drawable {
 
     private static final Font DEFAULT_MENU_FONT = new Font("Comic sans", Font.PLAIN, 30);
     private static final Color DEFAULT_COLOR = new Color(49, 207, 240);

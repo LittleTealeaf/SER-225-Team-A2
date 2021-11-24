@@ -2,10 +2,11 @@ package Screens;
 
 import Engine.*;
 import Game.GameState;
+import Game.TimeTracker;
 import Level.Map;
 import Level.Player;
 import Level.PlayerListener;
-import Maps.*;
+import Maps.GameMaps;
 import SpriteFont.SpriteFont;
 import Utils.Stopwatch;
 
@@ -14,7 +15,6 @@ import java.awt.event.MouseEvent;
 
 public class PlayLevelScreen extends Screen implements PlayerListener {
 
-    private static final MapFactory[] MAPS;
     private static final Stopwatch screenTimer;
     private static final KeyLocker keyLocker;
     private static final SpriteFont SPRITE_FONT_PAUSE;
@@ -23,18 +23,11 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
     private static Map loadedMap;
     private static Screen alternateScreen;
     private static Player player;
+    private static TimeTracker timeTracker;
 
     static {
         screenTimer = new Stopwatch();
         keyLocker = new KeyLocker();
-
-        /*
-         * List of maps in the game, each map is given a constructor
-         * This is some new java funky stuff :D
-         */
-        MAPS = new MapFactory[]{
-                TestTutorial::new, TestMap::new, TestMap2::new, TestMap3::new, TestMap4::new, TestMap5::new, TestMap6::new, TestMap7::new, BossBattle::new
-        };
 
         SPRITE_FONT_PAUSE = new SpriteFont("Pause", 350, 250, "Comic Sans", 30, Color.white);
 
@@ -79,6 +72,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
 
     @Override
     public void initialize() {
+        timeTracker = new TimeTracker();
         loadMap(currentMap);
     }
 
@@ -88,8 +82,10 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
             case RUNNING -> {
                 if (KeyboardAction.GAME_PAUSE.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_PAUSE)) {
                     screenState = State.PAUSE;
+                    timeTracker.stop();
                 } else if (KeyboardAction.GAME_INSTRUCTIONS.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_INSTRUCTIONS)) {
                     screenState = State.INSTRUCTIONS;
+                    timeTracker.stop();
                 } else {
                     player.update();
                     loadedMap.update(player);
@@ -157,6 +153,13 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                 graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), COLOR_GREY_BACKGROUND);
             }
         }
+        if(timeTracker != null) {
+            timeTracker.draw(graphicsHandler);
+        }
+    }
+
+    public Map getLoadedMap() {
+        return loadedMap;
     }
 
     @Override
@@ -176,10 +179,10 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
      * @param index index of map to load
      */
     private void loadMap(int index) {
-        if(index < MAPS.length) {
+        if(index < GameMaps.MAPS.length) {
             currentMap = index;
             //Load map using the MapFactory
-            loadedMap = MAPS[index].generateMap();
+            loadedMap = GameMaps.MAPS[index].generateMap();
             loadedMap.reset();
 
             //Load the cat using the Config setting
@@ -187,7 +190,11 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
             player.setMap(loadedMap);
             player.addListener(this);
             screenState = State.RUNNING;
+
+            //Update Time
+            timeTracker.setCurrentLevel(index);
         } else {
+            //Add the other menu
             GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
         }
     }
@@ -213,8 +220,11 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
     public void resume() {
         if (screenState == State.PAUSE || screenState == State.INSTRUCTIONS) {
             screenState = State.RUNNING;
+            timeTracker.start();
         }
     }
+
+
 
     public enum State {
         RUNNING, LEVEL_COMPLETED, PLAYER_DEAD, LEVEL_WIN_MESSAGE, LEVEL_LOSE_MESSAGE, LEVEL_SELECT, PAUSE, INSTRUCTIONS, OPTIONS
