@@ -25,6 +25,8 @@ public class TimeTracker implements Drawable {
     private GameTimer[] levels;
     private GameTimer total;
 
+    private int xMap, yMap, xTotal, yTotal, charsTotal, charsMap;
+
     /**
      * Whether the level-specific time should be listed
      */
@@ -79,18 +81,38 @@ public class TimeTracker implements Drawable {
     @Override
     public void draw(GraphicsHandler graphicsHandler) {
         //Custom rendering in order to place it correctly
-        FontMetrics metrics = graphicsHandler.getGraphics2D().getFontMetrics(FONT_BIG);
+//        FontMetrics metrics = graphicsHandler.getGraphics2D().getFontMetrics(FONT_BIG);
+//        String totalString = total.toString();
+//        int yTotal = metrics.getHeight();
+//        int xTotal = ScreenManager.getScreenWidth() - metrics.stringWidth(totalString);
+//        graphicsHandler.drawString(totalString, Math.round(xTotal), yTotal, FONT_BIG, Color.WHITE);
+//
+//        if(showLevel) {
+//            metrics = graphicsHandler.getGraphics2D().getFontMetrics(FONT_SMALL);
+//            String mapString = levels[currentLevel].toString();
+//            int yMap = yTotal + metrics.getHeight();
+//            int xMap = ScreenManager.getScreenWidth() - metrics.stringWidth(mapString);
+//            graphicsHandler.drawString(mapString,xMap, yMap, FONT_SMALL,Color.white);
+//        }
         String totalString = total.toString();
-        int yTotal = metrics.getHeight();
-        int xTotal = ScreenManager.getScreenWidth() - metrics.stringWidth(totalString);
-        graphicsHandler.drawString(totalString, Math.round(xTotal), yTotal, FONT_BIG, Color.WHITE);
+        if(totalString.length() != charsTotal) {
+            FontMetrics metrics = graphicsHandler.getGraphics2D().getFontMetrics(FONT_BIG);
+            yTotal = metrics.getHeight();
+            xTotal = ScreenManager.getScreenWidth() - metrics.stringWidth(totalString.replace(' ','0'));
+            charsTotal = totalString.length();
+        }
+        graphicsHandler.drawString(totalString, xTotal, yTotal, FONT_BIG, Color.white);
 
         if(showLevel) {
-            metrics = graphicsHandler.getGraphics2D().getFontMetrics(FONT_SMALL);
             String mapString = levels[currentLevel].toString();
-            int yMap = yTotal + metrics.getHeight();
-            int xMap = ScreenManager.getScreenWidth() - metrics.stringWidth(mapString);
-            graphicsHandler.drawString(mapString,xMap, yMap, FONT_SMALL,Color.white);
+            if(mapString.length() != charsMap) {
+                FontMetrics metrics = graphicsHandler.getGraphics2D().getFontMetrics(FONT_SMALL);
+                yMap = metrics.getHeight() + yTotal;
+                xMap = ScreenManager.getScreenWidth() - metrics.stringWidth(mapString.replace(' ','0'));
+                charsMap = totalString.length();
+            }
+            graphicsHandler.drawString(mapString,xMap,yMap,FONT_SMALL,Color.white);
         }
+
     }
 }
