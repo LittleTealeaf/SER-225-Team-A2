@@ -80,20 +80,6 @@ public class TimeTracker implements Drawable {
 
     @Override
     public void draw(GraphicsHandler graphicsHandler) {
-        //Custom rendering in order to place it correctly
-//        FontMetrics metrics = graphicsHandler.getGraphics2D().getFontMetrics(FONT_BIG);
-//        String totalString = total.toString();
-//        int yTotal = metrics.getHeight();
-//        int xTotal = ScreenManager.getScreenWidth() - metrics.stringWidth(totalString);
-//        graphicsHandler.drawString(totalString, Math.round(xTotal), yTotal, FONT_BIG, Color.WHITE);
-//
-//        if(showLevel) {
-//            metrics = graphicsHandler.getGraphics2D().getFontMetrics(FONT_SMALL);
-//            String mapString = levels[currentLevel].toString();
-//            int yMap = yTotal + metrics.getHeight();
-//            int xMap = ScreenManager.getScreenWidth() - metrics.stringWidth(mapString);
-//            graphicsHandler.drawString(mapString,xMap, yMap, FONT_SMALL,Color.white);
-//        }
         String totalString = total.toString();
         if(totalString.length() != charsTotal) {
             FontMetrics metrics = graphicsHandler.getGraphics2D().getFontMetrics(FONT_BIG);

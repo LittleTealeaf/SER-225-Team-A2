@@ -101,7 +101,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
             case LEVEL_COMPLETED -> {
                 alternateScreen = new LevelClearedScreen();
                 alternateScreen.initialize();
-                screenTimer.setWaitTime(2500);
+                screenTimer.setWaitTime(750);
                 screenState = State.LEVEL_WIN_MESSAGE;
             }
             case LEVEL_WIN_MESSAGE -> {
