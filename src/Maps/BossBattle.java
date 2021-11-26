@@ -19,7 +19,7 @@ import java.util.ArrayList;
 public class BossBattle extends Map {
 
     public BossBattle() {
-        super("BossBattle.txt", new CommonTileset(), new Point(1, 17));
+        super("BossBattle.txt", new CommonTileset(), new Point(10, 1));
     }
 
     @Override
