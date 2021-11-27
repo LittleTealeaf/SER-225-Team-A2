@@ -14,7 +14,7 @@ public class MenuOption implements Drawable {
     private static final Color OUTLINE_COLOR = new Color(0, 0, 0);
     private static final int OUTLINE_THICKNESS = 3;
 
-    private Menu.SelectFunction selectFunction;
+    private SelectableMenu selectableMenu;
 
     private final MenuOption[] neighbors;
 
@@ -129,8 +129,8 @@ public class MenuOption implements Drawable {
 
     public void mouseMoved(Point p) {
         softSelected = contains(p);
-        if (selected != softSelected && selectFunction != null) {
-            selectFunction.select(this);
+        if (selected != softSelected && selectableMenu != null) {
+            selectableMenu.select(this);
         }
     }
 
@@ -150,7 +150,7 @@ public class MenuOption implements Drawable {
         }
     }
 
-    public void setSelectFunction(Menu.SelectFunction function) {
-        this.selectFunction = function;
+    public void setSelectFunction(SelectableMenu function) {
+        this.selectableMenu = function;
     }
 }

@@ -2,6 +2,7 @@ package Game;
 
 import Engine.GameWindow;
 import Engine.ScreenManager;
+import Maps.GameMaps;
 
 /*
  * The game starts here
@@ -11,6 +12,8 @@ import Engine.ScreenManager;
 public class Game {
 
     public static void main(String[] args) {
+        //Loads all maps before anything else happens
+        new GameMaps();
         new Game();
     }
 

@@ -13,16 +13,18 @@ public class GameTimer extends TimeParser {
     }
 
     public void start() {
-        addTime = getElapsed();
         if(!running) {
+            addTime = getElapsed();
             startTime = System.currentTimeMillis();
             running = true;
         }
     }
 
     public void stop() {
-        endTime = System.currentTimeMillis();
-        running = false;
+        if(running) {
+            endTime = System.currentTimeMillis();
+            running = false;
+        }
     }
 
     public void reset() {
@@ -34,6 +36,7 @@ public class GameTimer extends TimeParser {
         return (running ? System.currentTimeMillis() : endTime ) + addTime - startTime;
     }
 
+    @Override
     public long getTime() {
         return getElapsed();
     }

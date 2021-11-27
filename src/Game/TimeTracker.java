@@ -46,9 +46,8 @@ public class TimeTracker implements Drawable {
 
     public void setCurrentLevel(int currentLevel) {
         if(this.currentLevel != currentLevel) {
-            if(this.currentLevel == -1) {
-                total.start();
-            } else {
+            total.start();
+            if(this.currentLevel > -1) {
                 levels[this.currentLevel].stop();
                 showLevel = true;
             }
@@ -101,4 +100,6 @@ public class TimeTracker implements Drawable {
         }
 
     }
+
+
 }

@@ -119,6 +119,11 @@ public abstract class Player extends GameObject {
 
     private void updateWin() {
         if (map.getCamera().containsDraw(this)) {
+
+            for(PlayerListener listener : playerListeners) {
+                listener.onLevelFinished();
+            }
+
             facing = Facing.RIGHT;
             if (inAir) {
                 playerState = PlayerState.FALL;

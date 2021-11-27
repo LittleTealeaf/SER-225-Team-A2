@@ -1,7 +1,7 @@
 package Utils;
 
 public class TimeParser {
-    private static long MS_PER_SECOND, SECOND_PER_MINUTE, MINUTE_PER_HOUR, MS_PER_HOUR, MS_PER_MINUTE;
+    private static final long MS_PER_SECOND, SECOND_PER_MINUTE, MINUTE_PER_HOUR, MS_PER_HOUR, MS_PER_MINUTE;
 
     private long time;
 
@@ -37,7 +37,16 @@ public class TimeParser {
         this.time -= time;
     }
 
+    /**
+     * Converts the time to a readable string
+     * @return
+     */
     public String toString() {
+        /*
+        Implementation Note:
+        While yes, there is a more efficient method... I did it this way
+        Refrain from changing as the ' ' characters are important for rendering in the right spot
+         */
         long elapsed = getTime();
         long hours = elapsed / MS_PER_HOUR;
         long minutes = (elapsed %= MS_PER_HOUR) / MS_PER_MINUTE;

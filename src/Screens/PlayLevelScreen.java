@@ -13,11 +13,10 @@ import Utils.Stopwatch;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class PlayLevelScreen extends Screen implements PlayerListener {
+public class PlayLevelScreen extends Screen implements PlayerListener, Pausable {
 
     private static final Stopwatch screenTimer;
     private static final KeyLocker keyLocker;
-    private static final SpriteFont SPRITE_FONT_PAUSE;
     private static final SpriteFont[] SPRITE_FONT_INSTRUCTIONS;
     private static final Color COLOR_GREY_BACKGROUND;
     private static Map loadedMap;
@@ -28,8 +27,6 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
     static {
         screenTimer = new Stopwatch();
         keyLocker = new KeyLocker();
-
-        SPRITE_FONT_PAUSE = new SpriteFont("Pause", 350, 250, "Comic Sans", 30, Color.white);
 
         SPRITE_FONT_INSTRUCTIONS = new SpriteFont[] {
                 new SpriteFont("To JUMP: UP arrow key, or 'W', or SPACEBAR", 130, 140, "Times New Roman", 20,
@@ -81,8 +78,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
         switch (screenState) {
             case RUNNING -> {
                 if (KeyboardAction.GAME_PAUSE.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_PAUSE)) {
-                    screenState = State.PAUSE;
-                    timeTracker.stop();
+                    pause();
                 } else if (KeyboardAction.GAME_INSTRUCTIONS.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_INSTRUCTIONS)) {
                     screenState = State.INSTRUCTIONS;
                     timeTracker.stop();
@@ -96,7 +92,11 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                     screenState = State.RUNNING;
                 }
             }
-            case PAUSE,LEVEL_LOSE_MESSAGE -> alternateScreen.update();
+            case PAUSE,LEVEL_LOSE_MESSAGE,GAME_COMPLETED -> {
+                if(alternateScreen != null) {
+                    alternateScreen.update();
+                }
+            }
             case PLAYER_DEAD -> screenState = State.LEVEL_LOSE_MESSAGE;
             case LEVEL_COMPLETED -> {
                 alternateScreen = new LevelClearedScreen();
@@ -107,8 +107,8 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
             case LEVEL_WIN_MESSAGE -> {
                 alternateScreen.update();
                 if (screenTimer.isTimeUp()) {
-                    nextLevel();
                     screenState = State.RUNNING;
+                    nextLevel();
                 }
             }
         }
@@ -151,6 +151,13 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                     sprite.draw(graphicsHandler);
                 }
                 graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), COLOR_GREY_BACKGROUND);
+            }
+            case GAME_COMPLETED -> {
+                if(!(alternateScreen instanceof GameScoreScreen)) {
+                    alternateScreen = new GameScoreScreen(timeTracker);
+                    alternateScreen.initialize();
+                }
+                alternateScreen.draw(graphicsHandler);
             }
         }
         if(timeTracker != null) {
@@ -195,8 +202,14 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
             timeTracker.setCurrentLevel(index);
         } else {
             //Add the other menu
-            GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
+            System.out.println("complete game");
+            screenState = State.GAME_COMPLETED;
         }
+    }
+
+    @Override
+    public void onLevelFinished() {
+        timeTracker.stop();
     }
 
     @Override
@@ -217,6 +230,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
         GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
     }
 
+    @Override
     public void resume() {
         if (screenState == State.PAUSE || screenState == State.INSTRUCTIONS) {
             screenState = State.RUNNING;
@@ -224,14 +238,14 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
         }
     }
 
+    @Override
+    public void pause() {
+        screenState = State.PAUSE;
+        timeTracker.stop();
+    }
 
 
     public enum State {
-        RUNNING, LEVEL_COMPLETED, PLAYER_DEAD, LEVEL_WIN_MESSAGE, LEVEL_LOSE_MESSAGE, LEVEL_SELECT, PAUSE, INSTRUCTIONS, OPTIONS
-    }
-
-    private interface MapFactory {
-
-        Map generateMap();
+        RUNNING, LEVEL_COMPLETED, PLAYER_DEAD, LEVEL_WIN_MESSAGE, LEVEL_LOSE_MESSAGE, PAUSE, INSTRUCTIONS, GAME_COMPLETED
     }
 }
