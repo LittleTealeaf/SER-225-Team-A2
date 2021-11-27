@@ -4,6 +4,7 @@ import Utils.TimeParser;
 
 import java.awt.*;
 
+@Deprecated
 public class TimerElement extends SpriteFont {
 
     private TimeParser timeParser;

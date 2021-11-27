@@ -24,6 +24,9 @@ import java.util.Scanner;
 */
 
 public abstract class Map implements Drawable {
+
+    protected String name;
+
     // the tile map (map tiles that make up the entire map image)
     protected MapTile[] mapTiles;
 
@@ -64,7 +67,8 @@ public abstract class Map implements Drawable {
     // if set to false, camera will not move as player moves
     protected boolean adjustCamera = true;
 
-    public Map(String mapFileName, Tileset tileset, Point playerStartTile) {
+    public Map(String name, String mapFileName, Tileset tileset, Point playerStartTile) {
+        this.name = name;
         this.mapFileName = mapFileName;
         this.tileset = tileset;
         setupMap();
@@ -409,5 +413,13 @@ public abstract class Map implements Drawable {
 
     public int getRightBound() {
         return rightBound;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }
