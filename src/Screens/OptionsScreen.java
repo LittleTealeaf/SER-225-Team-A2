@@ -4,6 +4,7 @@ import Engine.Config;
 import Engine.GamePanel;
 import Engine.GraphicsHandler;
 import Engine.ImageLoader;
+import Game.GameState;
 import GameObject.SpriteSheet;
 import Maps.LevelSelectMap;
 import Menu.Direction;

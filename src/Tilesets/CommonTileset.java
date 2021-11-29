@@ -241,6 +241,17 @@ public class CommonTileset extends Tileset {
         mapTiles.add(floatingPlatformTile);
 
 
+        // Sand
+        Frame sandFrame = new FrameBuilder(getSubImage(4, 0), 0)
+                .withScale(tileScale)
+                .build();
+
+        MapTileBuilder sandTile = new MapTileBuilder(sandFrame)
+                .withTileType(TileType.NOT_PASSABLE);
+
+        mapTiles.add(sandTile);
+
+
         // solid floating block
         Frame solidFloatingFrame = new FrameBuilder(getSubImage(3, 5), 0)
                 .withScale(tileScale)
@@ -252,16 +263,6 @@ public class CommonTileset extends Tileset {
 
         mapTiles.add(solidFloatingTile);
 
-
-        // Sand
-        Frame sandFrame = new FrameBuilder(getSubImage(4, 0), 0)
-                .withScale(tileScale)
-                .build();
-
-        MapTileBuilder sandTile = new MapTileBuilder(sandFrame)
-                .withTileType(TileType.NOT_PASSABLE);
-
-        mapTiles.add(sandTile);
 
         return mapTiles;
     }
