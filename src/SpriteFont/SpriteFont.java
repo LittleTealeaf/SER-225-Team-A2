@@ -21,7 +21,7 @@ public class SpriteFont implements Drawable {
 	/**
 	 * Whether to automatically multi-line the text if `\n` is present
 	 */
-	protected boolean multiLine, containsNewLines;
+	protected boolean multiLine = false, containsNewLines;
 
 	public SpriteFont(String text, float x, float y, String fontName, int fontSize, Color color) {
 		this(text,x,y,new Font(fontName,Font.PLAIN,fontSize),color);
