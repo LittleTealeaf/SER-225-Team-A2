@@ -98,7 +98,7 @@ public class Dog extends Enemy {
             // then the bone is actually shot out
         } else if (dogState == dogState.SHOOT) {
             if (previousdogState == dogState.WALK) {
-                shootTimer.setWaitTime(1000);
+                shootTimer.setWaitTime(500);
                 currentAnimationName = facingDirection == Direction.RIGHT ? "SHOOT_RIGHT" : "SHOOT_LEFT";
             } else if (shootTimer.isTimeUp()) {
 
@@ -151,44 +151,44 @@ public class Dog extends Enemy {
             put("WALK_LEFT", new Frame[]{
                     new FrameBuilder(spriteSheet.getSprite(0, 0), 200)
                             .withScale(2)
-                            .withBounds(0, 0, 30, 13)
+                            .withBounds(-5, 0, 35, 13)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(0, 1), 200)
                             .withScale(2)
-                            .withBounds(0, 0, 30, 13)
+                            .withBounds(-5, 0, 35, 13)
                             .build(),
                     new FrameBuilder(spriteSheet.getSprite(0, 2), 200)
                             .withScale(2)
-                            .withBounds(0, 0, 30, 13)
+                            .withBounds(-5, 0, 35, 13)
                             .build()
             });
 
             put("WALK_RIGHT", new Frame[]{
             		new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
 		                    .withScale(2)
-		                    .withBounds(0, 0, 30, 13)
+                            .withBounds(0, 0, 35, 13)
 		                    .build(),
 		            new FrameBuilder(spriteSheet.getSprite(1, 1), 200)
 		                    .withScale(2)
-		                    .withBounds(0, 0, 30, 13)
+                            .withBounds(0, 0, 35, 13)
 		                    .build(),
 		            new FrameBuilder(spriteSheet.getSprite(1, 2), 200)
 		                    .withScale(2)
-		                    .withBounds(0, 0, 30, 13)
+                            .withBounds(0, 0, 35, 13)
 		                    .build()
             });
 
             put("SHOOT_LEFT", new Frame[]{
                     new FrameBuilder(spriteSheet.getSprite(0, 2), 0)
                             .withScale(2)
-                            .withBounds(30, 0, 30, 13)
+                            .withBounds(-5, 0, 35, 13)
                             .build(),
             });
 
             put("SHOOT_RIGHT", new Frame[]{
                     new FrameBuilder(spriteSheet.getSprite(1, 2), 0)
                             .withScale(2)
-                            .withBounds(0, 0, 30, 13)
+                            .withBounds(0, 0, 35, 13)
                             .build(),
             });
         }};
