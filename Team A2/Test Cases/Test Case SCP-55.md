@@ -10,14 +10,14 @@
 
 |Step | Action | Expected Result | Pass/Fail     |
 |:---:| :---        |    :----  | :---: |
-|1|Run the game|The main menu displays successfully||
-|2|Press space on "Options"|The options menu should load||
-|3|Click on orange and then hover over blue or green|The orange cat should be displayed||
-|4|Click on blue and then hover over orange or green|The blue cat should be displayed||
-|5|Click on green and then hover over blue or orange|The green cat should be displayed||
+|1|Run the game|The main menu displays successfully|Pass|
+|2|Press space on "Options"|The options menu should load|Pass|
+|3|Click on orange and then hover over blue or green|The orange cat should be displayed|Pass|
+|4|Click on blue and then hover over orange or green|The blue cat should be displayed|Pass|
+|5|Click on green and then hover over blue or orange|The green cat should be displayed|Pass|
 
 
 ### Test Completion
-- **Tester**: 
-- **Date of Test**: 
-- **Test Result**: 
+- **Tester**: Thomas Kwashnak
+- **Date of Test**: 11/29/2021 10:17 AM
+- **Test Result**: Passed
