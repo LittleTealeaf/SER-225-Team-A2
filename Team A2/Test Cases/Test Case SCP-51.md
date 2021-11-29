@@ -2,7 +2,7 @@
 | TEST CASE ID | SCP-51|
 | :--- | :--- |
 | Owner of Test | Ty Hutchison|
-| Test Name | Update Instructions |
+| Test Name | Implement Quit Option |
 | Date of Last Revision | 11/29/2021 |
 | Test Objective | Add Quit option in main menu |
 
