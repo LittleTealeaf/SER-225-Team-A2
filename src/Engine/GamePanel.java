@@ -70,7 +70,7 @@ public class GamePanel extends JPanel {
 		screenManager = new ScreenManager();
 		coordinator = c1;
 
-		difficultyHolder = new DifficultyHolder(0);
+		difficultyHolder = new DifficultyHolder(3);
 	
 		
 
