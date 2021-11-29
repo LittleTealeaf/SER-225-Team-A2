@@ -28,7 +28,7 @@ Functionality of `Player.java` tested:
 |6| Tap `Space/W/Up Arrow` | The player short-jumps. The player then falls back down after the button is let go and lands on the ground||
 |7|Hold `Space/W/Up Arrow` | The player high-jumps. The player falls back down after a certain height and and falls back down to the ground||
 |8|Hold `Shift` and repeat steps 3-5|The player moves in the same ways as stated above, but faster||
-|9|Hold `ctrl/W/Down Arrow`|The player crouches||
+|9|Hold `ctrl/S/Down Arrow`|The player crouches||
 |10|Tap `A/Left Arrow`, then hit `Space/W/Up Arrow` quickly followed by `D/Right Arrow`|The player faces left, then switches to facing right while in the air||
 |11|Tap `D/Right Arrow`, then hit `Space/W/Up Arrow` quickly followed by `A/Left Arrow`|The player faces right, then switches to facing left while in the air||
 |12|Tap `A/Left Arrow`, then tap `e` (*Attack Button*)|The player faces to the left, and attacks, sending a projectile to the left||
