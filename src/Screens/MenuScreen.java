@@ -20,6 +20,8 @@ public class MenuScreen extends Menu {
                 }, {
                         new MenuOption("INSTRUCTIONS", 80, 300, () -> GamePanel.getScreenCoordinator().setGameState(GameState.INSTRUCTIONS)),
                         new MenuOption("OPTIONS", 350, 300, () -> GamePanel.getScreenCoordinator().setGameState(GameState.OPTIONS))
+                }, {
+                        new MenuOption("QUIT", 80, 400, () -> System.exit(0))
                 }
         });
         setBackground(new TitleScreenMap());

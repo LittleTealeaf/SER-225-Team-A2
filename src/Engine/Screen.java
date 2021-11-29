@@ -1,8 +1,7 @@
 package Engine;
 
-
+import java.awt.Graphics;
 import Level.Map;
-
 import java.awt.event.MouseEvent;
 
 // Base Screen class

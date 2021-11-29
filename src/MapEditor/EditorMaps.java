@@ -1,6 +1,7 @@
 package MapEditor;
 
 import Level.Map;
+import Maps.BossBattle;
 import Maps.LevelSelectMap;
 import Maps.TestMap;
 import Maps.TestMap2;
@@ -11,7 +12,6 @@ import Maps.TestMap6;
 import Maps.TestMap7;
 import Maps.TestTutorial;
 import Maps.TitleScreenMap;
-
 import java.util.ArrayList;
 
 public class EditorMaps {
@@ -27,6 +27,7 @@ public class EditorMaps {
             add("TestMap5");
             add("TestMap6");
             add("TestMap7");
+            add("BossBattle");
         }};
     }
 
@@ -52,6 +53,8 @@ public class EditorMaps {
             	return new TestMap7();
             case "LevelSelect":
             	return new LevelSelectMap();
+            case "BossBattle":
+            	return new BossBattle();
             default:
                 throw new RuntimeException("Unrecognized map name");
         }
