@@ -19,7 +19,7 @@ Functionality of `Player.java` tested:
 
 |Step | Action | Expected Result | Pass/Fail     |
 |:---:| :---        |    :----  | :---: |
-|0a| **Evaluated on Each Step:** | Player Animation changes as expected |`N/A`|
+|0a| **Evaluated on Each Step:** | Player Animation changes as expected (*If a step does not pass this result, fail that step and indicate "Failed Step 0a"*) |`N/A`|
 |1| Run the game| The game successfully opens ||
 |2| Click "*Play*" |The tutorial level is entered, game does not crash. 3 hearts are displayed on the top of the screen.||
 |3| Hold `A/Left Arrow` |The player moves to the left. The player does not fall off the map and is instead stopped at the edge||
@@ -46,9 +46,6 @@ Functionality of `Player.java` tested:
 |24|Hit Escape, go back to main menu|The main menu is displayed||
 |25|Hit "Play Game"|The first level is loaded||
 |26|Play all levels of the game|Each level is completable||
-
-
-
 
 ### Test Completion
 - **Tester**: [TESTER NAME]
