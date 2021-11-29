@@ -56,7 +56,7 @@ public class GamePanel extends JPanel {
 
 		this.setSize(Config.WIDTH, Config.HEIGHT);
 		// attaches Keyboard class's keyListener to this JPanel
-		this.addKeyListener(Keyboard.getKeyListener());
+		this.addKeyListener(new Keyboard());
 
 		graphicsHandler = new GraphicsHandler();
 

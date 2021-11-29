@@ -16,7 +16,7 @@ public enum KeyboardAction {
     GAME_JUMP(Key.W,Key.SPACE,Key.UP),
     GAME_INSTRUCTIONS(Key.X),
     GAME_INTERACT(Key.SPACE),
-    GAME_CROUCH(Key.S,Key.DOWN),
+    GAME_CROUCH(Key.S,Key.DOWN,Key.CTRL),
     GAME_ATTACK(Key.E),
     GAME_SPRINT(Key.SHIFT),
     GAME_RESPAWN(Key.SPACE);
