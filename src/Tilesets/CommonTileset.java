@@ -232,6 +232,7 @@ public class CommonTileset extends Tileset {
         // solid floating block
         Frame solidFloatingFrame = new FrameBuilder(getSubImage(3, 5), 0)
                 .withScale(tileScale)
+                .withBounds(0, 6, 16, 3)
                 .build();
 
         MapTileBuilder solidFloatingTile = new MapTileBuilder(solidFloatingFrame)
