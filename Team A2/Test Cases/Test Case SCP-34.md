@@ -10,13 +10,13 @@
 
 |Step | Action | Expected Result | Pass/Fail     |
 |:---:| :---        |    :----  | :---: |
-|1| Run the game | The game successfully opens ||
-|2| Enter level 1 | The User will enter level 1 | |
-|3| Find new map tile next to water tile | User will find the new map tile, sand, next to water tiles in game | |
-|4| User will exit the game | The User will properly exit the game | |
+|1| Run the game | The game successfully opens |Passed|
+|2| Enter level 1 | The User will enter level 1 |Passed|
+|3| Find new map tile next to water tile | User will find the new map tile, sand, next to water tiles in game |Passed|
+|4| User will exit the game | The User will properly exit the game |Passed|
 
 
 ### Test Completion
-- **Tester**: [TESTER NAME]
-- **Date of Test**: DATE OF TEST
-- **Test Result**: TEST RESULT
+- **Tester**: Thomas Kwashnak
+- **Date of Test**: 11/29/2021
+- **Test Result**: Passed
