@@ -2,7 +2,7 @@
 | TEST CASE ID | SCP-47|
 | :--- | :--- |
 | Owner of Test | Ty Hutchison|
-| Test Name | Update Instructions |
+| Test Name | Add Solid Floating Block |
 | Date of Last Revision | 11/29/2021 |
 | Test Objective | Add Solid Floating block for user to use |
 

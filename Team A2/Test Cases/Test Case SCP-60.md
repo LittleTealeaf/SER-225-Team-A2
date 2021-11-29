@@ -2,9 +2,9 @@
 | TEST CASE ID | SCP-60|
 | :--- | :--- |
 | Owner of Test | Ty Hutchison|
-| Test Name | Update Instructions |
+| Test Name | Fix back-to-menu not working |
 | Date of Last Revision | 11/29/2021 |
-| Test Objective | Add Solid Floating block for user to use |
+| Test Objective | Fix bug preventing back to menu option not working in options menu |
 
 ### Procedure
 
