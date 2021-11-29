@@ -3,8 +3,10 @@ package Screens;
 import Engine.Drawable;
 import Engine.GraphicsHandler;
 import Game.TimeTracker;
+import Maps.GameMaps;
 import Maps.TitleScreenMap;
 import Menu.Menu;
+import SpriteFont.SpriteFont;
 import Utils.GameTimer;
 
 import java.awt.*;
@@ -21,10 +23,36 @@ public class GameScoreScreen extends Menu {
     }
 
     private TimeTracker timeTracker;
+    private SpriteFont levels;
 
     public GameScoreScreen(TimeTracker timeTracker) {
         this.timeTracker = timeTracker;
         setBackground(new TitleScreenMap());
+        System.out.println(getLevels(timeTracker));
+    }
+
+    private String getLevels(TimeTracker timeTracker) {
+        StringBuilder stringBuilder = new StringBuilder();
+        GameTimer[] gameTimers = timeTracker.getLevels();
+
+        for(int i = 0; i < GameMaps.MAPS.length; i++) {
+            if(gameTimers[i].getElapsed() > 0) {
+                if(!stringBuilder.isEmpty()) {
+                    stringBuilder.append('\n');
+                }
+                stringBuilder.append(GameMaps.MAPS[i].getName()).append(": ").append(gameTimers[i].toString());
+            }
+        }
+
+        return stringBuilder.toString();
+    }
+
+    private GameTimer getTotalTimes(TimeTracker timeTracker) {
+        GameTimer totalTime = new GameTimer();
+        for(GameTimer gameTimer : timeTracker.getLevels()) {
+            totalTime.addTime(gameTimer.getElapsed());
+        }
+        return totalTime;
     }
 
     @Deprecated //Maybe?

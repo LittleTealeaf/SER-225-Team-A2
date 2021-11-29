@@ -101,5 +101,7 @@ public class TimeTracker implements Drawable {
 
     }
 
-
+    public GameTimer[] getLevels() {
+        return levels;
+    }
 }

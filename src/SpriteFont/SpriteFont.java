@@ -4,8 +4,11 @@ import Engine.Drawable;
 import Engine.GraphicsHandler;
 
 import java.awt.*;
+import java.util.Arrays;
 
 // This class represents a sprite font, which is graphic text (text drawn to the screen as if it were an image)
+
+
 public class SpriteFont implements Drawable {
 	protected String text;
 	protected Font font;
@@ -15,6 +18,10 @@ public class SpriteFont implements Drawable {
 	protected Color color;
 	protected Color outlineColor;
 	protected float outlineThickness = 1f;
+	/**
+	 * Whether to automatically multi-line the text if `\n` is present
+	 */
+	protected boolean multiLine, containsNewLines;
 
 	public SpriteFont(String text, float x, float y, String fontName, int fontSize, Color color) {
 		this(text,x,y,new Font(fontName,Font.PLAIN,fontSize),color);
@@ -44,6 +51,11 @@ public class SpriteFont implements Drawable {
 	public void setText(String text) {
 		this.text = text;
 		updateDimensions();
+		updateContainsNewLines();
+	}
+
+	public void updateContainsNewLines() {
+		containsNewLines = text.contains("\n");
 	}
 
 	public void setFontName(String fontName) {
@@ -118,10 +130,14 @@ public class SpriteFont implements Drawable {
 
 
 	public void draw(GraphicsHandler graphicsHandler) {
-		if (outlineColor != null && !outlineColor.equals(color)) {
-			graphicsHandler.drawStringWithOutline(getText(), Math.round(x), Math.round(y), font, color, outlineColor, outlineThickness);
+		if(multiLine && containsNewLines) {
+			drawWithParsedNewLines(graphicsHandler);
 		} else {
-			graphicsHandler.drawString(getText(), Math.round(x), Math.round(y), font, color);
+			if (outlineColor != null && !outlineColor.equals(color)) {
+				graphicsHandler.drawStringWithOutline(getText(), Math.round(x), Math.round(y), font, color, outlineColor, outlineThickness);
+			} else {
+				graphicsHandler.drawString(getText(), Math.round(x), Math.round(y), font, color);
+			}
 		}
 	}
 
@@ -154,6 +170,14 @@ public class SpriteFont implements Drawable {
 	public void updateDimensions() {
 		width = -1;
 		height = -1;
+	}
+
+	public void setMultiLine(boolean multiLine) {
+		this.multiLine = multiLine;
+	}
+
+	public boolean isMultiLine() {
+		return multiLine;
 	}
 
 	public boolean contains(Point point) {
