@@ -176,7 +176,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
      *
      * @param index index of map to load
      */
-    private void loadMap(int index) {
+    protected void loadMap(int index) {
         if(index < MAPS.length) {
             currentMap = index;
             //Load map using the MapFactory
