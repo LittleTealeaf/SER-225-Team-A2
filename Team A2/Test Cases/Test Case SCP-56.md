@@ -7,6 +7,7 @@
 | Test Objective | Ensure that the game runs consistently through multiple distributions |
 | Test Notes| Due to the nature of this test case, multiple runs of the test must be conducted on various machines of different make and models. Measurements will be taken using a recording software, and should not be expected to be perfect|
 |Software Requirement|**Screen recording software:** Needs to be able to record the screen such that the tester can go back and accurately measure the time between events. *Suggested:* OBS|
+|Prerequisites|Test Case SCP-57 must be completed prior to this merge|
 
 
 ### Procedure
@@ -32,6 +33,7 @@ Instances of tests are listed in table below (template provided). Measurements l
 |Date|Name|Device Information | Measure 1|Measure 2|Measure 3|Measure 5|Measure 4|Pass/Fail|
 |:---:|:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|
 |[DATE]|[TESTER_NAME]|[CONFIG]|[MEASURE 1]|[MEASURE 2]|[MEASURE 3]|[MEASURE 4]|[MEASURE 5]|[PASS/FAIL]|
+|11/29/2021 10:41 AM|Thomas Kwashnak|Kubuntu 21.10 Laptop, Intel i7 CPU, NVIDIA MX330 GPU|\~ 2 seconds|\~1 second|\~1 second|\~1-2 seconds|~3 seconds|Pass. Game runs at expected speed|
 
 [comment]: <> (Add test rows to end here ^^)
 
