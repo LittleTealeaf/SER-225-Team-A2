@@ -30,7 +30,7 @@ public class OptionsScreen extends Menu {
                 new MenuOption("Blue",500,300, () -> Config.playerAvatar = Avatar.CAT_BLUE),
                 new MenuOption("Green",630,300, () -> Config.playerAvatar = Avatar.CAT_GREEN)
         },{
-                    new MenuOption("Hit [Escape] to go back to main menu",100,450)
+                    new MenuOption("Hit [Escape] to go back to main menu",100,450, () -> GamePanel.getScreenCoordinator().setGameState(GameState.MENU))
                 }
         };
         setMenuItemsAsGrid(items);
