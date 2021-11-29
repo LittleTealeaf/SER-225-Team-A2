@@ -185,7 +185,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
      *
      * @param index index of map to load
      */
-    private void loadMap(int index) {
+    public void loadMap(int index) {
         if(index < GameMaps.MAPS.length) {
             currentMap = index;
             //Load map using the MapFactory

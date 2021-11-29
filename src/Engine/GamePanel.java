@@ -25,6 +25,7 @@ public class GamePanel extends JPanel implements Updatable {
 	protected static GameWindow gameWindow;
 	private static ScreenCoordinator coordinator;
 	public static Clip clip;
+	private static DifficultyHolder difficultyHolder;
 	private final JLabel health;
 	private final GameThread gameThread;
 
@@ -49,9 +50,15 @@ public class GamePanel extends JPanel implements Updatable {
 		screenManager = new ScreenManager();
 		coordinator = c1;
 
+		difficultyHolder = new DifficultyHolder(3);
 		gameThread = new GameThread(this::repaint, this::update);
 	}
 
+	public static DifficultyHolder getDifficultyHolder()
+	{
+		return difficultyHolder;
+	}
+	
 	public static ScreenCoordinator getScreenCoordinator() {
 		return coordinator;
 	}
@@ -158,7 +165,7 @@ public class GamePanel extends JPanel implements Updatable {
 		}
 		
 		if(coordinator.getGameState() == GameState.MENU) {
-			Player.PLAYER_HEALTH = 3;
+			Player.PLAYER_HEALTH = difficultyHolder.getDifficulty();
 		}
 	}
 

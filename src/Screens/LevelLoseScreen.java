@@ -1,6 +1,7 @@
 package Screens;
 
 import Engine.Drawable;
+import Engine.GamePanel;
 import Engine.KeyboardAction;
 import Level.Player;
 import Level.PlayerAttack;
@@ -25,8 +26,16 @@ public class LevelLoseScreen extends Menu {
     public void update() {
         super.update();
         if (KeyboardAction.GAME_RESPAWN.isDown()) {
-            playLevelScreen.resetLevel();
-            Player.PLAYER_HEALTH = 3;
+        	// if the player is in hardcore difficulty restart them at the first level otherwise restart them on the current level
+        	if (GamePanel.getDifficultyHolder().getDifficulty() == 1)
+        	{
+        		playLevelScreen.loadMap(0);
+        	}
+        	else
+        	{
+        		playLevelScreen.resetLevel();
+        	}
+            Player.PLAYER_HEALTH = GamePanel.getDifficultyHolder().getDifficulty();
             PlayerAttack.dogHealth = 8;
         }
     }
