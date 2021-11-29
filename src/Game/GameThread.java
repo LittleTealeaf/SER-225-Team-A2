@@ -63,15 +63,14 @@ public class GameThread implements Runnable {
             currentTime = System.currentTimeMillis();
 
             //Repeat until the update time is after (in the future) current time
-            while(currentTime > nextUpdateTime) {
-                update.run();
-                nextUpdateTime += UPDATE_FIXED_MS;
-
+            if(currentTime > nextUpdateTime) {
+                do {
+                    update.run();
+                    nextUpdateTime += UPDATE_FIXED_MS;
+                } while(currentTime > nextUpdateTime);
                 //Run a render
                 render.run();
             }
-
-
         }
         //Reset running once it's set to false
         running = true;
