@@ -3,20 +3,30 @@ package Screens;
 import Engine.Config;
 import Engine.GamePanel;
 import Engine.GraphicsHandler;
-import Game.GameState;
+import Engine.ImageLoader;
+import GameObject.SpriteSheet;
 import Maps.LevelSelectMap;
 import Menu.Direction;
 import Menu.Menu;
 import Menu.MenuOption;
 import Players.Avatar;
+import Players.Cat;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public class OptionsScreen extends Menu {
+	private MenuOption[][] items;
+	private BufferedImage cat;
+	public int catColor = 0;
 
     public OptionsScreen() {
         setBackground(new LevelSelectMap());
-        MenuOption[][] items = new MenuOption[][]{
+        items = new MenuOption[][]{
                 {
 
                         new MenuOption("Volume Control:", 75, 150),
@@ -30,10 +40,11 @@ public class OptionsScreen extends Menu {
                 new MenuOption("Blue",500,300, () -> Config.playerAvatar = Avatar.CAT_BLUE),
                 new MenuOption("Green",630,300, () -> Config.playerAvatar = Avatar.CAT_GREEN)
         },{
-                    new MenuOption("Hit [Escape] to go back to main menu",100,450)
+                    new MenuOption("Hit [Escape] to go back to main menu",100,450, () -> GamePanel.getScreenCoordinator().setGameState(GameState.MENU))
                 }
         };
         setMenuItemsAsGrid(items);
+        
 
         //Sets the smaller fonts
         Font smallerFont = new Font("Comic Sans", Font.PLAIN, 24);
@@ -45,10 +56,28 @@ public class OptionsScreen extends Menu {
                 }
             }
         }
+        items[1][1].setSelected(true);
     }
-
+    
     public void draw(GraphicsHandler handler) {
-        super.draw(handler);
-        //        handler.drawImage(new BufferedImage());
+    	super.draw(handler);
+		if(Config.playerAvatar == Avatar.CAT_ORANGE) {
+			SpriteSheet orange = new SpriteSheet(ImageLoader.load("Cat.png"), 24, 24);
+			cat = orange.getSprite(0, 0);
+    		handler.drawImage(cat, 210, 225, 100, 100);
+        }
+		else if(Config.playerAvatar == Avatar.CAT_BLUE) {
+			SpriteSheet blue = new SpriteSheet(ImageLoader.load("CatBlue.png"), 24, 24);
+			cat = blue.getSprite(0, 0);
+        	handler.drawImage(cat, 210, 225, 100, 100);
+        }
+		else if(Config.playerAvatar == Avatar.CAT_GREEN) {
+			SpriteSheet green = new SpriteSheet(ImageLoader.load("CatGreen.png"), 24, 24);
+			cat = green.getSprite(0, 0);
+        	handler.drawImage(cat, 210, 225, 100, 100);
+        }
+		else {
+    		handler.drawImage(cat, 210, 225, 100, 100);
+		}
     }
 }

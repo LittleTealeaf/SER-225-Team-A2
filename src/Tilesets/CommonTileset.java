@@ -229,6 +229,18 @@ public class CommonTileset extends Tileset {
 
         mapTiles.add(lethalSpikeTile);
 
+        // middle branch
+        Frame floatingPlatformFrame = new FrameBuilder(getSubImage(3, 4), 0)
+                .withScale(tileScale)
+                .withBounds(0, 6, 16, 4)
+                .build();
+
+        MapTileBuilder floatingPlatformTile = new MapTileBuilder(floatingPlatformFrame)
+                .withTileType(TileType.JUMP_THROUGH_PLATFORM);
+
+        mapTiles.add(floatingPlatformTile);
+
+
         // solid floating block
         Frame solidFloatingFrame = new FrameBuilder(getSubImage(3, 5), 0)
                 .withScale(tileScale)
