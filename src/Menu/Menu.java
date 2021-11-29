@@ -7,8 +7,9 @@ import Utils.Stopwatch;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
-public abstract class Menu extends Screen {
+public abstract class Menu extends Screen implements SelectableMenu {
 
     private final Stopwatch keyTimer = new Stopwatch();
     private MenuOption[] menuOptions;
@@ -174,21 +175,22 @@ public abstract class Menu extends Screen {
             }
         }
 
-        SelectFunction function = (newSelection) -> {
-            selectedItem.setSelected(false);
-            newSelection.setSelected(true);
-            selectedItem = newSelection;
-        };
-
         menuOptions = new MenuOption[count];
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 if (grid[i][j] != null) {
                     menuOptions[menuOptions.length - (count--)] = grid[i][j];
-                    grid[i][j].setSelectFunction(function);
+                    grid[i][j].setSelectFunction(this);
                 }
             }
         }
+    }
+
+    @Override
+    public void select(MenuOption menuOption) {
+        selectedItem.setSelected(false);
+        menuOption.setSelected(true);
+        selectedItem = menuOption;
     }
 
     protected void setBackground(Map background) {
@@ -199,8 +201,10 @@ public abstract class Menu extends Screen {
         this.drawables = drawables;
     }
 
-    public interface SelectFunction {
-
-        void select(MenuOption item);
+    protected void setDrawables(List<Drawable> drawables) {
+        this.drawables = new Drawable[drawables.size()];
+        for(int i = 0; i < this.drawables.length; i++) {
+            this.drawables[i] = drawables.get(i);
+        }
     }
 }

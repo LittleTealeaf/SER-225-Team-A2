@@ -8,7 +8,7 @@ import Utils.Point;
 public class LevelSelectMap extends Map {
 
     public LevelSelectMap() {
-        super("level_select_map.txt", new CommonTileset(), new Point(5, 9));
+        super("","level_select_map.txt", new CommonTileset(), new Point(5, 9));
     }
 
 }

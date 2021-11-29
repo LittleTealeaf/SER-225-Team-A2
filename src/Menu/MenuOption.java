@@ -1,11 +1,12 @@
 package Menu;
 
+import Engine.Drawable;
 import Engine.GraphicsHandler;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class MenuOption {
+public class MenuOption implements Drawable {
 
     private static final Font DEFAULT_MENU_FONT = new Font("Comic sans", Font.PLAIN, 30);
     private static final Color DEFAULT_COLOR = new Color(49, 207, 240);
@@ -13,7 +14,7 @@ public class MenuOption {
     private static final Color OUTLINE_COLOR = new Color(0, 0, 0);
     private static final int OUTLINE_THICKNESS = 3;
 
-    private Menu.SelectFunction selectFunction;
+    private SelectableMenu selectableMenu;
 
     private final MenuOption[] neighbors;
 
@@ -128,8 +129,8 @@ public class MenuOption {
 
     public void mouseMoved(Point p) {
         softSelected = contains(p);
-        if (selected != softSelected && selectFunction != null) {
-            selectFunction.select(this);
+        if (selected != softSelected && selectableMenu != null) {
+            selectableMenu.select(this);
         }
     }
 
@@ -149,7 +150,7 @@ public class MenuOption {
         }
     }
 
-    public void setSelectFunction(Menu.SelectFunction function) {
-        this.selectFunction = function;
+    public void setSelectFunction(SelectableMenu function) {
+        this.selectableMenu = function;
     }
 }

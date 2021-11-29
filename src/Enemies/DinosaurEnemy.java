@@ -8,7 +8,6 @@ import GameObject.SpriteSheet;
 import Level.Enemy;
 import Level.Player;
 import Projectiles.Fireball;
-import Utils.AirGroundState;
 import Utils.Direction;
 import Utils.Point;
 import Utils.Stopwatch;
@@ -28,7 +27,7 @@ public class DinosaurEnemy extends Enemy {
     protected float movementSpeed = 1f;
     private Direction startFacingDirection;
     protected Direction facingDirection;
-    protected AirGroundState airGroundState;
+    protected boolean isInAir;
 
     // timer is used to determine when a fireball is to be shot out
     protected Stopwatch shootTimer = new Stopwatch();
@@ -56,7 +55,7 @@ public class DinosaurEnemy extends Enemy {
         } else if (facingDirection == Direction.LEFT) {
             currentAnimationName = "WALK_LEFT";
         }
-        airGroundState = AirGroundState.GROUND;
+        isInAir = false;
 
         // every 2 seconds, the fireball will be shot out
         shootTimer.setWaitTime(2000);

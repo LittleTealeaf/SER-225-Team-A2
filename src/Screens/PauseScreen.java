@@ -21,18 +21,18 @@ public class PauseScreen extends Menu {
         PAUSE_INSTRUCTIONS = new SpriteFont("SOMETHING SOMETHING ", 350, 250, "Comic Sans", 30, Color.white);
     }
 
-    private final PlayLevelScreen playLevelScreen;
+    private final Pausable parent;
     private boolean menuEscape;
 
-    public PauseScreen(Map map, Player player, PlayLevelScreen playLevelScreen) {
-        this.playLevelScreen = playLevelScreen;
+    public PauseScreen(Map map, Player player, Pausable parent) {
+        this.parent = parent;
         menuEscape = false;
         setDrawables(new Drawable[]{
                 player, map
         });
         setMenuItemsAsGrid(new MenuOption[][]{
                 {
-                        new MenuOption("Return to Game", 100, 100, () -> this.playLevelScreen.resume())
+                        new MenuOption("Return to Game", 100, 100, this.parent::resume)
                 }, {
                         new MenuOption("Back to Menu", 100, 200, () -> GamePanel.getScreenCoordinator().setGameState(GameState.MENU))
                 }
@@ -45,7 +45,7 @@ public class PauseScreen extends Menu {
     public void update() {
         updateMenu();
         if (menuEscape && KeyboardAction.GAME_PAUSE.isDown()) {
-            playLevelScreen.resume();
+            parent.resume();
         }
         if (!KeyboardAction.GAME_PAUSE.isDown()) {
             menuEscape = true;

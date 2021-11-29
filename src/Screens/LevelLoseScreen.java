@@ -35,7 +35,7 @@ public class LevelLoseScreen extends Menu {
         	{
         		playLevelScreen.resetLevel();
         	}
-            Player.playerHealth = GamePanel.getDifficultyHolder().getDifficulty();
+            Player.PLAYER_HEALTH = GamePanel.getDifficultyHolder().getDifficulty();
             PlayerAttack.dogHealth = 8;
         }
     }
