@@ -53,37 +53,56 @@ public class TimeParser {
         long seconds = (elapsed %= MS_PER_MINUTE) / MS_PER_SECOND;
         elapsed %= MS_PER_SECOND;
 
-        char[] chs = new char[hours > 0 ? 11 : minutes > 0 ? 8 : 5];
+        StringBuilder stringBuilder = new StringBuilder();
 
-        //milliseconds
-        chs[chs.length - 3] = '.';
-        chs[chs.length - 2] = (char) ('0' + (elapsed / 100));
-        chs[chs.length - 1] = (char) ('0' + (elapsed / 10) % 10);
-        //seconds
-        chs[chs.length - 5] = (char) ('0' + (seconds / 10));
-        if(minutes == 0 && hours == 0 && chs[chs.length - 5] == '0') {
-            chs[chs.length - 5] = ' ';
+        /*
+        TODO clean / optimize
+         */
+
+        if(hours > 0) {
+            stringBuilder.append(hours).append(':').append((char) ('0' + minutes / 10)).append((char) ('0' + minutes % 10)).append(':');
+            stringBuilder.append((char) ('0' + seconds / 10));
+        } else if(minutes > 0) {
+            stringBuilder.append((char) ('0' + minutes / 10)).append((char) ('0' + minutes % 10)).append(':');
+            stringBuilder.append((char) ('0' + seconds / 10));
+        } else if(seconds > 9) {
+            stringBuilder.append((char) ('0' + seconds / 10));
         }
-        chs[chs.length - 4] = (char) ('0' + (seconds % 10));
+        stringBuilder.append((char) ('0' + seconds % 10)).append('.');
+        stringBuilder.append((char) ('0' + elapsed / 100)).append((char) ('0' + (elapsed / 10) % 10));
 
-        if(minutes > 0 || hours > 0) {
-            chs[chs.length - 6] = ':';
-            chs[chs.length - 7] = (char) ('0' + (minutes % 10));
-            chs[chs.length - 8] = (char) ('0' + (minutes / 10));
-            if(chs[chs.length - 8] == '0' && hours == 0) {
-                chs[chs.length - 8] = ' ';
-            }
-
-            if(hours > 0) {
-                chs[0] = (char) ('0' + (hours / 10) % 10);
-                if(chs[0] == '0') {
-                    chs[0] = ' ';
-                }
-                chs[1] = (char) ('0' + hours % 10);
-                chs[2] = ':';
-            }
-        }
-
-        return new String(chs);
+//        char[] chs = new char[hours > 0 ? 11 : minutes > 0 ? 8 : 5];
+//
+//        //milliseconds
+//        chs[chs.length - 3] = '.';
+//        chs[chs.length - 2] = (char) ('0' + (elapsed / 100));
+//        chs[chs.length - 1] = (char) ('0' + (elapsed / 10) % 10);
+//        //seconds
+//        chs[chs.length - 5] = (char) ('0' + (seconds / 10));
+//        if(minutes == 0 && hours == 0 && chs[chs.length - 5] == '0') {
+//            chs[chs.length - 5] = ' ';
+//        }
+//        chs[chs.length - 4] = (char) ('0' + (seconds % 10));
+//
+//        if(minutes > 0 || hours > 0) {
+//            chs[chs.length - 6] = ':';
+//            chs[chs.length - 7] = (char) ('0' + (minutes % 10));
+//            chs[chs.length - 8] = (char) ('0' + (minutes / 10));
+//            if(chs[chs.length - 8] == '0' && hours == 0) {
+//                chs[chs.length - 8] = ' ';
+//            }
+//
+//            if(hours > 0) {
+//                chs[0] = (char) ('0' + (hours / 10) % 10);
+//                if(chs[0] == '0') {
+//                    chs[0] = ' ';
+//                }
+//                chs[1] = (char) ('0' + hours % 10);
+//                chs[2] = ':';
+//            }
+//        }
+//
+//        return new String(chs);
+        return stringBuilder.toString();
     }
 }

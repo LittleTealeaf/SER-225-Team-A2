@@ -88,6 +88,7 @@ public class TimeTracker implements Drawable {
         }
         graphicsHandler.drawString(totalString, xTotal, yTotal, FONT_BIG, Color.white);
 
+        
         if(showLevel) {
             String mapString = levels[currentLevel].toString();
             if(mapString.length() != charsMap) {
