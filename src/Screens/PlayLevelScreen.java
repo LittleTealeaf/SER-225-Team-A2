@@ -209,7 +209,10 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
 
     @Override
     public void onLevelFinished() {
-        timeTracker.stop();
+        //Only complete on final level
+        if(currentMap == GameMaps.MAPS.length - 1) {
+            timeTracker.stop();
+        }
     }
 
     @Override
