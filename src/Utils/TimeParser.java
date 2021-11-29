@@ -60,10 +60,16 @@ public class TimeParser {
          */
 
         if(hours > 0) {
-            stringBuilder.append(hours).append(':').append((char) ('0' + minutes / 10)).append((char) ('0' + minutes % 10)).append(':');
+            if(hours > 9) {
+                stringBuilder.append((char) ('0' + hours / 10));
+            }
+            stringBuilder.append((char) ('0' + hours % 10)).append(':').append((char) ('0' + minutes / 10)).append((char) ('0' + minutes % 10)).append(':');
             stringBuilder.append((char) ('0' + seconds / 10));
         } else if(minutes > 0) {
-            stringBuilder.append((char) ('0' + minutes / 10)).append((char) ('0' + minutes % 10)).append(':');
+            if(minutes > 9) {
+                stringBuilder.append((char) ('0' + minutes / 10));
+            }
+            stringBuilder.append((char) ('0' + minutes % 10)).append(':');
             stringBuilder.append((char) ('0' + seconds / 10));
         } else if(seconds > 9) {
             stringBuilder.append((char) ('0' + seconds / 10));
