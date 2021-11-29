@@ -526,6 +526,11 @@ public abstract class Player extends GameObject {
     public void setLevelState(LevelState levelState) {
         this.levelState = levelState;
     }
+    
+    public void setPlayerHealth(int health)
+    {
+    	playerHealth = health;
+    }
 
     public void addListener(PlayerListener listener) {
         listeners.add(listener);

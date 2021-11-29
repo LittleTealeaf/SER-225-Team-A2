@@ -47,6 +47,7 @@ public class GamePanel extends JPanel {
 	public static Clip clip;
 	private Point previousMousePoint = new Point(0,0);
 	private JLabel health;
+	private static DifficultyHolder difficultyHolder;
 
 	
 	/*
@@ -69,7 +70,7 @@ public class GamePanel extends JPanel {
 		screenManager = new ScreenManager();
 		coordinator = c1;
 
-
+		difficultyHolder = new DifficultyHolder(0);
 	
 		
 
@@ -89,6 +90,11 @@ public class GamePanel extends JPanel {
 		timer.setRepeats(true);
 	}
 
+	public static DifficultyHolder getDifficultyHolder()
+	{
+		return difficultyHolder;
+	}
+	
 	public static ScreenCoordinator getScreenCoordinator() {
 		return coordinator;
 	}
@@ -196,7 +202,7 @@ public class GamePanel extends JPanel {
 		}
 		
 		if(coordinator.getGameState() == GameState.MENU) {
-			Player.playerHealth = 3;
+			Player.playerHealth = difficultyHolder.getDifficulty();
 		}
 	}
 

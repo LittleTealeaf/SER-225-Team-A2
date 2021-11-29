@@ -1,5 +1,6 @@
 package Screens;
 
+import Engine.DifficultyHolder;
 import Engine.GamePanel;
 import Game.GameState;
 import Maps.TitleScreenMap;
@@ -8,13 +9,21 @@ import Menu.Direction;
 import Menu.MenuOption;
 
 public class DifficultySelectScreen extends Menu {
+	
+	private final DifficultyHolder difficultyHolder;
+	
+	//these values also correspond to the health given at each difficulty
+	private final static int NORMAL = 3;
+	private final static int HARD = 2;
+	private final static int HARDCORE = 1;
 
     public DifficultySelectScreen() {
+    	difficultyHolder = GamePanel.getDifficultyHolder();
         MenuOption[][] menu = new MenuOption[][]{
                 {
-                		new MenuOption("Normal", 100, 150, null),
-                		new MenuOption("Hard", 320, 150, null),
-                		new MenuOption("Hardcore", 500, 150, null)
+                		new MenuOption("Normal", 100, 150, () -> difficultyHolder.setDifficulty(NORMAL)),
+                		new MenuOption("Hard", 320, 150, () -> difficultyHolder.setDifficulty(HARD)),
+                		new MenuOption("Hardcore", 500, 150, () -> difficultyHolder.setDifficulty(HARDCORE))
                 },
                 {
                         new MenuOption(
