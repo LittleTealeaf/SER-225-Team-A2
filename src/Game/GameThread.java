@@ -66,10 +66,12 @@ public class GameThread implements Runnable {
             while(currentTime > nextUpdateTime) {
                 update.run();
                 nextUpdateTime += UPDATE_FIXED_MS;
+
+                //Run a render
+                render.run();
             }
 
-            //Run a render
-            render.run();
+
         }
         //Reset running once it's set to false
         running = true;
