@@ -228,6 +228,16 @@ public class CommonTileset extends Tileset {
                 .withTileType(TileType.LETHAL);
 
         mapTiles.add(lethalSpikeTile);
+
+        // solid floating block
+        Frame solidFloatingFrame = new FrameBuilder(getSubImage(3, 5), 0)
+                .withScale(tileScale)
+                .build();
+
+        MapTileBuilder solidFloatingTile = new MapTileBuilder(solidFloatingFrame)
+                .withTileType(TileType.NOT_PASSABLE);
+
+        mapTiles.add(solidFloatingTile);
         return mapTiles;
     }
 }
