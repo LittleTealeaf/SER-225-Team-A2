@@ -31,6 +31,10 @@ public class KeyLocker {
         return lockedAdapters.contains(keyboardAction);
     }
 
+    public boolean isActionUnlocked(KeyboardAction keyboardAction) {
+        return !lockedAdapters.contains(keyboardAction);
+    }
+
     public void clear() {
         lockedAdapters.clear();
     }

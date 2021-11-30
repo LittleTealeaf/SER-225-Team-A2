@@ -2,12 +2,11 @@ package Maps;
 
 import Enemies.BugEnemy;
 import Enemies.DinosaurEnemy;
-import Engine.ImageLoader;
 import EnhancedMapTiles.EndLevelBox;
-import EnhancedMapTiles.HorizontalMovingPlatform;
-import GameObject.Rectangle;
-import Level.*;
-import NPCs.Walrus;
+import Level.Enemy;
+import Level.EnhancedMapTile;
+import Level.Map;
+import Level.NPC;
 import Tilesets.CommonTileset;
 import Utils.Direction;
 import Utils.Point;
@@ -18,7 +17,7 @@ import java.util.ArrayList;
 public class TestMap2 extends Map {
 
     public TestMap2() {
-        super("test_map_2.txt", new CommonTileset(), new Point(1, 11));
+        super("Level 2","test_map_2.txt", new CommonTileset(), new Point(1, 11));
     }
 
     @Override

@@ -1,13 +1,13 @@
 package Enemies;
 
 import Builders.FrameBuilder;
+import Engine.GamePanel;
 import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
 import Level.Enemy;
 import Level.Player;
-import Utils.AirGroundState;
 import Utils.Direction;
 import Utils.Point;
 
@@ -19,10 +19,14 @@ import java.util.HashMap;
 public class BugEnemy extends Enemy {
 
     private float gravity = .5f;
-    private float movementSpeed = .5f;
+    
+    // different speeds depending on the difficulty
+    private static final float NORMAL_SPEED = 0.5f, HARD_SPEED = 0.7f, HARDCORE_SPEED = 0.9f;
+    float movementSpeed = NORMAL_SPEED;
+    
     private Direction startFacingDirection;
     private Direction facingDirection;
-    private AirGroundState airGroundState;
+    private boolean isInAir;
 
     public BugEnemy(Point location, Direction facingDirection) {
         super(location.x, location.y, new SpriteSheet(ImageLoader.load("BugEnemy.png"), 24, 15), "WALK_LEFT");
@@ -39,7 +43,7 @@ public class BugEnemy extends Enemy {
         } else if (facingDirection == Direction.LEFT) {
             currentAnimationName = "WALK_LEFT";
         }
-        airGroundState = AirGroundState.GROUND;
+        isInAir = false;
     }
 
     @Override
@@ -47,11 +51,21 @@ public class BugEnemy extends Enemy {
         float moveAmountX = 0;
         float moveAmountY = 0;
 
+        // set the movement speed of the enemy depending on what difficulty it selected
+        if (GamePanel.getDifficulty() == 2)
+        {
+        	movementSpeed = HARD_SPEED;
+        }
+        else if (GamePanel.getDifficulty() == 1)
+        {
+        	movementSpeed = HARDCORE_SPEED;
+        }
+        
         // add gravity (if in air, this will cause bug to fall)
         moveAmountY += gravity;
 
         // if on ground, walk forward based on facing direction
-        if (airGroundState == AirGroundState.GROUND) {
+        if (!isInAir) {
             if (facingDirection == Direction.RIGHT) {
                 moveAmountX += movementSpeed;
             } else {
@@ -86,11 +100,7 @@ public class BugEnemy extends Enemy {
         // if bug is colliding with the ground, change its air ground state to GROUND
         // if it is not colliding with the ground, it means that it's currently in the air, so its air ground state is changed to AIR
         if (direction == Direction.DOWN) {
-            if (hasCollided) {
-                airGroundState = AirGroundState.GROUND;
-            } else {
-                airGroundState = AirGroundState.AIR;
-            }
+            isInAir = !hasCollided;
         }
     }
 

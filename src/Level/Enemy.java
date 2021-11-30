@@ -1,5 +1,6 @@
 package Level;
 
+import Engine.Collidable;
 import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.Rectangle;
@@ -9,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 // This class is a base class for all enemies in the game -- all enemies should extend from it
-public class Enemy extends MapEntity {
+public class Enemy extends MapEntity implements Collidable.InstantDeath {
 
     public Enemy(float x, float y, SpriteSheet spriteSheet, String startingAnimation) {
         super(x, y, spriteSheet, startingAnimation);

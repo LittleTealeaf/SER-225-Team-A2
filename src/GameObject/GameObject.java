@@ -34,6 +34,8 @@ public class GameObject extends AnimatedSprite implements Drawable {
 	// previous location the game object was in from the last frame
 	protected float previousX, previousY;
 
+
+
 	// the map instance this game object "belongs" to.
 	protected Map map;
 

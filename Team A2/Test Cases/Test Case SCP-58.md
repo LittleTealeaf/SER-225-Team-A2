@@ -10,14 +10,14 @@
 
 |Step | Action | Expected Result | Pass/Fail     |
 |:---:| :---        |    :----  | :---: |
-|1|Run the game|The main menu displays successfully||
-|2|Press space on "Level Select"|The list of levels should load||
-|3|Press Space on "Boss Battle"|The user should be at the start of the level "Boss Battle"||
-|4|Get within one tile in front of the boss |The cat should not die||
-|5|Get within one tile behind the boss |The cat should not die||
-|4|Touch the boss |The cat should die||
+|1|Run the game|The main menu displays successfully|Pass|
+|2|Press space on "Level Select"|The list of levels should load|Pass|
+|3|Press Space on "Boss Battle"|The user should be at the start of the level "Boss Battle"|Pass|
+|4|Get within one tile in front of the boss |The cat should not die|Pass|
+|5|Get within one tile behind the boss |The cat should not die|Pass|
+|4|Touch the boss |The cat should die|Pass|
 
 ### Test Completion
-- **Tester**: 
-- **Date of Test**: 
-- **Test Result**: 
+- **Tester**: Thomas Kwashnak
+- **Date of Test**: 11/29/2021 10:20 AM
+- **Test Result**: Passed
