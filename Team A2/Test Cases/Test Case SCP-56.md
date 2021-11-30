@@ -34,6 +34,7 @@ Instances of tests are listed in table below (template provided). Measurements l
 |:---:|:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|
 |[DATE]|[TESTER_NAME]|[CONFIG]|[MEASURE 1]|[MEASURE 2]|[MEASURE 3]|[MEASURE 4]|[MEASURE 5]|[PASS/FAIL]|
 |11/29/2021 10:41 AM|Thomas Kwashnak|Kubuntu 21.10 Laptop, Intel i7 CPU, NVIDIA MX330 GPU|\~ 2 seconds|\~1 second|\~1 second|\~1-2 seconds|~3 seconds|Pass. Game runs at expected speed|
+|11/29/2021 7:05 PM|Thomas Kwashnak|Windows 11 Desktop, Ryzen 5 3600 CPU, Nvidia RTX 2060 GPU|\~ 1.5 Seconds|\~ 1 second|\~ 1 second|\~1-2 seconds|3 seconds|Pass. Game runs at expected speed|
 
 [comment]: <> (Add test rows to end here ^^)
 
