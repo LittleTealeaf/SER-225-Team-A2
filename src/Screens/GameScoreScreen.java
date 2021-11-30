@@ -15,15 +15,14 @@ import java.awt.*;
 
 public class GameScoreScreen extends Menu {
 
-    private static final Font FONT_LEVEL, FONT_TOTAL;
-    private static final Color COLOR_LEVEL, COLOR_TOTAL;
+    private static final Font FONT_LEVEL, FONT_TITLE;
+    private static final Color COLOR_LEVEL, COLOR_TITLE;
 
     static {
         String fontName = "Times New Roman";
         FONT_LEVEL = new Font(fontName, Font.PLAIN, 30);
-        FONT_TOTAL = new Font(fontName,Font.PLAIN,60);
-        COLOR_LEVEL = Color.WHITE;
-        COLOR_TOTAL = Color.WHITE;
+        FONT_TITLE = new Font(fontName, Font.BOLD,60);
+        COLOR_LEVEL = COLOR_TITLE = Color.WHITE;
     }
 
 
@@ -31,10 +30,11 @@ public class GameScoreScreen extends Menu {
         setBackground(new TitleScreenMap());
         System.out.println(levelsToString(timeTracker));
 
-        SpriteFont levels = new SpriteFont(levelsToString(timeTracker), 10, 100, FONT_LEVEL, COLOR_LEVEL);
+        SpriteFont levels = new SpriteFont(levelsToString(timeTracker), 10, 150, FONT_LEVEL, COLOR_LEVEL);
         levels.setMultiLine(true);
-        SpriteFont total = new SpriteFont(totalToString(timeTracker),300,100,FONT_TOTAL,COLOR_TOTAL);
-        setDrawables(levels,total);
+        SpriteFont title = new SpriteFont("Game Complete",200,75,FONT_TITLE,COLOR_TITLE);
+//        SpriteFont total = new SpriteFont(totalToString(timeTracker),300,100,FONT_TOTAL,COLOR_TOTAL);
+        setDrawables(levels,title);
 
         MenuOption close = new MenuOption("Main Menu", 550, 550,this::backToMainMenu);
         setMenuItemsAsGrid(new MenuOption[][]{{close}});
@@ -56,6 +56,7 @@ public class GameScoreScreen extends Menu {
                 stringBuilder.append(GameMaps.MAPS[i].getName()).append(": ").append(gameTimers[i].toString());
             }
         }
+        stringBuilder.append("\n\nTotal: ").append(getTotalTimes(timeTracker));
 
         return stringBuilder.toString();
     }
