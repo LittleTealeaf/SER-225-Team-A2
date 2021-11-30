@@ -1,5 +1,6 @@
 package Level;
 
+import Engine.Collidable;
 import Engine.KeyboardAction;
 import GameObject.GameObject;
 import GameObject.SpriteSheet;
@@ -17,7 +18,7 @@ import java.util.List;
  */
 public abstract class Player extends GameObject {
 
-    private static final int ATTACK_DELAY = 1500, JUMP_DELAY = 5000;
+    private static final int ATTACK_DELAY = 1500;
     private static final float MAX_FALL_VELOCITY = 6f, MAX_DEATH_FALL_VELOCITY = 10f, DEATH_Y_VELOCITY = -2.5f;
     public static int PLAYER_HEALTH = 3;
     protected float gravity, jumpHeight, walkSpeed, sprintSpeed, sprintAcceleration;
@@ -191,11 +192,13 @@ public abstract class Player extends GameObject {
     }
 
     public void hurtPlayer(MapEntity mapEntity) {
-        //Checks the collision type of the entity that collided with the player
-        switch (mapEntity.getCollisionType()) {
-            case DAMAGE -> PLAYER_HEALTH -= 1;
-            case INSTANT_DEATH -> PLAYER_HEALTH = 0;
-            case PREVENT_JUMP -> jumpDelay.setWaitTime(JUMP_DELAY);
+        if(mapEntity instanceof Collidable.Damage) {
+            PLAYER_HEALTH -= ((Damage) mapEntity).getDamage();
+        } else if(mapEntity instanceof Collidable.InstantDeath) {
+            PLAYER_HEALTH = 0;
+        }
+        if(mapEntity instanceof Collidable.PreventJump) {
+            jumpDelay.setWaitTime(((Collidable.PreventJump) mapEntity).getJumpDelay());
         }
     }
 
