@@ -15,9 +15,9 @@
 |Step | Action | Expected Result | Measurement Field |
 |:---:| :---        |    :----  | :----:|
 |1|Run the game|The game successfully opens||
-|2|Begin recording|A screen recorder is started that records the game||
-|3|Click *Play Game*|The tutorial level is successfully opened||
-|4|Walk to the left-most edge of the level|The cat is at the left most bound of the tutorial level||
+|2|Begin recording|A screen recorder is started that records the game|pass|
+|3|Click *Play Game*|The tutorial level is successfully opened|pass|
+|4|Walk to the left-most edge of the level|The cat is at the left most bound of the tutorial level|pass|
 |5|Hold `D/Right Arrow` until the cat is blocked from moving by the tree|The cat moves from the edge of the map into the tree|**Measurement 1:** The time it takes starting when the cat begins moving to when the cat finishes moving|
 |6|Hold `Shift`, then hold `A/Left Arrow` until the cat stops moving at the left edge of the map|The player sprints to the left-most edge of the map|**Measurement 2:** The time it takes for the cat to move starting when the cat begins moving to when the cat is stopped by the map edge|
 |7|Hold `Space/W/Up Arrow` until the cat reaches the ground again|The cat jumps and lands back on the ground|**Measurement 3:** The time it takes starting when the cat begins jumping to when the cat hits the ground again|
@@ -35,6 +35,7 @@ Instances of tests are listed in table below (template provided). Measurements l
 |[DATE]|[TESTER_NAME]|[CONFIG]|[MEASURE 1]|[MEASURE 2]|[MEASURE 3]|[MEASURE 4]|[MEASURE 5]|[PASS/FAIL]|
 |11/29/2021 10:41 AM|Thomas Kwashnak|Kubuntu 21.10 Laptop, Intel i7 CPU, NVIDIA MX330 GPU|\~ 2 seconds|\~1 second|\~1 second|\~1-2 seconds|~3 seconds|Pass. Game runs at expected speed|
 |11/29/2021 7:05 PM|Thomas Kwashnak|Windows 11 Desktop, Ryzen 5 3600 CPU, Nvidia RTX 2060 GPU|\~ 1.5 Seconds|\~ 1 second|\~ 1 second|\~1-2 seconds|3 seconds|Pass. Game runs at expected speed|
+|11/30/2021 5:13 PM|Nicholas Tourony|Windows 10 Laptop, Intel i7-9750H CPU, Nvidia GTX 1660Ti GPU|\~ 1.75 Seconds|\~ 1 second|\~ 1 second|\~1.5 seconds|~3 seconds|Pass. Game runs at expected speed|
 
 [comment]: <> (Add test rows to end here ^^)
 
@@ -42,6 +43,6 @@ Instances of tests are listed in table below (template provided). Measurements l
  - There are no outliers on all measurements
 
 ### Test Completion
-- **Tester**: [TEST REVIEWER NAME]
-- **Date of Test**: [TEST COMPLETION DATE]
-- **Test Result**: [TEST RESULT]
+- **Tester**: Nicholas Tourony
+- **Date of Test**: 11/30/2021
+- **Test Result**: Pass
