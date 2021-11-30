@@ -12,13 +12,17 @@
 |:---:| :---        |    :----  | :---: |
 |1| Run the game| The game successfully opens |P|
 |2| Select the difficulty menu. | The difficulty menu opens. | [RESULT] |
-|3| Select normal difficulty | The game lets you select normal difficulty. | [RESULT] |
-|4| Go back to the main menu and start the game. | The cat is loaded into the first level with 3 health and the enemies move at their slowest speed. | [RESULT] |
+|3| Select normal difficulty | The game lets you select normal difficulty and automatically puts you back to the main menu. | [RESULT] |
+|4| Start the game. | The cat is loaded into the first level with 3 health and the enemies and projectiles move at their slowest speed. | [RESULT] |
 |5| Take projectile damage until the character dies | The cat can take 3 projectile hits before dying. | [RESULT] |
-|6| Select hard difficulty and start the game | The cat is loaded into the first level with 2 health and the enemies move faster. | [RESULT] |
-|7| Take projectile damage until the character dies | The cat can take 2 projectile hits before dying. | [RESULT] |
-|8| Select hardcore difficulty and start the game.  | The cat is loaded into the first level with 1 health and the enemies move even faster. | [RESULT] |
-|9| Take damage. | The player is sent back to the main menu. | [RESULT] |
+|6| Respawn and run into an enemy. | The cat instantly dies. | [RESULT] |
+|7| Select hard difficulty and start the game | The cat is loaded into the first level with 2 health and the enemies move faster. | [RESULT] |
+|8| Take projectile damage until the character dies | The cat can take 2 projectile hits before dying. | [RESULT] |
+|9| Respawn and run into an enemy. | The cat instantly dies. | [RESULT] |
+|10| Select hardcore difficulty and start the game.  | The cat is loaded into the first level with 1 health and the enemies move even faster. | [RESULT] |
+|11| Take damage. | The cat dies. | [RESULT] |
+|12| Press escape. | The player is returned to the main menu. | [RESULT] |
+|13| Load into level 6, die to any enemy, and press space. | The player is restarted at the tutorial level. | [RESULT] |
 
 ### Test Completion
 - **Tester**: [TESTER NAME]

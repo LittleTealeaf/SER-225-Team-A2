@@ -158,6 +158,7 @@ public class MenuOption implements Drawable {
         if (listener != null) {
             listener.event();
         }
+        // allows a menu option the ability to close after selecting them
         if (actionAfterExecute == CloseOnExecute.CLOSE)
         {
         	GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
