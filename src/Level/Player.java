@@ -102,21 +102,23 @@ public abstract class Player extends GameObject {
             playerState = PlayerState.CROUCH;
         }
 
-        //Updates player to death if their health hits 0
-        if (PLAYER_HEALTH <= 0) {
-            levelState = LevelState.DEAD;
-        }
-
         inAir = true; //inAir is updated in collisions
         //Moves while handling collisions
         moveYHandleCollision(velocityY);
         moveXHandleCollision(absVelocityX * facing.mod);
+
+
+        //Updates player to death if their health hits 0
+        if (PLAYER_HEALTH <= 0) {
+            levelState = LevelState.DEAD;
+        }
     }
 
     /**
      * Updates the player while it is dead
      */
     private void updateDead() {
+        playerState = PlayerState.DEATH;
         if (currentFrameIndex > 0) { //Checks if it is not the first frame of the player's death animation
             if (map.getCamera().containsDraw(this)) {
                 applyGravity(MAX_DEATH_FALL_VELOCITY);
