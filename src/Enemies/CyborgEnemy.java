@@ -1,6 +1,7 @@
 package Enemies;
 
 import Builders.FrameBuilder;
+import Engine.GamePanel;
 import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.ImageEffect;
@@ -27,7 +28,11 @@ public class CyborgEnemy extends Enemy {
     // Whether or not the game is waiting for LazerBeams to launch
     private boolean wait = false;
 
-    protected float movementSpeed = 0.5f;
+    // different speeds depending on the difficulty
+    private static final float NORMAL_SPEED = 0.5f, HARD_SPEED = 0.7f, HARDCORE_SPEED = 0.9f;
+    float movementSpeed = NORMAL_SPEED;
+    private static final float NORMAL_LAZER_SPEED = 1.5f, HARD_LAZER_SPEED = 1.7f, HARDCORE_LAZER_SPEED = 1.9f;
+    
     private Direction startFacingDirection;
     protected Direction facingDirection;
     protected boolean isInAir;
@@ -70,7 +75,20 @@ public class CyborgEnemy extends Enemy {
     public void update(Player player) {
         float startBound = startLocation.x;
         float endBound = endLocation.x;
+        float lazerMovementSpeed = NORMAL_LAZER_SPEED;
 
+        // set the movement speed of the enemy and lazer attack depending on what difficulty it selected
+        if (GamePanel.getDifficulty() == 2)
+        {
+        	movementSpeed = HARD_SPEED;
+        	lazerMovementSpeed = HARD_LAZER_SPEED;
+        }
+        else if (GamePanel.getDifficulty() == 1)
+        {
+        	movementSpeed = HARDCORE_SPEED;
+        	lazerMovementSpeed = HARDCORE_LAZER_SPEED;
+        }
+        
         // if shoot timer is up and cyborg is not currently shooting, set its state to SHOOT
         if (shootTimer.isTimeUp() && cyborgState != cyborgState.SHOOT) {
             cyborgState = cyborgState.SHOOT;
@@ -112,16 +130,14 @@ public class CyborgEnemy extends Enemy {
                 // define where LazerBeam will spawn on map (x location) relative to cyborg enemy's location
                 // and define its movement speed
                 int LazerBeamX;
-                float movementSpeed;
                 LazerBeamX = Math.round(getX());
-                movementSpeed = 1.5f;
 
                 // define where LazerBeam will spawn on the map (y location) relative to cyborg enemy's location
                 int LazerBeamY = Math.round(getY() + 15);
 
                 // create LazerBeam enemy
-                LazerBeam LazerBeam = new LazerBeam(new Point(LazerBeamX + 20, LazerBeamY), movementSpeed, 1000);
-                LazerBeam LazerBeam2 = new LazerBeam(new Point(LazerBeamX - 10, LazerBeamY), -movementSpeed, 1000);
+                LazerBeam LazerBeam = new LazerBeam(new Point(LazerBeamX + 20, LazerBeamY), lazerMovementSpeed, 1000);
+                LazerBeam LazerBeam2 = new LazerBeam(new Point(LazerBeamX - 10, LazerBeamY), -lazerMovementSpeed, 1000);
 
                 // add LazerBeam enemy to the map for it to offically spawn in the level
                 map.addProjectile(LazerBeam);

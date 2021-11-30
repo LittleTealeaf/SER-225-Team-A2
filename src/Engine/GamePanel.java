@@ -18,13 +18,18 @@ import java.io.IOException;
  * This is where the game loop starts
  * The JPanel uses a timer to continually call cycles of update and draw
  */
-public class GamePanel extends JPanel {
+public class GamePanel extends JPanel implements Updatable {
 	private final ScreenManager screenManager;
 	private final GraphicsHandler graphicsHandler;
 	private boolean doPaint = false;
 	protected static GameWindow gameWindow;
 	private static ScreenCoordinator coordinator;
 	public static Clip clip;
+	
+	// these difficulty values are not only just used for the the logic of the game but
+	// to determine how much health the user gets at each difficulty;
+	private final static int NORMAL = 3, HARD = 2, HARDCORE = 1;
+	private static int difficulty;
 	private final JLabel health;
 	private final GameThread gameThread;
 
@@ -49,9 +54,24 @@ public class GamePanel extends JPanel {
 		screenManager = new ScreenManager();
 		coordinator = c1;
 
+		difficulty = NORMAL;
+		
 		gameThread = new GameThread(this::repaint, this::update);
 	}
+	
+	public static void setDifficulty(int newDifficulty)
+	{
+		difficulty = newDifficulty;
+	}
+	public static int getDifficulty()
+	{
+		return difficulty;
+	}
 
+	public static String getDifficultyString() {
+		return difficulty == 3 ? "Normal" : difficulty == 2 ? "Hard" : "Hardcore";
+	}
+	
 	public static ScreenCoordinator getScreenCoordinator() {
 		return coordinator;
 	}
@@ -157,8 +177,17 @@ public class GamePanel extends JPanel {
 			}
 		}
 		
+		// Each difficulty is represented as an integer while also representing the amount of health the user has
+		// normal is 3 hard is 2 and hardcore is 1
+		// hide the health whenever in a menu
 		if(coordinator.getGameState() == GameState.MENU) {
-			Player.PLAYER_HEALTH = 3;
+			Player.PLAYER_HEALTH = difficulty;
+			health.hide();
+		}
+		// show the health when in a level
+		else if (coordinator.getGameState() == GameState.LEVEL)
+		{
+			health.show();
 		}
 	}
 

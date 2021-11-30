@@ -2,41 +2,31 @@ package Screens;
 
 import Engine.*;
 import Game.GameState;
+import Game.TimeTracker;
 import Level.Map;
 import Level.Player;
 import Level.PlayerListener;
-import Maps.*;
+import Maps.GameMaps;
 import SpriteFont.SpriteFont;
 import Utils.Stopwatch;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public class PlayLevelScreen extends Screen implements PlayerListener {
+public class PlayLevelScreen extends Screen implements PlayerListener, Pausable {
 
-    private static final MapFactory[] MAPS;
     private static final Stopwatch screenTimer;
     private static final KeyLocker keyLocker;
-    private static final SpriteFont SPRITE_FONT_PAUSE;
     private static final SpriteFont[] SPRITE_FONT_INSTRUCTIONS;
     private static final Color COLOR_GREY_BACKGROUND;
     private static Map loadedMap;
     private static Screen alternateScreen;
     private static Player player;
+    private static TimeTracker timeTracker;
 
     static {
         screenTimer = new Stopwatch();
         keyLocker = new KeyLocker();
-
-        /*
-         * List of maps in the game, each map is given a constructor
-         * This is some new java funky stuff :D
-         */
-        MAPS = new MapFactory[]{
-                TestTutorial::new, TestMap::new, TestMap2::new, TestMap3::new, TestMap4::new, TestMap5::new, TestMap6::new, TestMap7::new, BossBattle::new
-        };
-
-        SPRITE_FONT_PAUSE = new SpriteFont("Pause", 350, 250, "Comic Sans", 30, Color.white);
 
         SPRITE_FONT_INSTRUCTIONS = new SpriteFont[] {
                 new SpriteFont("To JUMP: UP arrow key, or 'W', or SPACEBAR", 130, 140, "Times New Roman", 20,
@@ -79,6 +69,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
 
     @Override
     public void initialize() {
+        timeTracker = new TimeTracker();
         loadMap(currentMap);
     }
 
@@ -87,9 +78,10 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
         switch (screenState) {
             case RUNNING -> {
                 if (KeyboardAction.GAME_PAUSE.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_PAUSE)) {
-                    screenState = State.PAUSE;
+                    pause();
                 } else if (KeyboardAction.GAME_INSTRUCTIONS.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_INSTRUCTIONS)) {
                     screenState = State.INSTRUCTIONS;
+                    timeTracker.stop();
                 } else {
                     player.update();
                     loadedMap.update(player);
@@ -100,19 +92,23 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                     screenState = State.RUNNING;
                 }
             }
-            case PAUSE,LEVEL_LOSE_MESSAGE -> alternateScreen.update();
+            case PAUSE,LEVEL_LOSE_MESSAGE,GAME_COMPLETED -> {
+                if(alternateScreen != null) {
+                    alternateScreen.update();
+                }
+            }
             case PLAYER_DEAD -> screenState = State.LEVEL_LOSE_MESSAGE;
             case LEVEL_COMPLETED -> {
                 alternateScreen = new LevelClearedScreen();
                 alternateScreen.initialize();
-                screenTimer.setWaitTime(2500);
+                screenTimer.setWaitTime(750);
                 screenState = State.LEVEL_WIN_MESSAGE;
             }
             case LEVEL_WIN_MESSAGE -> {
                 alternateScreen.update();
                 if (screenTimer.isTimeUp()) {
-                    nextLevel();
                     screenState = State.RUNNING;
+                    nextLevel();
                 }
             }
         }
@@ -126,6 +122,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                 alternateScreen = null;
                 loadedMap.draw(graphicsHandler);
                 player.draw(graphicsHandler);
+                timeTracker.draw(graphicsHandler);
             }
             case LEVEL_WIN_MESSAGE -> {
                 if (!(alternateScreen instanceof LevelClearedScreen)) {
@@ -133,6 +130,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                     alternateScreen.initialize();
                 }
                 alternateScreen.draw(graphicsHandler);
+                timeTracker.draw(graphicsHandler);
             }
             case LEVEL_LOSE_MESSAGE -> {
                 if (!(alternateScreen instanceof LevelLoseScreen)) {
@@ -140,6 +138,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                     alternateScreen.initialize();
                 }
                 alternateScreen.draw(graphicsHandler);
+                timeTracker.draw(graphicsHandler);
             }
             case PAUSE -> {
                 if (!(alternateScreen instanceof PauseScreen)) {
@@ -147,6 +146,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                     alternateScreen.initialize();
                 }
                 alternateScreen.draw(graphicsHandler);
+                timeTracker.draw(graphicsHandler);
             }
             case INSTRUCTIONS -> {
                 loadedMap.draw(graphicsHandler);
@@ -156,7 +156,18 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
                 }
                 graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), COLOR_GREY_BACKGROUND);
             }
+            case GAME_COMPLETED -> {
+                if(!(alternateScreen instanceof GameScoreScreen)) {
+                    alternateScreen = new GameScoreScreen(timeTracker);
+                    alternateScreen.initialize();
+                }
+                alternateScreen.draw(graphicsHandler);
+            }
         }
+    }
+
+    public Map getLoadedMap() {
+        return loadedMap;
     }
 
     @Override
@@ -175,11 +186,11 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
      *
      * @param index index of map to load
      */
-    private void loadMap(int index) {
-        if(index < MAPS.length) {
+    public void loadMap(int index) {
+        if(index < GameMaps.MAPS.length) {
             currentMap = index;
             //Load map using the MapFactory
-            loadedMap = MAPS[index].generateMap();
+            loadedMap = GameMaps.MAPS[index].generateMap();
             loadedMap.reset();
 
             //Load the cat using the Config setting
@@ -187,8 +198,21 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
             player.setMap(loadedMap);
             player.addListener(this);
             screenState = State.RUNNING;
+
+            //Update Time
+            timeTracker.setCurrentLevel(index);
         } else {
-            GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
+            //Add the other menu
+            System.out.println("complete game");
+            screenState = State.GAME_COMPLETED;
+        }
+    }
+
+    @Override
+    public void onLevelFinished() {
+        //Only complete on final level
+        if(currentMap == GameMaps.MAPS.length - 1) {
+            timeTracker.stop();
         }
     }
 
@@ -210,18 +234,27 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
         GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
     }
 
+    @Override
     public void resume() {
         if (screenState == State.PAUSE || screenState == State.INSTRUCTIONS) {
             screenState = State.RUNNING;
+            timeTracker.start();
         }
     }
 
-    public enum State {
-        RUNNING, LEVEL_COMPLETED, PLAYER_DEAD, LEVEL_WIN_MESSAGE, LEVEL_LOSE_MESSAGE, LEVEL_SELECT, PAUSE, INSTRUCTIONS, OPTIONS
+    @Override
+    public void pause() {
+        screenState = State.PAUSE;
+        timeTracker.stop();
     }
 
-    private interface MapFactory {
+    public void resetHardcore() {
+        timeTracker = new TimeTracker();
+        loadMap(0);
+    }
 
-        Map generateMap();
+
+    public enum State {
+        RUNNING, LEVEL_COMPLETED, PLAYER_DEAD, LEVEL_WIN_MESSAGE, LEVEL_LOSE_MESSAGE, PAUSE, INSTRUCTIONS, GAME_COMPLETED
     }
 }

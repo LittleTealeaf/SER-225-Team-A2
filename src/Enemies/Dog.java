@@ -1,6 +1,7 @@
 package Enemies;
 
 import Builders.FrameBuilder;
+import Engine.GamePanel;
 import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.SpriteSheet;
@@ -23,7 +24,11 @@ public class Dog extends Enemy {
     protected Point startLocation;
     protected Point endLocation;
 
-    protected float movementSpeed = 1f;
+    // different speeds depending on the difficulty
+    private static final float NORMAL_SPEED = 1f, HARD_SPEED = 1.2f, HARDCORE_SPEED = 1.4f;
+    float movementSpeed = NORMAL_SPEED;
+    
+    private static final float NORMAL_BONE_SPEED = 1.5f, HARD_BONE_SPEED = 1.7f, HARDCORE_BONE_SPEED = 1.9f;
     private Direction startFacingDirection;
     protected Direction facingDirection;
     protected boolean isInAir;
@@ -63,6 +68,19 @@ public class Dog extends Enemy {
     public void update(Player player) {
         float startBound = startLocation.x;
         float endBound = endLocation.x;
+        float boneMovementSpeed = NORMAL_BONE_SPEED;
+
+        // set the movement speed of the enemy and fireball attack depending on what difficulty it selected
+        if (GamePanel.getDifficulty() == 2)
+        {
+        	movementSpeed = HARD_SPEED;
+        	boneMovementSpeed = HARD_BONE_SPEED;
+        }
+        else if (GamePanel.getDifficulty() == 1)
+        {
+        	movementSpeed = HARDCORE_SPEED;
+        	boneMovementSpeed = HARDCORE_BONE_SPEED;
+        }
 
         // if shoot timer is up and dog is not currently shooting, set its state to SHOOT
         if (shootTimer.isTimeUp() && dogState != dogState.SHOOT) {
@@ -105,20 +123,18 @@ public class Dog extends Enemy {
                 // define where bone will spawn on map (x location) relative to dog enemy's location
                 // and define its movement speed
                 int boneX;
-                float movementSpeed;
                 if (facingDirection == Direction.RIGHT) {
                     boneX = Math.round(getX()) + getScaledWidth();
-                    movementSpeed = 1.5f;
                 } else {
                     boneX = Math.round(getX());
-                    movementSpeed = -1.5f;
+                    boneMovementSpeed = -boneMovementSpeed;
                 }
 
                 // define where bone will spawn on the map (y location) relative to dog enemy's location
                 int boneY = Math.round(getY()) + 4;
 
                 // create bone enemy
-                Bone bone = new Bone(new Point(boneX, boneY), movementSpeed, 2000);
+                Bone bone = new Bone(new Point(boneX, boneY), boneMovementSpeed, 2000);
 
                 // add bone enemy to the map for it to offically spawn in the level
                 map.addProjectile(bone);
