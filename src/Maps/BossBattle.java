@@ -18,6 +18,8 @@ import java.util.ArrayList;
 // Represents a test map to be used in a level
 public class BossBattle extends Map {
 
+    private boolean bossKilled = false;
+
     public BossBattle() {
         super("BossBattle.txt", new CommonTileset(), new Point(1, 17));
     }
@@ -53,6 +55,15 @@ public class BossBattle extends Map {
         ));
 
         return enhancedMapTiles;
+    }
+
+    @Override
+    public void update(Player player) {
+        super.update(player);
+        if(!bossKilled && PlayerAttack.dogHealth <= 0) {
+            bossKilled = true;
+            player.setJumpHeight(16);
+        }
     }
 
 }
