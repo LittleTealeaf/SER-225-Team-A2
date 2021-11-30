@@ -1,6 +1,7 @@
 package Screens;
 
 import Engine.Drawable;
+import Engine.GamePanel;
 import Engine.GraphicsHandler;
 import Game.TimeTracker;
 import Maps.GameMaps;
@@ -34,7 +35,8 @@ public class GameScoreScreen extends Menu {
         levels.setMultiLine(true);
         SpriteFont title = new SpriteFont("Game Complete",200,75,FONT_TITLE,COLOR_TITLE);
 //        SpriteFont total = new SpriteFont(totalToString(timeTracker),300,100,FONT_TOTAL,COLOR_TOTAL);
-        setDrawables(levels,title);
+        SpriteFont difficulty = new SpriteFont(GamePanel.getDifficultyString() + " Difficulty",500,150,FONT_LEVEL,COLOR_LEVEL);
+        setDrawables(levels,title,difficulty);
 
         MenuOption close = new MenuOption("Main Menu", 550, 550,this::backToMainMenu);
         setMenuItemsAsGrid(new MenuOption[][]{{close}});

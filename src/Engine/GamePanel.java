@@ -67,6 +67,10 @@ public class GamePanel extends JPanel implements Updatable {
 	{
 		return difficulty;
 	}
+
+	public static String getDifficultyString() {
+		return difficulty == 3 ? "Normal" : difficulty == 2 ? "Hard" : "Hardcore";
+	}
 	
 	public static ScreenCoordinator getScreenCoordinator() {
 		return coordinator;
