@@ -47,7 +47,7 @@ public abstract class Menu extends Screen implements SelectableMenu {
 
     protected void updateMenuEscape() {
         if (KeyboardAction.MENU_ESCAPE.isDown()) {
-            GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
+            backToMainMenu();
         }
     }
 
@@ -200,5 +200,9 @@ public abstract class Menu extends Screen implements SelectableMenu {
 
     protected void setDrawables(Drawable... drawables) {
         this.drawables = drawables;
+    }
+
+    protected void backToMainMenu() {
+        GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
     }
 }

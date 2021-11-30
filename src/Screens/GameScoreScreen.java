@@ -1,8 +1,10 @@
 package Screens;
 
 import Engine.Drawable;
+import Engine.GamePanel;
 import Engine.GraphicsHandler;
 import Engine.ScreenManager;
+import Game.GameState;
 import Game.TimeTracker;
 import Maps.GameMaps;
 import Maps.TitleScreenMap;
@@ -10,6 +12,7 @@ import Menu.Menu;
 import SpriteFont.SpriteFont;
 import Utils.GameTimer;
 import Utils.TimeParser;
+import Menu.MenuOption;
 
 import java.awt.*;
 
@@ -34,8 +37,10 @@ public class GameScoreScreen extends Menu {
         SpriteFont levels = new SpriteFont(levelsToString(timeTracker), 10, 100, FONT_LEVEL, COLOR_LEVEL);
         levels.setMultiLine(true);
         SpriteFont total = new SpriteFont(totalToString(timeTracker),300,100,FONT_TOTAL,COLOR_TOTAL);
-
         setDrawables(levels,total);
+
+        MenuOption close = new MenuOption("Main Menu", 550, 550,this::backToMainMenu);
+        setMenuItemsAsGrid(new MenuOption[][]{{close}});
     }
 
     private String totalToString(TimeTracker timeTracker) {

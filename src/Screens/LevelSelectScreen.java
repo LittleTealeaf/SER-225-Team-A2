@@ -32,7 +32,7 @@ public class LevelSelectScreen extends Menu {
                         new MenuOption("Boss Battle", x_right_column, 300, () -> coordinator.loadLevel(8))
                 }, {
                         new MenuOption(
-                                "Back to Main Menu", x_left_column, 375, () -> GamePanel.getScreenCoordinator().setGameState(GameState.MENU))
+                                "Back to Main Menu", x_left_column, 375, this::backToMainMenu)
                 }
         };
         menu[4][1].setNeighborItem(menu[5][0], Direction.DOWN);
