@@ -194,10 +194,4 @@ public abstract class Player extends GameObject {
     public void setJumpHeight(int height) {
         this.jumpHeight = height;
     }
-
-    
-    public void setPlayerHealth(int health)
-    {
-    	PLAYER_HEALTH = health;
-    }
 }

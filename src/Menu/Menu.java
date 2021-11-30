@@ -7,7 +7,6 @@ import Utils.Stopwatch;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.util.List;
 
 public abstract class Menu extends Screen implements SelectableMenu {
 
@@ -197,14 +196,7 @@ public abstract class Menu extends Screen implements SelectableMenu {
         this.background = background;
     }
 
-    protected void setDrawables(Drawable[] drawables) {
+    protected void setDrawables(Drawable... drawables) {
         this.drawables = drawables;
-    }
-
-    protected void setDrawables(List<Drawable> drawables) {
-        this.drawables = new Drawable[drawables.size()];
-        for(int i = 0; i < this.drawables.length; i++) {
-            this.drawables[i] = drawables.get(i);
-        }
     }
 }

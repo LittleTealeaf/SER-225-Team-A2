@@ -2,6 +2,7 @@ package Screens;
 
 import Engine.Drawable;
 import Engine.GraphicsHandler;
+import Engine.ScreenManager;
 import Game.TimeTracker;
 import Maps.GameMaps;
 import Maps.TitleScreenMap;
@@ -22,13 +23,14 @@ public class GameScoreScreen extends Menu {
         COLOR_LEVEL = Color.WHITE;
     }
 
-    private TimeTracker timeTracker;
-    private SpriteFont levels;
 
     public GameScoreScreen(TimeTracker timeTracker) {
-        this.timeTracker = timeTracker;
         setBackground(new TitleScreenMap());
         System.out.println(getLevels(timeTracker));
+
+        SpriteFont levels = new SpriteFont(getLevels(timeTracker), 30, ScreenManager.getScreenHeight() - 125, FONT_LEVEL, COLOR_LEVEL);
+
+        setDrawables(levels);
     }
 
     private String getLevels(TimeTracker timeTracker) {
