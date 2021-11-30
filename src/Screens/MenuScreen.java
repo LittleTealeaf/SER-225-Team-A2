@@ -23,11 +23,11 @@ public class MenuScreen extends Menu {
                 new MenuOption("OPTIONS", 350, 300, () -> GamePanel.getScreenCoordinator().setGameState(GameState.OPTIONS))
         },
         {
-            new MenuOption("SELECT DIFFICULTY", 80, 400, () -> GamePanel.getScreenCoordinator().setGameState(GameState.DIFFICULTYSELECT))
+            new MenuOption("SELECT DIFFICULTY", 80, 400, () -> GamePanel.getScreenCoordinator().setGameState(GameState.DIFFICULTYSELECT)),
+            new MenuOption("QUIT", 80, 400, () -> System.exit(0))
         }
         };
         setMenuItemsAsGrid(menu);
-        menu[2][1].setNeighborItem(menu[3][0], Direction.DOWN);
         setBackground(new TitleScreenMap());
     }
 }
