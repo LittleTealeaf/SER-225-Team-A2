@@ -164,6 +164,8 @@ public class GamePanel extends JPanel implements Updatable {
 			}
 		}
 		
+		// Each difficulty is represented as an integer while also representing the amount of health the user has
+		// normal is 3 hard is 2 and hardcore is 1
 		if(coordinator.getGameState() == GameState.MENU) {
 			Player.PLAYER_HEALTH = difficultyHolder.getDifficulty();
 		}

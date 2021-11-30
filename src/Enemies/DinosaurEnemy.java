@@ -1,6 +1,7 @@
 package Enemies;
 
 import Builders.FrameBuilder;
+import Engine.GamePanel;
 import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.ImageEffect;
@@ -24,7 +25,11 @@ public class DinosaurEnemy extends Enemy {
     protected Point startLocation;
     protected Point endLocation;
 
-    protected float movementSpeed = 1f;
+    // different speeds depending on the difficulty
+    private static final float NORMAL_SPEED = 1f, HARD_SPEED = 1.2f, HARDCORE_SPEED = 1.4f;
+    float movementSpeed = NORMAL_SPEED;
+    
+    private static final float NORMAL_FIREBALL_SPEED = 1.5f, HARD_FIREBALL_SPEED = 1.7f, HARDCORE_FIREBALL_SPEED = 1.9f;
     private Direction startFacingDirection;
     protected Direction facingDirection;
     protected boolean isInAir;
@@ -65,7 +70,19 @@ public class DinosaurEnemy extends Enemy {
     public void update(Player player) {
         float startBound = startLocation.x;
         float endBound = endLocation.x;
+        float fireballMovementSpeed = NORMAL_FIREBALL_SPEED;
 
+        // set the movement speed of the enemy and fireball attack depending on what difficulty it selected
+        if (GamePanel.getDifficultyHolder().getDifficulty() == 2)
+        {
+        	movementSpeed = HARD_SPEED;
+        	fireballMovementSpeed = HARD_FIREBALL_SPEED;
+        }
+        else if (GamePanel.getDifficultyHolder().getDifficulty() == 1)
+        {
+        	movementSpeed = HARDCORE_SPEED;
+        	fireballMovementSpeed = HARDCORE_FIREBALL_SPEED;
+        }
         // if shoot timer is up and dinosaur is not currently shooting, set its state to SHOOT
         if (shootTimer.isTimeUp() && dinosaurState != DinosaurState.SHOOT) {
             dinosaurState = DinosaurState.SHOOT;
@@ -107,20 +124,18 @@ public class DinosaurEnemy extends Enemy {
                 // define where fireball will spawn on map (x location) relative to dinosaur enemy's location
                 // and define its movement speed
                 int fireballX;
-                float movementSpeed;
                 if (facingDirection == Direction.RIGHT) {
                     fireballX = Math.round(getX()) + getScaledWidth();
-                    movementSpeed = 1.5f;
                 } else {
                     fireballX = Math.round(getX());
-                    movementSpeed = -1.5f;
+                    fireballMovementSpeed = -fireballMovementSpeed;
                 }
 
                 // define where fireball will spawn on the map (y location) relative to dinosaur enemy's location
                 int fireballY = Math.round(getY()) + 4;
 
                 // create Fireball enemy
-                Fireball fireball = new Fireball(new Point(fireballX, fireballY), movementSpeed, 1000);
+                Fireball fireball = new Fireball(new Point(fireballX, fireballY), fireballMovementSpeed, 1000);
 
                 // add fireball enemy to the map for it to offically spawn in the level
                 map.addProjectile(fireball);
