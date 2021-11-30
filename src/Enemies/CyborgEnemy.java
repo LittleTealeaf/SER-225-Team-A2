@@ -78,12 +78,12 @@ public class CyborgEnemy extends Enemy {
         float lazerMovementSpeed = NORMAL_LAZER_SPEED;
 
         // set the movement speed of the enemy and lazer attack depending on what difficulty it selected
-        if (GamePanel.getDifficultyHolder().getDifficulty() == 2)
+        if (GamePanel.getDifficulty() == 2)
         {
         	movementSpeed = HARD_SPEED;
         	lazerMovementSpeed = HARD_LAZER_SPEED;
         }
-        else if (GamePanel.getDifficultyHolder().getDifficulty() == 1)
+        else if (GamePanel.getDifficulty() == 1)
         {
         	movementSpeed = HARDCORE_SPEED;
         	lazerMovementSpeed = HARDCORE_LAZER_SPEED;

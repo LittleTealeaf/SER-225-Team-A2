@@ -52,11 +52,11 @@ public class BugEnemy extends Enemy {
         float moveAmountY = 0;
 
         // set the movement speed of the enemy depending on what difficulty it selected
-        if (GamePanel.getDifficultyHolder().getDifficulty() == 2)
+        if (GamePanel.getDifficulty() == 2)
         {
         	movementSpeed = HARD_SPEED;
         }
-        else if (GamePanel.getDifficultyHolder().getDifficulty() == 1)
+        else if (GamePanel.getDifficulty() == 1)
         {
         	movementSpeed = HARDCORE_SPEED;
         }

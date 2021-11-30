@@ -73,12 +73,12 @@ public class DinosaurEnemy extends Enemy {
         float fireballMovementSpeed = NORMAL_FIREBALL_SPEED;
 
         // set the movement speed of the enemy and fireball attack depending on what difficulty it selected
-        if (GamePanel.getDifficultyHolder().getDifficulty() == 2)
+        if (GamePanel.getDifficulty() == 2)
         {
         	movementSpeed = HARD_SPEED;
         	fireballMovementSpeed = HARD_FIREBALL_SPEED;
         }
-        else if (GamePanel.getDifficultyHolder().getDifficulty() == 1)
+        else if (GamePanel.getDifficulty() == 1)
         {
         	movementSpeed = HARDCORE_SPEED;
         	fireballMovementSpeed = HARDCORE_FIREBALL_SPEED;

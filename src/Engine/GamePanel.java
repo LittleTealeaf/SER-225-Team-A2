@@ -25,7 +25,11 @@ public class GamePanel extends JPanel implements Updatable {
 	protected static GameWindow gameWindow;
 	private static ScreenCoordinator coordinator;
 	public static Clip clip;
-	private static DifficultyHolder difficultyHolder;
+	
+	// these difficulty values are not only just used for the the logic of the game but
+	// to determine how much health the user gets at each difficulty;
+	private final static int NORMAL = 3, HARD = 2, HARDCORE = 1;
+	private static int difficulty;
 	private final JLabel health;
 	private final GameThread gameThread;
 
@@ -50,13 +54,18 @@ public class GamePanel extends JPanel implements Updatable {
 		screenManager = new ScreenManager();
 		coordinator = c1;
 
-		difficultyHolder = new DifficultyHolder(3);
+		difficulty = NORMAL;
+		
 		gameThread = new GameThread(this::repaint, this::update);
 	}
-
-	public static DifficultyHolder getDifficultyHolder()
+	
+	public static void setDifficulty(int newDifficulty)
 	{
-		return difficultyHolder;
+		difficulty = newDifficulty;
+	}
+	public static int getDifficulty()
+	{
+		return difficulty;
 	}
 	
 	public static ScreenCoordinator getScreenCoordinator() {
@@ -166,8 +175,15 @@ public class GamePanel extends JPanel implements Updatable {
 		
 		// Each difficulty is represented as an integer while also representing the amount of health the user has
 		// normal is 3 hard is 2 and hardcore is 1
+		// hide the health whenever in a menu
 		if(coordinator.getGameState() == GameState.MENU) {
-			Player.PLAYER_HEALTH = difficultyHolder.getDifficulty();
+			Player.PLAYER_HEALTH = difficulty;
+			health.hide();
+		}
+		// show the health when in a level
+		else if (coordinator.getGameState() == GameState.LEVEL)
+		{
+			health.show();
 		}
 	}
 

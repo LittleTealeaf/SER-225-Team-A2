@@ -23,6 +23,7 @@
 |11| Take damage. | The cat dies. | [RESULT] |
 |12| Press escape. | The player is returned to the main menu. | [RESULT] |
 |13| Load into level 6, die to any enemy, and press space. | The player is restarted at the tutorial level. | [RESULT] |
+|14| Restart the game and beat each level at every difficulty to ensure the levels are still possible. (Use the level select to make hardcore mode easier) | Each level is beat on every difficulty | [RESULT] |
 
 ### Test Completion
 - **Tester**: [TESTER NAME]

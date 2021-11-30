@@ -71,12 +71,12 @@ public class Dog extends Enemy {
         float boneMovementSpeed = NORMAL_BONE_SPEED;
 
         // set the movement speed of the enemy and fireball attack depending on what difficulty it selected
-        if (GamePanel.getDifficultyHolder().getDifficulty() == 2)
+        if (GamePanel.getDifficulty() == 2)
         {
         	movementSpeed = HARD_SPEED;
         	boneMovementSpeed = HARD_BONE_SPEED;
         }
-        else if (GamePanel.getDifficultyHolder().getDifficulty() == 1)
+        else if (GamePanel.getDifficulty() == 1)
         {
         	movementSpeed = HARDCORE_SPEED;
         	boneMovementSpeed = HARDCORE_BONE_SPEED;

@@ -20,7 +20,7 @@ public class BossBattle extends Map {
     private boolean bossKilled = false;
 
     public BossBattle() {
-        super("Final Boss","BossBattle.txt", new CommonTileset(), new Point(1, 0));
+        super("Final Boss","BossBattle.txt", new CommonTileset(), new Point(1, 17));
     }
 
     @Override
