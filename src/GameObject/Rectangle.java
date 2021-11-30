@@ -1,5 +1,6 @@
 package GameObject;
 
+import Engine.Collidable;
 import Engine.GraphicsHandler;
 
 import java.awt.*;
@@ -7,7 +8,7 @@ import java.awt.*;
 // This class represents a rectangle, which at its core is (x, y, width, height)
 // it has some properties, rectangle math methods, and draw logic
 // the methods here are pretty self explanatory
-public class Rectangle implements IntersectableRectangle {
+public class Rectangle implements Collidable {
     protected float x;
 	protected float y;
 	protected int width;
@@ -174,7 +175,7 @@ public class Rectangle implements IntersectableRectangle {
 	}
 
 	// check if this intersects with another rectangle
-	public boolean intersects(IntersectableRectangle other) {
+	public boolean intersects(Collidable other) {
 		Rectangle intersectRectangle = getIntersectRectangle();
 		Rectangle otherIntersectRectangle = other.getIntersectRectangle();
 		return Math.round(intersectRectangle.getX1()) < Math.round(otherIntersectRectangle.getX2()) && Math.round(intersectRectangle.getX2()) > Math.round(otherIntersectRectangle.getX1()) &&
@@ -182,10 +183,11 @@ public class Rectangle implements IntersectableRectangle {
 	}
 
 	// check if this overlaps with another rectangle
-	public boolean overlaps(IntersectableRectangle other) {
+	public boolean overlaps(Collidable other) {
 		Rectangle intersectRectangle = getIntersectRectangle();
 		Rectangle otherIntersectRectangle = other.getIntersectRectangle();
 		return Math.round(intersectRectangle.getX1()) <= Math.round(otherIntersectRectangle.getX2()) && Math.round(intersectRectangle.getX2()) >= Math.round(otherIntersectRectangle.getX1()) &&
 				Math.round(intersectRectangle.getY1()) <= Math.round(otherIntersectRectangle.getY2()) && Math.round(intersectRectangle.getY2()) >= Math.round(otherIntersectRectangle.getY1());
 	}
+
 }

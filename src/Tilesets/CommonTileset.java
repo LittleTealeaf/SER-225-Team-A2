@@ -229,7 +229,6 @@ public class CommonTileset extends Tileset {
 
         mapTiles.add(lethalSpikeTile);
 
-        // passable floating platform
         Frame floatingPlatformFrame = new FrameBuilder(getSubImage(3, 4), 0)
                 .withScale(tileScale)
                 .withBounds(0, 6, 16, 4)

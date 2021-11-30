@@ -45,7 +45,8 @@ public enum Key {
     NINE(57),
     ZERO(48),
     SPACE(32),
-    ESC(27);
+    ESC(27),
+    CTRL(17);
 
     private int keyCode;
     Key(int keyCode) {

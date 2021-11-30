@@ -1,7 +1,7 @@
 package Projectiles;
 
 import Builders.FrameBuilder;
-import Engine.CollisionType;
+import Engine.Collidable;
 import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.ImageEffect;
@@ -19,7 +19,7 @@ import java.util.HashMap;
 // This class is for the bone enemy that the dog class shoots out
 // it will travel in a straight line (x axis) for a set time before disappearing
 // it will disappear early if it collides with a solid map tile
-public class Bone extends Projectile {
+public class Bone extends Projectile implements Collidable.PreventJump {
     private float movementSpeed;
     private Stopwatch existenceTimer = new Stopwatch();
 
@@ -34,7 +34,6 @@ public class Bone extends Projectile {
         isRespawnable = false;
 
         initialize();
-        collisionType = CollisionType.PREVENT_JUMP;
     }
 
     @Override
@@ -92,5 +91,9 @@ public class Bone extends Projectile {
                             .build()
             });
         }};
+    }
+
+    public int getJumpDelay() {
+        return 5000;
     }
 }

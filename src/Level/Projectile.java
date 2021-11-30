@@ -1,6 +1,6 @@
 package Level;
 
-import Engine.CollisionType;
+import Engine.Collidable;
 import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.Rectangle;
@@ -10,7 +10,7 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 // This class is a base class for all projectiles in the game -- all projectiles should extend from it
-public class Projectile extends MapEntity {
+public class Projectile extends MapEntity implements Collidable.Damage {
 
     public Projectile(float x, float y, SpriteSheet spriteSheet, String startingAnimation) {
         super(x, y, spriteSheet, startingAnimation);
@@ -43,7 +43,6 @@ public class Projectile extends MapEntity {
     @Override
     public void initialize() {
         super.initialize();
-        collisionType = CollisionType.DAMAGE;
     }
 
     public void update(Player player) {
@@ -51,6 +50,10 @@ public class Projectile extends MapEntity {
         if (intersects(player)) {
             touchedPlayer(player);
         }
+    }
+
+    public int getDamage() {
+        return 1;
     }
 
     // A subclass can override this method to specify what it does when it touches the player
