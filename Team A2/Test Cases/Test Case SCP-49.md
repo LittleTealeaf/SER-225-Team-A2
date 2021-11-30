@@ -4,7 +4,7 @@
 | Owner of Test | Nicholas Tourony |
 | Test Name | Difficulty Test |
 | Date of Last Revision | 11/28/2021 |
-| Test Objective | Ensure that the difficulty settings change the amount of health the cat has and changes the movement speed of the enemies. |
+| Test Objective | Ensure that the difficulty settings change the amount of health the cat has and changes the movement speed of the enemies and their projectiles. |
 
 ### Procedure
 
