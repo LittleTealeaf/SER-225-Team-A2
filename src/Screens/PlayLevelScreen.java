@@ -249,8 +249,8 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
     }
 
     public void resetHardcore() {
+        timeTracker = new TimeTracker();
         loadMap(0);
-        timeTracker.reset();
     }
 
 
