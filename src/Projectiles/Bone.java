@@ -6,10 +6,14 @@ import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
-import Level.*;
+import Level.Enemy;
+import Level.MapEntityStatus;
+import Level.Player;
+import Level.Projectile;
 import Utils.Direction;
 import Utils.Point;
 import Utils.Stopwatch;
+
 import java.util.HashMap;
 
 // This class is for the bone enemy that the dog class shoots out

@@ -1,9 +1,7 @@
 package Game;
 
 import Engine.GameWindow;
-
 import Engine.ScreenManager;
-import Menu.DebugScreen;
 
 /*
  * The game starts here
@@ -19,7 +17,6 @@ public class Game {
     public Game() {
     	ScreenCoordinator c1 = new ScreenCoordinator();
         GameWindow gameWindow = new GameWindow(c1);
-     
         gameWindow.startGame();
         ScreenManager screenManager = gameWindow.getScreenManager();
         screenManager.setCurrentScreen(c1);

@@ -4,10 +4,14 @@ import Builders.FrameBuilder;
 import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.SpriteSheet;
-import Level.*;
+import Level.Enemy;
+import Level.MapEntityStatus;
+import Level.Player;
+import Level.Projectile;
 import Utils.Direction;
 import Utils.Point;
 import Utils.Stopwatch;
+
 import java.util.HashMap;
 
 // This class is for the lazer beam enemy that the DinosaurEnemy class shoots out
