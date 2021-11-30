@@ -1,7 +1,9 @@
 package Menu;
 
 import Engine.Drawable;
+import Engine.GamePanel;
 import Engine.GraphicsHandler;
+import Game.GameState;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -30,6 +32,8 @@ public class MenuOption implements Drawable {
     private final int y;
     private int width;
     private int height;
+    
+    private CloseOnExecute actionAfterExecute = CloseOnExecute.REMAINOPEN;
 
     public MenuOption(String text, int x, int y, MenuItemListener listener) {
         this(text, x, y);
@@ -41,6 +45,12 @@ public class MenuOption implements Drawable {
         this.text = text;
         this.x = x;
         this.y = y;
+    }
+    
+    public MenuOption(String text, int x, int y, MenuItemListener listener, CloseOnExecute closeOnExecute) {
+        this(text, x, y);
+        setListener(listener);
+        actionAfterExecute = closeOnExecute;
     }
 
     public void setNeighborItem(MenuOption item, Direction direction) {
@@ -148,9 +158,18 @@ public class MenuOption implements Drawable {
         if (listener != null) {
             listener.event();
         }
+        if (actionAfterExecute == CloseOnExecute.CLOSE)
+        {
+        	GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
+        }
     }
 
     public void setSelectFunction(SelectableMenu function) {
         this.selectableMenu = function;
+    }
+    
+    public enum CloseOnExecute
+    {
+    	REMAINOPEN, CLOSE;
     }
 }
