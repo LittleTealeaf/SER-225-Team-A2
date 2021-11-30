@@ -7,9 +7,11 @@ import Enemies.CyborgEnemy;
 import Engine.ImageLoader;
 import EnhancedMapTiles.EndLevelBox;
 import EnhancedMapTiles.HorizontalMovingPlatform;
+import Flags.CheckpointFlag;
 import GameObject.Rectangle;
 import Level.*;
 import NPCs.Walrus;
+import Screens.PlayLevelScreen;
 import Tilesets.CommonTileset;
 import Utils.Direction;
 import Utils.Point;
@@ -19,7 +21,7 @@ import java.util.ArrayList;
 public class BossBattle extends Map {
 
     public BossBattle() {
-        super("BossBattle.txt", new CommonTileset(), new Point(1, 17));
+        super("BossBattle.txt", new CommonTileset(), new Point(35, 5));
     }
 
     @Override
@@ -53,6 +55,17 @@ public class BossBattle extends Map {
         ));
 
         return enhancedMapTiles;
+    }
+    
+    @Override
+    public ArrayList<Flag> loadFlags() {
+        ArrayList<Flag> flags = new ArrayList<>();
+
+        flags.add(new CheckpointFlag(
+        		getPositionByTileIndex(24, 5)
+        ));
+
+        return flags;
     }
 
 }

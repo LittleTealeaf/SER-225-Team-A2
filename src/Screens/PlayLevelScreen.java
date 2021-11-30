@@ -20,7 +20,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener {
     private static final SpriteFont SPRITE_FONT_PAUSE;
     private static final SpriteFont[] SPRITE_FONT_INSTRUCTIONS;
     private static final Color COLOR_GREY_BACKGROUND;
-    private static Map loadedMap;
+    public static Map loadedMap;
     private static Screen alternateScreen;
     private static Player player;
 

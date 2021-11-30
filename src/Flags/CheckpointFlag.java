@@ -6,6 +6,7 @@ import GameObject.Frame;
 import GameObject.SpriteSheet;
 import Level.Flag;
 import Level.Player;
+import Screens.PlayLevelScreen;
 import Utils.Point;
 import java.util.HashMap;
 
@@ -20,15 +21,17 @@ public class CheckpointFlag extends Flag {
     protected checkpointState checkpointState;
 
     public CheckpointFlag(Point location) {
-        super(location.getX(), location.getY(), new SpriteSheet(ImageLoader.load("CheckpointFlag.png"), 17, 32), "NOT PASSED");
+        super(location.x, location.y, new SpriteSheet(ImageLoader.load("CheckpointFlag.png"), 16, 27), "NOT PASSED");
         this.location = location;
         checkpointState = checkpointState.NOT_PASSED;
     }
 
     @Override
     public void update(Player player) {
+    	super.update(player);
     	if(intersects(player)) {
-    		checkpointState = checkpointState.PASSED;  
+    		checkpointState = checkpointState.PASSED;
+    		PlayLevelScreen.loadedMap.setPlayerStartPosition(location); 		
     	}
     	
     	if(checkpointState == checkpointState.PASSED) {
@@ -50,14 +53,14 @@ public class CheckpointFlag extends Flag {
             put("NOT PASSED", new Frame[]{
             		new FrameBuilder(spriteSheet.getSprite(0, 0), 200)
 		                    .withScale(2)
-		                    .withBounds(0, 0, 7, 22)
+		                    .withBounds(0, 0, 17, 28)
 		                    .build()
             });
 
             put("PASSED", new Frame[]{
-            		new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
+            		new FrameBuilder(spriteSheet.getSprite(0, 1), 200)
 		                    .withScale(2)
-		                    .withBounds(0, 0, 17, 31)
+		                    .withBounds(0, 0, 17, 28)
 		                    .build()
             });
         }};
