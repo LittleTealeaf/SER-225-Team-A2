@@ -3,7 +3,7 @@ package Utils;
 public class TimeParser {
     private static final long MS_PER_SECOND, SECOND_PER_MINUTE, MINUTE_PER_HOUR, MS_PER_HOUR, MS_PER_MINUTE;
 
-    private long time;
+    protected long time;
 
     static {
         MS_PER_SECOND = 1000;

@@ -2,19 +2,19 @@ package Utils;
 
 public class GameTimer extends TimeParser {
 
-    private long startTime, endTime, addTime;
+    private long startTime, endTime;
     private boolean running;
 
     public GameTimer() {
         startTime = 0;
         endTime = 0;
-        addTime = 0;
+        time = 0;
         running = false;
     }
 
     public void start() {
         if(!running) {
-            addTime = getElapsed();
+            time = getElapsed();
             startTime = System.currentTimeMillis();
             running = true;
         }
@@ -28,12 +28,12 @@ public class GameTimer extends TimeParser {
     }
 
     public void reset() {
-        addTime = 0;
+        time = 0;
         startTime = System.currentTimeMillis();
     }
 
     public long getElapsed() {
-        return (running ? System.currentTimeMillis() : endTime ) + addTime - startTime;
+        return (running ? System.currentTimeMillis() : endTime ) + time - startTime;
     }
 
     @Override

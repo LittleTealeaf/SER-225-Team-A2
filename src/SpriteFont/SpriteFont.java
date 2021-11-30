@@ -34,6 +34,7 @@ public class SpriteFont implements Drawable {
 		this.y = y;
 		this.color = color;
 		updateDimensions();
+		updateContainsNewLines();
 	}
 
 	public void setColor(Color color) {

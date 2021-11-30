@@ -9,6 +9,7 @@ import Maps.TitleScreenMap;
 import Menu.Menu;
 import SpriteFont.SpriteFont;
 import Utils.GameTimer;
+import Utils.TimeParser;
 
 import java.awt.*;
 
@@ -30,8 +31,9 @@ public class GameScoreScreen extends Menu {
         setBackground(new TitleScreenMap());
         System.out.println(levelsToString(timeTracker));
 
-        SpriteFont levels = new SpriteFont(levelsToString(timeTracker), 10, ScreenManager.getScreenHeight() - 150, FONT_LEVEL, COLOR_LEVEL);
-        SpriteFont total = new SpriteFont(totalToString(timeTracker),500,100,FONT_TOTAL,COLOR_TOTAL);
+        SpriteFont levels = new SpriteFont(levelsToString(timeTracker), 10, 100, FONT_LEVEL, COLOR_LEVEL);
+        levels.setMultiLine(true);
+        SpriteFont total = new SpriteFont(totalToString(timeTracker),300,100,FONT_TOTAL,COLOR_TOTAL);
 
         setDrawables(levels,total);
     }
@@ -56,8 +58,8 @@ public class GameScoreScreen extends Menu {
         return stringBuilder.toString();
     }
 
-    private GameTimer getTotalTimes(TimeTracker timeTracker) {
-        GameTimer totalTime = new GameTimer();
+    private TimeParser getTotalTimes(TimeTracker timeTracker) {
+        TimeParser totalTime = new TimeParser();
         for(GameTimer gameTimer : timeTracker.getLevels()) {
             totalTime.addTime(gameTimer.getElapsed());
         }

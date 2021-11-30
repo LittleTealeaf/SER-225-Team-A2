@@ -125,8 +125,10 @@ public abstract class Menu extends Screen implements SelectableMenu {
     }
 
     public void mouseClicked(MouseEvent e) {
-        for (MenuOption option : menuOptions) {
-            option.mouseClicked(e);
+        if(menuOptions != null) {
+            for (MenuOption option : menuOptions) {
+                option.mouseClicked(e);
+            }
         }
     }
 

@@ -122,6 +122,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
                 alternateScreen = null;
                 loadedMap.draw(graphicsHandler);
                 player.draw(graphicsHandler);
+                timeTracker.draw(graphicsHandler);
             }
             case LEVEL_WIN_MESSAGE -> {
                 if (!(alternateScreen instanceof LevelClearedScreen)) {
@@ -129,6 +130,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
                     alternateScreen.initialize();
                 }
                 alternateScreen.draw(graphicsHandler);
+                timeTracker.draw(graphicsHandler);
             }
             case LEVEL_LOSE_MESSAGE -> {
                 if (!(alternateScreen instanceof LevelLoseScreen)) {
@@ -136,6 +138,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
                     alternateScreen.initialize();
                 }
                 alternateScreen.draw(graphicsHandler);
+                timeTracker.draw(graphicsHandler);
             }
             case PAUSE -> {
                 if (!(alternateScreen instanceof PauseScreen)) {
@@ -143,6 +146,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
                     alternateScreen.initialize();
                 }
                 alternateScreen.draw(graphicsHandler);
+                timeTracker.draw(graphicsHandler);
             }
             case INSTRUCTIONS -> {
                 loadedMap.draw(graphicsHandler);
@@ -159,9 +163,6 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
                 }
                 alternateScreen.draw(graphicsHandler);
             }
-        }
-        if(timeTracker != null) {
-            timeTracker.draw(graphicsHandler);
         }
     }
 
