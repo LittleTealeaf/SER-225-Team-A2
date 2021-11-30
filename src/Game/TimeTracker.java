@@ -61,6 +61,7 @@ public class TimeTracker implements Drawable {
         for(GameTimer gameTimer : levels) {
             gameTimer.reset();
         }
+        showLevel = false;
     }
 
     /**
