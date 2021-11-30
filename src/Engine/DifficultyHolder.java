@@ -1,5 +1,6 @@
 package Engine;
 
+@Deprecated
 public class DifficultyHolder 
 
 {

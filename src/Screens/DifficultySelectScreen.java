@@ -7,10 +7,10 @@ import Maps.TitleScreenMap;
 import Menu.Menu;
 import Menu.Direction;
 import Menu.MenuOption;
+import Menu.MenuOption.CloseOnExecute;
 
 public class DifficultySelectScreen extends Menu {
 	
-	private final DifficultyHolder difficultyHolder;
 	
 	//these values also correspond to the health given at each difficulty
 	private final static int NORMAL = 3;
@@ -18,12 +18,11 @@ public class DifficultySelectScreen extends Menu {
 	private final static int HARDCORE = 1;
 
     public DifficultySelectScreen() {
-    	difficultyHolder = GamePanel.getDifficultyHolder();
         MenuOption[][] menu = new MenuOption[][]{
                 {
-                		new MenuOption("Normal", 100, 150, () -> difficultyHolder.setDifficulty(NORMAL)),
-                		new MenuOption("Hard", 320, 150, () -> difficultyHolder.setDifficulty(HARD)),
-                		new MenuOption("Hardcore", 500, 150, () -> difficultyHolder.setDifficulty(HARDCORE))
+                		new MenuOption("Normal", 100, 150, () -> GamePanel.setDifficulty(NORMAL), CloseOnExecute.CLOSE),
+                		new MenuOption("Hard", 320, 150, () -> GamePanel.setDifficulty(HARD), CloseOnExecute.CLOSE),
+                		new MenuOption("Hardcore", 500, 150, () -> GamePanel.setDifficulty(HARDCORE), CloseOnExecute.CLOSE)
                 },
                 {
                         new MenuOption(
@@ -35,6 +34,7 @@ public class DifficultySelectScreen extends Menu {
       menu[0][0].setNeighborItem(menu[1][0], Direction.DOWN);
       menu[0][1].setNeighborItem(menu[1][0], Direction.DOWN);
       menu[0][2].setNeighborItem(menu[1][0], Direction.DOWN);
-      menu[1][0].setNeighborItem(menu[0][1],Direction.UP);
+      menu[1][0].setNeighborItem(menu[0][1], Direction.UP);
     }
+    
 }

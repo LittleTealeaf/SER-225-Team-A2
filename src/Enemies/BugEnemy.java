@@ -1,6 +1,7 @@
 package Enemies;
 
 import Builders.FrameBuilder;
+import Engine.GamePanel;
 import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.ImageEffect;
@@ -18,7 +19,11 @@ import java.util.HashMap;
 public class BugEnemy extends Enemy {
 
     private float gravity = .5f;
-    private float movementSpeed = .5f;
+    
+    // different speeds depending on the difficulty
+    private static final float NORMAL_SPEED = 0.5f, HARD_SPEED = 0.7f, HARDCORE_SPEED = 0.9f;
+    float movementSpeed = NORMAL_SPEED;
+    
     private Direction startFacingDirection;
     private Direction facingDirection;
     private boolean isInAir;
@@ -46,6 +51,16 @@ public class BugEnemy extends Enemy {
         float moveAmountX = 0;
         float moveAmountY = 0;
 
+        // set the movement speed of the enemy depending on what difficulty it selected
+        if (GamePanel.getDifficulty() == 2)
+        {
+        	movementSpeed = HARD_SPEED;
+        }
+        else if (GamePanel.getDifficulty() == 1)
+        {
+        	movementSpeed = HARDCORE_SPEED;
+        }
+        
         // add gravity (if in air, this will cause bug to fall)
         moveAmountY += gravity;
 
