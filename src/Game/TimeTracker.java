@@ -95,7 +95,7 @@ public class TimeTracker implements Drawable {
                 FontMetrics metrics = graphicsHandler.getGraphics2D().getFontMetrics(FONT_SMALL);
                 yMap = metrics.getHeight() + yTotal;
                 xMap = ScreenManager.getScreenWidth() - metrics.stringWidth(mapString.replace(' ','0'));
-                charsMap = totalString.length();
+                charsMap = mapString.length();
             }
             graphicsHandler.drawString(mapString,xMap,yMap,FONT_SMALL,Color.white);
         }

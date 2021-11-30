@@ -1,10 +1,7 @@
 package Screens;
 
 import Engine.Drawable;
-import Engine.GamePanel;
 import Engine.GraphicsHandler;
-import Engine.ScreenManager;
-import Game.GameState;
 import Game.TimeTracker;
 import Maps.GameMaps;
 import Maps.TitleScreenMap;
