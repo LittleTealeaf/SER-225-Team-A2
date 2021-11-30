@@ -28,6 +28,9 @@
 |6|Hit "Play" again to go back into the main menu|The tutorial level is loaded, and the timer is reset back to 0||
 |7|Complete the tutorial level|The level completed screen is shown, but only for a brief second before the next level is loaded. On the top right is now two timers, one that displays the total time, and another that displays the elapsed time for the current level||
 |8|Hit `P/Escape` to pause the game|While the game is paused, timers are also paused||
+|9|Exit back to main menu, Select "Difficulty", and select "Hardcore"|The player is brought back to the main menu, and the hardcore difficulty is selected||
+|10|Select "Level Select", then select "Level 3"|Level 3 is loaded, the timer starts running||
+|11|Die, and then respawn|The timer is reset back to 0||
 
 ### Test Completion
 - **Tester**: [TESTER NAME]

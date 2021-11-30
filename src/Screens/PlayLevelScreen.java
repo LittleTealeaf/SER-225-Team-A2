@@ -248,6 +248,11 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
         timeTracker.stop();
     }
 
+    public void resetHardcore() {
+        loadMap(0);
+        timeTracker.reset();
+    }
+
 
     public enum State {
         RUNNING, LEVEL_COMPLETED, PLAYER_DEAD, LEVEL_WIN_MESSAGE, LEVEL_LOSE_MESSAGE, PAUSE, INSTRUCTIONS, GAME_COMPLETED

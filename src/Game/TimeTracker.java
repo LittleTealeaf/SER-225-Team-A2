@@ -56,6 +56,13 @@ public class TimeTracker implements Drawable {
         }
     }
 
+    public void reset() {
+        total.reset();
+        for(GameTimer gameTimer : levels) {
+            gameTimer.reset();
+        }
+    }
+
     /**
      * Usable when dealing with pausing
      */
