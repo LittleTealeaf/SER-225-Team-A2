@@ -14,7 +14,7 @@
 
 |Step | Action | Expected Result | Measurement Field |
 |:---:| :---        |    :----  | :----:|
-|1|Run the game|The game successfully opens||
+|1|Run the game|The game successfully opens|pass|
 |2|Begin recording|A screen recorder is started that records the game|pass|
 |3|Click *Play Game*|The tutorial level is successfully opened|pass|
 |4|Walk to the left-most edge of the level|The cat is at the left most bound of the tutorial level|pass|
