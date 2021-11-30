@@ -14,26 +14,33 @@ import java.awt.*;
 
 public class GameScoreScreen extends Menu {
 
-    private static final Font FONT_LEVEL;
-    private static final Color COLOR_LEVEL;
+    private static final Font FONT_LEVEL, FONT_TOTAL;
+    private static final Color COLOR_LEVEL, COLOR_TOTAL;
 
     static {
         String fontName = "Times New Roman";
         FONT_LEVEL = new Font(fontName, Font.PLAIN, 30);
+        FONT_TOTAL = new Font(fontName,Font.PLAIN,60);
         COLOR_LEVEL = Color.WHITE;
+        COLOR_TOTAL = Color.WHITE;
     }
 
 
     public GameScoreScreen(TimeTracker timeTracker) {
         setBackground(new TitleScreenMap());
-        System.out.println(getLevels(timeTracker));
+        System.out.println(levelsToString(timeTracker));
 
-        SpriteFont levels = new SpriteFont(getLevels(timeTracker), 30, ScreenManager.getScreenHeight() - 125, FONT_LEVEL, COLOR_LEVEL);
+        SpriteFont levels = new SpriteFont(levelsToString(timeTracker), 10, ScreenManager.getScreenHeight() - 150, FONT_LEVEL, COLOR_LEVEL);
+        SpriteFont total = new SpriteFont(totalToString(timeTracker),500,100,FONT_TOTAL,COLOR_TOTAL);
 
-        setDrawables(levels);
+        setDrawables(levels,total);
     }
 
-    private String getLevels(TimeTracker timeTracker) {
+    private String totalToString(TimeTracker timeTracker) {
+        return new StringBuilder("Total: ").append(getTotalTimes(timeTracker)).toString();
+    }
+
+    private String levelsToString(TimeTracker timeTracker) {
         StringBuilder stringBuilder = new StringBuilder();
         GameTimer[] gameTimers = timeTracker.getLevels();
 
