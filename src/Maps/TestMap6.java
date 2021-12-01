@@ -6,9 +6,11 @@ import Enemies.DinosaurEnemy;
 import Engine.ImageLoader;
 import EnhancedMapTiles.EndLevelBox;
 import EnhancedMapTiles.HorizontalMovingPlatform;
+import Flags.CheckpointFlag;
 import GameObject.Rectangle;
 import Level.Enemy;
 import Level.EnhancedMapTile;
+import Level.Flag;
 import Level.Map;
 import Level.TileType;
 import Tilesets.CommonTileset;
@@ -74,6 +76,17 @@ public class TestMap6 extends Map {
         ));
 
         return enhancedMapTiles;
+    }
+    
+    @Override
+    public ArrayList<Flag> loadFlags() {
+        ArrayList<Flag> flags = new ArrayList<>();
+
+        flags.add(new CheckpointFlag(
+        		getPositionByTileIndex(26, 7)
+        ));
+
+        return flags;
     }
 
 }

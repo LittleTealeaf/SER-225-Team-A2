@@ -19,7 +19,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
     private static final KeyLocker keyLocker;
     private static final SpriteFont[] SPRITE_FONT_INSTRUCTIONS;
     private static final Color COLOR_GREY_BACKGROUND;
-    private static Map loadedMap;
+    public static Map loadedMap;
     private static Screen alternateScreen;
     private static Player player;
     private static TimeTracker timeTracker;
@@ -227,7 +227,11 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
     }
 
     public void resetLevel() {
-        loadMap(currentMap);
+        loadedMap.reset();
+        player = Config.playerAvatar.generatePlayer(loadedMap.getPlayerStartPosition());
+        player.setMap(loadedMap);
+        player.addListener(this);
+        screenState = State.RUNNING;
     }
 
     public void backToMenu() {

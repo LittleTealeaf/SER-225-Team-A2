@@ -2,8 +2,8 @@ package Utils;
 
 // Represents a Point on a 2D plane, has some "point math" methods
 public class Point {
-    public final float x;
-    public final float y;
+    public float x;
+    public float y;
 
     public Point(float x, float y) {
         this.x = x;
@@ -32,5 +32,9 @@ public class Point {
 
     public Point subtractY(int y) {
         return new Point(this.x, this.y - y);
+    }
+
+    public String toString() {
+        return x + " " + y;
     }
 }

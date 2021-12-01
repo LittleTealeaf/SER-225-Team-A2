@@ -27,6 +27,7 @@ public class Camera extends Rectangle {
     private ArrayList<Projectile> activeProjectiles = new ArrayList<>();
     private ArrayList<EnhancedMapTile> activeEnhancedMapTiles = new ArrayList<>();
     private ArrayList<NPC> activeNPCs = new ArrayList<>();
+    private ArrayList<Flag> activeFlags = new ArrayList<>();
   
     // determines how many tiles off screen an entity can be before it will be deemed inactive and not included in the update/draw cycles until it comes back in range
     private final int UPDATE_OFF_SCREEN_RANGE = 10;
@@ -74,6 +75,7 @@ public class Camera extends Rectangle {
         activeProjectiles = loadActiveProjectiles();
         activeEnhancedMapTiles = loadActiveEnhancedMapTiles();
         activeNPCs = loadActiveNPCs();
+        activeFlags = loadActiveFlags();
 
         for (Enemy enemy : activeEnemies) {
             enemy.update(player);
@@ -89,6 +91,10 @@ public class Camera extends Rectangle {
 
         for (NPC npc : activeNPCs) {
             npc.update(player);
+        }
+        
+        for (Flag flag : activeFlags) {
+            flag.update(player);
         }
     }
 
@@ -200,6 +206,37 @@ public class Camera extends Rectangle {
         }
         return activeNPCs;
     }
+    
+ // determine which flags are active (within range of the camera)
+    // if flag is currently active and was also active last frame, nothing special happens and flag is included in active list
+    // if flag is currently active but last frame was inactive, it will have its status set to active and flag is included in active list
+    // if flag is currently inactive but last frame was active, it will have its status set to inactive, have its initialize method called if its respawnable
+    //      (which will set it back up to its default state), and not include it in the active list
+    //      next time a respawnable enemy is determined active, since it was reset back to default state upon going inactive, it will essentially be "respawned" in its starting state
+    // if flag is currently set to REMOVED, it is permanently removed from the map's list of enemies and will never be able to be active again
+    private ArrayList<Flag> loadActiveFlags() {
+        ArrayList<Flag> activeFlags = new ArrayList<>();
+        if(map.getFlags() != null) {
+            for (int i = map.getFlags().size() - 1; i >= 0; i--) {
+                Flag flag = map.getFlags().get(i);
+
+                if (isMapEntityActive(flag)) {
+                    activeFlags.add(flag);
+                    if (flag.mapEntityStatus == MapEntityStatus.INACTIVE) {
+                        flag.setMapEntityStatus(MapEntityStatus.ACTIVE);
+                    }
+                } else if (flag.getMapEntityStatus() == MapEntityStatus.ACTIVE) {
+                    flag.setMapEntityStatus(MapEntityStatus.INACTIVE);
+                    if (flag.isRespawnable()) {
+                        flag.initialize();
+                    }
+                } else if (flag.getMapEntityStatus() == MapEntityStatus.REMOVED) {
+                    map.getFlags().remove(i);
+                }
+            }
+        }
+        return activeFlags;
+    }
 
     /*
         determines if map entity (enemy, enhanced map tile, or npc) is active by the camera's standards
@@ -254,6 +291,11 @@ public class Camera extends Rectangle {
                 npc.draw(graphicsHandler);
             }
         }
+        for (Flag flag : activeFlags) {
+            if (containsDraw(flag)) {
+                flag.draw(graphicsHandler);
+            }
+        }
     }
 
     // checks if a game object's position falls within the camera's current radius
@@ -285,6 +327,10 @@ public class Camera extends Rectangle {
 
     public ArrayList<NPC> getActiveNPCs() {
         return activeNPCs;
+    }
+    
+    public ArrayList<Flag> getActiveFlags() {
+        return activeFlags;
     }
 
     // gets end bound X position of the camera (start position is always 0)

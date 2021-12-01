@@ -6,6 +6,7 @@ import Enemies.Dog;
 import Engine.ImageLoader;
 import EnhancedMapTiles.EndLevelBox;
 import EnhancedMapTiles.HorizontalMovingPlatform;
+import Flags.CheckpointFlag;
 import GameObject.Rectangle;
 import Level.*;
 import Tilesets.CommonTileset;
@@ -21,7 +22,7 @@ public class BossBattle extends Map {
 
     //original 17
     public BossBattle() {
-        super("Final Boss","BossBattle.txt", new CommonTileset(), new Point(1, 17));
+    	super("Final Boss","BossBattle.txt", new CommonTileset(), new Point(1, 17));
     }
 
     @Override
@@ -55,6 +56,17 @@ public class BossBattle extends Map {
         ));
 
         return enhancedMapTiles;
+    }
+    
+    @Override
+    public ArrayList<Flag> loadFlags() {
+        ArrayList<Flag> flags = new ArrayList<>();
+
+        flags.add(new CheckpointFlag(
+        		getPositionByTileIndex(24, 5)
+        ));
+
+        return flags;
     }
 
     @Override

@@ -1,9 +1,6 @@
 package Level;
 
-import Engine.Config;
-import Engine.Drawable;
-import Engine.GraphicsHandler;
-import Engine.ScreenManager;
+import Engine.*;
 import Utils.Point;
 
 import java.io.File;
@@ -45,6 +42,7 @@ public abstract class Map implements Drawable {
 
     // tile player should start on when this map is first loaded
     protected Point playerStartTile;
+    protected Point scaledPlayerStartTile;
 
     // the location of the "mid point" of the screen
     // this is what tells the game that the player has reached the center of the screen, therefore the camera should move instead of the player
@@ -63,6 +61,7 @@ public abstract class Map implements Drawable {
     protected ArrayList<Projectile> projectiles;
     protected ArrayList<EnhancedMapTile> enhancedMapTiles;
     protected ArrayList<NPC> npcs;
+    protected ArrayList<Flag> flags;
 
     // if set to false, camera will not move as player moves
     protected boolean adjustCamera = true;
@@ -108,6 +107,13 @@ public abstract class Map implements Drawable {
             npc.setMap(this);
         }
 
+        if(GamePanel.getDifficulty() != 1) {
+            this.flags = loadFlags();
+            for (Flag flags: this.flags) {
+                flags.setMap(this);
+            }
+        }
+
         this.camera = new Camera(0, 0, tileset.getScaledSpriteWidth(), tileset.getScaledSpriteHeight(), this);
     }
 
@@ -148,6 +154,7 @@ public abstract class Map implements Drawable {
                 MapTile tile = tileset.getTile(tileIndex).build(xLocation, yLocation);
                 tile.setMap(this);
                 setMapTile(j, i, tile);
+
             }
         }
 
@@ -162,17 +169,24 @@ public abstract class Map implements Drawable {
         fileWriter.write("0 0\n");
         fileWriter.close();
     }
+    
+    public void setPlayerStartTile(Point point) {
+    	playerStartTile = point;
+        scaledPlayerStartTile = getPositionByTileIndex((int) point.x,(int) point.y);
+    }
+
+    public void setPlayerStartPosition(Point point) {
+        scaledPlayerStartTile = point;
+    }
 
     // gets player start position based on player start tile (basically the start tile's position on the map)
     public Point getPlayerStartPosition() {
-        MapTile tile = getMapTile(Math.round(playerStartTile.x), Math.round(playerStartTile.y));
-        return new Point(tile.getX(), tile.getY());
+        return scaledPlayerStartTile != null ? scaledPlayerStartTile : getPositionByTileIndex((int) playerStartTile.x, (int) playerStartTile.y);
     }
 
     // get position on the map based on a specfic tile index
     public Point getPositionByTileIndex(int xIndex, int yIndex) {
-        MapTile tile = getMapTile(xIndex, yIndex);
-        return new Point(tile.getX(), tile.getY());
+        return new Point(xIndex * tileset.getScaledSpriteWidth(), yIndex * tileset.getScaledSpriteHeight());
     }
 
     public Tileset getTileset() {
@@ -275,6 +289,11 @@ public abstract class Map implements Drawable {
     protected ArrayList<NPC> loadNPCs() {
         return new ArrayList<>();
     }
+    
+ // list of flags defined to be a part of the map, should be overridden in a subclass
+    protected ArrayList<Flag> loadFlags() {
+        return new ArrayList<>();
+    }
 
     public Camera getCamera() {
         return camera;
@@ -292,6 +311,9 @@ public abstract class Map implements Drawable {
     }
     public ArrayList<NPC> getNPCs() {
         return npcs;
+    }
+    public ArrayList<Flag> getFlags() {
+        return flags;
     }
 
     // returns all active enemies (enemies that are a part of the current update cycle) -- this changes every frame by the Camera class
@@ -313,6 +335,11 @@ public abstract class Map implements Drawable {
     public ArrayList<NPC> getActiveNPCs() {
         return camera.getActiveNPCs();
     }
+    
+ // returns all active flags (flags that are a part of the current update cycle) -- this changes every frame by the Camera class
+    public ArrayList<Flag> getActiveFlags() {
+        return camera.getActiveFlags();
+    }
 
     // add an enemy to the map's list of enemies
     public void addEnemy(Enemy enemy) {
@@ -320,6 +347,7 @@ public abstract class Map implements Drawable {
         this.enemies.add(enemy);
     }
     
+    // add a projectile to the map's list of projectiles
     public void addProjectile(Projectile projectile) {
     	projectile.setMap(this);
     	this.projectiles.add(projectile);
@@ -335,6 +363,12 @@ public abstract class Map implements Drawable {
     public void addNPC(NPC npc) {
         npc.setMap(this);
         this.npcs.add(npc);
+    }
+    
+ // add an FLAG to the map's list of FLAGS
+    public void addFlag(Flag flag) {
+        flag.setMap(this);
+        this.flags.add(flag);
     }
 
     public void setAdjustCamera(boolean adjustCamera) {
@@ -422,4 +456,6 @@ public abstract class Map implements Drawable {
     public void setName(String name) {
         this.name = name;
     }
+
+
 }
