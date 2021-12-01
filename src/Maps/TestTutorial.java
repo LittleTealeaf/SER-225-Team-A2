@@ -2,16 +2,16 @@ package Maps;
 
 import Enemies.BugEnemy;
 import Enemies.DinosaurEnemy;
-import Engine.*;
+import Engine.GraphicsHandler;
+import Engine.ImageLoader;
 import EnhancedMapTiles.EndLevelBox;
 import EnhancedMapTiles.HorizontalMovingPlatform;
 import GameObject.Rectangle;
 import Level.*;
-import NPCs.Walrus;
+import SpriteFont.SpriteFont;
 import Tilesets.CommonTileset;
 import Utils.Direction;
 import Utils.Point;
-import SpriteFont.*;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class TestTutorial extends Map {
 
     public TestTutorial() {
-        super("test_tutorial.txt", new CommonTileset(), new Point(1, 11));
+        super("Tutorial","test_tutorial.txt", new CommonTileset(), new Point(1, 11));
     }
 
     @Override

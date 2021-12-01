@@ -4,7 +4,6 @@ import Builders.FrameBuilder;
 import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.SpriteSheet;
-import Level.Enemy;
 import Level.MapEntityStatus;
 import Level.Player;
 import Level.Projectile;

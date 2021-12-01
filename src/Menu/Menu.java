@@ -8,7 +8,7 @@ import Utils.Stopwatch;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public abstract class Menu extends Screen {
+public abstract class Menu extends Screen implements SelectableMenu {
 
     private final Stopwatch keyTimer = new Stopwatch();
     private MenuOption[] menuOptions;
@@ -47,7 +47,7 @@ public abstract class Menu extends Screen {
 
     protected void updateMenuEscape() {
         if (KeyboardAction.MENU_ESCAPE.isDown()) {
-            GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
+            backToMainMenu();
         }
     }
 
@@ -125,8 +125,10 @@ public abstract class Menu extends Screen {
     }
 
     public void mouseClicked(MouseEvent e) {
-        for (MenuOption option : menuOptions) {
-            option.mouseClicked(e);
+        if(menuOptions != null) {
+            for (MenuOption option : menuOptions) {
+                option.mouseClicked(e);
+            }
         }
     }
 
@@ -174,33 +176,33 @@ public abstract class Menu extends Screen {
             }
         }
 
-        SelectFunction function = (newSelection) -> {
-            selectedItem.setSelected(false);
-            newSelection.setSelected(true);
-            selectedItem = newSelection;
-        };
-
         menuOptions = new MenuOption[count];
         for (int i = 0; i < grid.length; i++) {
             for (int j = 0; j < grid[i].length; j++) {
                 if (grid[i][j] != null) {
                     menuOptions[menuOptions.length - (count--)] = grid[i][j];
-                    grid[i][j].setSelectFunction(function);
+                    grid[i][j].setSelectFunction(this);
                 }
             }
         }
+    }
+
+    @Override
+    public void select(MenuOption menuOption) {
+        selectedItem.setSelected(false);
+        menuOption.setSelected(true);
+        selectedItem = menuOption;
     }
 
     protected void setBackground(Map background) {
         this.background = background;
     }
 
-    protected void setDrawables(Drawable[] drawables) {
+    protected void setDrawables(Drawable... drawables) {
         this.drawables = drawables;
     }
 
-    public interface SelectFunction {
-
-        void select(MenuOption item);
+    protected void backToMainMenu() {
+        GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
     }
 }

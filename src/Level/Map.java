@@ -24,12 +24,18 @@ import java.util.Scanner;
 */
 
 public abstract class Map implements Drawable {
+
+    protected String name;
+
     // the tile map (map tiles that make up the entire map image)
     protected MapTile[] mapTiles;
 
     // width and height of the map in terms of the number of tiles width-wise and height-wise
     protected int width;
     protected int height;
+
+    //right most bound
+    private int rightBound;
 
     // the tileset this map uses for its map tiles
     protected Tileset tileset;
@@ -62,7 +68,8 @@ public abstract class Map implements Drawable {
     // if set to false, camera will not move as player moves
     protected boolean adjustCamera = true;
 
-    public Map(String mapFileName, Tileset tileset, Point playerStartTile) {
+    public Map(String name, String mapFileName, Tileset tileset, Point playerStartTile) {
+        this.name = name;
         this.mapFileName = mapFileName;
         this.tileset = tileset;
         setupMap();
@@ -73,6 +80,7 @@ public abstract class Map implements Drawable {
         this.xMidPoint = ScreenManager.getScreenWidth() / 2;
         this.yMidPoint = (ScreenManager.getScreenHeight() / 2);
         this.playerStartTile = playerStartTile;
+        rightBound = getWidthPixels() - getTileset().getScaledSpriteWidth();
     }
 
     // sets up map by reading in the map file to create the tile map
@@ -431,5 +439,17 @@ public abstract class Map implements Drawable {
 
     public void draw(GraphicsHandler graphicsHandler) {
         camera.draw(graphicsHandler);
+    }
+
+    public int getRightBound() {
+        return rightBound;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

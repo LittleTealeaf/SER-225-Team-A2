@@ -58,6 +58,7 @@ public class ScreenCoordinator extends Screen {
 					case LEVELSELECT -> currentScreen = new LevelSelectScreen();
 					case OPENING -> currentScreen = new OpeningScreen(this);
 					case OPTIONS -> currentScreen = new OptionsScreen();
+					case DIFFICULTYSELECT -> currentScreen = new DifficultySelectScreen();
 				}
 				currentScreen.initialize();
 			}

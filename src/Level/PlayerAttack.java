@@ -6,13 +6,10 @@ import Enemies.Dog;
 import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.SpriteSheet;
-import Level.Enemy;
-import Level.MapEntityStatus;
-import Level.Player;
 import Utils.Direction;
 import Utils.Point;
 import Utils.Stopwatch;
-import Level.Map;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 

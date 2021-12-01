@@ -1,55 +1,40 @@
 package Engine;
 
+import Game.GameState;
+import Game.GameThread;
+import Game.ScreenCoordinator;
 import GameObject.Rectangle;
 import Level.Player;
-import Players.Avatar;
-import Players.Cat;
-import Screens.OptionsScreen;
-import SpriteFont.SpriteFont;
 import Utils.Colors;
-import Utils.Stopwatch;
 
-import javax.imageio.ImageIO;
 import javax.sound.sampled.*;
-//import sun.audio.AudioData;
 import javax.swing.*;
-
-import Game.GameState;
-import Game.ScreenCoordinator;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
-/*
+/**
  * This is where the game loop starts
  * The JPanel uses a timer to continually call cycles of update and draw
  */
-public class GamePanel extends JPanel {
-	// loads Screens on to the JPanel
-	// each screen has its own update and draw methods defined to handle a "section"
-	// of the game.
-	protected KeyLocker keyLocker = new KeyLocker();
-	private ScreenManager screenManager;
-	// used to create the game loop and cycle between update and draw calls
-	private Timer timer;
-	// used to draw graphics to the panel
-	private GraphicsHandler graphicsHandler;
+public class GamePanel extends JPanel implements Updatable {
+	private final ScreenManager screenManager;
+	private final GraphicsHandler graphicsHandler;
 	private boolean doPaint = false;
-	protected int pointerLocationX, pointerLocationY;	
-	protected Stopwatch keyTimer = new Stopwatch();
 	protected static GameWindow gameWindow;
 	private static ScreenCoordinator coordinator;
 	public static Clip clip;
-	private Point previousMousePoint = new Point(0,0);
-	private JLabel health;
+	
+	// these difficulty values are not only just used for the the logic of the game but
+	// to determine how much health the user gets at each difficulty;
+	private final static int NORMAL = 3, HARD = 2, HARDCORE = 1;
+	private static int difficulty;
+	private final JLabel health;
+	private final GameThread gameThread;
 
 	
-	/*
+	/**
 	 * The JPanel and various important class instances are setup here
 	 */
 	public GamePanel(ScreenCoordinator c1,GameWindow gameWindow) {
@@ -62,33 +47,31 @@ public class GamePanel extends JPanel {
 
 		this.setSize(Config.WIDTH, Config.HEIGHT);
 		// attaches Keyboard class's keyListener to this JPanel
-		this.addKeyListener(Keyboard.getKeyListener());
+		this.addKeyListener(new Keyboard());
 
 		graphicsHandler = new GraphicsHandler();
 
 		screenManager = new ScreenManager();
 		coordinator = c1;
 
-
-	
+		difficulty = NORMAL;
 		
-
-		timer = new Timer(1000 / Config.FPS, new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				update();
-				changeHealth();
-				if(coordinator.getGameState() == GameState.LEVEL) {
-					health.show();
-				}
-				else {
-					health.hide();
-				}
-				repaint();
-			}
-		});
-		timer.setRepeats(true);
+		gameThread = new GameThread(this::repaint, this::update);
+	}
+	
+	public static void setDifficulty(int newDifficulty)
+	{
+		difficulty = newDifficulty;
+	}
+	public static int getDifficulty()
+	{
+		return difficulty;
 	}
 
+	public static String getDifficultyString() {
+		return difficulty == 3 ? "Normal" : difficulty == 2 ? "Hard" : "Hardcore";
+	}
+	
 	public static ScreenCoordinator getScreenCoordinator() {
 		return coordinator;
 	}
@@ -99,8 +82,8 @@ public class GamePanel extends JPanel {
 		setBackground(Colors.CORNFLOWER_BLUE);
 		screenManager.initialize(new Rectangle(getX(), getY(), getWidth(), getHeight()));
 		doPaint = true;
-
 	}
+
 	public static GameWindow getGameWindow() {
 		return gameWindow;
 	}
@@ -148,7 +131,7 @@ public class GamePanel extends JPanel {
 
 	// this starts the timer (the game loop is started here
 	public void startGame() {
-		timer.start();
+		gameThread.start();
 
 		try {
 			music("Resources/Music/music.wav",.05);
@@ -166,27 +149,26 @@ public class GamePanel extends JPanel {
 	}
 
 	public void update() {
-			screenManager.update();
+		screenManager.update();
+		changeHealth();
 	}
 
 	public void draw() {
 		screenManager.draw(graphicsHandler);
-
-
 	}
 	
 	// Checks the players health and accordingly changes to the image with the corresponding number of hearts
 	public void changeHealth() {
 		if(coordinator.getGameState() == GameState.LEVEL) {
-			if(Player.playerHealth == 3) { 
+			if(Player.PLAYER_HEALTH == 3) {
 				health.setIcon(new ImageIcon(ImageLoader.load("3 Hearts.png")));
 			}
 			
-			else if(Player.playerHealth == 2) { 
+			else if(Player.PLAYER_HEALTH == 2) {
 				health.setIcon(new ImageIcon(ImageLoader.load("2 Hearts.png")));
 			}
 			
-			else if(Player.playerHealth == 1) { 
+			else if(Player.PLAYER_HEALTH == 1) {
 				health.setIcon(new ImageIcon(ImageLoader.load("1 Heart.png")));
 			}
 			
@@ -195,8 +177,17 @@ public class GamePanel extends JPanel {
 			}
 		}
 		
+		// Each difficulty is represented as an integer while also representing the amount of health the user has
+		// normal is 3 hard is 2 and hardcore is 1
+		// hide the health whenever in a menu
 		if(coordinator.getGameState() == GameState.MENU) {
-			Player.playerHealth = 3;
+			Player.PLAYER_HEALTH = difficulty;
+			health.hide();
+		}
+		// show the health when in a level
+		else if (coordinator.getGameState() == GameState.LEVEL)
+		{
+			health.show();
 		}
 	}
 
@@ -213,7 +204,6 @@ public class GamePanel extends JPanel {
 	}
 
 	public static void mouseClicked(MouseEvent e) {
-//		System.out.println("Click: " + e.getPoint());
 		coordinator.mouseClicked(e);
 	}
 

@@ -4,25 +4,21 @@ import Engine.Config;
 import Engine.GamePanel;
 import Engine.GraphicsHandler;
 import Engine.ImageLoader;
+import Game.GameState;
 import GameObject.SpriteSheet;
 import Maps.LevelSelectMap;
 import Menu.Direction;
 import Menu.Menu;
 import Menu.MenuOption;
 import Players.Avatar;
-import Players.Cat;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
 
 public class OptionsScreen extends Menu {
 	private MenuOption[][] items;
 	private BufferedImage cat;
-	public static int catColor;
+	public int catColor = 0;
 
     public OptionsScreen() {
         setBackground(new LevelSelectMap());
@@ -40,7 +36,7 @@ public class OptionsScreen extends Menu {
                 new MenuOption("Blue",500,300, () -> Config.playerAvatar = Avatar.CAT_BLUE),
                 new MenuOption("Green",630,300, () -> Config.playerAvatar = Avatar.CAT_GREEN)
         },{
-                    new MenuOption("Hit [Escape] to go back to main menu",100,450)
+                    new MenuOption("Hit [Escape] to go back to main menu",100,450, () -> GamePanel.getScreenCoordinator().setGameState(GameState.MENU))
                 }
         };
         setMenuItemsAsGrid(items);
@@ -61,17 +57,17 @@ public class OptionsScreen extends Menu {
     
     public void draw(GraphicsHandler handler) {
     	super.draw(handler);
-		if(items[1][1].isSelected()) {
+		if(Config.playerAvatar == Avatar.CAT_ORANGE) {
 			SpriteSheet orange = new SpriteSheet(ImageLoader.load("Cat.png"), 24, 24);
 			cat = orange.getSprite(0, 0);
     		handler.drawImage(cat, 210, 225, 100, 100);
         }
-		else if(items[1][2].isSelected()) {
+		else if(Config.playerAvatar == Avatar.CAT_BLUE) {
 			SpriteSheet blue = new SpriteSheet(ImageLoader.load("CatBlue.png"), 24, 24);
 			cat = blue.getSprite(0, 0);
         	handler.drawImage(cat, 210, 225, 100, 100);
         }
-		else if(items[1][3].isSelected()) {
+		else if(Config.playerAvatar == Avatar.CAT_GREEN) {
 			SpriteSheet green = new SpriteSheet(ImageLoader.load("CatGreen.png"), 24, 24);
 			cat = green.getSprite(0, 0);
         	handler.drawImage(cat, 210, 225, 100, 100);

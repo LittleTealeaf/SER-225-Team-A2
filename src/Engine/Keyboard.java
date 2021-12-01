@@ -10,46 +10,33 @@ import java.util.Set;
  * This class is used throughout the engine for detecting keyboard state
  * This includes if a key is pressed, if a key is not pressed, and if multiple keys are pressed/not pressed at the same time
  */
-public class Keyboard {
+public class Keyboard extends KeyAdapter {
 
-	// hashmaps keep track of if a key is currently down or up
 	private static final Set<Integer> keysDown;
 
-	private static final KeyListener keyListener;
-
 	static {
-		keyListener = new KeyAdapter() {
-
-			@Override
-			public void keyPressed(KeyEvent e) {
-				keysDown.add(e.getKeyCode());
-			}
-
-			@Override
-			public void keyReleased(KeyEvent e) {
-				keysDown.remove(e.getKeyCode());
-			}
-		};
-
 		keysDown = new HashSet<>();
 	}
 
-	// prevents Keyboard from being instantiated -- it's my way of making a "static" class like C# has
-	private Keyboard() { }
-    
-    public static KeyListener getKeyListener() {
-    	return keyListener;
-    }
+	@Override
+	public void keyPressed(KeyEvent keyEvent) {
+		keysDown.add(keyEvent.getKeyCode());
+	}
 
-    // returns if a key is currently being pressed
-    public static boolean isKeyDown(Key key) {
-    	return keysDown.contains(key.getKeyCode());
-    }
+	@Override
+	public void keyReleased(KeyEvent keyEvent) {
+		keysDown.remove(keyEvent.getKeyCode());
+	}
 
-    // returns if a key is currently not being pressed
-    public static boolean isKeyUp(Key key) {
-    	return !keysDown.contains(key.getKeyCode());
-    }
+	// returns if a key is currently being pressed
+	public static boolean isKeyDown(Key key) {
+		return keysDown.contains(key.getKeyCode());
+	}
+
+	// returns if a key is currently not being pressed
+	public static boolean isKeyUp(Key key) {
+		return !keysDown.contains(key.getKeyCode());
+	}
 
 	/**
 	 * Returns if one of the keys is down
@@ -64,4 +51,33 @@ public class Keyboard {
 		}
 		return false;
 	}
+	//
+//	// hashmaps keep track of if a key is currently down or up
+//	private static final Set<Integer> keysDown;
+//
+//	private static final KeyListener keyListener;
+//
+//	static {
+//		keyListener = new KeyAdapter() {
+//
+//			@Override
+//			public void keyPressed(KeyEvent e) {
+//				keysDown.add(e.getKeyCode());
+//				System.out.println(e.getKeyCode());
+//			}
+//
+//			@Override
+//			public void keyReleased(KeyEvent e) {
+//				keysDown.remove(e.getKeyCode());
+//			}
+//		};
+//
+//		keysDown = new HashSet<>();
+//	}
+//
+//	// prevents Keyboard from being instantiated -- it's my way of making a "static" class like C# has
+//	private Keyboard() { }
+//
+
+
 }
