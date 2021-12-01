@@ -216,21 +216,23 @@ public class Camera extends Rectangle {
     // if flag is currently set to REMOVED, it is permanently removed from the map's list of enemies and will never be able to be active again
     private ArrayList<Flag> loadActiveFlags() {
         ArrayList<Flag> activeFlags = new ArrayList<>();
-        for (int i = map.getFlags().size() - 1; i >= 0; i--) {
-            Flag flag = map.getFlags().get(i);
+        if(map.getFlags() != null) {
+            for (int i = map.getFlags().size() - 1; i >= 0; i--) {
+                Flag flag = map.getFlags().get(i);
 
-            if (isMapEntityActive(flag)) {
-                activeFlags.add(flag);
-                if (flag.mapEntityStatus == MapEntityStatus.INACTIVE) {
-                	flag.setMapEntityStatus(MapEntityStatus.ACTIVE);
+                if (isMapEntityActive(flag)) {
+                    activeFlags.add(flag);
+                    if (flag.mapEntityStatus == MapEntityStatus.INACTIVE) {
+                        flag.setMapEntityStatus(MapEntityStatus.ACTIVE);
+                    }
+                } else if (flag.getMapEntityStatus() == MapEntityStatus.ACTIVE) {
+                    flag.setMapEntityStatus(MapEntityStatus.INACTIVE);
+                    if (flag.isRespawnable()) {
+                        flag.initialize();
+                    }
+                } else if (flag.getMapEntityStatus() == MapEntityStatus.REMOVED) {
+                    map.getFlags().remove(i);
                 }
-            } else if (flag.getMapEntityStatus() == MapEntityStatus.ACTIVE) {
-            	flag.setMapEntityStatus(MapEntityStatus.INACTIVE);
-                if (flag.isRespawnable()) {
-                	flag.initialize();
-                }
-            } else if (flag.getMapEntityStatus() == MapEntityStatus.REMOVED) {
-                map.getFlags().remove(i);
             }
         }
         return activeFlags;

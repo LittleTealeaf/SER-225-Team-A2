@@ -1,9 +1,6 @@
 package Level;
 
-import Engine.Config;
-import Engine.Drawable;
-import Engine.GraphicsHandler;
-import Engine.ScreenManager;
+import Engine.*;
 import Utils.Point;
 
 import java.io.File;
@@ -45,6 +42,7 @@ public abstract class Map implements Drawable {
 
     // tile player should start on when this map is first loaded
     protected Point playerStartTile;
+    protected Point scaledPlayerStartTile;
 
     // the location of the "mid point" of the screen
     // this is what tells the game that the player has reached the center of the screen, therefore the camera should move instead of the player
@@ -108,10 +106,12 @@ public abstract class Map implements Drawable {
         for (NPC npc: this.npcs) {
             npc.setMap(this);
         }
-        
-        this.flags = loadFlags();
-        for (Flag flags: this.flags) {
-            flags.setMap(this);
+
+        if(GamePanel.getDifficulty() != 1) {
+            this.flags = loadFlags();
+            for (Flag flags: this.flags) {
+                flags.setMap(this);
+            }
         }
 
         this.camera = new Camera(0, 0, tileset.getScaledSpriteWidth(), tileset.getScaledSpriteHeight(), this);
@@ -154,6 +154,7 @@ public abstract class Map implements Drawable {
                 MapTile tile = tileset.getTile(tileIndex).build(xLocation, yLocation);
                 tile.setMap(this);
                 setMapTile(j, i, tile);
+
             }
         }
 
@@ -169,20 +170,26 @@ public abstract class Map implements Drawable {
         fileWriter.close();
     }
     
-    public void setPlayerStartPosition(Point point) {
+    public void setPlayerStartTile(Point point) {
     	playerStartTile = point;
+        scaledPlayerStartTile = getPositionByTileIndex((int) point.x,(int) point.y);
+    }
+
+    public void setPlayerStartPosition(Point point) {
+        scaledPlayerStartTile = point;
     }
 
     // gets player start position based on player start tile (basically the start tile's position on the map)
     public Point getPlayerStartPosition() {
-        MapTile tile = getMapTile(Math.round(playerStartTile.x), Math.round(playerStartTile.y));
-        return new Point(tile.getX(), tile.getY());
+        return scaledPlayerStartTile != null ? scaledPlayerStartTile : getPositionByTileIndex((int) playerStartTile.x, (int) playerStartTile.y);
     }
 
     // get position on the map based on a specfic tile index
     public Point getPositionByTileIndex(int xIndex, int yIndex) {
-        MapTile tile = getMapTile(xIndex, yIndex);
-        return new Point(tile.getX(), tile.getY());
+//        MapTile tile = getMapTile(xIndex, yIndex);
+//        System.out.println(tile.getX() + " " + (xIndex * tileset.getScaledSpriteWidth()) + ", " + tile.getY() + " " + (yIndex * tileset.getScaledSpriteHeight()));
+//        return new Point(tile.getX(), tile.getY());
+        return new Point(xIndex * tileset.getScaledSpriteWidth(), yIndex * tileset.getScaledSpriteHeight());
     }
 
     public Tileset getTileset() {
