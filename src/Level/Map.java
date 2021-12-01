@@ -186,9 +186,6 @@ public abstract class Map implements Drawable {
 
     // get position on the map based on a specfic tile index
     public Point getPositionByTileIndex(int xIndex, int yIndex) {
-//        MapTile tile = getMapTile(xIndex, yIndex);
-//        System.out.println(tile.getX() + " " + (xIndex * tileset.getScaledSpriteWidth()) + ", " + tile.getY() + " " + (yIndex * tileset.getScaledSpriteHeight()));
-//        return new Point(tile.getX(), tile.getY());
         return new Point(xIndex * tileset.getScaledSpriteWidth(), yIndex * tileset.getScaledSpriteHeight());
     }
 

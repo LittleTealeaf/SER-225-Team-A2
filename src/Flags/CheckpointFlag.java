@@ -25,7 +25,6 @@ public class CheckpointFlag extends Flag {
         super(location.x, location.y, new SpriteSheet(ImageLoader.load("CheckpointFlag.png"), 16, 27), "NOT PASSED");
         this.location = location;
         checkpointState = checkpointState.NOT_PASSED;
-        System.out.println(location);
     }
 
     @Override
