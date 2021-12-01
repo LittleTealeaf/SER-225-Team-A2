@@ -5,9 +5,11 @@ import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.SpriteSheet;
 import Level.Flag;
+import Level.Map;
 import Level.Player;
 import Screens.PlayLevelScreen;
 import Utils.Point;
+
 import java.util.HashMap;
 
 // This class is for the checkpoint flag
@@ -19,6 +21,8 @@ public class CheckpointFlag extends Flag {
 
     // can be either PASSED or NOT_PASSED based on if the player got the checkpoint
     protected checkpointState checkpointState;
+
+    protected Map map;
 
     public CheckpointFlag(Point location) {
         super(location.x, location.y, new SpriteSheet(ImageLoader.load("CheckpointFlag.png"), 16, 27), "NOT PASSED");

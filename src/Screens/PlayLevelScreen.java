@@ -227,7 +227,11 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
     }
 
     public void resetLevel() {
-        loadMap(currentMap);
+        loadedMap.reset();
+        player = Config.playerAvatar.generatePlayer(loadedMap.getPlayerStartPosition());
+        player.setMap(loadedMap);
+        player.addListener(this);
+        screenState = State.RUNNING;
     }
 
     public void backToMenu() {
