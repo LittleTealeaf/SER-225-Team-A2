@@ -1,6 +1,7 @@
 package Flags;
 
 import Builders.FrameBuilder;
+import Engine.GamePanel;
 import Engine.ImageLoader;
 import GameObject.Frame;
 import GameObject.SpriteSheet;
@@ -31,7 +32,7 @@ public class CheckpointFlag extends Flag {
     @Override
     public void update(Player player) {
     	super.update(player);
-    	if(intersects(player)) {
+    	if(intersects(player) && GamePanel.getDifficulty() != 1) {
     		checkpointState = checkpointState.PASSED;
     		PlayLevelScreen.loadedMap.setPlayerStartPosition(location); 		
     	}
