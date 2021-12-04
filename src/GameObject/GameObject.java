@@ -25,7 +25,8 @@ public class GameObject extends AnimatedSprite implements Drawable {
 
 	// stores game object's start position
 	// important to keep track of this as it's what allows the special draw logic to work
-	protected float startPositionX, startPositionY;
+	protected final float startPositionX;
+	protected final float startPositionY;
 
 	// how much game object's position has changed from start position over time
 	// also important to keep track of for the special draw logic
@@ -65,11 +66,11 @@ public class GameObject extends AnimatedSprite implements Drawable {
 
 	public GameObject(BufferedImage image, float x, float y) {
 		super(x, y);
-		this.animations = new HashMap<String, Frame[]>() {{
-			put("DEFAULT", new Frame[] {
-					new FrameBuilder(image, 0).build()
-			});
-		}};
+		this.animations = new HashMap<>() {{
+            put("DEFAULT", new Frame[]{
+                    new FrameBuilder(image, 0).build()
+            });
+        }};
 		this.currentAnimationName = "DEFAULT";
 		updateCurrentFrame();
 		this.startPositionX = x;
@@ -80,13 +81,11 @@ public class GameObject extends AnimatedSprite implements Drawable {
 
 	public GameObject(BufferedImage image, float x, float y, float scale) {
 		super(x, y);
-		this.animations = new HashMap<String, Frame[]>() {{
-			put("DEFAULT", new Frame[] {
-					new FrameBuilder(image, 0)
-							.withScale(scale)
-							.build()
-			});
-		}};
+		this.animations = new HashMap<>() {{
+            put("DEFAULT", new Frame[]{
+                    new FrameBuilder(image, 0).withScale(scale).build()
+            });
+        }};
 		this.currentAnimationName = "DEFAULT";
 		updateCurrentFrame();
 		this.startPositionX = x;
@@ -97,14 +96,11 @@ public class GameObject extends AnimatedSprite implements Drawable {
 
 	public GameObject(BufferedImage image, float x, float y, float scale, ImageEffect imageEffect) {
 		super(x, y);
-		this.animations = new HashMap<String, Frame[]>() {{
-			put("DEFAULT", new Frame[] {
-					new FrameBuilder(image, 0)
-							.withScale(scale)
-							.withImageEffect(imageEffect)
-							.build()
-			});
-		}};
+		this.animations = new HashMap<>() {{
+            put("DEFAULT", new Frame[]{
+                    new FrameBuilder(image, 0).withScale(scale).withImageEffect(imageEffect).build()
+            });
+        }};
 		this.currentAnimationName = "DEFAULT";
 		updateCurrentFrame();
 		this.startPositionX = x;
@@ -115,15 +111,11 @@ public class GameObject extends AnimatedSprite implements Drawable {
 
 	public GameObject(BufferedImage image, float x, float y, float scale, ImageEffect imageEffect, Rectangle bounds) {
 		super(x, y);
-		this.animations = new HashMap<String, Frame[]>() {{
-			put("DEFAULT", new Frame[]{
-					new FrameBuilder(image, 0)
-							.withScale(scale)
-							.withImageEffect(imageEffect)
-							.withBounds(bounds)
-							.build()
-			});
-		}};
+		this.animations = new HashMap<>() {{
+            put("DEFAULT", new Frame[]{
+                    new FrameBuilder(image, 0).withScale(scale).withImageEffect(imageEffect).withBounds(bounds).build()
+            });
+        }};
 		this.currentAnimationName = "DEFAULT";
 		updateCurrentFrame();
 		this.startPositionX = x;

@@ -1,11 +1,10 @@
 package Screens;
 
 import Engine.GamePanel;
-import Game.GameState;
 import Game.ScreenCoordinator;
 import Maps.TitleScreenMap;
-import Menu.Menu;
 import Menu.Direction;
+import Menu.Menu;
 import Menu.MenuOption;
 
 public class LevelSelectScreen extends Menu {

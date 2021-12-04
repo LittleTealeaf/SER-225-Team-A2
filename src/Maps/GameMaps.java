@@ -35,8 +35,8 @@ public class GameMaps {
      */
     public static class MapManager implements MapFactory {
 
-        private MapFactory mapFactory;
-        private String name;
+        private final MapFactory mapFactory;
+        private final String name;
 
         public MapManager(MapFactory mapFactory) {
             this.mapFactory = mapFactory;

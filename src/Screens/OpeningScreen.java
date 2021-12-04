@@ -10,7 +10,6 @@ import GameObject.AnimatedSprite;
 import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.SpriteSheet;
-import Maps.LevelSelectMap;
 import SpriteFont.SpriteFont;
 import Utils.Stopwatch;
 
@@ -106,7 +105,7 @@ public class OpeningScreen extends Screen{
 
 
     public HashMap<String, Frame[]> getCatAnimations(SpriteSheet spriteSheet) {
-        return new HashMap<String, Frame[]>() {{
+        return new HashMap<>() {{
             put("STAND_RIGHT", new Frame[]{
                     new FrameBuilder(spriteSheet.getSprite(0, 0), 0).withScale(3).withBounds(8, 9, 8, 9).build()
             });

@@ -27,7 +27,6 @@ public class MenuOption implements Drawable {
     private final String text;
 
     private boolean selected;
-    private boolean softSelected;
     private final int x;
     private final int y;
     private int width;
@@ -108,7 +107,7 @@ public class MenuOption implements Drawable {
 
         //Draws the pointer
         if (selected) {
-            graphicsHandler.drawFilledRectangleWithBorder(x - 30, y - 20, 20, 20, new Color(49, 207, 240), Color.black, 2);
+            graphicsHandler.drawFilledRectangleWithBorder(x - 30, y - 20, 20, 20, DEFAULT_COLOR, Color.black, 2);
         }
     }
 
@@ -138,8 +137,7 @@ public class MenuOption implements Drawable {
     }
 
     public void mouseMoved(Point p) {
-        softSelected = contains(p);
-        if (selected != softSelected && selectableMenu != null) {
+        if (selected != contains(p) && selectableMenu != null) {
             selectableMenu.select(this);
         }
     }
@@ -171,6 +169,6 @@ public class MenuOption implements Drawable {
     
     public enum CloseOnExecute
     {
-    	REMAINOPEN, CLOSE;
+    	REMAINOPEN, CLOSE
     }
 }

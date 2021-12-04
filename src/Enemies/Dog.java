@@ -29,7 +29,7 @@ public class Dog extends Enemy {
     float movementSpeed = NORMAL_SPEED;
     
     private static final float NORMAL_BONE_SPEED = 1.5f, HARD_BONE_SPEED = 1.7f, HARDCORE_BONE_SPEED = 1.9f;
-    private Direction startFacingDirection;
+    private final Direction startFacingDirection;
     protected Direction facingDirection;
     protected boolean isInAir;
 
@@ -37,8 +37,8 @@ public class Dog extends Enemy {
     protected Stopwatch shootTimer = new Stopwatch();
 
     // can be either WALK or SHOOT based on what the enemy is currently set to do
-    protected dogState dogState;
-    protected dogState previousdogState;
+    protected DogState dogState;
+    protected DogState previousdogState;
 
     public Dog(Point startLocation, Point endLocation, Direction facingDirection) {
         super(startLocation.x, startLocation.y, new SpriteSheet(ImageLoader.load("Dog.png"), 30, 26), "WALK_RIGHT");
@@ -51,7 +51,7 @@ public class Dog extends Enemy {
     @Override
     public void initialize() {
         super.initialize();
-        dogState = dogState.WALK;
+        dogState = DogState.WALK;
         previousdogState = dogState;
         facingDirection = startFacingDirection;
         if (facingDirection == Direction.RIGHT) {
@@ -83,14 +83,14 @@ public class Dog extends Enemy {
         }
 
         // if shoot timer is up and dog is not currently shooting, set its state to SHOOT
-        if (shootTimer.isTimeUp() && dogState != dogState.SHOOT) {
-            dogState = dogState.SHOOT;
+        if (shootTimer.isTimeUp() && dogState != DogState.SHOOT) {
+            dogState = DogState.SHOOT;
         }
 
         super.update(player);
 
         // if dog is walking, determine which direction to walk in based on facing direction
-        if (dogState == dogState.WALK) {
+        if (dogState == DogState.WALK) {
             if (facingDirection == Direction.RIGHT) {
                 currentAnimationName = "WALK_RIGHT";
                 moveXHandleCollision(movementSpeed);
@@ -114,8 +114,8 @@ public class Dog extends Enemy {
 
             // if dog is shooting, it first turns read for 1 second
             // then the bone is actually shot out
-        } else if (dogState == dogState.SHOOT) {
-            if (previousdogState == dogState.WALK) {
+        } else if (dogState == DogState.SHOOT) {
+            if (previousdogState == DogState.WALK) {
                 shootTimer.setWaitTime(500);
                 currentAnimationName = facingDirection == Direction.RIGHT ? "SHOOT_RIGHT" : "SHOOT_LEFT";
             } else if (shootTimer.isTimeUp()) {
@@ -140,7 +140,7 @@ public class Dog extends Enemy {
                 map.addProjectile(bone);
 
                 // change dog back to its WALK state after shooting, reset shootTimer to wait another 2 seconds before shooting again
-                dogState = dogState.WALK;
+                dogState = DogState.WALK;
                 shootTimer.setWaitTime(2000);
             }
         }
@@ -163,54 +163,29 @@ public class Dog extends Enemy {
 
     @Override
     public HashMap<String, Frame[]> getAnimations(SpriteSheet spriteSheet) {
-        return new HashMap<String, Frame[]>() {{
+        return new HashMap<>() {{
             put("WALK_LEFT", new Frame[]{
-                    new FrameBuilder(spriteSheet.getSprite(0, 0), 200)
-                            .withScale(2)
-                            .withBounds(-5, 0, 35, 13)
-                            .build(),
-                    new FrameBuilder(spriteSheet.getSprite(0, 1), 200)
-                            .withScale(2)
-                            .withBounds(-5, 0, 35, 13)
-                            .build(),
-                    new FrameBuilder(spriteSheet.getSprite(0, 2), 200)
-                            .withScale(2)
-                            .withBounds(-5, 0, 35, 13)
-                            .build()
+                    new FrameBuilder(spriteSheet.getSprite(0, 0), 200).withScale(2).withBounds(-5, 0, 35, 13).build(), new FrameBuilder(
+                    spriteSheet.getSprite(0, 1), 200).withScale(2).withBounds(-5, 0, 35, 13).build(), new FrameBuilder(spriteSheet.getSprite(0, 2), 200).withScale(2).withBounds(-5, 0, 35, 13).build()
             });
 
             put("WALK_RIGHT", new Frame[]{
-            		new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
-		                    .withScale(2)
-                            .withBounds(0, 0, 35, 13)
-		                    .build(),
-		            new FrameBuilder(spriteSheet.getSprite(1, 1), 200)
-		                    .withScale(2)
-                            .withBounds(0, 0, 35, 13)
-		                    .build(),
-		            new FrameBuilder(spriteSheet.getSprite(1, 2), 200)
-		                    .withScale(2)
-                            .withBounds(0, 0, 35, 13)
-		                    .build()
+                    new FrameBuilder(spriteSheet.getSprite(1, 0), 200).withScale(2).withBounds(0, 0, 35, 13).build(), new FrameBuilder(
+                    spriteSheet.getSprite(1, 1), 200).withScale(2).withBounds(0, 0, 35, 13).build(), new FrameBuilder(spriteSheet.getSprite(1, 2),
+                                                                                                                      200).withScale(2).withBounds(0, 0, 35, 13).build()
             });
 
             put("SHOOT_LEFT", new Frame[]{
-                    new FrameBuilder(spriteSheet.getSprite(0, 2), 0)
-                            .withScale(2)
-                            .withBounds(-5, 0, 35, 13)
-                            .build(),
-            });
+                    new FrameBuilder(spriteSheet.getSprite(0, 2), 0).withScale(2).withBounds(-5, 0, 35, 13).build(),
+                    });
 
             put("SHOOT_RIGHT", new Frame[]{
-                    new FrameBuilder(spriteSheet.getSprite(1, 2), 0)
-                            .withScale(2)
-                            .withBounds(0, 0, 35, 13)
-                            .build(),
-            });
+                    new FrameBuilder(spriteSheet.getSprite(1, 2), 0).withScale(2).withBounds(0, 0, 35, 13).build(),
+                    });
         }};
     }
 
-    public enum dogState {
+    public enum DogState {
         WALK, SHOOT
     }
 }

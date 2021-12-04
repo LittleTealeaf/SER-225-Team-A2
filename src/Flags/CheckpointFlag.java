@@ -16,26 +16,26 @@ import java.util.HashMap;
 public class CheckpointFlag extends Flag {
 
     // Location of the flag
-    protected Point location;
+    protected final Point location;
 
     // can be either PASSED or NOT_PASSED based on if the player got the checkpoint
-    protected checkpointState checkpointState;
+    protected CheckpointState checkpointState;
 
     public CheckpointFlag(Point location) {
         super(location.x, location.y, new SpriteSheet(ImageLoader.load("CheckpointFlag.png"), 16, 27), "NOT PASSED");
         this.location = location;
-        checkpointState = checkpointState.NOT_PASSED;
+        checkpointState = CheckpointState.NOT_PASSED;
     }
 
     @Override
     public void update(Player player) {
     	super.update(player);
     	if(intersects(player)) {
-    		checkpointState = checkpointState.PASSED;
+    		checkpointState = CheckpointState.PASSED;
     		PlayLevelScreen.loadedMap.setPlayerStartPosition(location);
     	}
     	
-    	if(checkpointState == checkpointState.PASSED) {
+    	if(checkpointState == CheckpointState.PASSED) {
         	currentAnimationName = "PASSED";
         }
         else {
@@ -50,24 +50,18 @@ public class CheckpointFlag extends Flag {
 
     @Override
     public HashMap<String, Frame[]> getAnimations(SpriteSheet spriteSheet) {
-        return new HashMap<String, Frame[]>() {{
+        return new HashMap<>() {{
             put("NOT PASSED", new Frame[]{
-            		new FrameBuilder(spriteSheet.getSprite(0, 0), 200)
-		                    .withScale(2)
-		                    .withBounds(0, 0, 17, 28)
-		                    .build()
+                    new FrameBuilder(spriteSheet.getSprite(0, 0), 200).withScale(2).withBounds(0, 0, 17, 28).build()
             });
 
             put("PASSED", new Frame[]{
-            		new FrameBuilder(spriteSheet.getSprite(0, 1), 200)
-		                    .withScale(2)
-		                    .withBounds(0, 0, 17, 28)
-		                    .build()
+                    new FrameBuilder(spriteSheet.getSprite(0, 1), 200).withScale(2).withBounds(0, 0, 17, 28).build()
             });
         }};
     }
 
-    public enum checkpointState {
+    public enum CheckpointState {
         PASSED, NOT_PASSED
     }
 }

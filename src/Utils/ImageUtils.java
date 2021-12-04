@@ -16,11 +16,11 @@ public class ImageUtils {
 		final int g2 = 255;
 		final int b2 = 255;
 		ImageFilter filter = new RGBImageFilter() {
-			public final int filterRGB(int x, int y, int rgb) {
+			public int filterRGB(int x, int y, int rgb) {
 				int r = (rgb & 0xFF0000) >> 16;
 				int g = (rgb & 0xFF00) >> 8;
 				int b = rgb & 0xFF;
-				if (r >= r1 && r <= r2 && g >= g1 && g <= g2 && b >= b1 && b <= b2) {
+				if (r >= r1 && g >= g1 && b >= b1) {
 					// Set fully transparent but keep color
 					return rgb & 0xFFFFFF;
 				}

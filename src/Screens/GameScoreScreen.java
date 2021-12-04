@@ -1,16 +1,14 @@
 package Screens;
 
-import Engine.Drawable;
 import Engine.GamePanel;
-import Engine.GraphicsHandler;
 import Game.TimeTracker;
 import Maps.GameMaps;
 import Maps.TitleScreenMap;
 import Menu.Menu;
+import Menu.MenuOption;
 import SpriteFont.SpriteFont;
 import Utils.GameTimer;
 import Utils.TimeParser;
-import Menu.MenuOption;
 
 import java.awt.*;
 
@@ -69,21 +67,5 @@ public class GameScoreScreen extends Menu {
             totalTime.addTime(gameTimer.getElapsed());
         }
         return totalTime;
-    }
-
-    @Deprecated //Maybe?
-    public class LevelScores implements Drawable {
-
-        private int x, y, height, width;
-
-
-        public LevelScores(GameTimer[] scores, int x, int y, int height, int width) {
-
-        }
-
-        @Override
-        public void draw(GraphicsHandler graphicsHandler) {
-
-        }
     }
 }

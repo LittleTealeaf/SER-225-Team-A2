@@ -177,11 +177,11 @@ public abstract class Menu extends Screen implements SelectableMenu {
         }
 
         menuOptions = new MenuOption[count];
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) {
-                if (grid[i][j] != null) {
-                    menuOptions[menuOptions.length - (count--)] = grid[i][j];
-                    grid[i][j].setSelectFunction(this);
+        for(MenuOption[] row : grid) {
+            for(MenuOption menuOption : row) {
+                if(menuOption != null) {
+                    menuOptions[menuOptions.length - (count--)] = menuOption;
+                    menuOption.setSelectFunction(this);
                 }
             }
         }

@@ -22,8 +22,8 @@ public class TimeTracker implements Drawable {
 
     private int currentLevel;
 
-    private GameTimer[] levels;
-    private GameTimer total;
+    private final GameTimer[] levels;
+    private final GameTimer total;
 
     private int xMap, yMap, xTotal, yTotal, charsTotal, charsMap;
 
@@ -83,7 +83,7 @@ public class TimeTracker implements Drawable {
         if(totalString.length() != charsTotal) {
             FontMetrics metrics = graphicsHandler.getGraphics2D().getFontMetrics(FONT_BIG);
             yTotal = metrics.getHeight();
-            xTotal = ScreenManager.getScreenWidth() - metrics.stringWidth(totalString.replace(' ','0'));
+            xTotal = ScreenManager.getScreenWidth() - metrics.stringWidth(totalString.replace(' ','0')) - 5;
             charsTotal = totalString.length();
         }
         graphicsHandler.drawString(totalString, xTotal, yTotal, FONT_BIG, Color.white);
@@ -94,7 +94,7 @@ public class TimeTracker implements Drawable {
             if(mapString.length() != charsMap) {
                 FontMetrics metrics = graphicsHandler.getGraphics2D().getFontMetrics(FONT_SMALL);
                 yMap = metrics.getHeight() + yTotal;
-                xMap = ScreenManager.getScreenWidth() - metrics.stringWidth(mapString.replace(' ','0'));
+                xMap = ScreenManager.getScreenWidth() - metrics.stringWidth(mapString.replace(' ','0')) - 5;
                 charsMap = mapString.length();
             }
             graphicsHandler.drawString(mapString,xMap,yMap,FONT_SMALL,Color.white);

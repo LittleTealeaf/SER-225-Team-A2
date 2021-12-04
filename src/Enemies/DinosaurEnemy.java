@@ -22,20 +22,20 @@ public class DinosaurEnemy extends Enemy {
 
     // start and end location defines the two points that it walks between
     // is only made to walk along the x axis and has no air ground state logic, so make sure both points have the same Y value
-    protected Point startLocation;
-    protected Point endLocation;
+    protected final Point startLocation;
+    protected final Point endLocation;
 
     // different speeds depending on the difficulty
     private static final float NORMAL_SPEED = 1f, HARD_SPEED = 1.2f, HARDCORE_SPEED = 1.4f;
     float movementSpeed = NORMAL_SPEED;
     
     private static final float NORMAL_FIREBALL_SPEED = 1.5f, HARD_FIREBALL_SPEED = 1.7f, HARDCORE_FIREBALL_SPEED = 1.9f;
-    private Direction startFacingDirection;
+    private final Direction startFacingDirection;
     protected Direction facingDirection;
     protected boolean isInAir;
 
     // timer is used to determine when a fireball is to be shot out
-    protected Stopwatch shootTimer = new Stopwatch();
+    protected final Stopwatch shootTimer = new Stopwatch();
 
     // can be either WALK or SHOOT based on what the enemy is currently set to do
     protected DinosaurState dinosaurState;
@@ -164,45 +164,27 @@ public class DinosaurEnemy extends Enemy {
 
     @Override
     public HashMap<String, Frame[]> getAnimations(SpriteSheet spriteSheet) {
-        return new HashMap<String, Frame[]>() {{
+        return new HashMap<>() {{
             put("WALK_LEFT", new Frame[]{
-                    new FrameBuilder(spriteSheet.getSprite(0, 0), 200)
-                            .withScale(3)
-                            .withBounds(4, 2, 5, 13)
-                            .build(),
-                    new FrameBuilder(spriteSheet.getSprite(0, 1), 200)
-                            .withScale(3)
-                            .withBounds(4, 2, 5, 13)
-                            .build()
+                    new FrameBuilder(spriteSheet.getSprite(0, 0), 200).withScale(3).withBounds(4, 2, 5, 13).build(), new FrameBuilder(
+                    spriteSheet.getSprite(0, 1), 200).withScale(3).withBounds(4, 2, 5, 13).build()
             });
 
             put("WALK_RIGHT", new Frame[]{
-                    new FrameBuilder(spriteSheet.getSprite(0, 0), 200)
-                            .withScale(3)
-                            .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                            .withBounds(4, 2, 5, 13)
-                            .build(),
-                    new FrameBuilder(spriteSheet.getSprite(0, 1), 200)
-                            .withScale(3)
-                            .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                            .withBounds(4, 2, 5, 13)
-                            .build()
+                    new FrameBuilder(spriteSheet.getSprite(0, 0), 200).withScale(3).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(4, 2, 5
+                            , 13).build(),
+                    new FrameBuilder(spriteSheet.getSprite(0, 1), 200).withScale(3).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(4, 2, 5
+                            , 13).build()
             });
 
             put("SHOOT_LEFT", new Frame[]{
-                    new FrameBuilder(spriteSheet.getSprite(1, 0), 0)
-                            .withScale(3)
-                            .withBounds(4, 2, 5, 13)
-                            .build(),
-            });
+                    new FrameBuilder(spriteSheet.getSprite(1, 0), 0).withScale(3).withBounds(4, 2, 5, 13).build(),
+                    });
 
             put("SHOOT_RIGHT", new Frame[]{
-                    new FrameBuilder(spriteSheet.getSprite(1, 0), 0)
-                            .withScale(3)
-                            .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                            .withBounds(4, 2, 5, 13)
-                            .build(),
-            });
+                    new FrameBuilder(spriteSheet.getSprite(1, 0), 0).withScale(3).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(4, 2, 5,
+                                                                                                                                          13).build(),
+                    });
         }};
     }
 

@@ -18,13 +18,13 @@ import java.util.HashMap;
 // if it ends up in the air from walking off a cliff, it will fall down until it hits the ground again, and then will continue walking
 public class BugEnemy extends Enemy {
 
-    private float gravity = .5f;
+    private static final float GRAVITY = .5f;
     
     // different speeds depending on the difficulty
     private static final float NORMAL_SPEED = 0.5f, HARD_SPEED = 0.7f, HARDCORE_SPEED = 0.9f;
     float movementSpeed = NORMAL_SPEED;
     
-    private Direction startFacingDirection;
+    private final Direction startFacingDirection;
     private Direction facingDirection;
     private boolean isInAir;
 
@@ -62,7 +62,7 @@ public class BugEnemy extends Enemy {
         }
         
         // add gravity (if in air, this will cause bug to fall)
-        moveAmountY += gravity;
+        moveAmountY += GRAVITY;
 
         // if on ground, walk forward based on facing direction
         if (!isInAir) {
@@ -106,29 +106,16 @@ public class BugEnemy extends Enemy {
 
     @Override
     public HashMap<String, Frame[]> getAnimations(SpriteSheet spriteSheet) {
-        return new HashMap<String, Frame[]>() {{
-            put("WALK_LEFT", new Frame[] {
-                    new FrameBuilder(spriteSheet.getSprite(0, 0), 100)
-                            .withScale(2)
-                            .withBounds(6, 6, 12, 7)
-                            .build(),
-                    new FrameBuilder(spriteSheet.getSprite(0, 1), 100)
-                            .withScale(2)
-                            .withBounds(6, 6, 12, 7)
-                            .build()
+        return new HashMap<>() {{
+            put("WALK_LEFT", new Frame[]{
+                    new FrameBuilder(spriteSheet.getSprite(0, 0), 100).withScale(2).withBounds(6, 6, 12, 7).build(), new FrameBuilder(
+                    spriteSheet.getSprite(0, 1), 100).withScale(2).withBounds(6, 6, 12, 7).build()
             });
 
-            put("WALK_RIGHT", new Frame[] {
-                    new FrameBuilder(spriteSheet.getSprite(0, 0), 100)
-                            .withScale(2)
-                            .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                            .withBounds(6, 6, 12, 7)
-                            .build(),
-                    new FrameBuilder(spriteSheet.getSprite(0, 1), 100)
-                            .withScale(2)
-                            .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                            .withBounds(6, 6, 12, 7)
-                            .build()
+            put("WALK_RIGHT", new Frame[]{
+                    new FrameBuilder(spriteSheet.getSprite(0, 0), 100).withScale(2).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(6, 6,
+                                                                                                                                            12, 7).build(),
+                    new FrameBuilder(spriteSheet.getSprite(0, 1), 100).withScale(2).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(6, 6, 12, 7).build()
             });
         }};
     }

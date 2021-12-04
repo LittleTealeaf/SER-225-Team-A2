@@ -27,14 +27,7 @@ public class Cat extends Player {
         walkSpeed = 2.1f;
         sprintSpeed = 3.3f;
         sprintAcceleration = 1.05f;
-        //        terminalVelocityY = 6f;
-        //        jumpHeight = 14.5f;
-        //        jumpDegrade = .5f;
-        //        walkSpeed = 2.1f;
-        //        minWalkSpeed = 2.1f;
-        //        maxWalkSpeed = 3.3f;
-        //        walkAcceleration = 1.05f;
-        //        momentumYIncrease = .5f;
+
     }
 
     public void update() {
@@ -48,7 +41,7 @@ public class Cat extends Player {
 
     @Override
     public HashMap<String, Frame[]> getAnimations(SpriteSheet spriteSheet) {
-        return new HashMap<String, Frame[]>() {{
+        return new HashMap<>() {{
             put("STAND_RIGHT", new Frame[]{
                     new FrameBuilder(spriteSheet.getSprite(0, 0), 0).withScale(3).withBounds(8, 9, 8, 9).build()
             });

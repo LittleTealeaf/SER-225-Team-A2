@@ -5,7 +5,7 @@ public enum PlayerState {
     STAND, WALK, JUMP, CROUCH, FALL,
     DEATH;
 
-    private String left,right;
+    private final String left,right;
 
     PlayerState() {
         left = this + "_LEFT";

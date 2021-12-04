@@ -5,10 +5,11 @@ import GameObject.GameObject;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.function.IntFunction;
 
 // Builder class to instantiate a GameObject class
 public class GameObjectBuilder {
-    protected HashMap<String, Frame[]> animations = new HashMap<>();
+    protected final HashMap<String, Frame[]> animations = new HashMap<>();
     protected String startingAnimationName = "DEFAULT";
 
     public GameObjectBuilder() { }
@@ -50,7 +51,8 @@ public class GameObjectBuilder {
         HashMap<String, Frame[]> animationsCopy = new HashMap<>();
         for (String key : animations.keySet()) {
             Frame[] frames = animations.get(key);
-            animationsCopy.put(key, Arrays.stream(frames).map(frame -> frame.copy()).toArray(size -> new Frame[size]));
+            animationsCopy.put(key, Arrays.stream(frames).map(frame -> frame.copy()).toArray(
+                    (IntFunction<Frame[]>) Frame[]::new));
         }
         return animationsCopy;
     }

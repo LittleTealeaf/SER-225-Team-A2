@@ -32,10 +32,10 @@ public abstract class Map implements Drawable {
     protected int height;
 
     //right most bound
-    private int rightBound;
+    private final int rightBound;
 
     // the tileset this map uses for its map tiles
-    protected Tileset tileset;
+    protected final Tileset tileset;
 
     // camera class that handles the viewable part of the map that is seen by the player of a game during a level
     protected Camera camera;
@@ -47,14 +47,18 @@ public abstract class Map implements Drawable {
     // the location of the "mid point" of the screen
     // this is what tells the game that the player has reached the center of the screen, therefore the camera should move instead of the player
     // this goes into creating that "map scrolling" effect
-    protected int xMidPoint, yMidPoint;
+    protected final int xMidPoint;
+    protected final int yMidPoint;
 
     // in pixels, this basically creates a rectangle defining how big the map is
     // startX and Y will always be 0, endX and Y is the number of tiles multiplied by the number of pixels each tile takes up
-    protected int startBoundX, startBoundY, endBoundX, endBoundY;
+    protected final int startBoundX;
+    protected final int startBoundY;
+    protected final int endBoundX;
+    protected final int endBoundY;
 
     // the name of the map text file that has the tile map information
-    protected String mapFileName;
+    protected final String mapFileName;
 
     // lists to hold map entities that are a part of the map
     protected ArrayList<Enemy> enemies;

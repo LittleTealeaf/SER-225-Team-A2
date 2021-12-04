@@ -3,7 +3,6 @@ package Screens;
 import Engine.GamePanel;
 import Game.GameState;
 import Maps.TitleScreenMap;
-import Menu.Direction;
 import Menu.Menu;
 import Menu.MenuOption;
 

@@ -52,10 +52,9 @@ public class TestMap4 extends Map {
 
     @Override
     public ArrayList<NPC> loadNPCs() {
-        ArrayList<NPC> npcs = new ArrayList<>();
 
-       // npcs.add(new Walrus(getPositionByTileIndex(30, 10).subtract(new Point(0, 13)), this));
+        // npcs.add(new Walrus(getPositionByTileIndex(30, 10).subtract(new Point(0, 13)), this));
 
-        return npcs;
+        return new ArrayList<>();
     }
 }

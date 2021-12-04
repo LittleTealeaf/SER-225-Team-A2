@@ -7,11 +7,10 @@ import javax.swing.*;
 
 public class MapBuilder extends JPanel {
     private Map map;
-    private JScrollPane tileBuilderScroll;
-    private TileBuilder tileBuilder;
-    private JLabel mapWidthLabel;
-    private JLabel mapHeightLabel;
-    private JLabel hoveredTileIndexLabel;
+    private final JScrollPane tileBuilderScroll;
+    private final TileBuilder tileBuilder;
+    private final JLabel mapWidthLabel;
+    private final JLabel mapHeightLabel;
 
     public MapBuilder(SelectedTileIndexHolder controlPanelHolder) {
         setBackground(Colors.CORNFLOWER_BLUE);
@@ -27,7 +26,7 @@ public class MapBuilder extends JPanel {
         mapHeightLabel.setSize(70, 20);
         mapHeightLabel.setLocation(76, 544);
         add(mapHeightLabel);
-        hoveredTileIndexLabel = new JLabel("X: , Y:");
+        JLabel hoveredTileIndexLabel = new JLabel("X: , Y:");
         hoveredTileIndexLabel.setSize(140, 20);
         hoveredTileIndexLabel.setLocation(152, 544);
         add(hoveredTileIndexLabel);

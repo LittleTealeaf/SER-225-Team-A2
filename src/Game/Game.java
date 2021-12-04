@@ -2,7 +2,6 @@ package Game;
 
 import Engine.GameWindow;
 import Engine.ScreenManager;
-import Maps.GameMaps;
 
 /*
  * The game starts here
@@ -13,17 +12,16 @@ public class Game {
 
     public static void main(String[] args) {
         //Loads all maps before anything else happens
-        new GameMaps();
-        new Game();
-    }
+//        new GameMaps();
 
-    public Game() {
-    	ScreenCoordinator c1 = new ScreenCoordinator();
+        ScreenCoordinator c1 = new ScreenCoordinator();
         GameWindow gameWindow = new GameWindow(c1);
         gameWindow.startGame();
         ScreenManager screenManager = gameWindow.getScreenManager();
         screenManager.setCurrentScreen(c1);
-//        DEBUG USE ONLY
-//        screenManager.setCurrentScreen(new DebugScreen());
+
+    }
+
+    public Game() {
     }
 }

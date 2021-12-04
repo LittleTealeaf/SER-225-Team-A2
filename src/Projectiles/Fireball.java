@@ -17,8 +17,8 @@ import java.util.HashMap;
 // it will travel in a straight line (x axis) for a set time before disappearing
 // it will disappear early if it collides with a solid map tile
 public class Fireball extends Projectile {
-    private float movementSpeed;
-    private Stopwatch existenceTimer = new Stopwatch();
+    private final float movementSpeed;
+    private final Stopwatch existenceTimer = new Stopwatch();
 
     public Fireball(Point location, float movementSpeed, int existenceTime) {
         super(location.x, location.y, new SpriteSheet(ImageLoader.load("Fireball.png"), 7, 7), "DEFAULT");
@@ -63,12 +63,9 @@ public class Fireball extends Projectile {
 
     @Override
     public HashMap<String, Frame[]> getAnimations(SpriteSheet spriteSheet) {
-        return new HashMap<String, Frame[]>() {{
+        return new HashMap<>() {{
             put("DEFAULT", new Frame[]{
-                    new FrameBuilder(spriteSheet.getSprite(0, 0), 0)
-                            .withScale(3)
-                            .withBounds(1, 1, 5, 5)
-                            .build()
+                    new FrameBuilder(spriteSheet.getSprite(0, 0), 0).withScale(3).withBounds(1, 1, 5, 5).build()
             });
         }};
     }

@@ -37,7 +37,7 @@ public class AnimatedSprite implements Collidable {
 	protected Frame currentFrame;
 
 	// times frame delay before transitioning into the next frame of an animation
-	private Stopwatch frameTimer = new Stopwatch();
+	private final Stopwatch frameTimer = new Stopwatch();
 
 	public AnimatedSprite(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
 		this.x = x;

@@ -1,7 +1,5 @@
 package Engine;
 
-import Level.Map;
-
 import java.awt.event.MouseEvent;
 
 // Base Screen class
@@ -14,8 +12,4 @@ public abstract class Screen implements Updatable, Drawable {
     @Override
     public abstract void draw(GraphicsHandler graphicsHandler);
     public abstract void mouseClicked(MouseEvent e);
-    private Map background;
-    protected void setBackground(Map background) {
-        this.background = background;
-    }
 }

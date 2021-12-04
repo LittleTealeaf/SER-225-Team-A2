@@ -3,12 +3,10 @@ package MapEditor;
 import javax.swing.*;
 
 public class EditorWindow {
-    private JFrame editorWindow;
-    private EditorMainPanel editorMainPanel;
 
     public EditorWindow() {
-        editorWindow = new JFrame("Map Editor");
-        editorMainPanel = new EditorMainPanel(editorWindow);
+        JFrame editorWindow = new JFrame("Map Editor");
+        EditorMainPanel editorMainPanel = new EditorMainPanel(editorWindow);
         editorWindow.setContentPane(editorMainPanel);
         editorWindow.setResizable(false);
         editorWindow.setSize(800, 600);

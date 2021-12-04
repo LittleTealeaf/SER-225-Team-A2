@@ -5,23 +5,18 @@ import Level.MapTile;
 import Utils.Colors;
 
 import javax.swing.*;
-
-import Engine.Config;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class ChangeMapSizeWindow {
-    private JDialog changeMapSizeWindow;
-    private JTextField widthTextField;
-    private JTextField heightTextField;
-    private JRadioButton widthLeftRadio;
-    private JRadioButton widthRightRadio;
-    private JRadioButton heightTopRadio;
-    private JRadioButton heightBottomRadio;
-    private JLabel errorMessage;
-    private Map map;
+    private final JDialog changeMapSizeWindow;
+    private final JTextField widthTextField;
+    private final JTextField heightTextField;
+    private final JRadioButton widthLeftRadio;
+    private final JRadioButton widthRightRadio;
+    private final JRadioButton heightTopRadio;
+    private final JRadioButton heightBottomRadio;
+    private final JLabel errorMessage;
+    private final Map map;
 
     public ChangeMapSizeWindow(Map map, JFrame parent) {
         this.map = map;
@@ -100,24 +95,14 @@ public class ChangeMapSizeWindow {
         okButton.setSize(120, 40);
         okButton.setLocation(25, 220);
         okButton.setText("OK");
-        okButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                resizeMap();
-            }
-        });
+        okButton.addActionListener(e -> resizeMap());
         mainPanel.add(okButton);
 
         JButton cancelButton = new JButton();
         cancelButton.setSize(120, 40);
         cancelButton.setLocation(150, 220);
         cancelButton.setText("Cancel");
-        cancelButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                close();
-            }
-        });
+        cancelButton.addActionListener(e -> close());
         mainPanel.add(cancelButton);
 
         errorMessage = new JLabel("");

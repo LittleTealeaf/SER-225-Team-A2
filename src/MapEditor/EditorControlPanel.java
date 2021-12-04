@@ -6,19 +6,15 @@ import Level.MapTile;
 import Utils.Colors;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
 public class EditorControlPanel extends JPanel {
 
-	private ArrayList<String> mapNames;
-    private SelectedTileIndexHolder selectedTileIndexHolder;
-    private JComboBox mapNamesComboBox;
-    private TilePicker tilePicker;
-    private MapBuilder mapBuilder;
+    private final JComboBox<String> mapNamesComboBox;
+    private final TilePicker tilePicker;
+    private final MapBuilder mapBuilder;
     private Map selectedMap;
 
     public EditorControlPanel(SelectedTileIndexHolder selectedTileIndexHolder, MapBuilder mapBuilder, JFrame parent) {
@@ -27,9 +23,8 @@ public class EditorControlPanel extends JPanel {
         setLocation(0, 0);
         setSize(200, 600);
 
-        mapNames = EditorMaps.getMapNames();
+        ArrayList<String> mapNames = EditorMaps.getMapNames();
 
-        this.selectedTileIndexHolder = selectedTileIndexHolder;
         this.mapBuilder = mapBuilder;
 
         JLabel mapLabel = new JLabel();
@@ -38,19 +33,14 @@ public class EditorControlPanel extends JPanel {
         mapLabel.setSize(100, 40);
         add(mapLabel);
 
-        mapNamesComboBox = new JComboBox();
+        mapNamesComboBox = new JComboBox<>();
         mapNamesComboBox.setSize(190, 40);
         mapNamesComboBox.setLocation(5, 30);
         mapNames.sort(String::compareToIgnoreCase);
         for (String mapName : mapNames) {
             mapNamesComboBox.addItem(mapName);
         }
-        mapNamesComboBox.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setMap();
-            }
-        });
+        mapNamesComboBox.addActionListener(e -> setMap());
         add(mapNamesComboBox);
         selectedMap = EditorMaps.getMapByName(mapNamesComboBox.getSelectedItem().toString());
 
@@ -66,12 +56,9 @@ public class EditorControlPanel extends JPanel {
         setMapDimensionsButton.setSize(190, 40);
         setMapDimensionsButton.setLocation(5, 480);
         setMapDimensionsButton.setText("Set Map Dimensions");
-        setMapDimensionsButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new ChangeMapSizeWindow(getSelectedMap(), parent).show();
-                mapBuilder.refreshTileBuilder();
-            }
+        setMapDimensionsButton.addActionListener(e -> {
+            new ChangeMapSizeWindow(getSelectedMap(), parent).show();
+            mapBuilder.refreshTileBuilder();
         });
         add(setMapDimensionsButton);
 
@@ -79,12 +66,7 @@ public class EditorControlPanel extends JPanel {
         saveMapButton.setSize(190, 40);
         saveMapButton.setLocation(5, 525);
         saveMapButton.setText("Save Map");
-        saveMapButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                writeSelectedMapToFile();
-            }
-        });
+        saveMapButton.addActionListener(e -> writeSelectedMapToFile());
         add(saveMapButton);
     }
 

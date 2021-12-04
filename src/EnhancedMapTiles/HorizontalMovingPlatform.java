@@ -15,10 +15,10 @@ import java.awt.image.BufferedImage;
 // the platform will move back and forth between its start location and end location
 // if the player is standing on top of it, the player will be moved the same amount as the platform is moving (so the platform will not slide out from under the player)
 public class HorizontalMovingPlatform extends EnhancedMapTile {
-    private Point startLocation;
-    private Point endLocation;
-    private float movementSpeed = 1f;
-    private Direction startDirection;
+    private final Point startLocation;
+    private final Point endLocation;
+    private static final float MOVEMENT_SPEED = 1f;
+    private final Direction startDirection;
     private Direction direction;
 
     public HorizontalMovingPlatform(BufferedImage image, Point startLocation, Point endLocation, TileType tileType, float scale, Rectangle bounds, Direction startDirection) {
@@ -43,9 +43,9 @@ public class HorizontalMovingPlatform extends EnhancedMapTile {
         // move platform left or right based on its current direction
         int moveAmountX = 0;
         if (direction == Direction.RIGHT) {
-            moveAmountX += movementSpeed;
+            moveAmountX += MOVEMENT_SPEED;
         } else if (direction == Direction.LEFT) {
-            moveAmountX -= movementSpeed;
+            moveAmountX -= MOVEMENT_SPEED;
         }
 
         moveX(moveAmountX);

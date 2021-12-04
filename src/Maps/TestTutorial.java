@@ -54,11 +54,10 @@ public class TestTutorial extends Map {
 
     @Override
     public ArrayList<NPC> loadNPCs() {
-        ArrayList<NPC> npcs = new ArrayList<>();
 
         //npcs.add(new Walrus(getPositionByTileIndex(30, 10).subtract(new Point(0, 13)), this));
 
-        return npcs;
+        return new ArrayList<>();
     }
 
     private static final SpriteFont SPRITE_FONT_DIRECTIONS = new SpriteFont("Press 'X' for controls", 15, 35, "Times New Roman", 30, Color.white);

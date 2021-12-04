@@ -18,11 +18,10 @@ import java.util.Map.Entry;
 
 public class TilePicker extends JPanel {
 
-    private Tileset tileset;
-    private GraphicsHandler graphicsHandler = new GraphicsHandler();
-    private HashMap<Integer, MapTile> mapTiles = new HashMap<>();
+    private final GraphicsHandler graphicsHandler = new GraphicsHandler();
+    private final HashMap<Integer, MapTile> mapTiles = new HashMap<>();
     private int selectedTileIndex = 0;
-    private SelectedTileIndexHolder selectedTileIndexHolder;
+    private final SelectedTileIndexHolder selectedTileIndexHolder;
 
     public TilePicker(SelectedTileIndexHolder selectedTileIndexHolder) {
         setBackground(Colors.MAGENTA);
@@ -46,10 +45,9 @@ public class TilePicker extends JPanel {
     }
 
     public void setTileset(Map map, Tileset tileset) {
-        this.tileset = tileset;
-        HashMap<Integer, MapTileBuilder> mapTileBuilders = this.tileset.mapDefinedTilesToIndex();
+        HashMap<Integer, MapTileBuilder> mapTileBuilders = tileset.mapDefinedTilesToIndex();
 
-        int width = (int)this.getPreferredSize().getWidth() / this.tileset.getScaledSpriteWidth();
+        int width = (int)this.getPreferredSize().getWidth() / tileset.getScaledSpriteWidth();
         if (width == 0) {
             width = 1;
         }
@@ -59,7 +57,7 @@ public class TilePicker extends JPanel {
         }
         setPreferredSize(new Dimension(Math.max(144, width * tileset.getScaledSpriteWidth()), Math.max(391, height * tileset.getScaledSpriteHeight())));
 
-        Integer[] tileKeys = mapTileBuilders.keySet().toArray(new Integer[mapTileBuilders.keySet().size()]);
+        Integer[] tileKeys = mapTileBuilders.keySet().toArray(new Integer[0]);
         Arrays.sort(tileKeys);
         int currentKeyIndex = 0;
         outerLoop: for (int i = 0; i < height; i++) {

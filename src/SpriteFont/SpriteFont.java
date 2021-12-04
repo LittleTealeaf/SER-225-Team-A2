@@ -4,7 +4,6 @@ import Engine.Drawable;
 import Engine.GraphicsHandler;
 
 import java.awt.*;
-import java.util.Arrays;
 
 // This class represents a sprite font, which is graphic text (text drawn to the screen as if it were an image)
 

@@ -1,6 +1,5 @@
 package Screens;
 
-import Engine.Drawable;
 import Engine.GamePanel;
 import Engine.KeyboardAction;
 import Level.Player;

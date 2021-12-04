@@ -1,11 +1,10 @@
 package Screens;
 
-import Engine.DifficultyHolder;
 import Engine.GamePanel;
 import Game.GameState;
 import Maps.TitleScreenMap;
-import Menu.Menu;
 import Menu.Direction;
+import Menu.Menu;
 import Menu.MenuOption;
 import Menu.MenuOption.CloseOnExecute;
 

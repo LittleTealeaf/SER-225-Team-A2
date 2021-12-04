@@ -14,9 +14,9 @@ import java.awt.event.MouseMotionAdapter;
 public class TileBuilder extends JPanel {
     private Map map;
     private MapTile hoveredMapTile;
-    private SelectedTileIndexHolder controlPanelHolder;
-    private GraphicsHandler graphicsHandler = new GraphicsHandler();
-    private JLabel hoveredTileIndexLabel;
+    private final SelectedTileIndexHolder controlPanelHolder;
+    private final GraphicsHandler graphicsHandler = new GraphicsHandler();
+    private final JLabel hoveredTileIndexLabel;
 
     public TileBuilder(SelectedTileIndexHolder controlPanelHolder, JLabel hoveredTileIndexLabel) {
         setBackground(Colors.MAGENTA);

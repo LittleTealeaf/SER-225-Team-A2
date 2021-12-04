@@ -39,18 +39,12 @@ public class Walrus extends NPC {
 
     @Override
     public HashMap<String, Frame[]> getAnimations(SpriteSheet spriteSheet) {
-        return new HashMap<String, Frame[]>() {{
-           put("TAIL_DOWN", new Frame[] {
-                   new FrameBuilder(spriteSheet.getSprite(0, 0), 0)
-                           .withScale(3)
-                           .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                           .build()
-           });
-            put("TAIL_UP", new Frame[] {
-                    new FrameBuilder(spriteSheet.getSprite(1, 0), 0)
-                            .withScale(3)
-                            .withImageEffect(ImageEffect.FLIP_HORIZONTAL)
-                            .build()
+        return new HashMap<>() {{
+            put("TAIL_DOWN", new Frame[]{
+                    new FrameBuilder(spriteSheet.getSprite(0, 0), 0).withScale(3).withImageEffect(ImageEffect.FLIP_HORIZONTAL).build()
+            });
+            put("TAIL_UP", new Frame[]{
+                    new FrameBuilder(spriteSheet.getSprite(1, 0), 0).withScale(3).withImageEffect(ImageEffect.FLIP_HORIZONTAL).build()
             });
         }};
     }

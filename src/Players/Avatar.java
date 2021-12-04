@@ -11,7 +11,7 @@ public enum Avatar {
     CAT_GREEN(p -> new Cat("CatGreen.png", p));
 
 
-    private PlayerFactory factory;
+    private final PlayerFactory factory;
 
     Avatar(PlayerFactory factory) {
         this.factory = factory;

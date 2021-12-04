@@ -13,8 +13,8 @@ public class Config {
     public static final int FPS = 100;
     public static final String RESOURCES_PATH = "Resources/";
     public static final String MAP_FILES_PATH = "MapFiles/";
-    public static int WIDTH= 800;
-    public static int HEIGHT = 605;
+    public static final int WIDTH= 800;
+    public static final int HEIGHT = 605;
     public static final Color TRANSPARENT_COLOR = Colors.MAGENTA;
     public static Avatar playerAvatar = Avatar.CAT_ORANGE;
 

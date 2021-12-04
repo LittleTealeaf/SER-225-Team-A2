@@ -205,7 +205,7 @@ public class CommonTileset extends Tileset {
                 .build();
 
         MapTileBuilder lethalWaterTile = new MapTileBuilder(lethalWaterFrame)
-        		.withTileType(TileType.LETHAL);;
+        		.withTileType(TileType.LETHAL);
 
         mapTiles.add(lethalWaterTile);
 

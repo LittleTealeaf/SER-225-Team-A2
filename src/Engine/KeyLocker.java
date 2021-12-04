@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class KeyLocker {
-    private Set<KeyboardAction> lockedAdapters = new HashSet<>();
+    private final Set<KeyboardAction> lockedAdapters = new HashSet<>();
 
     public void setAction(KeyboardAction... keyboardActions) {
         for(KeyboardAction keyboardAction : keyboardActions) {

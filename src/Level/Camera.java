@@ -13,14 +13,14 @@ import java.util.ArrayList;
 public class Camera extends Rectangle {
 
     // the current map this camera is attached to
-    private Map map;
+    private final Map map;
 
     // width and height of each tile in the map (the map's tileset has this info)
-    private int tileWidth, tileHeight;
+    private final int tileWidth, tileHeight;
 
     // if the screen is covered in full length tiles, often there will be some extra room that doesn't quite have enough space for another entire tile
     // this leftover space keeps track of that "extra" space, which is needed to calculate the camera's current "end" position on the screen (in map coordinates, not screen coordinates)
-    private int leftoverSpaceX, leftoverSpaceY;
+    private final int leftoverSpaceX, leftoverSpaceY;
 
     // current map entities that are to be included in this frame's update/draw cycle
     private ArrayList<Enemy> activeEnemies = new ArrayList<>();

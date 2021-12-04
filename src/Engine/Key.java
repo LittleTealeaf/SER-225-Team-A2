@@ -48,7 +48,7 @@ public enum Key {
     ESC(27),
     CTRL(17);
 
-    private int keyCode;
+    private final int keyCode;
     Key(int keyCode) {
         this.keyCode = keyCode;
     }

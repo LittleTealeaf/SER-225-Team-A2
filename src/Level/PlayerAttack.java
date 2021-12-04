@@ -17,8 +17,8 @@ import java.util.HashMap;
 // it will travel in a straight line (x axis) for a set time before disappearing
 // it will disappear early if it collides with a solid map tile
 public class PlayerAttack extends Enemy {
-    private float movementSpeed;
-    private Stopwatch existenceTimer = new Stopwatch();
+    private final float movementSpeed;
+    private final Stopwatch existenceTimer = new Stopwatch();
     public static int dogHealth = 8;
 
     public PlayerAttack(Point location, float movementSpeed, int existenceTime) {
@@ -45,19 +45,19 @@ public class PlayerAttack extends Enemy {
             moveXHandleCollision(movementSpeed);
             super.update(player);
             ArrayList<Enemy> enemies = map.getActiveEnemies();
-            for (int i = 0; i < enemies.size(); i++) {
-            	if(intersects(enemies.get(i)) && enemies.get(i) instanceof Dog) {
-            		this.mapEntityStatus = MapEntityStatus.REMOVED;
-            		dogHealth -= 1;
-            		System.out.println(dogHealth);
-            		if(dogHealth == 0) {
-            			enemies.get(i).mapEntityStatus = MapEntityStatus.REMOVED;
-            		}
-            	}
-            	if (intersects(enemies.get(i)) && !(enemies.get(i) instanceof PlayerAttack) && !(enemies.get(i) instanceof Dog)) {
-            		this.mapEntityStatus = MapEntityStatus.REMOVED;
-            		enemies.get(i).mapEntityStatus = MapEntityStatus.REMOVED;
-            	}
+            for (Enemy enemy : enemies) {
+                if (intersects(enemy) && enemy instanceof Dog) {
+                    this.mapEntityStatus = MapEntityStatus.REMOVED;
+                    dogHealth -= 1;
+                    System.out.println(dogHealth);
+                    if (dogHealth == 0) {
+                        enemy.mapEntityStatus = MapEntityStatus.REMOVED;
+                    }
+                }
+                if (intersects(enemy) && !(enemy instanceof PlayerAttack) && !(enemy instanceof Dog)) {
+                    this.mapEntityStatus = MapEntityStatus.REMOVED;
+                    enemy.mapEntityStatus = MapEntityStatus.REMOVED;
+                }
             }
         }
     }
@@ -71,24 +71,14 @@ public class PlayerAttack extends Enemy {
     }
 
     @Override
-    public void touchedPlayer(Player player) {
-        // if fireball touches player, it disappears
-        //super.touchedPlayer(player);
-        //this.mapEntityStatus = MapEntityStatus.REMOVED;
-    	
-    	
-    	
-    }
+    public void touchedPlayer(Player player) {}
     
 
     @Override
     public HashMap<String, Frame[]> getAnimations(SpriteSheet spriteSheet) {
-        return new HashMap<String, Frame[]>() {{
+        return new HashMap<>() {{
             put("DEFAULT", new Frame[]{
-                    new FrameBuilder(spriteSheet.getSprite(0, 0), 0)
-                            .withScale(3)
-                            .withBounds(1, 1, 5, 5)
-                            .build()
+                    new FrameBuilder(spriteSheet.getSprite(0, 0), 0).withScale(3).withBounds(1, 1, 5, 5).build()
             });
         }};
     }

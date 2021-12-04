@@ -15,9 +15,9 @@ import java.util.HashMap;
 // This class is a base class for all npcs in the game -- all npcs should extend from it
 public class NPC extends MapEntity {
     protected boolean talkedTo = false;
-    protected SpriteFont message;
-    protected int talkedToTime;
-    protected Stopwatch timer = new Stopwatch();
+    protected final SpriteFont message;
+    protected final int talkedToTime;
+    protected final Stopwatch timer = new Stopwatch();
 
     public NPC(float x, float y, SpriteSheet spriteSheet, String startingAnimation, int talkedToTime) {
         super(x, y, spriteSheet, startingAnimation);

@@ -1,22 +1,13 @@
 package MapEditor;
 
 import Level.Map;
-import Maps.BossBattle;
-import Maps.LevelSelectMap;
-import Maps.TestMap;
-import Maps.TestMap2;
-import Maps.TestMap3;
-import Maps.TestMap4;
-import Maps.TestMap5;
-import Maps.TestMap6;
-import Maps.TestMap7;
-import Maps.TestTutorial;
-import Maps.TitleScreenMap;
+import Maps.*;
+
 import java.util.ArrayList;
 
 public class EditorMaps {
     public static ArrayList<String> getMapNames() {
-        return new ArrayList<String>() {{
+        return new ArrayList<>() {{
             add("TestMap");
             add("TitleScreen");
             add("LevelSelect");
@@ -32,31 +23,19 @@ public class EditorMaps {
     }
 
     public static Map getMapByName(String mapName) {
-        switch(mapName) {
-            case "TestMap":
-                return new TestMap();
-            case "TitleScreen":
-                return new TitleScreenMap();
-            case "TestTutorial":
-            	return new TestTutorial();
-            case "TestMap2":
-            	return new TestMap2();
-            case "TestMap3":
-            	return new TestMap3();
-            case "TestMap4":
-            	return new TestMap4();
-            case "TestMap5":
-            	return new TestMap5();
-            case "TestMap6":
-            	return new TestMap6();
-            case "TestMap7":
-            	return new TestMap7();
-            case "LevelSelect":
-            	return new LevelSelectMap();
-            case "BossBattle":
-            	return new BossBattle();
-            default:
-                throw new RuntimeException("Unrecognized map name");
-        }
+        return switch (mapName) {
+            case "TestMap" -> new TestMap();
+            case "TitleScreen" -> new TitleScreenMap();
+            case "TestTutorial" -> new TestTutorial();
+            case "TestMap2" -> new TestMap2();
+            case "TestMap3" -> new TestMap3();
+            case "TestMap4" -> new TestMap4();
+            case "TestMap5" -> new TestMap5();
+            case "TestMap6" -> new TestMap6();
+            case "TestMap7" -> new TestMap7();
+            case "LevelSelect" -> new LevelSelectMap();
+            case "BossBattle" -> new BossBattle();
+            default -> throw new RuntimeException("Unrecognized map name");
+        };
     }
 }

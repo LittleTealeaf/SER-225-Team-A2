@@ -18,8 +18,8 @@ import java.util.HashMap;
 // it will travel in a straight line (x axis) for a set time before disappearing
 // it will disappear early if it collides with a solid map tile
 public class LazerBeam extends Projectile {
-    private float movementSpeed;
-    private Stopwatch existenceTimer = new Stopwatch();
+    private final float movementSpeed;
+    private final Stopwatch existenceTimer = new Stopwatch();
 
     public LazerBeam(Point location, float movementSpeed, int existenceTime) {
         super(location.x, location.y, new SpriteSheet(ImageLoader.load("Lazer Beam.png"), 11, 6), "DEFAULT");
@@ -68,12 +68,9 @@ public class LazerBeam extends Projectile {
 
     @Override
     public HashMap<String, Frame[]> getAnimations(SpriteSheet spriteSheet) {
-        return new HashMap<String, Frame[]>() {{
+        return new HashMap<>() {{
             put("DEFAULT", new Frame[]{
-                    new FrameBuilder(spriteSheet.getSprite(0, 0), 0)
-                            .withScale(2)
-                            .withBounds(1, 1, 5, 5)
-                            .build()
+                    new FrameBuilder(spriteSheet.getSprite(0, 0), 0).withScale(2).withBounds(1, 1, 5, 5).build()
             });
         }};
     }

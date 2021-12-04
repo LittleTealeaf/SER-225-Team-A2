@@ -39,7 +39,7 @@ public class GamePanel extends JPanel implements Updatable {
 	 */
 	public GamePanel(ScreenCoordinator c1,GameWindow gameWindow) {
 		super();
-		this.gameWindow = gameWindow;
+		GamePanel.gameWindow = gameWindow;
 		this.setDoubleBuffered(true);
 		
 		health = new JLabel();
@@ -138,7 +138,7 @@ public class GamePanel extends JPanel implements Updatable {
 		} catch(Exception e) {
 			try {
 				music("Resources/Music/music.mp3",.05);
-			} catch(Exception f) {
+			} catch(Exception ignored) {
 
 			}
 		}
@@ -182,12 +182,12 @@ public class GamePanel extends JPanel implements Updatable {
 		// hide the health whenever in a menu
 		if(coordinator.getGameState() == GameState.MENU) {
 			Player.PLAYER_HEALTH = difficulty;
-			health.hide();
+			health.setVisible(false);
 		}
 		// show the health when in a level
 		else if (coordinator.getGameState() == GameState.LEVEL)
 		{
-			health.show();
+			health.setVisible(true);
 		}
 	}
 

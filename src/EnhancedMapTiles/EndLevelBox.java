@@ -29,20 +29,10 @@ public class EndLevelBox extends EnhancedMapTile {
 
     @Override
     public HashMap<String, Frame[]> getAnimations(SpriteSheet spriteSheet) {
-        return new HashMap<String, Frame[]>() {{
-            put("DEFAULT", new Frame[] {
-                new FrameBuilder(spriteSheet.getSprite(0, 0), 500)
-                        .withScale(3)
-                        .withBounds(1, 1, 14, 14)
-                        .build(),
-                new FrameBuilder(spriteSheet.getSprite(0, 1), 500)
-                        .withScale(3)
-                        .withBounds(1, 1, 14, 14)
-                        .build(),
-                new FrameBuilder(spriteSheet.getSprite(0, 2), 500)
-                        .withScale(3)
-                        .withBounds(1, 1, 14, 14)
-                        .build()
+        return new HashMap<>() {{
+            put("DEFAULT", new Frame[]{
+                    new FrameBuilder(spriteSheet.getSprite(0, 0), 500).withScale(3).withBounds(1, 1, 14, 14).build(), new FrameBuilder(
+                    spriteSheet.getSprite(0, 1), 500).withScale(3).withBounds(1, 1, 14, 14).build(), new FrameBuilder(spriteSheet.getSprite(0, 2), 500).withScale(3).withBounds(1, 1, 14, 14).build()
             });
         }};
     }

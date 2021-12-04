@@ -77,9 +77,9 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
     public void update() {
         switch (screenState) {
             case RUNNING -> {
-                if (KeyboardAction.GAME_PAUSE.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_PAUSE)) {
+                if (KeyboardAction.GAME_PAUSE.isDown() && keyLocker.isActionUnlocked(KeyboardAction.GAME_PAUSE)) {
                     pause();
-                } else if (KeyboardAction.GAME_INSTRUCTIONS.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_INSTRUCTIONS)) {
+                } else if (KeyboardAction.GAME_INSTRUCTIONS.isDown() && keyLocker.isActionUnlocked(KeyboardAction.GAME_INSTRUCTIONS)) {
                     screenState = State.INSTRUCTIONS;
                     timeTracker.stop();
                 } else {
@@ -88,7 +88,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
                 }
             }
             case INSTRUCTIONS -> {
-                if (KeyboardAction.GAME_INSTRUCTIONS.isDown() && !keyLocker.isActionLocked(KeyboardAction.GAME_INSTRUCTIONS)) {
+                if (KeyboardAction.GAME_INSTRUCTIONS.isDown() && keyLocker.isActionUnlocked(KeyboardAction.GAME_INSTRUCTIONS)) {
                     screenState = State.RUNNING;
                 }
             }

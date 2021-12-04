@@ -21,7 +21,7 @@ public enum KeyboardAction {
     GAME_SPRINT(Key.SHIFT),
     GAME_RESPAWN(Key.SPACE);
 
-    int[] keys;
+    final int[] keys;
 
     KeyboardAction(Key... keys) {
         this.keys = new int[keys.length];

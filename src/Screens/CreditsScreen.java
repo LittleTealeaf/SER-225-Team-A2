@@ -1,8 +1,5 @@
 package Screens;
 
-import Engine.Drawable;
-import Engine.GamePanel;
-import Game.GameState;
 import Maps.TitleScreenMap;
 import Menu.Menu;
 import Menu.MenuOption;

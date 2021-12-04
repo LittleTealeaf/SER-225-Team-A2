@@ -25,18 +25,10 @@ public class GraphicsHandler {
 
     public void drawImage(BufferedImage image, int x, int y, int width, int height, ImageEffect imageEffect) {
         switch (imageEffect) {
-            case NONE:
-                drawImage(image, x, y, width, height);
-                break;
-            case FLIP_HORIZONTAL:
-                g.drawImage(image, x + width, y, -width, height, null);
-                break;
-            case FLIP_VERTICAL:
-                g.drawImage(image, x, y + height, width, -height, null);
-                break;
-            case FLIP_H_AND_V:
-                g.drawImage(image, x + width, y + height, -width, -height, null);
-                break;
+            case NONE -> drawImage(image, x, y, width, height);
+            case FLIP_HORIZONTAL -> g.drawImage(image, x + width, y, -width, height, null);
+            case FLIP_VERTICAL -> g.drawImage(image, x, y + height, width, -height, null);
+            case FLIP_H_AND_V -> g.drawImage(image, x + width, y + height, -width, -height, null);
         }
     }
 
