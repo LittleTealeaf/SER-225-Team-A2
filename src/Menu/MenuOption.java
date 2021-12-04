@@ -15,23 +15,17 @@ public class MenuOption implements Drawable {
     private static final Color SELECTED_COLOR = new Color(255, 215, 0);
     private static final Color OUTLINE_COLOR = new Color(0, 0, 0);
     private static final int OUTLINE_THICKNESS = 3;
-
-    private SelectableMenu selectableMenu;
-
     private final MenuOption[] neighbors;
-
-    private MenuItemListener listener;
-
-    private Font font;
-
     private final String text;
-
-    private boolean selected;
     private final int x;
     private final int y;
+    private SelectableMenu selectableMenu;
+    private MenuItemListener listener;
+    private Font font;
+    private boolean selected;
     private int width;
     private int height;
-    
+
     private CloseOnExecute actionAfterExecute = CloseOnExecute.REMAINOPEN;
 
     public MenuOption(String text, int x, int y, MenuItemListener listener) {
@@ -45,7 +39,7 @@ public class MenuOption implements Drawable {
         this.x = x;
         this.y = y;
     }
-    
+
     public MenuOption(String text, int x, int y, MenuItemListener listener, CloseOnExecute closeOnExecute) {
         this(text, x, y);
         setListener(listener);
@@ -157,18 +151,17 @@ public class MenuOption implements Drawable {
             listener.event();
         }
         // allows a menu option the ability to close after selecting them
-        if (actionAfterExecute == CloseOnExecute.CLOSE)
-        {
-        	GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
+        if (actionAfterExecute == CloseOnExecute.CLOSE) {
+            GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
         }
     }
 
     public void setSelectFunction(SelectableMenu function) {
         this.selectableMenu = function;
     }
-    
-    public enum CloseOnExecute
-    {
-    	REMAINOPEN, CLOSE
+
+    public enum CloseOnExecute {
+        REMAINOPEN,
+        CLOSE
     }
 }

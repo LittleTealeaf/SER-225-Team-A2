@@ -17,6 +17,7 @@ import java.util.HashMap;
 // it will travel in a straight line (x axis) for a set time before disappearing
 // it will disappear early if it collides with a solid map tile
 public class Fireball extends Projectile {
+
     private final float movementSpeed;
     private final Stopwatch existenceTimer = new Stopwatch();
 
@@ -47,18 +48,18 @@ public class Fireball extends Projectile {
     }
 
     @Override
+    public void touchedPlayer(Player player) {
+        // if fireball touches player, it disappears
+        super.touchedPlayer(player);
+        this.mapEntityStatus = MapEntityStatus.REMOVED;
+    }
+
+    @Override
     public void onEndCollisionCheckX(boolean hasCollided, Direction direction) {
         // if fireball collides with anything solid on the x axis, it is removed
         if (hasCollided) {
             this.mapEntityStatus = MapEntityStatus.REMOVED;
         }
-    }
-
-    @Override
-    public void touchedPlayer(Player player) {
-        // if fireball touches player, it disappears
-        super.touchedPlayer(player);
-        this.mapEntityStatus = MapEntityStatus.REMOVED;
     }
 
     @Override

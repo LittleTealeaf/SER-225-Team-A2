@@ -19,26 +19,22 @@ import java.util.HashMap;
 // Every so often (based on shootTimer) it will shoot a bone enemy
 public class Dog extends Enemy {
 
+    // different speeds depending on the difficulty
+    private static final float NORMAL_SPEED = 1f, HARD_SPEED = 1.2f, HARDCORE_SPEED = 1.4f;
+    private static final float NORMAL_BONE_SPEED = 1.5f, HARD_BONE_SPEED = 1.7f, HARDCORE_BONE_SPEED = 1.9f;
+    private final Direction startFacingDirection;
     // start and end location defines the two points that it walks between
     // is only made to walk along the x axis and has no air ground state logic, so make sure both points have the same Y value
     protected Point startLocation;
     protected Point endLocation;
-
-    // different speeds depending on the difficulty
-    private static final float NORMAL_SPEED = 1f, HARD_SPEED = 1.2f, HARDCORE_SPEED = 1.4f;
-    float movementSpeed = NORMAL_SPEED;
-    
-    private static final float NORMAL_BONE_SPEED = 1.5f, HARD_BONE_SPEED = 1.7f, HARDCORE_BONE_SPEED = 1.9f;
-    private final Direction startFacingDirection;
     protected Direction facingDirection;
     protected boolean isInAir;
-
     // timer is used to determine when a bone is to be shot out
     protected Stopwatch shootTimer = new Stopwatch();
-
     // can be either WALK or SHOOT based on what the enemy is currently set to do
     protected DogState dogState;
     protected DogState previousdogState;
+    float movementSpeed = NORMAL_SPEED;
 
     public Dog(Point startLocation, Point endLocation, Direction facingDirection) {
         super(startLocation.x, startLocation.y, new SpriteSheet(ImageLoader.load("Dog.png"), 30, 26), "WALK_RIGHT");
@@ -71,15 +67,12 @@ public class Dog extends Enemy {
         float boneMovementSpeed = NORMAL_BONE_SPEED;
 
         // set the movement speed of the enemy and fireball attack depending on what difficulty it selected
-        if (GamePanel.getDifficulty() == 2)
-        {
-        	movementSpeed = HARD_SPEED;
-        	boneMovementSpeed = HARD_BONE_SPEED;
-        }
-        else if (GamePanel.getDifficulty() == 1)
-        {
-        	movementSpeed = HARDCORE_SPEED;
-        	boneMovementSpeed = HARDCORE_BONE_SPEED;
+        if (GamePanel.getDifficulty() == 2) {
+            movementSpeed = HARD_SPEED;
+            boneMovementSpeed = HARD_BONE_SPEED;
+        } else if (GamePanel.getDifficulty() == 1) {
+            movementSpeed = HARDCORE_SPEED;
+            boneMovementSpeed = HARDCORE_BONE_SPEED;
         }
 
         // if shoot timer is up and dog is not currently shooting, set its state to SHOOT
@@ -166,13 +159,15 @@ public class Dog extends Enemy {
         return new HashMap<>() {{
             put("WALK_LEFT", new Frame[]{
                     new FrameBuilder(spriteSheet.getSprite(0, 0), 200).withScale(2).withBounds(-5, 0, 35, 13).build(), new FrameBuilder(
-                    spriteSheet.getSprite(0, 1), 200).withScale(2).withBounds(-5, 0, 35, 13).build(), new FrameBuilder(spriteSheet.getSprite(0, 2), 200).withScale(2).withBounds(-5, 0, 35, 13).build()
+                    spriteSheet.getSprite(0, 1), 200).withScale(2).withBounds(-5, 0, 35, 13).build(), new FrameBuilder(
+                    spriteSheet.getSprite(0, 2), 200).withScale(2).withBounds(-5, 0, 35, 13).build()
             });
 
             put("WALK_RIGHT", new Frame[]{
                     new FrameBuilder(spriteSheet.getSprite(1, 0), 200).withScale(2).withBounds(0, 0, 35, 13).build(), new FrameBuilder(
                     spriteSheet.getSprite(1, 1), 200).withScale(2).withBounds(0, 0, 35, 13).build(), new FrameBuilder(spriteSheet.getSprite(1, 2),
-                                                                                                                      200).withScale(2).withBounds(0, 0, 35, 13).build()
+                                                                                                                      200
+            ).withScale(2).withBounds(0, 0, 35, 13).build()
             });
 
             put("SHOOT_LEFT", new Frame[]{
@@ -186,6 +181,7 @@ public class Dog extends Enemy {
     }
 
     public enum DogState {
-        WALK, SHOOT
+        WALK,
+        SHOOT
     }
 }

@@ -85,6 +85,10 @@ public abstract class Menu extends Screen implements SelectableMenu {
         }
     }
 
+    protected void backToMainMenu() {
+        GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
+    }
+
     private void moveDirection(Direction direction) {
         //Fallback if selected item is null
         if (selectedItem == null) {
@@ -125,7 +129,7 @@ public abstract class Menu extends Screen implements SelectableMenu {
     }
 
     public void mouseClicked(MouseEvent e) {
-        if(menuOptions != null) {
+        if (menuOptions != null) {
             for (MenuOption option : menuOptions) {
                 option.mouseClicked(e);
             }
@@ -177,9 +181,9 @@ public abstract class Menu extends Screen implements SelectableMenu {
         }
 
         menuOptions = new MenuOption[count];
-        for(MenuOption[] row : grid) {
-            for(MenuOption menuOption : row) {
-                if(menuOption != null) {
+        for (MenuOption[] row : grid) {
+            for (MenuOption menuOption : row) {
+                if (menuOption != null) {
                     menuOptions[menuOptions.length - (count--)] = menuOption;
                     menuOption.setSelectFunction(this);
                 }
@@ -200,9 +204,5 @@ public abstract class Menu extends Screen implements SelectableMenu {
 
     protected void setDrawables(Drawable... drawables) {
         this.drawables = drawables;
-    }
-
-    protected void backToMainMenu() {
-        GamePanel.getScreenCoordinator().setGameState(GameState.MENU);
     }
 }

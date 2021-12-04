@@ -20,31 +20,25 @@ import java.util.HashMap;
 // Every so often (based on shootTimer) the cyborg will shoot lazers from its arms
 public class CyborgEnemy extends Enemy {
 
+    // different speeds depending on the difficulty
+    private static final float NORMAL_SPEED = 0.5f, HARD_SPEED = 0.7f, HARDCORE_SPEED = 0.9f;
+    private static final float NORMAL_LAZER_SPEED = 1.5f, HARD_LAZER_SPEED = 1.7f, HARDCORE_LAZER_SPEED = 1.9f;
     // start and end location defines the two points that it walks between
     // is only made to walk along the x axis and has no air ground state logic, so make sure both points have the same Y value
     protected final Point startLocation;
     protected final Point endLocation;
-    
-    // Whether or not the game is waiting for LazerBeams to launch
-    private boolean wait = false;
-
-    // different speeds depending on the difficulty
-    private static final float NORMAL_SPEED = 0.5f, HARD_SPEED = 0.7f, HARDCORE_SPEED = 0.9f;
-    float movementSpeed = NORMAL_SPEED;
-    private static final float NORMAL_LAZER_SPEED = 1.5f, HARD_LAZER_SPEED = 1.7f, HARDCORE_LAZER_SPEED = 1.9f;
-    
+    // timer is used to determine when a lazer is to be shot out
+    protected final Stopwatch shootTimer = new Stopwatch();
+    protected final Stopwatch delay = new Stopwatch();
     private final Direction startFacingDirection;
     protected Direction facingDirection;
     protected boolean isInAir;
-
-    // timer is used to determine when a lazer is to be shot out
-    protected final Stopwatch shootTimer = new Stopwatch();
-    
-    protected final Stopwatch delay = new Stopwatch();
-
     // can be either WALK or SHOOT based on what the enemy is currently set to do
     protected CyborgState cyborgState;
     protected CyborgState previouscyborgState;
+    float movementSpeed = NORMAL_SPEED;
+    // Whether or not the game is waiting for LazerBeams to launch
+    private boolean wait = false;
 
     public CyborgEnemy(Point startLocation, Point endLocation, Direction facingDirection) {
         super(startLocation.x, startLocation.y, new SpriteSheet(ImageLoader.load("CyborgEnemy.png"), 14, 23), "WALK_LEFT");
@@ -78,17 +72,14 @@ public class CyborgEnemy extends Enemy {
         float lazerMovementSpeed = NORMAL_LAZER_SPEED;
 
         // set the movement speed of the enemy and lazer attack depending on what difficulty it selected
-        if (GamePanel.getDifficulty() == 2)
-        {
-        	movementSpeed = HARD_SPEED;
-        	lazerMovementSpeed = HARD_LAZER_SPEED;
+        if (GamePanel.getDifficulty() == 2) {
+            movementSpeed = HARD_SPEED;
+            lazerMovementSpeed = HARD_LAZER_SPEED;
+        } else if (GamePanel.getDifficulty() == 1) {
+            movementSpeed = HARDCORE_SPEED;
+            lazerMovementSpeed = HARDCORE_LAZER_SPEED;
         }
-        else if (GamePanel.getDifficulty() == 1)
-        {
-        	movementSpeed = HARDCORE_SPEED;
-        	lazerMovementSpeed = HARDCORE_LAZER_SPEED;
-        }
-        
+
         // if shoot timer is up and cyborg is not currently shooting, set its state to SHOOT
         if (shootTimer.isTimeUp() && cyborgState != CyborgState.SHOOT) {
             cyborgState = CyborgState.SHOOT;
@@ -149,9 +140,9 @@ public class CyborgEnemy extends Enemy {
                 shootTimer.setWaitTime(2000);
             }
             // 
-            else if(delay.isTimeUp() && wait) {
-            	cyborgState = CyborgState.WALK;
-            	wait = false;
+            else if (delay.isTimeUp() && wait) {
+                cyborgState = CyborgState.WALK;
+                wait = false;
             }
         }
         previouscyborgState = cyborgState;
@@ -175,18 +166,22 @@ public class CyborgEnemy extends Enemy {
     public HashMap<String, Frame[]> getAnimations(SpriteSheet spriteSheet) {
         return new HashMap<>() {{
             put("WALK_LEFT", new Frame[]{
-                    new FrameBuilder(spriteSheet.getSprite(0, 1), 200).withScale(2).withBounds(0, 0, 7, 22).build(),
-                    new FrameBuilder(spriteSheet.getSprite(0, 0), 200).withScale(2).withBounds(0, 0, 13, 22).build(),
-                    new FrameBuilder(spriteSheet.getSprite(0, 1), 200).withScale(2).withBounds(0, 0, 7, 22).build(),
-                    new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
-                            .withScale(2).withBounds(0, 0, 13, 22).build(),
+                    new FrameBuilder(spriteSheet.getSprite(0, 1), 200).withScale(2).withBounds(0, 0, 7, 22).build(), new FrameBuilder(
+                    spriteSheet.getSprite(0, 0), 200).withScale(2).withBounds(0, 0, 13, 22).build(), new FrameBuilder(
+                    spriteSheet.getSprite(0, 1), 200).withScale(2).withBounds(0, 0, 7, 22).build(), new FrameBuilder(spriteSheet.getSprite(1, 0), 200)
+                            .withScale(2).withBounds(
+                            0, 0, 13, 22).build(),
                     });
 
             put("WALK_RIGHT", new Frame[]{
-                    new FrameBuilder(spriteSheet.getSprite(0, 1), 200).withScale(2).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(0, 0, 7, 22).build(),
-                    new FrameBuilder(spriteSheet.getSprite(0, 0), 200).withScale(2).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(0, 0, 13, 22).build(),
-                    new FrameBuilder(spriteSheet.getSprite(0, 1), 200).withScale(2).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(0, 0, 7, 22).build(),
-                    new FrameBuilder(spriteSheet.getSprite(1, 0), 200).withScale(2).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(0, 0, 13, 22).build(),
+                    new FrameBuilder(spriteSheet.getSprite(0, 1), 200).withScale(2).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(
+                            0, 0, 7, 22).build(),
+                    new FrameBuilder(spriteSheet.getSprite(0, 0), 200).withScale(2).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(
+                            0, 0, 13, 22).build(),
+                    new FrameBuilder(spriteSheet.getSprite(0, 1), 200).withScale(2).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(
+                            0, 0, 7, 22).build(),
+                    new FrameBuilder(spriteSheet.getSprite(1, 0), 200).withScale(2).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(
+                            0, 0, 13, 22).build(),
                     });
 
             put("SHOOT", new Frame[]{
@@ -196,6 +191,7 @@ public class CyborgEnemy extends Enemy {
     }
 
     public enum CyborgState {
-        WALK, SHOOT
+        WALK,
+        SHOOT
     }
 }

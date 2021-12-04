@@ -13,15 +13,19 @@ public class GameTimer extends TimeParser {
     }
 
     public void start() {
-        if(!running) {
+        if (!running) {
             time = getElapsed();
             startTime = System.currentTimeMillis();
             running = true;
         }
     }
 
+    public long getElapsed() {
+        return (running ? System.currentTimeMillis() : endTime) + time - startTime;
+    }
+
     public void stop() {
-        if(running) {
+        if (running) {
             endTime = System.currentTimeMillis();
             running = false;
         }
@@ -30,10 +34,6 @@ public class GameTimer extends TimeParser {
     public void reset() {
         time = 0;
         startTime = System.currentTimeMillis();
-    }
-
-    public long getElapsed() {
-        return (running ? System.currentTimeMillis() : endTime ) + time - startTime;
     }
 
     @Override

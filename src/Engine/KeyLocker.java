@@ -5,11 +5,12 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class KeyLocker {
+
     private final Set<KeyboardAction> lockedAdapters = new HashSet<>();
 
     public void setAction(KeyboardAction... keyboardActions) {
-        for(KeyboardAction keyboardAction : keyboardActions) {
-            if(keyboardAction.isDown()) {
+        for (KeyboardAction keyboardAction : keyboardActions) {
+            if (keyboardAction.isDown()) {
                 lockedAdapters.add(keyboardAction);
             } else {
                 lockedAdapters.remove(keyboardAction);
@@ -18,7 +19,7 @@ public class KeyLocker {
     }
 
     public void unlockAction(KeyboardAction... keyboardActions) {
-        for(KeyboardAction keyboardAction : keyboardActions) {
+        for (KeyboardAction keyboardAction : keyboardActions) {
             lockedAdapters.remove(keyboardAction);
         }
     }

@@ -12,6 +12,7 @@ import java.util.HashMap;
 
 // This class represents a tileset, which defines a set of tiles based on a sprite sheet image
 public abstract class Tileset extends SpriteSheet {
+
     // global scale of all tiles in the tileset
     protected float tileScale = 1f;
 
@@ -27,15 +28,31 @@ public abstract class Tileset extends SpriteSheet {
         this.defaultTile = getDefaultTile();
     }
 
+    // maps all tiles to a tile index, which is how it is identified by the map file
+    public HashMap<Integer, MapTileBuilder> mapDefinedTilesToIndex() {
+        ArrayList<MapTileBuilder> mapTileBuilders = defineTiles();
+        HashMap<Integer, MapTileBuilder> tilesToIndex = new HashMap<>();
+        for (int i = 0; i < mapTileBuilders.size(); i++) {
+            tilesToIndex.put(i, mapTileBuilders.get(i).withTileIndex(i));
+        }
+        return tilesToIndex;
+    }
+
+    public MapTileBuilder getDefaultTile() {
+        BufferedImage defaultTileImage = ImageLoader.load("DefaultTile.png");
+        return new MapTileBuilder(new FrameBuilder(ImageUtils.resizeImage(defaultTileImage, spriteWidth, spriteHeight), 0).withScale(tileScale)
+                                                                                                                          .build());
+    }
+
+    // a subclass of this class must implement this method to define tiles in the tileset
+    public abstract ArrayList<MapTileBuilder> defineTiles();
+
     public Tileset(BufferedImage image, int tileWidth, int tileHeight, int tileScale) {
         super(image, tileWidth, tileHeight);
         this.tileScale = tileScale;
         this.tiles = mapDefinedTilesToIndex();
         this.defaultTile = getDefaultTile();
     }
-
-    // a subclass of this class must implement this method to define tiles in the tileset
-    public abstract ArrayList<MapTileBuilder> defineTiles();
 
     // get specific tile from tileset by index, if not found the default tile is returned
     public MapTileBuilder getTile(int tileNumber) {
@@ -52,20 +69,5 @@ public abstract class Tileset extends SpriteSheet {
 
     public int getScaledSpriteHeight() {
         return Math.round(spriteHeight * tileScale);
-    }
-
-    // maps all tiles to a tile index, which is how it is identified by the map file
-    public HashMap<Integer, MapTileBuilder> mapDefinedTilesToIndex() {
-        ArrayList<MapTileBuilder> mapTileBuilders = defineTiles();
-        HashMap<Integer, MapTileBuilder> tilesToIndex = new HashMap<>();
-        for (int i = 0; i < mapTileBuilders.size(); i++) {
-            tilesToIndex.put(i, mapTileBuilders.get(i).withTileIndex(i));
-        }
-        return tilesToIndex;
-    }
-
-    public MapTileBuilder getDefaultTile() {
-        BufferedImage defaultTileImage = ImageLoader.load("DefaultTile.png");
-        return new MapTileBuilder(new FrameBuilder(ImageUtils.resizeImage(defaultTileImage, spriteWidth, spriteHeight), 0).withScale(tileScale).build());
     }
 }

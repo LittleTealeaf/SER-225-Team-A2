@@ -22,18 +22,18 @@ public class BossBattle extends Map {
 
     //original 17
     public BossBattle() {
-    	super("Final Boss","BossBattle.txt", new CommonTileset(), new Point(1, 17));
+        super("Final Boss", "BossBattle.txt", new CommonTileset(), new Point(1, 17));
     }
 
     @Override
     public ArrayList<Enemy> loadEnemies() {
         ArrayList<Enemy> enemies = new ArrayList<>();
         enemies.add(new CyborgEnemy(getPositionByTileIndex(34, 13), getPositionByTileIndex(38, 13), Direction.RIGHT));
-    	enemies.add(new DinosaurEnemy(getPositionByTileIndex(19, 5), getPositionByTileIndex(28, 5), Direction.RIGHT));
-    	enemies.add(new DinosaurEnemy(getPositionByTileIndex(33, 5), getPositionByTileIndex(44, 5), Direction.RIGHT));
-    	enemies.add(new CyborgEnemy(getPositionByTileIndex(16, 5), getPositionByTileIndex(17, 5), Direction.RIGHT));
-    	enemies.add(new CyborgEnemy(getPositionByTileIndex(2, 5), getPositionByTileIndex(3, 5), Direction.RIGHT));
-    	enemies.add(new Dog(getPositionByTileIndex(4, 5), getPositionByTileIndex(15, 5), Direction.RIGHT));
+        enemies.add(new DinosaurEnemy(getPositionByTileIndex(19, 5), getPositionByTileIndex(28, 5), Direction.RIGHT));
+        enemies.add(new DinosaurEnemy(getPositionByTileIndex(33, 5), getPositionByTileIndex(44, 5), Direction.RIGHT));
+        enemies.add(new CyborgEnemy(getPositionByTileIndex(16, 5), getPositionByTileIndex(17, 5), Direction.RIGHT));
+        enemies.add(new CyborgEnemy(getPositionByTileIndex(2, 5), getPositionByTileIndex(3, 5), Direction.RIGHT));
+        enemies.add(new Dog(getPositionByTileIndex(4, 5), getPositionByTileIndex(15, 5), Direction.RIGHT));
         return enemies;
     }
 
@@ -41,30 +41,21 @@ public class BossBattle extends Map {
     public ArrayList<EnhancedMapTile> loadEnhancedMapTiles() {
         ArrayList<EnhancedMapTile> enhancedMapTiles = new ArrayList<>();
 
-        enhancedMapTiles.add(new HorizontalMovingPlatform(
-                ImageLoader.load("GreenPlatform.png"),
-                getPositionByTileIndex(39, 13),
-                getPositionByTileIndex(42, 13),
-                TileType.JUMP_THROUGH_PLATFORM,
-                3,
-                new Rectangle(0, 6,16,4),
-                Direction.RIGHT
-        ));
-        
-        enhancedMapTiles.add(new EndLevelBox(
-                getPositionByTileIndex(0, 0)
-        ));
+        enhancedMapTiles.add(
+                new HorizontalMovingPlatform(ImageLoader.load("GreenPlatform.png"), getPositionByTileIndex(39, 13), getPositionByTileIndex(42, 13),
+                                             TileType.JUMP_THROUGH_PLATFORM, 3, new Rectangle(0, 6, 16, 4), Direction.RIGHT
+                ));
+
+        enhancedMapTiles.add(new EndLevelBox(getPositionByTileIndex(0, 0)));
 
         return enhancedMapTiles;
     }
-    
+
     @Override
     public ArrayList<Flag> loadFlags() {
         ArrayList<Flag> flags = new ArrayList<>();
 
-        flags.add(new CheckpointFlag(
-        		getPositionByTileIndex(24, 5)
-        ));
+        flags.add(new CheckpointFlag(getPositionByTileIndex(24, 5)));
 
         return flags;
     }
@@ -72,10 +63,9 @@ public class BossBattle extends Map {
     @Override
     public void update(Player player) {
         super.update(player);
-        if(!bossKilled && PlayerAttack.dogHealth <= 0) {
+        if (!bossKilled && PlayerAttack.dogHealth <= 0) {
             bossKilled = true;
             player.setJumpHeight(16);
         }
     }
-
 }

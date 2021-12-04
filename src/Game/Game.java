@@ -10,6 +10,9 @@ import Engine.ScreenManager;
  */
 public class Game {
 
+    public Game() {
+    }
+
     public static void main(String[] args) {
         //Loads all maps before anything else happens
 //        new GameMaps();
@@ -19,9 +22,5 @@ public class Game {
         gameWindow.startGame();
         ScreenManager screenManager = gameWindow.getScreenManager();
         screenManager.setCurrentScreen(c1);
-
-    }
-
-    public Game() {
     }
 }

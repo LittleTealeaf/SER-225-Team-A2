@@ -1,6 +1,5 @@
 package Players;
 
-
 import Level.Player;
 import Utils.Point;
 
@@ -9,7 +8,6 @@ public enum Avatar {
     CAT_ORANGE(p -> new Cat("Cat.png", p)),
     CAT_BLUE(p -> new Cat("CatBlue.png", p)),
     CAT_GREEN(p -> new Cat("CatGreen.png", p));
-
 
     private final PlayerFactory factory;
 
@@ -22,6 +20,7 @@ public enum Avatar {
     }
 
     public interface PlayerFactory {
+
         Player generatePlayer(Point startingPoint);
     }
 }

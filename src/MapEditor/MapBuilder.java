@@ -6,11 +6,12 @@ import Utils.Colors;
 import javax.swing.*;
 
 public class MapBuilder extends JPanel {
-    private Map map;
+
     private final JScrollPane tileBuilderScroll;
     private final TileBuilder tileBuilder;
     private final JLabel mapWidthLabel;
     private final JLabel mapHeightLabel;
+    private Map map;
 
     public MapBuilder(SelectedTileIndexHolder controlPanelHolder) {
         setBackground(Colors.CORNFLOWER_BLUE);

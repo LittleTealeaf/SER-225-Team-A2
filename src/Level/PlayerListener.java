@@ -7,6 +7,7 @@ public interface PlayerListener {
      * Whenever the player leaves the level in its completed state
      */
     void onLevelCompleted();
+
     void onDeath();
 
     /**

@@ -11,45 +11,45 @@ import java.util.Set;
  */
 public class Keyboard extends KeyAdapter {
 
-	private static final Set<Integer> keysDown;
+    private static final Set<Integer> keysDown;
 
-	static {
-		keysDown = new HashSet<>();
-	}
+    static {
+        keysDown = new HashSet<>();
+    }
 
-	@Override
-	public void keyPressed(KeyEvent keyEvent) {
-		keysDown.add(keyEvent.getKeyCode());
-	}
+    // returns if a key is currently being pressed
+    public static boolean isKeyDown(Key key) {
+        return keysDown.contains(key.getKeyCode());
+    }
 
-	@Override
-	public void keyReleased(KeyEvent keyEvent) {
-		keysDown.remove(keyEvent.getKeyCode());
-	}
+    // returns if a key is currently not being pressed
+    public static boolean isKeyUp(Key key) {
+        return !keysDown.contains(key.getKeyCode());
+    }
 
-	// returns if a key is currently being pressed
-	public static boolean isKeyDown(Key key) {
-		return keysDown.contains(key.getKeyCode());
-	}
+    /**
+     * Returns if one of the keys is down
+     *
+     * @param keyCode Integer code of the key
+     *
+     * @return True if at least one of the keys is down
+     */
+    public static boolean isKeyDown(int... keyCode) {
+        for (Integer i : keyCode) {
+            if (keysDown.contains(i)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-	// returns if a key is currently not being pressed
-	public static boolean isKeyUp(Key key) {
-		return !keysDown.contains(key.getKeyCode());
-	}
+    @Override
+    public void keyPressed(KeyEvent keyEvent) {
+        keysDown.add(keyEvent.getKeyCode());
+    }
 
-	/**
-	 * Returns if one of the keys is down
-	 * @param keyCode Integer code of the key
-	 * @return True if at least one of the keys is down
-	 */
-	public static boolean isKeyDown(int... keyCode) {
-		for(Integer i : keyCode) {
-			if(keysDown.contains(i)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-
+    @Override
+    public void keyReleased(KeyEvent keyEvent) {
+        keysDown.remove(keyEvent.getKeyCode());
+    }
 }

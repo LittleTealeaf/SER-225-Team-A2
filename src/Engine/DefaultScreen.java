@@ -8,20 +8,20 @@ import java.awt.event.MouseEvent;
  * Think of it as the equivalent as setting a String to "" instead of just leaving it as null
  */
 public class DefaultScreen extends Screen {
-    public DefaultScreen() { }
+
+    public DefaultScreen() {}
 
     @Override
-    public void initialize() { }
+    public void initialize() {}
 
     @Override
-    public void update() { }
+    public void update() {}
 
     @Override
-    public void draw(GraphicsHandler graphicsHandler) { }
+    public void draw(GraphicsHandler graphicsHandler) {}
 
     @Override
     public void mouseClicked(MouseEvent e) {
 
     }
-
 }

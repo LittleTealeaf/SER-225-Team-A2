@@ -1,9 +1,8 @@
 package Utils;
 
 public class TimeParser {
-    private static final long MS_PER_SECOND, SECOND_PER_MINUTE, MINUTE_PER_HOUR, MS_PER_HOUR, MS_PER_MINUTE;
 
-    protected long time;
+    private static final long MS_PER_SECOND, SECOND_PER_MINUTE, MINUTE_PER_HOUR, MS_PER_HOUR, MS_PER_MINUTE;
 
     static {
         MS_PER_SECOND = 1000;
@@ -13,20 +12,14 @@ public class TimeParser {
         MS_PER_HOUR = MS_PER_MINUTE * MINUTE_PER_HOUR;
     }
 
+    protected long time;
+
     public TimeParser() {
         this(0);
     }
 
     public TimeParser(long time) {
         this.time = time;
-    }
-
-    public void setTime(long time) {
-        this.time = time;
-    }
-
-    public long getTime() {
-        return time;
     }
 
     public void addTime(long time) {
@@ -39,6 +32,7 @@ public class TimeParser {
 
     /**
      * Converts the time to a readable string
+     *
      * @return
      */
     public String toString() {
@@ -55,24 +49,33 @@ public class TimeParser {
 
         StringBuilder stringBuilder = new StringBuilder();
 
-        if(hours > 0) {
-            if(hours > 9) {
+        if (hours > 0) {
+            if (hours > 9) {
                 stringBuilder.append((char) ('0' + hours / 10));
             }
-            stringBuilder.append((char) ('0' + hours % 10)).append(':').append((char) ('0' + minutes / 10)).append((char) ('0' + minutes % 10)).append(':');
+            stringBuilder.append((char) ('0' + hours % 10)).append(':').append((char) ('0' + minutes / 10)).append((char) ('0' + minutes % 10))
+                         .append(':');
             stringBuilder.append((char) ('0' + seconds / 10));
-        } else if(minutes > 0) {
-            if(minutes > 9) {
+        } else if (minutes > 0) {
+            if (minutes > 9) {
                 stringBuilder.append((char) ('0' + minutes / 10));
             }
             stringBuilder.append((char) ('0' + minutes % 10)).append(':');
             stringBuilder.append((char) ('0' + seconds / 10));
-        } else if(seconds > 9) {
+        } else if (seconds > 9) {
             stringBuilder.append((char) ('0' + seconds / 10));
         }
         stringBuilder.append((char) ('0' + seconds % 10)).append('.');
         stringBuilder.append((char) ('0' + elapsed / 100)).append((char) ('0' + (elapsed / 10) % 10));
 
         return stringBuilder.toString();
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
     }
 }

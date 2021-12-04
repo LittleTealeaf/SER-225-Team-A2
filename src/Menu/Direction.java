@@ -1,7 +1,10 @@
 package Menu;
 
 public enum Direction {
-    UP(0), RIGHT(1), LEFT(2), DOWN(3);
+    UP(0),
+    RIGHT(1),
+    LEFT(2),
+    DOWN(3);
 
     int index;
 

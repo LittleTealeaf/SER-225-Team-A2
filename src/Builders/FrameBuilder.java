@@ -8,6 +8,7 @@ import java.awt.image.BufferedImage;
 
 // Builder class to instantiate a Frame class
 public class FrameBuilder {
+
     private final BufferedImage image;
     private int delay;
     private Rectangle bounds;

@@ -4,6 +4,7 @@ import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.Rectangle;
 import GameObject.SpriteSheet;
+
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
@@ -52,8 +53,6 @@ public class Flag extends MapEntity {
 
     // A subclass can override this method to specify what it does when it touches the player
     public void touchedPlayer() {
-        
+
     }
- 
-    
 }

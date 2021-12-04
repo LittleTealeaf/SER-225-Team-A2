@@ -8,6 +8,7 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ChangeMapSizeWindow {
+
     private final JDialog changeMapSizeWindow;
     private final JTextField widthTextField;
     private final JTextField heightTextField;
@@ -23,7 +24,7 @@ public class ChangeMapSizeWindow {
 
         changeMapSizeWindow = new JDialog();
         changeMapSizeWindow.setResizable(false);
-       changeMapSizeWindow.setSize(300, 310);
+        changeMapSizeWindow.setSize(300, 310);
         //changeMapSizeWindow.setSize(Config.WIDTH, Config.HEIGHT);
         changeMapSizeWindow.setTitle("Change Map Size");
         changeMapSizeWindow.setModal(true);
@@ -110,7 +111,6 @@ public class ChangeMapSizeWindow {
         errorMessage.setLocation(26, 260);
         errorMessage.setForeground(new Color(154, 0, 0));
         mainPanel.add(errorMessage);
-
     }
 
     public void resizeMap() {
@@ -137,38 +137,17 @@ public class ChangeMapSizeWindow {
         }
     }
 
+    public void close() {
+        changeMapSizeWindow.setVisible(false);
+        changeMapSizeWindow.dispose();
+    }
+
     public boolean isWidthInputValid() {
         return isStringAPositiveNumber(widthTextField.getText());
     }
 
     public boolean isHeightInputValid() {
         return isStringAPositiveNumber(heightTextField.getText());
-    }
-
-    public boolean isStringAPositiveNumber(String s) {
-        try {
-            int number = Integer.parseInt(s);
-            return number >= 0;
-        } catch (NumberFormatException ex) {
-            return false;
-        }
-    }
-
-    public void show() {
-        changeMapSizeWindow.setVisible(true);
-    }
-
-    public void close() {
-        changeMapSizeWindow.setVisible(false);
-        changeMapSizeWindow.dispose();
-    }
-
-    public enum MapWidthDirection {
-        LEFT, RIGHT
-    }
-
-    public enum MapHeightDirection {
-        TOP, BOTTOM
     }
 
     public void resizeMapWidth(int newWidth, MapWidthDirection mapWidthDirection) {
@@ -199,8 +178,8 @@ public class ChangeMapSizeWindow {
         for (int i = 0; i < map.getHeight(); i++) {
             for (int j = 0; j < newWidth; j++) {
                 if (mapTilesSizeChange[j + newWidth * i] == null) {
-                    MapTile defaultTile = map.getTileset().getDefaultTile()
-                            .build(j * map.getTileset().getScaledSpriteWidth(), i * map.getTileset().getScaledSpriteHeight());
+                    MapTile defaultTile = map.getTileset().getDefaultTile().build(
+                            j * map.getTileset().getScaledSpriteWidth(), i * map.getTileset().getScaledSpriteHeight());
                     defaultTile.setMap(map);
                     mapTilesSizeChange[j + newWidth * i] = defaultTile;
                 }
@@ -239,8 +218,8 @@ public class ChangeMapSizeWindow {
         for (int i = 0; i < newHeight; i++) {
             for (int j = 0; j < map.getWidth(); j++) {
                 if (mapTilesSizeChange[j + map.getWidth() * i] == null) {
-                    MapTile defaultTile = map.getTileset().getDefaultTile()
-                            .build(j * map.getTileset().getScaledSpriteWidth(), i * map.getTileset().getScaledSpriteHeight());
+                    MapTile defaultTile = map.getTileset().getDefaultTile().build(
+                            j * map.getTileset().getScaledSpriteWidth(), i * map.getTileset().getScaledSpriteHeight());
                     defaultTile.setMap(map);
                     mapTilesSizeChange[j + map.getWidth() * i] = defaultTile;
                 }
@@ -249,5 +228,28 @@ public class ChangeMapSizeWindow {
 
         map.setMapTiles(mapTilesSizeChange);
         map.setHeight(newHeight);
+    }
+
+    public boolean isStringAPositiveNumber(String s) {
+        try {
+            int number = Integer.parseInt(s);
+            return number >= 0;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+
+    public void show() {
+        changeMapSizeWindow.setVisible(true);
+    }
+
+    public enum MapWidthDirection {
+        LEFT,
+        RIGHT
+    }
+
+    public enum MapHeightDirection {
+        TOP,
+        BOTTOM
     }
 }

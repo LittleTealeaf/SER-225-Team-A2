@@ -27,7 +27,6 @@ public class Cat extends Player {
         walkSpeed = 2.1f;
         sprintSpeed = 3.3f;
         sprintAcceleration = 1.05f;
-
     }
 
     public void update() {

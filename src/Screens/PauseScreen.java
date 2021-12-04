@@ -27,9 +27,7 @@ public class PauseScreen extends Menu {
     public PauseScreen(Map map, Player player, Pausable parent) {
         this.parent = parent;
         menuEscape = false;
-        setDrawables(new Drawable[]{
-                player, map
-        });
+        setDrawables(player, map);
         setMenuItemsAsGrid(new MenuOption[][]{
                 {
                         new MenuOption("Return to Game", 100, 100, this.parent::resume)

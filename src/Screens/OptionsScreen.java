@@ -17,8 +17,8 @@ import java.awt.image.BufferedImage;
 
 public class OptionsScreen extends Menu {
 
+    public int catColor = 0;
     private BufferedImage cat;
-	public int catColor = 0;
 
     public OptionsScreen() {
         setBackground(new LevelSelectMap());
@@ -39,7 +39,6 @@ public class OptionsScreen extends Menu {
                 }
         };
         setMenuItemsAsGrid(items);
-        
 
         //Sets the smaller fonts
         Font smallerFont = new Font("Comic Sans", Font.PLAIN, 24);
@@ -53,26 +52,23 @@ public class OptionsScreen extends Menu {
         }
         items[1][1].setSelected(true);
     }
-    
+
     public void draw(GraphicsHandler handler) {
-    	super.draw(handler);
-		if(Config.playerAvatar == Avatar.CAT_ORANGE) {
-			SpriteSheet orange = new SpriteSheet(ImageLoader.load("Cat.png"), 24, 24);
-			cat = orange.getSprite(0, 0);
-    		handler.drawImage(cat, 210, 225, 100, 100);
+        super.draw(handler);
+        if (Config.playerAvatar == Avatar.CAT_ORANGE) {
+            SpriteSheet orange = new SpriteSheet(ImageLoader.load("Cat.png"), 24, 24);
+            cat = orange.getSprite(0, 0);
+            handler.drawImage(cat, 210, 225, 100, 100);
+        } else if (Config.playerAvatar == Avatar.CAT_BLUE) {
+            SpriteSheet blue = new SpriteSheet(ImageLoader.load("CatBlue.png"), 24, 24);
+            cat = blue.getSprite(0, 0);
+            handler.drawImage(cat, 210, 225, 100, 100);
+        } else if (Config.playerAvatar == Avatar.CAT_GREEN) {
+            SpriteSheet green = new SpriteSheet(ImageLoader.load("CatGreen.png"), 24, 24);
+            cat = green.getSprite(0, 0);
+            handler.drawImage(cat, 210, 225, 100, 100);
+        } else {
+            handler.drawImage(cat, 210, 225, 100, 100);
         }
-		else if(Config.playerAvatar == Avatar.CAT_BLUE) {
-			SpriteSheet blue = new SpriteSheet(ImageLoader.load("CatBlue.png"), 24, 24);
-			cat = blue.getSprite(0, 0);
-        	handler.drawImage(cat, 210, 225, 100, 100);
-        }
-		else if(Config.playerAvatar == Avatar.CAT_GREEN) {
-			SpriteSheet green = new SpriteSheet(ImageLoader.load("CatGreen.png"), 24, 24);
-			cat = green.getSprite(0, 0);
-        	handler.drawImage(cat, 210, 225, 100, 100);
-        }
-		else {
-    		handler.drawImage(cat, 210, 225, 100, 100);
-		}
     }
 }

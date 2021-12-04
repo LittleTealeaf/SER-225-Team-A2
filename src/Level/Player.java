@@ -14,6 +14,7 @@ import java.util.List;
 
 /**
  * Represents the player as it navigates through a map.
+ *
  * @author Thomas Kwashnak
  */
 public abstract class Player extends GameObject {
@@ -21,15 +22,14 @@ public abstract class Player extends GameObject {
     private static final int ATTACK_DELAY = 1500;
     private static final float MAX_FALL_VELOCITY = 6f, MAX_DEATH_FALL_VELOCITY = 10f, DEATH_Y_VELOCITY = -2.5f;
     public static int PLAYER_HEALTH = 3;
-    protected float gravity, jumpHeight, walkSpeed, sprintSpeed, sprintAcceleration;
     private final List<PlayerListener> playerListeners = new ArrayList<>();
     private final Stopwatch attackDelay = new Stopwatch(), jumpDelay = new Stopwatch();
+    protected float gravity, jumpHeight, walkSpeed, sprintSpeed, sprintAcceleration;
     private PlayerState playerState;
     private Facing facing;
     private LevelState levelState;
     private boolean inAir;
     private float absVelocityX, velocityY;
-
 
     public Player(SpriteSheet spriteSheet, float x, float y, String startingAnimationName) {
         super(spriteSheet, x, y, startingAnimationName);
@@ -98,7 +98,7 @@ public abstract class Player extends GameObject {
         //If the player is in the air, set its animation based on velocityY
         if (inAir) {
             playerState = velocityY < 0 ? PlayerState.JUMP : PlayerState.FALL;
-        } else if(KeyboardAction.GAME_CROUCH.isDown()) {
+        } else if (KeyboardAction.GAME_CROUCH.isDown()) {
             absVelocityX = 0;
             playerState = PlayerState.CROUCH;
         }
@@ -107,7 +107,6 @@ public abstract class Player extends GameObject {
         //Moves while handling collisions
         moveYHandleCollision(velocityY);
         moveXHandleCollision(absVelocityX * facing.mod);
-
 
         //Updates player to death if their health hits 0
         if (PLAYER_HEALTH <= 0) {
@@ -123,8 +122,10 @@ public abstract class Player extends GameObject {
         if (currentFrameIndex > 0) { //Checks if it is not the first frame of the player's death animation
             if (map.getCamera().containsDraw(this)) {
                 applyGravity(MAX_DEATH_FALL_VELOCITY);
-            } else for (PlayerListener listener : playerListeners) {
-                listener.onDeath();
+            } else {
+                for (PlayerListener listener : playerListeners) {
+                    listener.onDeath();
+                }
             }
         } else { //Only activates on the first frame of death animation
             velocityY = DEATH_Y_VELOCITY;
@@ -147,14 +148,17 @@ public abstract class Player extends GameObject {
                 playerState = PlayerState.WALK;
                 moveX(walkSpeed);
             }
-        } else for (PlayerListener listener : playerListeners) {
-            //When the player is off the map, send a onLevelCompleted() to all listeners
-            listener.onLevelCompleted();
+        } else {
+            for (PlayerListener listener : playerListeners) {
+                //When the player is off the map, send a onLevelCompleted() to all listeners
+                listener.onLevelCompleted();
+            }
         }
     }
 
     /**
      * Updates the current velocityY with the current gravity
+     *
      * @param maxFallVelocity Gravity Force
      */
     private void applyGravity(float maxFallVelocity) {
@@ -192,12 +196,12 @@ public abstract class Player extends GameObject {
     }
 
     public void hurtPlayer(MapEntity mapEntity) {
-        if(mapEntity instanceof Collidable.Damage) {
+        if (mapEntity instanceof Collidable.Damage) {
             PLAYER_HEALTH -= ((Damage) mapEntity).getDamage();
-        } else if(mapEntity instanceof Collidable.InstantDeath) {
+        } else if (mapEntity instanceof Collidable.InstantDeath) {
             PLAYER_HEALTH = 0;
         }
-        if(mapEntity instanceof Collidable.PreventJump) {
+        if (mapEntity instanceof Collidable.PreventJump) {
             jumpDelay.setWaitTime(((Collidable.PreventJump) mapEntity).getJumpDelay());
         }
     }
@@ -218,6 +222,7 @@ public abstract class Player extends GameObject {
 
     /**
      * Adds a listener
+     *
      * @param listener Methods to be checked whenever the player executes an event
      */
     public void addListener(PlayerListener listener) {
@@ -226,6 +231,7 @@ public abstract class Player extends GameObject {
 
     /**
      * Updates the jump height of the player
+     *
      * @param height Velocity to apply when the player jumps
      */
     public void setJumpHeight(int height) {

@@ -2,10 +2,14 @@ package Level;
 
 // This enum represents different states the Player can be in
 public enum PlayerState {
-    STAND, WALK, JUMP, CROUCH, FALL,
+    STAND,
+    WALK,
+    JUMP,
+    CROUCH,
+    FALL,
     DEATH;
 
-    private final String left,right;
+    private final String left, right;
 
     PlayerState() {
         left = this + "_LEFT";
@@ -25,9 +29,11 @@ public enum PlayerState {
     }
 
     public enum Facing {
-        LEFT(-1),RIGHT(1);
+        LEFT(-1),
+        RIGHT(1);
 
         public final int mod;
+
         Facing(int i) {
             this.mod = i;
         }

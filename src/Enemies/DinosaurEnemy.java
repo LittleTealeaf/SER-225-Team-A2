@@ -20,26 +20,22 @@ import java.util.HashMap;
 // Every so often (based on shootTimer) it will shoot a Fireball enemy
 public class DinosaurEnemy extends Enemy {
 
+    // different speeds depending on the difficulty
+    private static final float NORMAL_SPEED = 1f, HARD_SPEED = 1.2f, HARDCORE_SPEED = 1.4f;
+    private static final float NORMAL_FIREBALL_SPEED = 1.5f, HARD_FIREBALL_SPEED = 1.7f, HARDCORE_FIREBALL_SPEED = 1.9f;
     // start and end location defines the two points that it walks between
     // is only made to walk along the x axis and has no air ground state logic, so make sure both points have the same Y value
     protected final Point startLocation;
     protected final Point endLocation;
-
-    // different speeds depending on the difficulty
-    private static final float NORMAL_SPEED = 1f, HARD_SPEED = 1.2f, HARDCORE_SPEED = 1.4f;
-    float movementSpeed = NORMAL_SPEED;
-    
-    private static final float NORMAL_FIREBALL_SPEED = 1.5f, HARD_FIREBALL_SPEED = 1.7f, HARDCORE_FIREBALL_SPEED = 1.9f;
+    // timer is used to determine when a fireball is to be shot out
+    protected final Stopwatch shootTimer = new Stopwatch();
     private final Direction startFacingDirection;
     protected Direction facingDirection;
     protected boolean isInAir;
-
-    // timer is used to determine when a fireball is to be shot out
-    protected final Stopwatch shootTimer = new Stopwatch();
-
     // can be either WALK or SHOOT based on what the enemy is currently set to do
     protected DinosaurState dinosaurState;
     protected DinosaurState previousDinosaurState;
+    float movementSpeed = NORMAL_SPEED;
 
     public DinosaurEnemy(Point startLocation, Point endLocation, Direction facingDirection) {
         super(startLocation.x, startLocation.y, new SpriteSheet(ImageLoader.load("DinosaurEnemy.png"), 14, 17), "WALK_RIGHT");
@@ -73,15 +69,12 @@ public class DinosaurEnemy extends Enemy {
         float fireballMovementSpeed = NORMAL_FIREBALL_SPEED;
 
         // set the movement speed of the enemy and fireball attack depending on what difficulty it selected
-        if (GamePanel.getDifficulty() == 2)
-        {
-        	movementSpeed = HARD_SPEED;
-        	fireballMovementSpeed = HARD_FIREBALL_SPEED;
-        }
-        else if (GamePanel.getDifficulty() == 1)
-        {
-        	movementSpeed = HARDCORE_SPEED;
-        	fireballMovementSpeed = HARDCORE_FIREBALL_SPEED;
+        if (GamePanel.getDifficulty() == 2) {
+            movementSpeed = HARD_SPEED;
+            fireballMovementSpeed = HARD_FIREBALL_SPEED;
+        } else if (GamePanel.getDifficulty() == 1) {
+            movementSpeed = HARDCORE_SPEED;
+            fireballMovementSpeed = HARDCORE_FIREBALL_SPEED;
         }
         // if shoot timer is up and dinosaur is not currently shooting, set its state to SHOOT
         if (shootTimer.isTimeUp() && dinosaurState != DinosaurState.SHOOT) {
@@ -171,10 +164,10 @@ public class DinosaurEnemy extends Enemy {
             });
 
             put("WALK_RIGHT", new Frame[]{
-                    new FrameBuilder(spriteSheet.getSprite(0, 0), 200).withScale(3).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(4, 2, 5
-                            , 13).build(),
-                    new FrameBuilder(spriteSheet.getSprite(0, 1), 200).withScale(3).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(4, 2, 5
-                            , 13).build()
+                    new FrameBuilder(spriteSheet.getSprite(0, 0), 200).withScale(3).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(4, 2, 5,
+                                                                                                                                            13).build(),
+                    new FrameBuilder(spriteSheet.getSprite(0, 1), 200).withScale(3).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(4, 2, 5,
+                                                                                                                                            13).build()
             });
 
             put("SHOOT_LEFT", new Frame[]{
@@ -183,12 +176,14 @@ public class DinosaurEnemy extends Enemy {
 
             put("SHOOT_RIGHT", new Frame[]{
                     new FrameBuilder(spriteSheet.getSprite(1, 0), 0).withScale(3).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(4, 2, 5,
-                                                                                                                                          13).build(),
+                                                                                                                                          13
+                                                                                                                                         ).build(),
                     });
         }};
     }
 
     public enum DinosaurState {
-        WALK, SHOOT
+        WALK,
+        SHOOT
     }
 }

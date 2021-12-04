@@ -15,16 +15,13 @@ public class TimeTracker implements Drawable {
 
     static {
         String fontName = "Times New Roman";
-        FONT_BIG = new Font(fontName,Font.PLAIN, 40);
-        FONT_SMALL = new Font(fontName,Font.PLAIN,30);
+        FONT_BIG = new Font(fontName, Font.PLAIN, 40);
+        FONT_SMALL = new Font(fontName, Font.PLAIN, 30);
     }
-
-
-    private int currentLevel;
 
     private final GameTimer[] levels;
     private final GameTimer total;
-
+    private int currentLevel;
     private int xMap, yMap, xTotal, yTotal, charsTotal, charsMap;
 
     /**
@@ -36,7 +33,7 @@ public class TimeTracker implements Drawable {
         total = new GameTimer();
         levels = new GameTimer[GameMaps.MAPS.length];
 
-        for(int i = 0; i < levels.length; i++) {
+        for (int i = 0; i < levels.length; i++) {
             levels[i] = new GameTimer();
         }
 
@@ -45,9 +42,9 @@ public class TimeTracker implements Drawable {
     }
 
     public void setCurrentLevel(int currentLevel) {
-        if(this.currentLevel != currentLevel) {
+        if (this.currentLevel != currentLevel) {
             total.start();
-            if(this.currentLevel > -1) {
+            if (this.currentLevel > -1) {
                 levels[this.currentLevel].stop();
                 showLevel = true;
             }
@@ -71,7 +68,7 @@ public class TimeTracker implements Drawable {
 
     public TimeParser getElapsedTime() {
         TimeParser timeParser = new TimeParser();
-        for(GameTimer gameTimer : levels) {
+        for (GameTimer gameTimer : levels) {
             timeParser.addTime(gameTimer.getElapsed());
         }
         return timeParser;
@@ -80,26 +77,24 @@ public class TimeTracker implements Drawable {
     @Override
     public void draw(GraphicsHandler graphicsHandler) {
         String totalString = total.toString();
-        if(totalString.length() != charsTotal) {
+        if (totalString.length() != charsTotal) {
             FontMetrics metrics = graphicsHandler.getGraphics2D().getFontMetrics(FONT_BIG);
             yTotal = metrics.getHeight();
-            xTotal = ScreenManager.getScreenWidth() - metrics.stringWidth(totalString.replace(' ','0')) - 5;
+            xTotal = ScreenManager.getScreenWidth() - metrics.stringWidth(totalString.replace(' ', '0')) - 5;
             charsTotal = totalString.length();
         }
         graphicsHandler.drawString(totalString, xTotal, yTotal, FONT_BIG, Color.white);
 
-        
-        if(showLevel) {
+        if (showLevel) {
             String mapString = levels[currentLevel].toString();
-            if(mapString.length() != charsMap) {
+            if (mapString.length() != charsMap) {
                 FontMetrics metrics = graphicsHandler.getGraphics2D().getFontMetrics(FONT_SMALL);
                 yMap = metrics.getHeight() + yTotal;
-                xMap = ScreenManager.getScreenWidth() - metrics.stringWidth(mapString.replace(' ','0')) - 5;
+                xMap = ScreenManager.getScreenWidth() - metrics.stringWidth(mapString.replace(' ', '0')) - 5;
                 charsMap = mapString.length();
             }
-            graphicsHandler.drawString(mapString,xMap,yMap,FONT_SMALL,Color.white);
+            graphicsHandler.drawString(mapString, xMap, yMap, FONT_SMALL, Color.white);
         }
-
     }
 
     public GameTimer[] getLevels() {

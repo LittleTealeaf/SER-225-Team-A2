@@ -6,6 +6,7 @@ import Level.Map;
  * Contains a centralized list of all game maps. Includes the name of the map, the function to create the map.
  */
 public class GameMaps {
+
     public static final MapManager[] MAPS;
 
     static {
@@ -25,9 +26,14 @@ public class GameMaps {
         };
 
         MAPS = new MapManager[MAP_FACTORIES.length];
-        for(int i = 0; i < MAPS.length; i++) {
+        for (int i = 0; i < MAPS.length; i++) {
             MAPS[i] = new MapManager(MAP_FACTORIES[i]);
         }
+    }
+
+    public interface MapFactory {
+
+        Map generateMap();
     }
 
     /**
@@ -52,9 +58,5 @@ public class GameMaps {
         public Map generateMap() {
             return mapFactory.generateMap();
         }
-    }
-
-    public interface MapFactory {
-        Map generateMap();
     }
 }

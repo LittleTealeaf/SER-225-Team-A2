@@ -25,15 +25,12 @@ public class LevelLoseScreen extends Menu {
     public void update() {
         super.update();
         if (KeyboardAction.GAME_RESPAWN.isDown()) {
-        	// if the player is in hardcore difficulty restart them at the first level otherwise restart them on the current level
-        	if (GamePanel.getDifficulty() == 1)
-        	{
-        		playLevelScreen.resetHardcore();
-        	}
-        	else
-        	{
-        		playLevelScreen.resetLevel();
-        	}
+            // if the player is in hardcore difficulty restart them at the first level otherwise restart them on the current level
+            if (GamePanel.getDifficulty() == 1) {
+                playLevelScreen.resetHardcore();
+            } else {
+                playLevelScreen.resetLevel();
+            }
             Player.PLAYER_HEALTH = GamePanel.getDifficulty();
             PlayerAttack.dogHealth = 8;
         }

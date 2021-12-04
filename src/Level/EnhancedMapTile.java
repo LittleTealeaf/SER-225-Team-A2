@@ -45,7 +45,6 @@ public class EnhancedMapTile extends MapTile {
         super.initialize();
     }
 
-
     public void update(Player player) {
         super.update();
     }
@@ -54,5 +53,4 @@ public class EnhancedMapTile extends MapTile {
     public void draw(GraphicsHandler graphicsHandler) {
         super.draw(graphicsHandler);
     }
-
 }

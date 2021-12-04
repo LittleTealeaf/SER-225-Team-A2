@@ -8,11 +8,7 @@ import EnhancedMapTiles.EndLevelBox;
 import EnhancedMapTiles.HorizontalMovingPlatform;
 import Flags.CheckpointFlag;
 import GameObject.Rectangle;
-import Level.Enemy;
-import Level.EnhancedMapTile;
-import Level.Flag;
-import Level.Map;
-import Level.TileType;
+import Level.*;
 import Tilesets.CommonTileset;
 import Utils.Direction;
 import Utils.Point;
@@ -23,7 +19,7 @@ import java.util.ArrayList;
 public class TestMap6 extends Map {
 
     public TestMap6() {
-        super("Level 6","test_map6.txt", new CommonTileset(), new Point(1, 15));
+        super("Level 6", "test_map6.txt", new CommonTileset(), new Point(1, 15));
     }
 
     @Override
@@ -41,52 +37,32 @@ public class TestMap6 extends Map {
     public ArrayList<EnhancedMapTile> loadEnhancedMapTiles() {
         ArrayList<EnhancedMapTile> enhancedMapTiles = new ArrayList<>();
 
-        enhancedMapTiles.add(new HorizontalMovingPlatform(
-                ImageLoader.load("GreenPlatform.png"),
-                getPositionByTileIndex(9, 8),
-                getPositionByTileIndex(11, 8),
-                TileType.JUMP_THROUGH_PLATFORM,
-                3,
-                new Rectangle(0, 6,16,4),
-                Direction.RIGHT
-        ));
-        
-        enhancedMapTiles.add(new HorizontalMovingPlatform(
-                ImageLoader.load("GreenPlatform.png"),
-                getPositionByTileIndex(12, 5),
-                getPositionByTileIndex(14, 5),
-                TileType.JUMP_THROUGH_PLATFORM,
-                3,
-                new Rectangle(0, 6,16,4),
-                Direction.LEFT
-        ));
-        
-        enhancedMapTiles.add(new HorizontalMovingPlatform(
-                ImageLoader.load("GreenPlatform.png"),
-                getPositionByTileIndex(36, 5),
-                getPositionByTileIndex(38, 5),
-                TileType.JUMP_THROUGH_PLATFORM,
-                3,
-                new Rectangle(0, 6,16,4),
-                Direction.LEFT
-        ));
+        enhancedMapTiles.add(
+                new HorizontalMovingPlatform(ImageLoader.load("GreenPlatform.png"), getPositionByTileIndex(9, 8), getPositionByTileIndex(11, 8),
+                                             TileType.JUMP_THROUGH_PLATFORM, 3, new Rectangle(0, 6, 16, 4), Direction.RIGHT
+                ));
 
-        enhancedMapTiles.add(new EndLevelBox(
-                getPositionByTileIndex(48, 9)
-        ));
+        enhancedMapTiles.add(
+                new HorizontalMovingPlatform(ImageLoader.load("GreenPlatform.png"), getPositionByTileIndex(12, 5), getPositionByTileIndex(14, 5),
+                                             TileType.JUMP_THROUGH_PLATFORM, 3, new Rectangle(0, 6, 16, 4), Direction.LEFT
+                ));
+
+        enhancedMapTiles.add(
+                new HorizontalMovingPlatform(ImageLoader.load("GreenPlatform.png"), getPositionByTileIndex(36, 5), getPositionByTileIndex(38, 5),
+                                             TileType.JUMP_THROUGH_PLATFORM, 3, new Rectangle(0, 6, 16, 4), Direction.LEFT
+                ));
+
+        enhancedMapTiles.add(new EndLevelBox(getPositionByTileIndex(48, 9)));
 
         return enhancedMapTiles;
     }
-    
+
     @Override
     public ArrayList<Flag> loadFlags() {
         ArrayList<Flag> flags = new ArrayList<>();
 
-        flags.add(new CheckpointFlag(
-        		getPositionByTileIndex(26, 7)
-        ));
+        flags.add(new CheckpointFlag(getPositionByTileIndex(26, 7)));
 
         return flags;
     }
-
 }

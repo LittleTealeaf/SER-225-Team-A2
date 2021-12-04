@@ -13,15 +13,18 @@ import java.awt.image.BufferedImage;
 
 // This class is for a horizontal moving platform
 // the platform will move back and forth between its start location and end location
-// if the player is standing on top of it, the player will be moved the same amount as the platform is moving (so the platform will not slide out from under the player)
+// if the player is standing on top of it, the player will be moved the same amount as the platform is moving (so the platform will not slide out
+// from under the player)
 public class HorizontalMovingPlatform extends EnhancedMapTile {
+
+    private static final float MOVEMENT_SPEED = 1f;
     private final Point startLocation;
     private final Point endLocation;
-    private static final float MOVEMENT_SPEED = 1f;
     private final Direction startDirection;
     private Direction direction;
 
-    public HorizontalMovingPlatform(BufferedImage image, Point startLocation, Point endLocation, TileType tileType, float scale, Rectangle bounds, Direction startDirection) {
+    public HorizontalMovingPlatform(BufferedImage image, Point startLocation, Point endLocation, TileType tileType, float scale, Rectangle bounds,
+                                    Direction startDirection) {
         super(image, startLocation.x, startLocation.y, tileType, scale, ImageEffect.NONE, bounds);
         this.startLocation = startLocation;
         this.endLocation = endLocation;
@@ -88,5 +91,4 @@ public class HorizontalMovingPlatform extends EnhancedMapTile {
         super.draw(graphicsHandler);
         //super.drawBounds(graphicsHandler, new Color(0, 0, 255, 100));
     }
-
 }

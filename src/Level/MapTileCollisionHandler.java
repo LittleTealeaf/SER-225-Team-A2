@@ -7,9 +7,9 @@ import Utils.Point;
 // This class has methods to check if a game object has collided with a map tile
 // it is used by the game object class to determine if a collision occurred
 public class MapTileCollisionHandler {
-	
-	public static MapTile lastCollidedTileX, lastCollidedTileY;
-	
+
+    public static MapTile lastCollidedTileX, lastCollidedTileY;
+
     public static float getAdjustedPositionAfterCollisionCheckX(GameObject gameObject, Map map, Direction direction) {
         int numberOfTilesToCheck = Math.max(gameObject.getScaledBounds().getHeight() / map.getTileset().getScaledSpriteHeight(), 1);
         float edgeBoundX = direction == Direction.LEFT ? gameObject.getScaledBounds().getX1() : gameObject.getScaledBounds().getX2();
@@ -17,7 +17,7 @@ public class MapTileCollisionHandler {
         for (int j = -1; j <= numberOfTilesToCheck + 1; j++) {
             MapTile mapTile = map.getMapTile(Math.round(tileIndex.x), Math.round(tileIndex.y + j));
             if (mapTile != null && hasCollidedWithMapTile(gameObject, mapTile, direction)) {
-            	lastCollidedTileX = mapTile;
+                lastCollidedTileX = mapTile;
                 if (direction == Direction.RIGHT) {
                     float boundsDifference = gameObject.getScaledX2() - gameObject.getScaledBoundsX2();
                     return mapTile.getScaledBoundsX1() - gameObject.getScaledWidth() + boundsDifference;
@@ -41,6 +41,16 @@ public class MapTileCollisionHandler {
         return 0;
     }
 
+    // based on tile type, perform logic to determine if a collision did occur with an intersecting tile or not
+    private static boolean hasCollidedWithMapTile(GameObject gameObject, MapTile mapTile, Direction direction) {
+        return switch (mapTile.getTileType()) {
+            case NOT_PASSABLE, LETHAL -> gameObject.intersects(mapTile);
+            case JUMP_THROUGH_PLATFORM -> direction == Direction.DOWN && gameObject.intersects(mapTile) && Math.round(
+                    gameObject.getScaledBoundsY2() - 1) == Math.round(mapTile.getScaledBoundsY1());
+            default -> false;
+        };
+    }
+
     public static float getAdjustedPositionAfterCollisionCheckY(GameObject gameObject, Map map, Direction direction) {
         int numberOfTilesToCheck = Math.max(gameObject.getScaledBounds().getWidth() / map.getTileset().getScaledSpriteWidth(), 1);
         float edgeBoundY = direction == Direction.UP ? gameObject.getScaledBounds().getY() : gameObject.getScaledBounds().getY2();
@@ -48,7 +58,7 @@ public class MapTileCollisionHandler {
         for (int j = -1; j <= numberOfTilesToCheck + 1; j++) {
             MapTile mapTile = map.getMapTile(Math.round(tileIndex.x) + j, Math.round(tileIndex.y));
             if (mapTile != null && hasCollidedWithMapTile(gameObject, mapTile, direction)) {
-            	lastCollidedTileY = mapTile;
+                lastCollidedTileY = mapTile;
                 if (direction == Direction.DOWN) {
                     float boundsDifference = gameObject.getScaledY2() - gameObject.getScaledBoundsY2();
                     return mapTile.getScaledBoundsY1() - gameObject.getScaledHeight() + boundsDifference;
@@ -71,15 +81,5 @@ public class MapTileCollisionHandler {
             }
         }
         return 0;
-    }
-
-    // based on tile type, perform logic to determine if a collision did occur with an intersecting tile or not
-    private static boolean hasCollidedWithMapTile(GameObject gameObject, MapTile mapTile, Direction direction) {
-        return switch (mapTile.getTileType()) {
-            case NOT_PASSABLE, LETHAL -> gameObject.intersects(mapTile);
-            case JUMP_THROUGH_PLATFORM -> direction == Direction.DOWN && gameObject.intersects(mapTile) && Math.round(
-                    gameObject.getScaledBoundsY2() - 1) == Math.round(mapTile.getScaledBoundsY1());
-            default -> false;
-        };
     }
 }

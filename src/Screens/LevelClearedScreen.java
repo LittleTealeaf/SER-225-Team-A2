@@ -26,7 +26,6 @@ public class LevelClearedScreen extends Screen {
 
     }
 
-
     public void draw(GraphicsHandler graphicsHandler) {
         // paint entire screen black and dislpay level cleared text
         graphicsHandler.drawFilledRectangle(0, 0, Config.WIDTH, Config.HEIGHT, Color.black);

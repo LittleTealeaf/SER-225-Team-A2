@@ -20,6 +20,7 @@ import java.util.HashMap;
 // it will travel in a straight line (x axis) for a set time before disappearing
 // it will disappear early if it collides with a solid map tile
 public class Bone extends Projectile implements Collidable.PreventJump {
+
     private final float movementSpeed;
     private final Stopwatch existenceTimer = new Stopwatch();
 
@@ -50,6 +51,13 @@ public class Bone extends Projectile implements Collidable.PreventJump {
     }
 
     @Override
+    public void touchedPlayer(Player player) {
+        // if bone touches player, it disappears
+        super.touchedPlayer(player);
+        this.mapEntityStatus = MapEntityStatus.REMOVED;
+    }
+
+    @Override
     public void onEndCollisionCheckX(boolean hasCollided, Direction direction) {
         // if bone collides with anything solid on the x axis, it is removed
         if (hasCollided) {
@@ -57,25 +65,18 @@ public class Bone extends Projectile implements Collidable.PreventJump {
         }
     }
 
-    @Override
-    public void touchedPlayer(Player player) {
-        // if bone touches player, it disappears
-        super.touchedPlayer(player);
-        this.mapEntityStatus = MapEntityStatus.REMOVED;
-    }
-    
     public void touchedEnemy(Enemy enemy) {
-    	
+
     }
 
     @Override
     public HashMap<String, Frame[]> getAnimations(SpriteSheet spriteSheet) {
         return new HashMap<>() {{
             put("DEFAULT", new Frame[]{
-                    new FrameBuilder(spriteSheet.getSprite(1, 0), 200).withScale(2).withBounds(1, 1, 13, 13).build(),
-                    new FrameBuilder(spriteSheet.getSprite(0, 0), 200).withScale(2).withBounds(1, 1, 13, 13).build(),
-                    new FrameBuilder(spriteSheet.getSprite(1, 0), 200).withScale(2).withBounds(1, 1, 13, 13).build(),
-                    new FrameBuilder(spriteSheet.getSprite(0, 0), 200).withScale(2).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(1, 1, 13, 13).build()
+                    new FrameBuilder(spriteSheet.getSprite(1, 0), 200).withScale(2).withBounds(1, 1, 13, 13).build(), new FrameBuilder(
+                    spriteSheet.getSprite(0, 0), 200).withScale(2).withBounds(1, 1, 13, 13).build(), new FrameBuilder(
+                    spriteSheet.getSprite(1, 0), 200).withScale(2).withBounds(1, 1, 13, 13).build(), new FrameBuilder(
+                    spriteSheet.getSprite(0, 0), 200).withScale(2).withImageEffect(ImageEffect.FLIP_HORIZONTAL).withBounds(1, 1, 13, 13).build()
             });
         }};
     }

@@ -14,5 +14,4 @@ public class EditorWindow {
         editorWindow.setVisible(true);
         editorWindow.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // it'd be nice if this actually worked more than 1/3rd of the time
     }
-
 }

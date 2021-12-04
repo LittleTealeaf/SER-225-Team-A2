@@ -20,10 +20,9 @@ public class GameScoreScreen extends Menu {
     static {
         String fontName = "Times New Roman";
         FONT_LEVEL = new Font(fontName, Font.PLAIN, 30);
-        FONT_TITLE = new Font(fontName, Font.BOLD,60);
+        FONT_TITLE = new Font(fontName, Font.BOLD, 60);
         COLOR_LEVEL = COLOR_TITLE = Color.WHITE;
     }
-
 
     public GameScoreScreen(TimeTracker timeTracker) {
         setBackground(new TitleScreenMap());
@@ -31,26 +30,22 @@ public class GameScoreScreen extends Menu {
 
         SpriteFont levels = new SpriteFont(levelsToString(timeTracker), 10, 150, FONT_LEVEL, COLOR_LEVEL);
         levels.setMultiLine(true);
-        SpriteFont title = new SpriteFont("Game Complete",200,75,FONT_TITLE,COLOR_TITLE);
+        SpriteFont title = new SpriteFont("Game Complete", 200, 75, FONT_TITLE, COLOR_TITLE);
 //        SpriteFont total = new SpriteFont(totalToString(timeTracker),300,100,FONT_TOTAL,COLOR_TOTAL);
-        SpriteFont difficulty = new SpriteFont(GamePanel.getDifficultyString() + " Difficulty",500,150,FONT_LEVEL,COLOR_LEVEL);
-        setDrawables(levels,title,difficulty);
+        SpriteFont difficulty = new SpriteFont(GamePanel.getDifficultyString() + " Difficulty", 500, 150, FONT_LEVEL, COLOR_LEVEL);
+        setDrawables(levels, title, difficulty);
 
-        MenuOption close = new MenuOption("Main Menu", 550, 550,this::backToMainMenu);
+        MenuOption close = new MenuOption("Main Menu", 550, 550, this::backToMainMenu);
         setMenuItemsAsGrid(new MenuOption[][]{{close}});
-    }
-
-    private String totalToString(TimeTracker timeTracker) {
-        return new StringBuilder("Total: ").append(getTotalTimes(timeTracker)).toString();
     }
 
     private String levelsToString(TimeTracker timeTracker) {
         StringBuilder stringBuilder = new StringBuilder();
         GameTimer[] gameTimers = timeTracker.getLevels();
 
-        for(int i = 0; i < GameMaps.MAPS.length; i++) {
-            if(gameTimers[i].getElapsed() > 0) {
-                if(!stringBuilder.isEmpty()) {
+        for (int i = 0; i < GameMaps.MAPS.length; i++) {
+            if (gameTimers[i].getElapsed() > 0) {
+                if (!stringBuilder.isEmpty()) {
                     stringBuilder.append('\n');
                 }
                 stringBuilder.append(GameMaps.MAPS[i].getName()).append(": ").append(gameTimers[i].toString());
@@ -63,9 +58,13 @@ public class GameScoreScreen extends Menu {
 
     private TimeParser getTotalTimes(TimeTracker timeTracker) {
         TimeParser totalTime = new TimeParser();
-        for(GameTimer gameTimer : timeTracker.getLevels()) {
+        for (GameTimer gameTimer : timeTracker.getLevels()) {
             totalTime.addTime(gameTimer.getElapsed());
         }
         return totalTime;
+    }
+
+    private String totalToString(TimeTracker timeTracker) {
+        return new StringBuilder("Total: ").append(getTotalTimes(timeTracker)).toString();
     }
 }

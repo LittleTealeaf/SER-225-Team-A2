@@ -52,12 +52,12 @@ public class Projectile extends MapEntity implements Collidable.Damage {
         }
     }
 
-    public int getDamage() {
-        return 1;
-    }
-
     // A subclass can override this method to specify what it does when it touches the player
     public void touchedPlayer(Player player) {
         player.hurtPlayer(this);
-    }   
+    }
+
+    public int getDamage() {
+        return 1;
+    }
 }

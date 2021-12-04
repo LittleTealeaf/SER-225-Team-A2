@@ -56,6 +56,4 @@ public class Enemy extends MapEntity implements Collidable.InstantDeath {
     public void touchedPlayer(Player player) {
         player.hurtPlayer(this);
     }
- 
-    
 }

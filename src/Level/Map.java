@@ -22,44 +22,34 @@ import java.util.Scanner;
 
 public abstract class Map implements Drawable {
 
-    protected String name;
-
-    // the tile map (map tiles that make up the entire map image)
-    protected MapTile[] mapTiles;
-
-    // width and height of the map in terms of the number of tiles width-wise and height-wise
-    protected int width;
-    protected int height;
-
-    //right most bound
-    private final int rightBound;
-
     // the tileset this map uses for its map tiles
     protected final Tileset tileset;
-
-    // camera class that handles the viewable part of the map that is seen by the player of a game during a level
-    protected Camera camera;
-
-    // tile player should start on when this map is first loaded
-    protected Point playerStartTile;
-    protected Point scaledPlayerStartTile;
-
     // the location of the "mid point" of the screen
     // this is what tells the game that the player has reached the center of the screen, therefore the camera should move instead of the player
     // this goes into creating that "map scrolling" effect
     protected final int xMidPoint;
     protected final int yMidPoint;
-
     // in pixels, this basically creates a rectangle defining how big the map is
     // startX and Y will always be 0, endX and Y is the number of tiles multiplied by the number of pixels each tile takes up
     protected final int startBoundX;
     protected final int startBoundY;
     protected final int endBoundX;
     protected final int endBoundY;
-
     // the name of the map text file that has the tile map information
     protected final String mapFileName;
-
+    //right most bound
+    private final int rightBound;
+    protected String name;
+    // the tile map (map tiles that make up the entire map image)
+    protected MapTile[] mapTiles;
+    // width and height of the map in terms of the number of tiles width-wise and height-wise
+    protected int width;
+    protected int height;
+    // camera class that handles the viewable part of the map that is seen by the player of a game during a level
+    protected Camera camera;
+    // tile player should start on when this map is first loaded
+    protected Point playerStartTile;
+    protected Point scaledPlayerStartTile;
     // lists to hold map entities that are a part of the map
     protected ArrayList<Enemy> enemies;
     protected ArrayList<Projectile> projectiles;
@@ -92,33 +82,41 @@ public abstract class Map implements Drawable {
         loadMapFile();
 
         this.enemies = loadEnemies();
-        for (Enemy enemy: this.enemies) {
+        for (Enemy enemy : this.enemies) {
             enemy.setMap(this);
         }
-        
+
         this.projectiles = loadProjectiles();
-        for (Projectile projectile: this.projectiles) {
+        for (Projectile projectile : this.projectiles) {
             projectile.setMap(this);
         }
 
         this.enhancedMapTiles = loadEnhancedMapTiles();
-        for (EnhancedMapTile enhancedMapTile: this.enhancedMapTiles) {
+        for (EnhancedMapTile enhancedMapTile : this.enhancedMapTiles) {
             enhancedMapTile.setMap(this);
         }
 
         this.npcs = loadNPCs();
-        for (NPC npc: this.npcs) {
+        for (NPC npc : this.npcs) {
             npc.setMap(this);
         }
 
-        if(GamePanel.getDifficulty() != 1) {
+        if (GamePanel.getDifficulty() != 1) {
             this.flags = loadFlags();
-            for (Flag flags: this.flags) {
+            for (Flag flags : this.flags) {
                 flags.setMap(this);
             }
         }
 
         this.camera = new Camera(0, 0, tileset.getScaledSpriteWidth(), tileset.getScaledSpriteHeight(), this);
+    }
+
+    public int getWidthPixels() {
+        return width * tileset.getScaledSpriteWidth();
+    }
+
+    public Tileset getTileset() {
+        return tileset;
     }
 
     // reads in a map file to create the map's tilemap
@@ -127,14 +125,14 @@ public abstract class Map implements Drawable {
         try {
             // open map file that is located in the MAP_FILES_PATH directory
             fileInput = new Scanner(new File(Config.MAP_FILES_PATH + this.mapFileName));
-        } catch(FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             // if map file does not exist, create a new one for this map (the map editor uses this)
             System.out.println("Map file " + Config.MAP_FILES_PATH + this.mapFileName + " not found! Creating empty map file...");
 
             try {
                 createEmptyMapFile();
                 fileInput = new Scanner(new File(Config.MAP_FILES_PATH + this.mapFileName));
-            } catch(IOException ex2) {
+            } catch (IOException ex2) {
                 ex2.printStackTrace();
                 System.out.println("Failed to create an empty map file!");
                 throw new RuntimeException();
@@ -158,11 +156,34 @@ public abstract class Map implements Drawable {
                 MapTile tile = tileset.getTile(tileIndex).build(xLocation, yLocation);
                 tile.setMap(this);
                 setMapTile(j, i, tile);
-
             }
         }
 
         fileInput.close();
+    }
+
+    // list of enemies defined to be a part of the map, should be overridden in a subclass
+    protected ArrayList<Enemy> loadEnemies() {
+        return new ArrayList<>();
+    }
+
+    protected ArrayList<Projectile> loadProjectiles() {
+        return new ArrayList<>();
+    }
+
+    // list of enhanced map tiles defined to be a part of the map, should be overridden in a subclass
+    protected ArrayList<EnhancedMapTile> loadEnhancedMapTiles() {
+        return new ArrayList<>();
+    }
+
+    // list of npcs defined to be a part of the map, should be overridden in a subclass
+    protected ArrayList<NPC> loadNPCs() {
+        return new ArrayList<>();
+    }
+
+    // list of flags defined to be a part of the map, should be overridden in a subclass
+    protected ArrayList<Flag> loadFlags() {
+        return new ArrayList<>();
     }
 
     // creates an empty map file for this map if one does not exist
@@ -173,19 +194,21 @@ public abstract class Map implements Drawable {
         fileWriter.write("0 0\n");
         fileWriter.close();
     }
-    
+
+    // set specific map tile from tile map to a new map tile
+    public void setMapTile(int x, int y, MapTile tile) {
+        mapTiles[getConvertedIndex(x, y)] = tile;
+    }
+
+    // since tile map array is a standard (1D) array and not a 2D,
+    // instead of doing [y][x] to get a value, instead the same can be achieved with x + width * y
+    private int getConvertedIndex(int x, int y) {
+        return x + width * y;
+    }
+
     public void setPlayerStartTile(Point point) {
-    	playerStartTile = point;
-        scaledPlayerStartTile = getPositionByTileIndex((int) point.x,(int) point.y);
-    }
-
-    public void setPlayerStartPosition(Point point) {
-        scaledPlayerStartTile = point;
-    }
-
-    // gets player start position based on player start tile (basically the start tile's position on the map)
-    public Point getPlayerStartPosition() {
-        return scaledPlayerStartTile != null ? scaledPlayerStartTile : getPositionByTileIndex((int) playerStartTile.x, (int) playerStartTile.y);
+        playerStartTile = point;
+        scaledPlayerStartTile = getPositionByTileIndex((int) point.x, (int) point.y);
     }
 
     // get position on the map based on a specfic tile index
@@ -193,8 +216,13 @@ public abstract class Map implements Drawable {
         return new Point(xIndex * tileset.getScaledSpriteWidth(), yIndex * tileset.getScaledSpriteHeight());
     }
 
-    public Tileset getTileset() {
-        return tileset;
+    // gets player start position based on player start tile (basically the start tile's position on the map)
+    public Point getPlayerStartPosition() {
+        return scaledPlayerStartTile != null ? scaledPlayerStartTile : getPositionByTileIndex((int) playerStartTile.x, (int) playerStartTile.y);
+    }
+
+    public void setPlayerStartPosition(Point point) {
+        scaledPlayerStartTile = point;
     }
 
     public String getMapFileName() {
@@ -217,10 +245,6 @@ public abstract class Map implements Drawable {
         this.height = height;
     }
 
-    public int getWidthPixels() {
-        return width * tileset.getScaledSpriteWidth();
-    }
-
     public int getHeightPixels() {
         return height * tileset.getScaledSpriteHeight();
     }
@@ -231,20 +255,6 @@ public abstract class Map implements Drawable {
 
     public void setMapTiles(MapTile[] mapTiles) {
         this.mapTiles = mapTiles;
-    }
-
-    // get specific map tile from tile map
-    public MapTile getMapTile(int x, int y) {
-        if (isInBounds(x, y)) {
-            return mapTiles[getConvertedIndex(x, y)];
-        } else {
-            return null;
-        }
-    }
-
-    // set specific map tile from tile map to a new map tile
-    public void setMapTile(int x, int y, MapTile tile) {
-        mapTiles[getConvertedIndex(x, y)] = tile;
     }
 
     // returns a tile based on a position in the map
@@ -269,34 +279,13 @@ public abstract class Map implements Drawable {
         return x >= 0 && y >= 0 && x < width && y < height;
     }
 
-    // since tile map array is a standard (1D) array and not a 2D,
-    // instead of doing [y][x] to get a value, instead the same can be achieved with x + width * y
-    private int getConvertedIndex(int x, int y) {
-        return x + width * y;
-    }
-
-    // list of enemies defined to be a part of the map, should be overridden in a subclass
-    protected ArrayList<Enemy> loadEnemies() {
-        return new ArrayList<>();
-    }
-    
-    protected ArrayList<Projectile> loadProjectiles() {
-        return new ArrayList<>();
-    }
-
-    // list of enhanced map tiles defined to be a part of the map, should be overridden in a subclass
-    protected ArrayList<EnhancedMapTile> loadEnhancedMapTiles() {
-        return new ArrayList<>();
-    }
-
-    // list of npcs defined to be a part of the map, should be overridden in a subclass
-    protected ArrayList<NPC> loadNPCs() {
-        return new ArrayList<>();
-    }
-    
- // list of flags defined to be a part of the map, should be overridden in a subclass
-    protected ArrayList<Flag> loadFlags() {
-        return new ArrayList<>();
+    // get specific map tile from tile map
+    public MapTile getMapTile(int x, int y) {
+        if (isInBounds(x, y)) {
+            return mapTiles[getConvertedIndex(x, y)];
+        } else {
+            return null;
+        }
     }
 
     public Camera getCamera() {
@@ -306,16 +295,19 @@ public abstract class Map implements Drawable {
     public ArrayList<Enemy> getEnemies() {
         return enemies;
     }
-    
+
     public ArrayList<Projectile> getProjectiles() {
         return projectiles;
     }
+
     public ArrayList<EnhancedMapTile> getEnhancedMapTiles() {
         return enhancedMapTiles;
     }
+
     public ArrayList<NPC> getNPCs() {
         return npcs;
     }
+
     public ArrayList<Flag> getFlags() {
         return flags;
     }
@@ -324,13 +316,14 @@ public abstract class Map implements Drawable {
     public ArrayList<Enemy> getActiveEnemies() {
         return camera.getActiveEnemies();
     }
-    
- // returns all active projectiles (projectiles that are a part of the current update cycle) -- this changes every frame by the Camera class
+
+    // returns all active projectiles (projectiles that are a part of the current update cycle) -- this changes every frame by the Camera class
     public ArrayList<Projectile> getActiveProjectiles() {
         return camera.getActiveProjectiles();
     }
 
-    // returns all active enhanced map tiles (enhanced map tiles that are a part of the current update cycle) -- this changes every frame by the Camera class
+    // returns all active enhanced map tiles (enhanced map tiles that are a part of the current update cycle) -- this changes every frame by the
+    // Camera class
     public ArrayList<EnhancedMapTile> getActiveEnhancedMapTiles() {
         return camera.getActiveEnhancedMapTiles();
     }
@@ -339,8 +332,8 @@ public abstract class Map implements Drawable {
     public ArrayList<NPC> getActiveNPCs() {
         return camera.getActiveNPCs();
     }
-    
- // returns all active flags (flags that are a part of the current update cycle) -- this changes every frame by the Camera class
+
+    // returns all active flags (flags that are a part of the current update cycle) -- this changes every frame by the Camera class
     public ArrayList<Flag> getActiveFlags() {
         return camera.getActiveFlags();
     }
@@ -350,11 +343,11 @@ public abstract class Map implements Drawable {
         enemy.setMap(this);
         this.enemies.add(enemy);
     }
-    
+
     // add a projectile to the map's list of projectiles
     public void addProjectile(Projectile projectile) {
-    	projectile.setMap(this);
-    	this.projectiles.add(projectile);
+        projectile.setMap(this);
+        this.projectiles.add(projectile);
     }
 
     // add an enhanced map tile to the map's list of enhanced map tiles
@@ -368,8 +361,8 @@ public abstract class Map implements Drawable {
         npc.setMap(this);
         this.npcs.add(npc);
     }
-    
- // add an FLAG to the map's list of FLAGS
+
+    // add an FLAG to the map's list of FLAGS
     public void addFlag(Flag flag) {
         flag.setMap(this);
         this.flags.add(flag);
@@ -385,33 +378,6 @@ public abstract class Map implements Drawable {
             adjustMovementX(player);
         }
         camera.update(player);
-    }
-
-    // based on the player's current X position (which in a level can potentially be updated each frame),
-    // adjust the player's and camera's positions accordingly in order to properly create the map "scrolling" effect
-    private void adjustMovementX(Player player) {
-        // if player goes past center screen (on the right side) and there is more map to show on the right side, push player back to center and move camera forward
-        if (player.getCalibratedXLocation() > xMidPoint && camera.getEndBoundX() < endBoundX) {
-            float xMidPointDifference = xMidPoint - player.getCalibratedXLocation();
-            camera.moveX(-xMidPointDifference);
-
-            // if camera moved past the right edge of the map as a result from the move above, move camera back and push player forward
-            if (camera.getEndBoundX() > endBoundX) {
-                float cameraDifference = camera.getEndBoundX() - endBoundX;
-                camera.moveX(-cameraDifference);
-            }
-        }
-        // if player goes past center screen (on the left side) and there is more map to show on the left side, push player back to center and move camera backwards
-        else if (player.getCalibratedXLocation() < xMidPoint && camera.getX() > startBoundX) {
-            float xMidPointDifference = xMidPoint - player.getCalibratedXLocation();
-            camera.moveX(-xMidPointDifference);
-
-            // if camera moved past the left edge of the map as a result from the move above, move camera back and push player backward
-            if (camera.getX() < startBoundX) {
-                float cameraDifference = startBoundX - camera.getX();
-                camera.moveX(cameraDifference);
-            }
-        }
     }
 
     // based on the player's current Y position (which in a level can potentially be updated each frame),
@@ -441,6 +407,35 @@ public abstract class Map implements Drawable {
         }
     }
 
+    // based on the player's current X position (which in a level can potentially be updated each frame),
+    // adjust the player's and camera's positions accordingly in order to properly create the map "scrolling" effect
+    private void adjustMovementX(Player player) {
+        // if player goes past center screen (on the right side) and there is more map to show on the right side, push player back to center and
+        // move camera forward
+        if (player.getCalibratedXLocation() > xMidPoint && camera.getEndBoundX() < endBoundX) {
+            float xMidPointDifference = xMidPoint - player.getCalibratedXLocation();
+            camera.moveX(-xMidPointDifference);
+
+            // if camera moved past the right edge of the map as a result from the move above, move camera back and push player forward
+            if (camera.getEndBoundX() > endBoundX) {
+                float cameraDifference = camera.getEndBoundX() - endBoundX;
+                camera.moveX(-cameraDifference);
+            }
+        }
+        // if player goes past center screen (on the left side) and there is more map to show on the left side, push player back to center and move
+        // camera backwards
+        else if (player.getCalibratedXLocation() < xMidPoint && camera.getX() > startBoundX) {
+            float xMidPointDifference = xMidPoint - player.getCalibratedXLocation();
+            camera.moveX(-xMidPointDifference);
+
+            // if camera moved past the left edge of the map as a result from the move above, move camera back and push player backward
+            if (camera.getX() < startBoundX) {
+                float cameraDifference = startBoundX - camera.getX();
+                camera.moveX(cameraDifference);
+            }
+        }
+    }
+
     public void reset() {
         setupMap();
     }
@@ -460,6 +455,4 @@ public abstract class Map implements Drawable {
     public void setName(String name) {
         this.name = name;
     }
-
-
 }

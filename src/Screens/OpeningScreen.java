@@ -17,12 +17,11 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.HashMap;
 
-public class OpeningScreen extends Screen{
+public class OpeningScreen extends Screen {
 
-
+    private final ScreenCoordinator screenCoordinator;
     private AnimatedSprite cat;
     private Stopwatch catFirstMovement;
-    private final ScreenCoordinator screenCoordinator;
     private SpriteFont story;
     private SpriteFont story1;
     private SpriteFont story2;
@@ -30,7 +29,6 @@ public class OpeningScreen extends Screen{
     private SpriteFont story4;
     private SpriteFont story5;
     private SpriteFont story6;
-
 
     public OpeningScreen(ScreenCoordinator screenCoordinator) {
         this.screenCoordinator = screenCoordinator;
@@ -102,7 +100,6 @@ public class OpeningScreen extends Screen{
     public void mouseClicked(MouseEvent e) {
 
     }
-
 
     public HashMap<String, Frame[]> getCatAnimations(SpriteSheet spriteSheet) {
         return new HashMap<>() {{

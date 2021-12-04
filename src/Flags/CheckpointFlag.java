@@ -28,24 +28,23 @@ public class CheckpointFlag extends Flag {
     }
 
     @Override
-    public void update(Player player) {
-    	super.update(player);
-    	if(intersects(player)) {
-    		checkpointState = CheckpointState.PASSED;
-    		PlayLevelScreen.loadedMap.setPlayerStartPosition(location);
-    	}
-    	
-    	if(checkpointState == CheckpointState.PASSED) {
-        	currentAnimationName = "PASSED";
-        }
-        else {
-        	currentAnimationName = "NOT PASSED";
-        }
-    }
-    
-    @Override
     public void initialize() {
         super.initialize();
+    }
+
+    @Override
+    public void update(Player player) {
+        super.update(player);
+        if (intersects(player)) {
+            checkpointState = CheckpointState.PASSED;
+            PlayLevelScreen.loadedMap.setPlayerStartPosition(location);
+        }
+
+        if (checkpointState == CheckpointState.PASSED) {
+            currentAnimationName = "PASSED";
+        } else {
+            currentAnimationName = "NOT PASSED";
+        }
     }
 
     @Override
@@ -62,6 +61,7 @@ public class CheckpointFlag extends Flag {
     }
 
     public enum CheckpointState {
-        PASSED, NOT_PASSED
+        PASSED,
+        NOT_PASSED
     }
 }

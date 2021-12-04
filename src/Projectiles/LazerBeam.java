@@ -18,6 +18,7 @@ import java.util.HashMap;
 // it will travel in a straight line (x axis) for a set time before disappearing
 // it will disappear early if it collides with a solid map tile
 public class LazerBeam extends Projectile {
+
     private final float movementSpeed;
     private final Stopwatch existenceTimer = new Stopwatch();
 
@@ -48,6 +49,13 @@ public class LazerBeam extends Projectile {
     }
 
     @Override
+    public void touchedPlayer(Player player) {
+        // if lazer beam touches player, it disappears
+        super.touchedPlayer(player);
+        this.mapEntityStatus = MapEntityStatus.REMOVED;
+    }
+
+    @Override
     public void onEndCollisionCheckX(boolean hasCollided, Direction direction) {
         // if lazer beam collides with anything solid on the x axis, it is removed
         if (hasCollided) {
@@ -55,15 +63,8 @@ public class LazerBeam extends Projectile {
         }
     }
 
-    @Override
-    public void touchedPlayer(Player player) {
-        // if lazer beam touches player, it disappears
-        super.touchedPlayer(player);
-        this.mapEntityStatus = MapEntityStatus.REMOVED;
-    }
-    
     public void touchedEnemy(Enemy enemy) {
-    	
+
     }
 
     @Override

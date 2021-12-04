@@ -14,15 +14,20 @@ import java.util.HashMap;
 
 // This class is a base class for all npcs in the game -- all npcs should extend from it
 public class NPC extends MapEntity {
-    protected boolean talkedTo = false;
+
     protected final SpriteFont message;
     protected final int talkedToTime;
     protected final Stopwatch timer = new Stopwatch();
+    protected boolean talkedTo = false;
 
     public NPC(float x, float y, SpriteSheet spriteSheet, String startingAnimation, int talkedToTime) {
         super(x, y, spriteSheet, startingAnimation);
         this.message = createMessage();
         this.talkedToTime = talkedToTime;
+    }
+
+    protected SpriteFont createMessage() {
+        return null;
     }
 
     public NPC(float x, float y, HashMap<String, Frame[]> animations, String startingAnimation, int talkedToTime) {
@@ -59,10 +64,6 @@ public class NPC extends MapEntity {
         super(image, x, y, scale, imageEffect, bounds);
         this.message = createMessage();
         this.talkedToTime = talkedToTime;
-    }
-
-    protected SpriteFont createMessage() {
-        return null;
     }
 
     public void update(Player player) {

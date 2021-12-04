@@ -20,8 +20,8 @@ public class TilePicker extends JPanel {
 
     private final GraphicsHandler graphicsHandler = new GraphicsHandler();
     private final HashMap<Integer, MapTile> mapTiles = new HashMap<>();
-    private int selectedTileIndex = 0;
     private final SelectedTileIndexHolder selectedTileIndexHolder;
+    private int selectedTileIndex = 0;
 
     public TilePicker(SelectedTileIndexHolder selectedTileIndexHolder) {
         setBackground(Colors.MAGENTA);
@@ -44,63 +44,6 @@ public class TilePicker extends JPanel {
         });
     }
 
-    public void setTileset(Map map, Tileset tileset) {
-        HashMap<Integer, MapTileBuilder> mapTileBuilders = tileset.mapDefinedTilesToIndex();
-
-        int width = (int)this.getPreferredSize().getWidth() / tileset.getScaledSpriteWidth();
-        if (width == 0) {
-            width = 1;
-        }
-        int height = (int)Math.ceil(mapTileBuilders.keySet().size() / (double)width);
-        if (height == 0) {
-            height = 1;
-        }
-        setPreferredSize(new Dimension(Math.max(144, width * tileset.getScaledSpriteWidth()), Math.max(391, height * tileset.getScaledSpriteHeight())));
-
-        Integer[] tileKeys = mapTileBuilders.keySet().toArray(new Integer[0]);
-        Arrays.sort(tileKeys);
-        int currentKeyIndex = 0;
-        outerLoop: for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-
-                if (currentKeyIndex >= tileKeys.length) {
-                    break outerLoop;
-                }
-
-                int x = j * tileset.getScaledSpriteWidth() + ((j * 5) + 5);
-                int y = i * tileset.getScaledSpriteHeight() + ((i * 5) + 5);
-                MapTile tile = mapTileBuilders.get(tileKeys[currentKeyIndex]).build(x, y);
-                tile.setMap(map);
-                mapTiles.put(currentKeyIndex, tile);
-                currentKeyIndex++;
-            }
-        }
-        repaint();
-    }
-
-    public void draw() {
-        for (MapTile mapTile : mapTiles.values()) {
-            mapTile.draw(graphicsHandler);
-        }
-
-        MapTile selectedTile = mapTiles.get(selectedTileIndex);
-        graphicsHandler.drawRectangle(
-                Math.round(selectedTile.getX()) - 2,
-                Math.round(selectedTile.getY()) - 2,
-                selectedTile.getScaledWidth() + 4,
-                selectedTile.getScaledHeight() + 4,
-                Color.YELLOW,
-                4
-        );
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        graphicsHandler.setGraphics((Graphics2D) g);
-        draw();
-    }
-
     protected void tileSelected(Point clickedPoint) {
         int selectedTileIndex = getClickedTileIndex(clickedPoint);
         if (selectedTileIndex >= 0) {
@@ -118,15 +61,6 @@ public class TilePicker extends JPanel {
         }
     }
 
-    protected boolean isMouseInTileBounds(Point mousePoint) {
-        for (MapTile mapTile : mapTiles.values()) {
-            if (isPointInTile(mousePoint, mapTile)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     protected int getClickedTileIndex(Point mousePoint) {
         for (Entry<Integer, MapTile> entry : mapTiles.entrySet()) {
             if (isPointInTile(mousePoint, entry.getValue())) {
@@ -136,8 +70,70 @@ public class TilePicker extends JPanel {
         return -1;
     }
 
+    protected boolean isMouseInTileBounds(Point mousePoint) {
+        for (MapTile mapTile : mapTiles.values()) {
+            if (isPointInTile(mousePoint, mapTile)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     protected boolean isPointInTile(Point point, MapTile tile) {
-        return (point.x >= tile.getX() && point.x <= tile.getX() + tile.getScaledWidth() &&
-                point.y >= tile.getY() && point.y <= tile.getY() + tile.getScaledHeight());
+        return (point.x >= tile.getX() && point.x <= tile.getX() + tile.getScaledWidth() && point.y >= tile.getY() && point.y <= tile.getY() + tile.getScaledHeight());
+    }
+
+    public void setTileset(Map map, Tileset tileset) {
+        HashMap<Integer, MapTileBuilder> mapTileBuilders = tileset.mapDefinedTilesToIndex();
+
+        int width = (int) this.getPreferredSize().getWidth() / tileset.getScaledSpriteWidth();
+        if (width == 0) {
+            width = 1;
+        }
+        int height = (int) Math.ceil(mapTileBuilders.keySet().size() / (double) width);
+        if (height == 0) {
+            height = 1;
+        }
+        setPreferredSize(
+                new Dimension(Math.max(144, width * tileset.getScaledSpriteWidth()), Math.max(391, height * tileset.getScaledSpriteHeight())));
+
+        Integer[] tileKeys = mapTileBuilders.keySet().toArray(new Integer[0]);
+        Arrays.sort(tileKeys);
+        int currentKeyIndex = 0;
+        outerLoop:
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+
+                if (currentKeyIndex >= tileKeys.length) {
+                    break outerLoop;
+                }
+
+                int x = j * tileset.getScaledSpriteWidth() + ((j * 5) + 5);
+                int y = i * tileset.getScaledSpriteHeight() + ((i * 5) + 5);
+                MapTile tile = mapTileBuilders.get(tileKeys[currentKeyIndex]).build(x, y);
+                tile.setMap(map);
+                mapTiles.put(currentKeyIndex, tile);
+                currentKeyIndex++;
+            }
+        }
+        repaint();
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        graphicsHandler.setGraphics((Graphics2D) g);
+        draw();
+    }
+
+    public void draw() {
+        for (MapTile mapTile : mapTiles.values()) {
+            mapTile.draw(graphicsHandler);
+        }
+
+        MapTile selectedTile = mapTiles.get(selectedTileIndex);
+        graphicsHandler.drawRectangle(Math.round(selectedTile.getX()) - 2, Math.round(selectedTile.getY()) - 2, selectedTile.getScaledWidth() + 4,
+                                      selectedTile.getScaledHeight() + 4, Color.YELLOW, 4
+                                     );
     }
 }

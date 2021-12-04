@@ -2,6 +2,7 @@ package Utils;
 
 // Represents a Point on a 2D plane, has some "point math" methods
 public class Point {
+
     public float x;
     public float y;
 

@@ -28,23 +28,15 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
         screenTimer = new Stopwatch();
         keyLocker = new KeyLocker();
 
-        SPRITE_FONT_INSTRUCTIONS = new SpriteFont[] {
-                new SpriteFont("To JUMP: UP arrow key, or 'W', or SPACEBAR", 130, 140, "Times New Roman", 20,
-                        Color.white),
-                new SpriteFont("To MOVE LEFT: LEFT arrow key, or 'A'", 130, 170, "Times New Roman", 20,
-                        Color.white),
-                new SpriteFont("To MOVE RIGHT: RIGHT arrow key, or 'D'", 130, 200, "Times New Roman", 20,
-                        Color.white),
-                new SpriteFont("To CROUCH: DOWN arrow key, or 'S'", 130, 230, "Times New Roman", 20,
-                        Color.white),
-                new SpriteFont("To SPRINT: Hold SHIFT while moving", 130, 260, "Times New Roman", 20,
-                        Color.white),
-                new SpriteFont("To ATTACK: press 'E'", 130,300, "Times New Roman", 20,
-                        Color.white),
-                new SpriteFont("To SPRINT: hold 'SHIFT' while moving", 130,340, "Times New Roman", 20,
-                        Color.white),
-                new SpriteFont("Press X to return", 20, 560, "Times New Roman", 20, Color.white)
-
+        SPRITE_FONT_INSTRUCTIONS = new SpriteFont[]{
+                new SpriteFont("To JUMP: UP arrow key, or 'W', or SPACEBAR", 130, 140, "Times New Roman", 20, Color.white), new SpriteFont(
+                "To MOVE LEFT: LEFT arrow key, or 'A'", 130, 170, "Times New Roman", 20, Color.white), new SpriteFont(
+                "To MOVE RIGHT: RIGHT arrow key, or 'D'", 130, 200, "Times New Roman", 20, Color.white), new SpriteFont(
+                "To CROUCH: DOWN arrow key, or 'S'", 130, 230, "Times New Roman", 20, Color.white), new SpriteFont(
+                "To SPRINT: Hold SHIFT while moving", 130, 260, "Times New Roman", 20, Color.white), new SpriteFont("To ATTACK: press 'E'", 130, 300,
+                                                                                                                    "Times New Roman", 20, Color.white
+        ), new SpriteFont("To SPRINT: hold 'SHIFT' while moving", 130, 340, "Times New Roman", 20, Color.white), new SpriteFont(
+                "Press X to return", 20, 560, "Times New Roman", 20, Color.white)
         };
         for (SpriteFont font : SPRITE_FONT_INSTRUCTIONS) {
             font.setOutlineColor(Color.white);
@@ -92,8 +84,8 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
                     screenState = State.RUNNING;
                 }
             }
-            case PAUSE,LEVEL_LOSE_MESSAGE,GAME_COMPLETED -> {
-                if(alternateScreen != null) {
+            case PAUSE, LEVEL_LOSE_MESSAGE, GAME_COMPLETED -> {
+                if (alternateScreen != null) {
                     alternateScreen.update();
                 }
             }
@@ -112,7 +104,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
                 }
             }
         }
-        keyLocker.setAction(KeyboardAction.GAME_INSTRUCTIONS,KeyboardAction.GAME_PAUSE);
+        keyLocker.setAction(KeyboardAction.GAME_INSTRUCTIONS, KeyboardAction.GAME_PAUSE);
     }
 
     @Override
@@ -157,17 +149,13 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
                 graphicsHandler.drawFilledRectangle(0, 0, ScreenManager.getScreenWidth(), ScreenManager.getScreenHeight(), COLOR_GREY_BACKGROUND);
             }
             case GAME_COMPLETED -> {
-                if(!(alternateScreen instanceof GameScoreScreen)) {
+                if (!(alternateScreen instanceof GameScoreScreen)) {
                     alternateScreen = new GameScoreScreen(timeTracker);
                     alternateScreen.initialize();
                 }
                 alternateScreen.draw(graphicsHandler);
             }
         }
-    }
-
-    public Map getLoadedMap() {
-        return loadedMap;
     }
 
     @Override
@@ -187,7 +175,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
      * @param index index of map to load
      */
     public void loadMap(int index) {
-        if(index < GameMaps.MAPS.length) {
+        if (index < GameMaps.MAPS.length) {
             currentMap = index;
             //Load map using the MapFactory
             loadedMap = GameMaps.MAPS[index].generateMap();
@@ -208,12 +196,8 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
         }
     }
 
-    @Override
-    public void onLevelFinished() {
-        //Only complete on final level
-        if(currentMap == GameMaps.MAPS.length - 1) {
-            timeTracker.stop();
-        }
+    public Map getLoadedMap() {
+        return loadedMap;
     }
 
     @Override
@@ -224,6 +208,14 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
     @Override
     public void onDeath() {
         screenState = State.PLAYER_DEAD;
+    }
+
+    @Override
+    public void onLevelFinished() {
+        //Only complete on final level
+        if (currentMap == GameMaps.MAPS.length - 1) {
+            timeTracker.stop();
+        }
     }
 
     public void resetLevel() {
@@ -257,8 +249,14 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
         loadMap(0);
     }
 
-
     public enum State {
-        RUNNING, LEVEL_COMPLETED, PLAYER_DEAD, LEVEL_WIN_MESSAGE, LEVEL_LOSE_MESSAGE, PAUSE, INSTRUCTIONS, GAME_COMPLETED
+        RUNNING,
+        LEVEL_COMPLETED,
+        PLAYER_DEAD,
+        LEVEL_WIN_MESSAGE,
+        LEVEL_LOSE_MESSAGE,
+        PAUSE,
+        INSTRUCTIONS,
+        GAME_COMPLETED
     }
 }

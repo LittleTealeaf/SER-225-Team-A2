@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class TestMap5 extends Map {
 
     public TestMap5() {
-        super("Level 5","test_map5.txt", new CommonTileset(), new Point(1, 11));
+        super("Level 5", "test_map5.txt", new CommonTileset(), new Point(1, 11));
     }
 
     @Override
@@ -32,19 +32,12 @@ public class TestMap5 extends Map {
     public ArrayList<EnhancedMapTile> loadEnhancedMapTiles() {
         ArrayList<EnhancedMapTile> enhancedMapTiles = new ArrayList<>();
 
-        enhancedMapTiles.add(new HorizontalMovingPlatform(
-                ImageLoader.load("GreenPlatform.png"),
-                getPositionByTileIndex(24, 6),
-                getPositionByTileIndex(27, 6),
-                TileType.JUMP_THROUGH_PLATFORM,
-                3,
-                new Rectangle(0, 6,16,4),
-                Direction.RIGHT
-        ));
+        enhancedMapTiles.add(
+                new HorizontalMovingPlatform(ImageLoader.load("GreenPlatform.png"), getPositionByTileIndex(24, 6), getPositionByTileIndex(27, 6),
+                                             TileType.JUMP_THROUGH_PLATFORM, 3, new Rectangle(0, 6, 16, 4), Direction.RIGHT
+                ));
 
-        enhancedMapTiles.add(new EndLevelBox(
-                getPositionByTileIndex(35, 7)
-        ));
+        enhancedMapTiles.add(new EndLevelBox(getPositionByTileIndex(35, 7)));
 
         return enhancedMapTiles;
     }

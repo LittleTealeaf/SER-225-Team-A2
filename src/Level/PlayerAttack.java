@@ -1,6 +1,5 @@
 package Level;
 
-
 import Builders.FrameBuilder;
 import Enemies.Dog;
 import Engine.ImageLoader;
@@ -17,9 +16,10 @@ import java.util.HashMap;
 // it will travel in a straight line (x axis) for a set time before disappearing
 // it will disappear early if it collides with a solid map tile
 public class PlayerAttack extends Enemy {
+
+    public static int dogHealth = 8;
     private final float movementSpeed;
     private final Stopwatch existenceTimer = new Stopwatch();
-    public static int dogHealth = 8;
 
     public PlayerAttack(Point location, float movementSpeed, int existenceTime) {
         super(location.x, location.y, new SpriteSheet(ImageLoader.load("Fireball.png"), 7, 7), "DEFAULT");
@@ -63,16 +63,15 @@ public class PlayerAttack extends Enemy {
     }
 
     @Override
+    public void touchedPlayer(Player player) {}
+
+    @Override
     public void onEndCollisionCheckX(boolean hasCollided, Direction direction) {
         // if fireball collides with anything solid on the x axis, it is removed
         if (hasCollided) {
             this.mapEntityStatus = MapEntityStatus.REMOVED;
         }
     }
-
-    @Override
-    public void touchedPlayer(Player player) {}
-    
 
     @Override
     public HashMap<String, Frame[]> getAnimations(SpriteSheet spriteSheet) {

@@ -3,6 +3,7 @@ package Game;
 /**
  * Runs the base loops of the game, including updates and renders. Multiple updates may happen between frames if it takes too long, meaning the
  * game will catch up once it gets too far ahead.
+ *
  * @author Thomas Kwashnak
  */
 public class GameThread implements Runnable {
@@ -25,9 +26,9 @@ public class GameThread implements Runnable {
      */
     private boolean running = true;
 
-
     /**
      * Creates a new game thread
+     *
      * @param render Runnable called when a render is needed
      * @param update Runnable called when an update is needed
      */
@@ -58,16 +59,16 @@ public class GameThread implements Runnable {
         long currentTime;
 
         //Loop until running is false
-        while(running) {
+        while (running) {
             //Update current time
             currentTime = System.currentTimeMillis();
 
             //Repeat until the update time is after (in the future) current time
-            if(currentTime > nextUpdateTime) {
+            if (currentTime > nextUpdateTime) {
                 do {
                     update.run();
                     nextUpdateTime += UPDATE_FIXED_MS;
-                } while(currentTime > nextUpdateTime);
+                } while (currentTime > nextUpdateTime);
                 //Run a render
                 render.run();
             }

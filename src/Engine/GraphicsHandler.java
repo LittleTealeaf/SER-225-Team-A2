@@ -7,8 +7,8 @@ import java.awt.font.GlyphVector;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 
-
 public class GraphicsHandler {
+
     private Graphics2D g;
 
     public void setGraphics(Graphics2D g) {
@@ -17,10 +17,6 @@ public class GraphicsHandler {
 
     public void drawImage(BufferedImage image, int x, int y) {
         g.drawImage(image, x, y, null);
-    }
-
-    public void drawImage(BufferedImage image, int x, int y, int width, int height) {
-        g.drawImage(image, x, y, width, height, null);
     }
 
     public void drawImage(BufferedImage image, int x, int y, int width, int height, ImageEffect imageEffect) {
@@ -32,15 +28,18 @@ public class GraphicsHandler {
         }
     }
 
+    public void drawImage(BufferedImage image, int x, int y, int width, int height) {
+        g.drawImage(image, x, y, width, height, null);
+    }
+
     public void drawRectangle(int x, int y, int width, int height, Color color) {
         g.setColor(color);
         g.drawRect(x, y, width, height);
     }
 
-    public void drawRectangle(int x, int y, int width, int height, Color color, int borderThickness) {
-        g.setStroke(new BasicStroke(borderThickness));
-        g.setColor(color);
-        g.drawRect(x, y, width, height);
+    public void drawFilledRectangleWithBorder(int x, int y, int width, int height, Color fillColor, Color borderColor, int borderThickness) {
+        drawFilledRectangle(x, y, width, height, fillColor);
+        drawRectangle(x, y, width, height, borderColor, borderThickness);
     }
 
     public void drawFilledRectangle(int x, int y, int width, int height, Color color) {
@@ -48,9 +47,10 @@ public class GraphicsHandler {
         g.fillRect(x, y, width, height);
     }
 
-    public void drawFilledRectangleWithBorder(int x, int y, int width, int height, Color fillColor, Color borderColor, int borderThickness) {
-        drawFilledRectangle(x, y, width, height, fillColor);
-        drawRectangle(x, y, width, height, borderColor, borderThickness);
+    public void drawRectangle(int x, int y, int width, int height, Color color, int borderThickness) {
+        g.setStroke(new BasicStroke(borderThickness));
+        g.setColor(color);
+        g.drawRect(x, y, width, height);
     }
 
     public void drawString(String text, int x, int y, Font font, Color color) {

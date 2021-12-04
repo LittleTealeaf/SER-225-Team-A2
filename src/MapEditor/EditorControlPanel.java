@@ -70,6 +70,12 @@ public class EditorControlPanel extends JPanel {
         add(saveMapButton);
     }
 
+    public void setMap() {
+        selectedMap = EditorMaps.getMapByName(mapNamesComboBox.getSelectedItem().toString());
+        tilePicker.setTileset(selectedMap, selectedMap.getTileset());
+        mapBuilder.setMap(selectedMap);
+    }
+
     public Map getSelectedMap() {
         return selectedMap;
     }
@@ -86,7 +92,7 @@ public class EditorControlPanel extends JPanel {
                     fileWriter.write(String.valueOf(mapTiles[j + map.getWidth() * i].getTileIndex()));
                     if (j < map.getWidth() - 1) {
                         fileWriter.write(" ");
-                    } else if (j >= map.getWidth() -1 && i < map.getHeight() - 1) {
+                    } else if (j >= map.getWidth() - 1 && i < map.getHeight() - 1) {
                         fileWriter.write("\n");
                     }
                 }
@@ -96,10 +102,5 @@ public class EditorControlPanel extends JPanel {
             ex.printStackTrace();
             System.out.println("Unable to save map file! That's really not great!");
         }
-    }
-    public void setMap() {
-        selectedMap = EditorMaps.getMapByName(mapNamesComboBox.getSelectedItem().toString());
-        tilePicker.setTileset(selectedMap, selectedMap.getTileset());
-        mapBuilder.setMap(selectedMap);
     }
 }

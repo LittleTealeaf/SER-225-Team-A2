@@ -19,8 +19,10 @@ import java.util.ArrayList;
 // Represents a test map to be used in a level
 public class TestTutorial extends Map {
 
+    private static final SpriteFont SPRITE_FONT_DIRECTIONS = new SpriteFont("Press 'X' for controls", 15, 35, "Times New Roman", 30, Color.white);
+
     public TestTutorial() {
-        super("Tutorial","test_tutorial.txt", new CommonTileset(), new Point(1, 11));
+        super("Tutorial", "test_tutorial.txt", new CommonTileset(), new Point(1, 11));
     }
 
     @Override
@@ -35,19 +37,12 @@ public class TestTutorial extends Map {
     public ArrayList<EnhancedMapTile> loadEnhancedMapTiles() {
         ArrayList<EnhancedMapTile> enhancedMapTiles = new ArrayList<>();
 
-        enhancedMapTiles.add(new HorizontalMovingPlatform(
-                ImageLoader.load("GreenPlatform.png"),
-                getPositionByTileIndex(24, 6),
-                getPositionByTileIndex(27, 6),
-                TileType.JUMP_THROUGH_PLATFORM,
-                3,
-                new Rectangle(0, 6,16,4),
-                Direction.RIGHT
-        ));
+        enhancedMapTiles.add(
+                new HorizontalMovingPlatform(ImageLoader.load("GreenPlatform.png"), getPositionByTileIndex(24, 6), getPositionByTileIndex(27, 6),
+                                             TileType.JUMP_THROUGH_PLATFORM, 3, new Rectangle(0, 6, 16, 4), Direction.RIGHT
+                ));
 
-        enhancedMapTiles.add(new EndLevelBox(
-                getPositionByTileIndex(32, 7)
-        ));
+        enhancedMapTiles.add(new EndLevelBox(getPositionByTileIndex(32, 7)));
 
         return enhancedMapTiles;
     }
@@ -60,7 +55,6 @@ public class TestTutorial extends Map {
         return new ArrayList<>();
     }
 
-    private static final SpriteFont SPRITE_FONT_DIRECTIONS = new SpriteFont("Press 'X' for controls", 15, 35, "Times New Roman", 30, Color.white);
     public void draw(GraphicsHandler graphicsHandler) {
         super.draw(graphicsHandler);
         SPRITE_FONT_DIRECTIONS.draw(graphicsHandler);
