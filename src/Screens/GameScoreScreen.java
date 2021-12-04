@@ -31,7 +31,6 @@ public class GameScoreScreen extends Menu {
         SpriteFont levels = new SpriteFont(levelsToString(timeTracker), 10, 150, FONT_LEVEL, COLOR_LEVEL);
         levels.setMultiLine(true);
         SpriteFont title = new SpriteFont("Game Complete", 200, 75, FONT_TITLE, COLOR_TITLE);
-//        SpriteFont total = new SpriteFont(totalToString(timeTracker),300,100,FONT_TOTAL,COLOR_TOTAL);
         SpriteFont difficulty = new SpriteFont(GamePanel.getDifficultyString() + " Difficulty", 500, 150, FONT_LEVEL, COLOR_LEVEL);
         setDrawables(levels, title, difficulty);
 
@@ -62,9 +61,5 @@ public class GameScoreScreen extends Menu {
             totalTime.addTime(gameTimer.getElapsed());
         }
         return totalTime;
-    }
-
-    private String totalToString(TimeTracker timeTracker) {
-        return new StringBuilder("Total: ").append(getTotalTimes(timeTracker)).toString();
     }
 }

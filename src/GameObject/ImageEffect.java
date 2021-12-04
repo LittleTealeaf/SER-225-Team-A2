@@ -1,7 +1,9 @@
 package GameObject;
 
-// Enum labels used in the Sprite class for applying various image effects during draw logic
-// example -- flipping an image horizontally
+/**
+ * Enum labels used in the Sprite class for applying various image effects during draw logic
+ * example -- flipping an image horizontally
+ */
 public enum ImageEffect {
     NONE,
     FLIP_HORIZONTAL,

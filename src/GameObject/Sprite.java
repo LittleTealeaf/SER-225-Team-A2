@@ -6,9 +6,11 @@ import Engine.ImageLoader;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-// This class is for representing a Sprite, which is essentially a Rectangle with an image attached
-// it also includes an attribute for "bounds", which can be thought of a sub rectangle on the image where it can be interacted with (like for
-// collisions)
+/**
+ * This class is for representing a Sprite, which is essentially a Rectangle with an image attached
+ * it also includes an attribute for "bounds", which can be thought of a sub rectangle on the image where it can be interacted with (like for
+ * collisions)
+ */
 public class Sprite extends Rectangle implements IntersectableRectangle {
 
     protected BufferedImage image;
@@ -97,11 +99,14 @@ public class Sprite extends Rectangle implements IntersectableRectangle {
         scaledBounds.draw(graphicsHandler);
     }
 
+    public Rectangle getScaledBounds() {
+        return new Rectangle(getScaledBoundsX1(), getScaledBoundsY1(), bounds.getScaledWidth(), bounds.getScaledHeight());
+    }
+
     @Override
     public String toString() {
-        return String.format(
-                "Sprite: x=%s y=%s width=%s height=%s bounds=(%s, %s, %s, %s)", getX(), getY(), getScaledWidth(), getScaledHeight(),
-                getScaledBoundsX1(), getScaledBoundsY1(), getScaledBounds().getWidth(), getScaledBounds().getHeight()
+        return String.format("Sprite: x=%s y=%s width=%s height=%s bounds=(%s, %s, %s, %s)", getX(), getY(), getScaledWidth(), getScaledHeight(),
+                             getScaledBoundsX1(), getScaledBoundsY1(), getScaledBounds().getWidth(), getScaledBounds().getHeight()
                             );
     }
 
@@ -117,9 +122,5 @@ public class Sprite extends Rectangle implements IntersectableRectangle {
 
     public Rectangle getIntersectRectangle() {
         return getScaledBounds();
-    }
-
-    public Rectangle getScaledBounds() {
-        return new Rectangle(getScaledBoundsX1(), getScaledBoundsY1(), bounds.getScaledWidth(), bounds.getScaledHeight());
     }
 }

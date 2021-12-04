@@ -1,6 +1,7 @@
 package GameObject;
 
 import Engine.Collidable;
+import Engine.Drawable;
 import Engine.GraphicsHandler;
 import Utils.Stopwatch;
 
@@ -8,15 +9,15 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
-/*
-	Represents an animated sprite
-	Animations can either be passed in directly or loaded automatically in a subclass by overriding the getAnimations method
-	This class contains logic for transitioning animations as well as playing out the frames in an animation in a loop
-	Subclasses need to call down to this class's update method in order for animation logic to be performed
-	While this calls does not extend from Sprite, it is set up in a way where it is still treated by other classes as if it is a singular sprite
-	(based on value of currentFrame)
-*/
-public class AnimatedSprite implements Collidable {
+/**
+ * Represents an animated sprite
+ * Animations can either be passed in directly or loaded automatically in a subclass by overriding the getAnimations method
+ * This class contains logic for transitioning animations as well as playing out the frames in an animation in a loop
+ * Subclasses need to call down to this class's update method in order for animation logic to be performed
+ * While this calls does not extend from Sprite, it is set up in a way where it is still treated by other classes as if it is a singular sprite
+ * (based on value of currentFrame)
+ */
+public class AnimatedSprite implements Collidable, Drawable {
 
     // times frame delay before transitioning into the next frame of an animation
     private final Stopwatch frameTimer = new Stopwatch();
@@ -48,16 +49,22 @@ public class AnimatedSprite implements Collidable {
         return null;
     }
 
-    // currentFrame is essentially a sprite, so each game loop cycle
-    // the sprite needs to have its current state updated based on animation logic,
-    // and location updated to match any changes to the animated sprite class
+    /**
+     * currentFrame is essentially a sprite, so each game loop cycle
+     * the sprite needs to have its current state updated based on animation logic,
+     * and location updated to match any changes to the animated sprite class
+     */
     protected void updateCurrentFrame() {
         currentFrame = getCurrentFrame();
         currentFrame.setX(x);
         currentFrame.setY(y);
     }
 
-    // gets the frame from current animation that the animated sprite class is currently using
+    /**
+     * gets the frame from current animation that the animated sprite class is currently using
+     *
+     * @return Frame from the current animation that the animated sprite class is currently using
+     */
     protected Frame getCurrentFrame() {
         return animations.get(currentAnimationName)[currentFrameIndex];
     }
@@ -261,9 +268,8 @@ public class AnimatedSprite implements Collidable {
 
     @Override
     public String toString() {
-        return String.format(
-                "Current Sprite: x=%s y=%s width=%s height=%s bounds=(%s, %s, %s, %s)", x, y, getScaledWidth(), getScaledHeight(),
-                getScaledBoundsX1(), getScaledBoundsY1(), getScaledBounds().getWidth(), getScaledBounds().getHeight()
+        return String.format("Current Sprite: x=%s y=%s width=%s height=%s bounds=(%s, %s, %s, %s)", x, y, getScaledWidth(), getScaledHeight(),
+                             getScaledBoundsX1(), getScaledBoundsY1(), getScaledBounds().getWidth(), getScaledBounds().getHeight()
                             );
     }
 

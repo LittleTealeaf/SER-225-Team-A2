@@ -20,8 +20,10 @@ import java.io.IOException;
  */
 public class GamePanel extends JPanel implements Updatable {
 
-    // these difficulty values are not only just used for the the logic of the game but
-    // to determine how much health the user gets at each difficulty;
+    /*
+     these difficulty values are not only just used for the the logic of the game but
+     to determine how much health the user gets at each difficulty;
+     */
     private final static int NORMAL = 3, HARD = 2, HARDCORE = 1;
     public static Clip clip;
     protected static GameWindow gameWindow;
@@ -34,7 +36,7 @@ public class GamePanel extends JPanel implements Updatable {
     private boolean doPaint = false;
 
     /**
-     * The JPanel and various important class instances are setup here
+     * The JPanel and various important class instances are set up here
      */
     public GamePanel(ScreenCoordinator c1, GameWindow gameWindow) {
         super();
@@ -63,7 +65,9 @@ public class GamePanel extends JPanel implements Updatable {
         changeHealth();
     }
 
-    // Checks the players health and accordingly changes to the image with the corresponding number of hearts
+    /**
+     * Checks the players health and accordingly changes to the image with the corresponding number of hearts
+     */
     public void changeHealth() {
         if (coordinator.getGameState() == GameState.LEVEL) {
             if (Player.PLAYER_HEALTH == 3) {
@@ -77,9 +81,11 @@ public class GamePanel extends JPanel implements Updatable {
             }
         }
 
-        // Each difficulty is represented as an integer while also representing the amount of health the user has
-        // normal is 3 hard is 2 and hardcore is 1
-        // hide the health whenever in a menu
+        /*
+         Each difficulty is represented as an integer while also representing the amount of health the user has
+         normal is 3 hard is 2 and hardcore is 1
+         hide the health whenever in a menu
+         */
         if (coordinator.getGameState() == GameState.MENU) {
             Player.PLAYER_HEALTH = difficulty;
             health.setVisible(false);
@@ -142,16 +148,20 @@ public class GamePanel extends JPanel implements Updatable {
         coordinator.mouseClicked(e);
     }
 
-    // this is called later after instantiation, and will initialize screenManager
-    // this had to be done outside of the constructor because it needed to know the
-    // JPanel's width and height, which aren't available in the constructor
+    /**
+     * this is called later after instantiation, and will initialize screenManager
+     * this had to be done outside the constructor because it needed to know the
+     * JPanel's width and height, which aren't available in the constructor
+     */
     public void setupGame() {
         setBackground(Colors.CORNFLOWER_BLUE);
         screenManager.initialize(new Rectangle(getX(), getY(), getWidth(), getHeight()));
         doPaint = true;
     }
 
-    // this starts the timer (the game loop is started here
+    /**
+     * this starts the timer (the game loop is started here
+     */
     public void startGame() {
         gameThread.start();
 
@@ -184,9 +194,11 @@ public class GamePanel extends JPanel implements Updatable {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // every repaint call will schedule this method to be called
-        // when called, it will setup the graphics handler and then call this class's
-        // draw method
+        /*
+         every repaint call will schedule this method to be called
+         when called, it will setup the graphics handler and then call this class's
+         draw method
+         */
         graphicsHandler.setGraphics((Graphics2D) g);
         if (doPaint) {
             draw();

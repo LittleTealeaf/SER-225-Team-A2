@@ -15,6 +15,9 @@ search_exclude: true
 Welcome to the unnamed SER-225-Game's website! Here you can find information on the game, documentation on how the code works, 
 and other miscellaneous notes.
 
+## Notes from Fall 2021 Team A2
+Some legacy code was completely revised during Team A2's development, and thus some of this documentation is obsolete. Documentation will be kept here as it was well written, however please look at the specific code. Javadoc's comments have been included, as well as other comments, to try and explain what is happening.
+
 ## Table of contents
 
 - [How to use this site](../HowToUseThisSite/how-to-use-this-site.md)

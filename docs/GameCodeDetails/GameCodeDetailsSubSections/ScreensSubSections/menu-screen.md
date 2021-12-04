@@ -20,6 +20,8 @@ permalink: /GameCodeDetails/Screens/MenuScreen
 
 # Menu Screen
 
+NOTE: WHILE SOME FOLLOWING DOCUMENTATION IS VALID, MANY SPECIFICS HAVE BEEN SIMPLIFIED BY FALL 2021 TEAM A2. PLEASE LOOK AT MENU CLASSES AND SCREEN CLASSES FOR COMMENTS EXPLAINING THE INNER WORKINGS OF THE NEW SYSTEM
+
 The screen handles the logic and graphics related to the menu that is loaded upon the game starting up.
 
 ![main-menu.PNG](../../../assets/images/main-menu.PNG)
@@ -104,3 +106,5 @@ The menu item text ("Play Game" and "Credits") use the `SpriteFont` class and ar
 Honestly, this class was not made the best; it was neglected because the vast majority of my development time went into the actual platformer game. The menu works fine,
 but it is not as modular as it could be. Regardless, adding a new menu item is easy, but it will be a bit tedious to space everything out correctly, add
 the necessary logic checks for when that menu item is selected, and getting the little blue square graphic to move to the correct spot on hover.
+
+^^ This was done by Fall 2021 Team A2 <3

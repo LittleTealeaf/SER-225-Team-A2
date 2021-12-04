@@ -7,7 +7,7 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-/*
+/**
  * The JFrame that holds the GamePanel
  * Just does some setup and exposes the gamePanel's screenManager to allow an external class to setup their own content and attach it to this engine.
  */
@@ -35,7 +35,9 @@ public class GameWindow {
         gamePanel.setupGame();
     }
 
-    // triggers the game loop to start as defined in the GamePanel class
+    /**
+     * Triggers the game loop to start as defined in the GamePanel class
+     */
     public void startGame() {
         gamePanel.startGame();
     }

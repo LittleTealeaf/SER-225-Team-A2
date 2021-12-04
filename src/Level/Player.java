@@ -63,7 +63,7 @@ public abstract class Player extends GameObject {
         //Update Player Action and Direction
         boolean moveLeftDown = KeyboardAction.GAME_MOVE_LEFT.isDown();
         boolean playerMove = moveLeftDown ^ KeyboardAction.GAME_MOVE_RIGHT.isDown(); //Only true if the player is moving in a direction
-        facing = playerMove ? moveLeftDown ? Facing.LEFT : Facing.RIGHT : facing; //Update facing if the player moved
+        facing = playerMove ? moveLeftDown ? Facing.LEFT : Facing.RIGHT : facing; //Update facing only if the player moved
         //Only move if the player moved and is not going out of bounds
         if (playerMove && ((facing == Facing.LEFT && x > 0) ^ (facing == Facing.RIGHT && x < map.getRightBound()))) {
             playerState = PlayerState.WALK;

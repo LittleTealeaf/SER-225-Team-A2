@@ -1,10 +1,12 @@
-package Level;
+package Projectiles;
 
 import Engine.Collidable;
 import GameObject.Frame;
 import GameObject.ImageEffect;
 import GameObject.Rectangle;
 import GameObject.SpriteSheet;
+import Level.MapEntity;
+import Level.Player;
 
 import java.awt.image.BufferedImage;
 import java.util.HashMap;

@@ -37,7 +37,7 @@ public class CheckpointFlag extends Flag {
         super.update(player);
         if (intersects(player)) {
             checkpointState = CheckpointState.PASSED;
-            PlayLevelScreen.loadedMap.setPlayerStartPosition(location);
+            PlayLevelScreen.getLoadedMap().setPlayerStartPosition(location);
         }
 
         if (checkpointState == CheckpointState.PASSED) {

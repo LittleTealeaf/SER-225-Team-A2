@@ -7,7 +7,7 @@ import Screens.*;
 
 import java.awt.event.MouseEvent;
 
-/*
+/**
  * Based on the current game state, this class determines which Screen should be shown
  * There can only be one "currentScreen", although screens can have "nested" screens
  */
@@ -48,7 +48,7 @@ public class ScreenCoordinator extends Screen {
                         currentScreen = new PlayLevelScreen(initialMap);
                         initialMap = 0;
                     } //should we skip tutorial?
-                    case CREDITS -> currentScreen = new CreditsScreen(); //TODO rebuild this
+                    case CREDITS -> currentScreen = new CreditsScreen();
                     case INSTRUCTIONS -> currentScreen = new InstructionsScreen();
                     case LEVELSELECT -> currentScreen = new LevelSelectScreen();
                     case OPENING -> currentScreen = new OpeningScreen(this);

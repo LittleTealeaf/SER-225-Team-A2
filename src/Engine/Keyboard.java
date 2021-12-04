@@ -17,16 +17,6 @@ public class Keyboard extends KeyAdapter {
         keysDown = new HashSet<>();
     }
 
-    // returns if a key is currently being pressed
-    public static boolean isKeyDown(Key key) {
-        return keysDown.contains(key.getKeyCode());
-    }
-
-    // returns if a key is currently not being pressed
-    public static boolean isKeyUp(Key key) {
-        return !keysDown.contains(key.getKeyCode());
-    }
-
     /**
      * Returns if one of the keys is down
      *

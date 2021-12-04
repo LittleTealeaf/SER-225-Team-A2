@@ -1,7 +1,11 @@
 package Engine;
 
 /**
- * List of "categories" and functions to ask whether any key in that selection is pressed down
+ * List of "categories" and functions to ask whether any key in that selection is pressed down. This allows for a very centralized place to
+ * configure keybinds and the likes. Customizable Keys can be easily implemented by changing this from an enum to a class that has default
+ * parameters, and allows for modifying the keys (or, simply by allowing the user to edit the keys. make keys not final in this instance)
+ *
+ * @author Thomas Kwashnak
  */
 public enum KeyboardAction {
     MENU_ENTER(Key.ENTER, Key.SPACE),
@@ -23,6 +27,11 @@ public enum KeyboardAction {
 
     final int[] keys;
 
+    /**
+     * Converts the keys from {@link Key} to integer values, and then stores in keys
+     *
+     * @param keys List of {@link Key} objects to convert and store as integers
+     */
     KeyboardAction(Key... keys) {
         this.keys = new int[keys.length];
         for (int i = 0; i < keys.length; i++) {
@@ -38,6 +47,9 @@ public enum KeyboardAction {
         return keys;
     }
 
+    /**
+     * @return {@code true} if any of the provided keys are down
+     */
     public boolean isDown() {
         return Keyboard.isKeyDown(keys);
     }

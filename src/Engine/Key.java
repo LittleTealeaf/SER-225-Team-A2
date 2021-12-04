@@ -54,6 +54,9 @@ public enum Key {
         this.keyCode = keyCode;
     }
 
+    /**
+     * @return integer key-code of the key
+     */
     public int getKeyCode() {
         return keyCode;
     }

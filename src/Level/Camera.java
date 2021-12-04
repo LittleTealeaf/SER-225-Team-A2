@@ -4,14 +4,17 @@ import Engine.GraphicsHandler;
 import Engine.ScreenManager;
 import GameObject.GameObject;
 import GameObject.Rectangle;
+import Projectiles.Projectile;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-// This class represents a Map's "Camera", aka a piece of the map that is currently included in a level's update/draw logic based on what should be
-// shown on screen.
-// A majority of its job is just determining which map tiles, enemies, npcs, and enhanced map tiles are "active" each frame (active = included in
-// update/draw cycle)
+/**
+ * This class represents a Map's "Camera", aka a piece of the map that is currently included in a level's update/draw logic based on what should be
+ * shown on screen.
+ * A majority of its job is just determining which map tiles, enemies, npcs, and enhanced map tiles are "active" each frame (active = included in
+ * update/draw cycle)
+ */
 public class Camera extends Rectangle {
 
     // the current map this camera is attached to
@@ -209,15 +212,21 @@ public class Camera extends Rectangle {
         return activeNPCs;
     }
 
-    // determine which flags are active (within range of the camera)
-    // if flag is currently active and was also active last frame, nothing special happens and flag is included in active list
-    // if flag is currently active but last frame was inactive, it will have its status set to active and flag is included in active list
-    // if flag is currently inactive but last frame was active, it will have its status set to inactive, have its initialize method called if its
-    // respawnable
-    //      (which will set it back up to its default state), and not include it in the active list
-    //      next time a respawnable enemy is determined active, since it was reset back to default state upon going inactive, it will essentially
-    //      be "respawned" in its starting state
-    // if flag is currently set to REMOVED, it is permanently removed from the map's list of enemies and will never be able to be active again
+    /**
+     * determine which flags are active (within range of the camera) <br>
+     * if flag is currently active and was also active last frame, nothing special happens and flag is included in active list <br>
+     * if flag is currently active but last frame was inactive, it will have its status set to active and flag is included in active list <br>
+     * if flag is currently inactive but last frame was active, it will have its status set to inactive, have its initialize method called if its
+     * respawnable <br>
+     * (which will set it back up to its default state), and not include it in the active list <br>
+     * next time a respawnable enemy is determined active, since it was reset back to default state upon going inactive, it will
+     * essentially <br>
+     * be "respawned" in its starting state <br>
+     * if flag is currently set to REMOVED, it is permanently removed from the map's list of enemies and will never be able to be active again
+     * <br>
+     *
+     * @return List of active flags
+     */
     private ArrayList<Flag> loadActiveFlags() {
         ArrayList<Flag> activeFlags = new ArrayList<>();
         if (map.getFlags() != null) {
@@ -242,12 +251,16 @@ public class Camera extends Rectangle {
         return activeFlags;
     }
 
-    /*
-        determines if map entity (enemy, enhanced map tile, or npc) is active by the camera's standards
-        1. if entity's status is REMOVED, it is not active, no questions asked
-        2. if entity's status is not REMOVED, then there's additional checks that take place:
-            1. if entity's isUpdateOffScreen attribute is true, it is active
-            2. OR if the camera determines that it is in its boundary range, it is active
+    /**
+     * determines if map entity (enemy, enhanced map tile, or npc) is active by the camera's standards <br>
+     * 1. if entity's status is REMOVED, it is not active, no questions asked <br>
+     * 2. if entity's status is not REMOVED, then there's additional checks that take place: <br>
+     * 1. if entity's isUpdateOffScreen attribute is true, it is active <br>
+     * 2. OR if the camera determines that it is in its boundary range, it is active <br>
+     *
+     * @param mapEntity Entity of the map
+     *
+     * @return
      */
     private boolean isMapEntityActive(MapEntity mapEntity) {
         return mapEntity.getMapEntityStatus() != MapEntityStatus.REMOVED && (mapEntity.isUpdateOffScreen() || containsUpdate(mapEntity));
@@ -258,10 +271,13 @@ public class Camera extends Rectangle {
         drawMapEntities(graphicsHandler);
     }
 
-    // draws visible map tiles to the screen
-    // this is different than "active" map tiles as determined in the update method -- there is no reason to actually draw to screen anything that
-    // can't be seen
-    // so this does not include the extra range granted by the UPDATE_OFF_SCREEN_RANGE value
+    /**
+     * draws visible map tiles to the screen.
+     * this is different than "active" map tiles as determined in the update method -- there is no reason to actually draw to screen anything that
+     * can't be seen so this does not include the extra range granted by the UPDATE_OFF_SCREEN_RANGE value
+     *
+     * @param graphicsHandler
+     */
     public void drawMapTiles(GraphicsHandler graphicsHandler) {
         Point tileIndex = getTileIndexByCameraPosition();
         for (int i = tileIndex.y - 1; i <= tileIndex.y + height + 1; i++) {

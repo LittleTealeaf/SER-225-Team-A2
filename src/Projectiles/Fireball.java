@@ -6,7 +6,6 @@ import GameObject.Frame;
 import GameObject.SpriteSheet;
 import Level.MapEntityStatus;
 import Level.Player;
-import Level.Projectile;
 import Utils.Direction;
 import Utils.Point;
 import Utils.Stopwatch;

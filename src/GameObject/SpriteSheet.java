@@ -2,8 +2,10 @@ package GameObject;
 
 import java.awt.image.BufferedImage;
 
-// This class is for reading in a SpriteSheet (collection of images laid out in a specific way)
-// As long as each graphic on the sheet is the same size, it can parse it into sub images
+/**
+ * This class is for reading in a SpriteSheet (collection of images laid out in a specific way)
+ * As long as each graphic on the sheet is the same size, it can parse it into sub images
+ */
 public class SpriteSheet {
 
     protected BufferedImage image;

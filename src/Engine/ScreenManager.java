@@ -2,27 +2,39 @@ package Engine;
 
 import GameObject.Rectangle;
 
-/*
+/**
  * The game engine uses this class to start off the cascading Screen updating/drawing
  * The idea is an external class should be allowed to set its own Screen to this class's currentScreen variable,
  * and then that class can handle coordinating which Screen to show.
  */
-public class ScreenManager {
+public class ScreenManager implements Drawable, Updatable {
 
     private static Rectangle screenBounds = new Rectangle(0, 0, 0, 0);
     private Screen currentScreen;
 
-    // gets width of currentScreen -- can be called from anywhere in an application
+    /**
+     * gets width of currentScreen -- can be called from anywhere in an application
+     *
+     * @return width of the current screen
+     */
     public static int getScreenWidth() {
         return screenBounds.getWidth();
     }
 
-    // gets height of currentScreen -- can be called from anywhere in an application
+    /**
+     * gets height of currentScreen -- can be called from anywhere in an application
+     *
+     * @return height of the current screen
+     */
     public static int getScreenHeight() {
         return screenBounds.getHeight();
     }
 
-    // gets bounds of currentScreen -- can be called from anywhere in an application
+    /**
+     * gets bounds of currentScreen -- can be called from anywhere in an application
+     *
+     * @return bounds of the current screen
+     */
     public static Rectangle getScreenBounds() {
         return screenBounds;
     }
@@ -32,7 +44,11 @@ public class ScreenManager {
         setCurrentScreen(new DefaultScreen());
     }
 
-    // attach an external Screen class here for the ScreenManager to start calling its update/draw cycles
+    /**
+     * attach an external Screen class here for the ScreenManager to start calling its update/draw cycles
+     *
+     * @param screen external screen to set as the current screen
+     */
     public void setCurrentScreen(Screen screen) {
         screen.initialize();
         this.currentScreen = screen;

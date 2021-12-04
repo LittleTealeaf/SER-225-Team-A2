@@ -1,7 +1,6 @@
 package GameObject;
 
 import Builders.FrameBuilder;
-import Engine.Drawable;
 import Engine.GraphicsHandler;
 import Level.Map;
 import Level.MapTileCollisionHandler;
@@ -12,16 +11,16 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
-/*
-	The all important GameObject class is what every "entity" used in this game should be based off of
-	It encapsulates all the other class logic in the GameObject package to be a "one stop shop" for all entity needs
-	This includes:
-	1. displaying an image (as a sprite) to represent the entity
-	2. animation logic for the sprite
-	3. collision detection with a map
-	4. performing proper draw logic based on camera movement
+/**
+ * The all important GameObject class is what every "entity" used in this game should be based off of
+ * It encapsulates all the other class logic in the GameObject package to be a "one stop shop" for all entity needs
+ * This includes:
+ * 1. displaying an image (as a sprite) to represent the entity
+ * 2. animation logic for the sprite
+ * 3. collision detection with a map
+ * 4. performing proper draw logic based on camera movement
  */
-public class GameObject extends AnimatedSprite implements Drawable {
+public class GameObject extends AnimatedSprite {
 
     // stores game object's start position
     // important to keep track of this as it's what allows the special draw logic to work
@@ -172,7 +171,9 @@ public class GameObject extends AnimatedSprite implements Drawable {
         }
     }
 
-    // gets scaled bounds taking into account map camera position
+    /**
+     * @return scaled bounds taking into account map camera position
+     */
     public Rectangle getCalibratedScaledBounds() {
         if (map != null) {
             Rectangle scaledBounds = getScaledBounds();
@@ -184,8 +185,12 @@ public class GameObject extends AnimatedSprite implements Drawable {
         }
     }
 
-    // move game object along the x axis
-    // will stop object from moving based on map collision logic (such as if it hits a solid tile)
+    /**
+     * move game object along the x axis
+     * will stop object from moving based on map collision logic (such as if it hits a solid tile)
+     *
+     * @param dx Distnace to travel in the x direction
+     */
     public void moveXHandleCollision(float dx) {
         if (map != null) {
             handleCollisionX(dx);
@@ -205,9 +210,11 @@ public class GameObject extends AnimatedSprite implements Drawable {
         // determines direction that will be moved in based on if moveAmountX is positive or negative
         Direction direction = moveAmountX < 0 ? Direction.LEFT : Direction.RIGHT;
 
-        // moves game object one pixel at a time until total move amount is reached
-        // if at any point a map tile collision is determined to have occurred from the move,
-        // move player back to right in front of the "solid" map tile's position, and stop attempting to move further
+        /*
+         moves game object one pixel at a time until total move amount is reached
+         if at any point a map tile collision is determined to have occurred from the move,
+         move player back to right in front of the "solid" map tile's position, and stop attempting to move further
+         */
         float amountMoved = 0;
         boolean hasCollided = false;
         for (int i = 0; i < amountToMove; i++) {
@@ -221,12 +228,14 @@ public class GameObject extends AnimatedSprite implements Drawable {
             amountMoved = (i + 1) * direction.getVelocity();
         }
 
-        // if no collision occurred in the above steps, this deals with the decimal remainder from the original move amount (stored in
-		// moveAmountXRemainder)
-        // it starts by moving the game object by that decimal amount
-        // it then does one more check for a collision in the case that this added decimal amount was enough to change the rounding and move the
-		// game object to the next pixel over
-        // if a collision occurs from this move, the player is moved back to right in front of the "solid" map tile's position
+         /*
+         if no collision occurred in the above steps, this deals with the decimal remainder from the original move amount (stored in
+		 moveAmountXRemainder)
+         it starts by moving the game object by that decimal amount
+         it then does one more check for a collision in the case that this added decimal amount was enough to change the rounding and move the
+		 game object to the next pixel over
+         if a collision occurs from this move, the player is moved back to right in front of the "solid" map tile's position
+          */
         if (!hasCollided) {
             moveX(moveAmountXRemainder * direction.getVelocity());
             float newLocation = MapTileCollisionHandler.getAdjustedPositionAfterCollisionCheckX(this, map, direction);
@@ -246,8 +255,12 @@ public class GameObject extends AnimatedSprite implements Drawable {
     // game object subclass can override this method to listen for x axis collision events and react accordingly after calling "moveXHandleCollision"
     public void onEndCollisionCheckX(boolean hasCollided, Direction direction) {}
 
-    // move game object along the y axis
-    // will stop object from moving based on map collision logic (such as if it hits a solid tile)
+    /**
+     * move game object along the y axis
+     * will stop object from moving based on map collision logic (such as if it hits a solid tile)
+     *
+     * @param dy Distance to travel
+     */
     public void moveYHandleCollision(float dy) {
         if (map != null) {
             handleCollisionY(dy);
@@ -267,9 +280,11 @@ public class GameObject extends AnimatedSprite implements Drawable {
         // determines direction that will be moved in based on if moveAmountY is positive or negative
         Direction direction = moveAmountY < 0 ? Direction.UP : Direction.DOWN;
 
-        // moves game object one pixel at a time until total move amount is reached
-        // if at any point a map tile collision is determined to have occurred from the move,
-        // move player back to right in front of the "solid" map tile's position, and stop attempting to move further
+        /*
+        moves game object one pixel at a time until total move amount is reached
+         if at any point a map tile collision is determined to have occurred from the move,
+         move player back to right in front of the "solid" map tile's position, and stop attempting to move further
+         */
         float amountMoved = 0;
         boolean hasCollided = false;
         for (int i = 0; i < amountToMove; i++) {
@@ -283,12 +298,14 @@ public class GameObject extends AnimatedSprite implements Drawable {
             amountMoved = (i + 1) * direction.getVelocity();
         }
 
-        // if no collision occurred in the above steps, this deals with the decimal remainder from the original move amount (stored in
-		// moveAmountYRemainder)
-        // it starts by moving the game object by that decimal amount
-        // it then does one more check for a collision in the case that this added decimal amount was enough to change the rounding and move the
-		// game object to the next pixel over
-        // if a collision occurs from this move, the player is moved back to right in front of the "solid" map tile's position
+         /*
+         if no collision occurred in the above steps, this deals with the decimal remainder from the original move amount (stored in
+		 moveAmountYRemainder)
+         it starts by moving the game object by that decimal amount
+         it then does one more check for a collision in the case that this added decimal amount was enough to change the rounding and move the
+		 game object to the next pixel over
+         if a collision occurs from this move, the player is moved back to right in front of the "solid" map tile's position
+          */
         if (!hasCollided) {
             moveY(moveAmountYRemainder * direction.getVelocity());
             float newLocation = MapTileCollisionHandler.getAdjustedPositionAfterCollisionCheckY(this, map, direction);

@@ -1,14 +1,17 @@
 package GameObject;
 
 import Engine.Collidable;
+import Engine.Drawable;
 import Engine.GraphicsHandler;
 
 import java.awt.*;
 
-// This class represents a rectangle, which at its core is (x, y, width, height)
-// it has some properties, rectangle math methods, and draw logic
-// the methods here are pretty self explanatory
-public class Rectangle implements Collidable {
+/**
+ * This class represents a rectangle, which at its core is (x, y, width, height)
+ * it has some properties, rectangle math methods, and draw logic
+ * the methods here are pretty self explanatory
+ */
+public class Rectangle implements Collidable, Drawable {
 
     protected float x;
     protected float y;
