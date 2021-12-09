@@ -8,10 +8,14 @@ import Menu.Menu;
 import Menu.MenuOption;
 import SpriteFont.SpriteFont;
 import Utils.GameTimer;
-import Utils.TimeParser;
 
 import java.awt.*;
 
+/**
+ * Displays the game score after the player completes the game, showing the time they took to complete each level, the total time, and the
+ * difficulty that the player completed on.
+ * @author Thomas Kwashnak
+ */
 public class GameScoreScreen extends Menu {
 
     private static final Font FONT_LEVEL, FONT_TITLE;
@@ -38,6 +42,11 @@ public class GameScoreScreen extends Menu {
         setMenuItemsAsGrid(new MenuOption[][]{{close}});
     }
 
+    /**
+     * Converts the list of level-specific times to a single string, separating each level by a newline character ('\n')
+     * @param timeTracker Time Tracker containing the list of level-specific maps used to render
+     * @return Displayed list of newlines as a String
+     */
     private String levelsToString(TimeTracker timeTracker) {
         StringBuilder stringBuilder = new StringBuilder();
         GameTimer[] gameTimers = timeTracker.getLevels();
@@ -50,16 +59,8 @@ public class GameScoreScreen extends Menu {
                 stringBuilder.append(GameMaps.MAPS[i].getName()).append(": ").append(gameTimers[i].toString());
             }
         }
-        stringBuilder.append("\n\nTotal: ").append(getTotalTimes(timeTracker));
+        stringBuilder.append("\n\nTotal: ").append(timeTracker.getElapsedTime());
 
         return stringBuilder.toString();
-    }
-
-    private TimeParser getTotalTimes(TimeTracker timeTracker) {
-        TimeParser totalTime = new TimeParser();
-        for (GameTimer gameTimer : timeTracker.getLevels()) {
-            totalTime.addTime(gameTimer.getElapsed());
-        }
-        return totalTime;
     }
 }

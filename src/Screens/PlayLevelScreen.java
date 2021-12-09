@@ -16,7 +16,13 @@ import java.awt.event.MouseEvent;
  * Probably the most important screen of all. This is the screen that handles rendering and updating the game, along with the sub-screens of the
  * game, such as the instructions menu and the pause menu. This also contains the time tracker and handles the loading of individual maps
  *
+ *
  * @author Thomas Kwashnak
+ */
+/*
+    Some implementation notes: While this works, some smart re-factoring could allow for a much simpler spot. Specifically, making all states into a
+    separate screen that specifically handles the updates and drawing, such that updates here only need to send an update to the current "game
+    screen" rather than checking the state (just an idea)
  */
 public class PlayLevelScreen extends Screen implements PlayerListener, Pausable {
 
@@ -239,7 +245,7 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
     /**
      * If the alternate screen is not null, then delegates the mouse press to the alternate screen
      *
-     * @param e
+     * @param e Mouse Event representing the mouse click
      */
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -280,16 +286,26 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
         }
     }
 
+    /**
+     * Sets the State to Level Completed to display the "Level Completed" screen
+     */
     @Override
     public void onLevelCompleted() {
         screenState = State.LEVEL_COMPLETED;
     }
 
+    /**
+     * Sets the state to Level Lose to display the "Level Lose" screen
+     */
     @Override
     public void onDeath() {
         screenState = State.LEVEL_LOSE_MESSAGE;
     }
 
+    /**
+     * When a level is finished (meaning, when the player hits the level end box), if the current level is the last level, then stop the stopwatch
+     * timer
+     */
     @Override
     public void onLevelFinished() {
         //Only complete on final level
@@ -298,6 +314,10 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
         }
     }
 
+    /**
+     * Resets the current level without instantiating a new one. We do this so that checkpoints keep their states, and the player respawns at the
+     * last checkpoint for that map if they reached it
+     */
     public void resetLevel() {
         loadedMap.reset();
         player = Config.playerAvatar.generatePlayer(loadedMap.getPlayerStartPosition());
@@ -306,6 +326,9 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
         screenState = State.RUNNING;
     }
 
+    /**
+     * Resumes back to the playing state (from instructions or the pause menu only) and restarts the time tracker
+     */
     @Override
     public void resume() {
         if (screenState == State.PAUSE || screenState == State.INSTRUCTIONS) {
@@ -314,6 +337,9 @@ public class PlayLevelScreen extends Screen implements PlayerListener, Pausable 
         }
     }
 
+    /**
+     * Pauses the game, setting the state to "Pause", and stops the time tracker
+     */
     @Override
     public void pause() {
         screenState = State.PAUSE;

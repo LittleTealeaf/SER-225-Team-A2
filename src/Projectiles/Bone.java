@@ -15,9 +15,11 @@ import Utils.Stopwatch;
 
 import java.util.HashMap;
 
-// This class is for the bone enemy that the dog class shoots out
-// it will travel in a straight line (x axis) for a set time before disappearing
-// it will disappear early if it collides with a solid map tile
+/**
+ *  This class is for the bone enemy that the dog class shoots out
+ *  it will travel in a straight line (x axis) for a set time before disappearing
+ *  it will disappear early if it collides with a solid map tile
+ */
 public class Bone extends Projectile implements Collidable.PreventJump {
 
     private final float movementSpeed;

@@ -14,9 +14,11 @@ import Utils.Stopwatch;
 
 import java.util.HashMap;
 
-// This class is for the green dog enemy that shoots bones
-// It walks back and forth between two set points (startLocation and endLocation)
-// Every so often (based on shootTimer) it will shoot a bone enemy
+/**
+ *  This class is for the green dog enemy that shoots bones
+ *  It walks back and forth between two set points (startLocation and endLocation)
+ *  Every so often (based on shootTimer) it will shoot a bone enemy
+ */
 public class Dog extends Enemy {
 
     // different speeds depending on the difficulty

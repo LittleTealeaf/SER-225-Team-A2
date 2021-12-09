@@ -7,6 +7,9 @@ import Menu.Direction;
 import Menu.Menu;
 import Menu.MenuOption;
 
+/**
+ * @author Thomas Kwashnak
+ */
 public class LevelSelectScreen extends Menu {
 
     private final ScreenCoordinator coordinator;

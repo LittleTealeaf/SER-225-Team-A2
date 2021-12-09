@@ -4,6 +4,9 @@ import Game.GameState;
 import Game.ScreenCoordinator;
 import Maps.TitleScreenMap;
 
+/**
+ * @author Thomas Kwashnak
+ */
 public class DebugScreen extends Menu {
 
     public DebugScreen(ScreenCoordinator screenCoordinator) {

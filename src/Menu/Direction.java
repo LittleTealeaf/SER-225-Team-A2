@@ -1,5 +1,8 @@
 package Menu;
 
+/**
+ * @author Thomas Kwashnak
+ */
 public enum Direction {
     UP(0),
     RIGHT(1),

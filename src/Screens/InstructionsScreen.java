@@ -9,6 +9,9 @@ import SpriteFont.SpriteFont;
 
 import java.awt.*;
 
+/**
+ * @author Thomas Kwashnak
+ */
 public class InstructionsScreen extends Menu {
 
     public InstructionsScreen() {

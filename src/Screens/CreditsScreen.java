@@ -7,6 +7,9 @@ import SpriteFont.SpriteFont;
 
 import java.awt.*;
 
+/**
+ * @author Thomas Kwashnak
+ */
 public class CreditsScreen extends Menu {
 
     public CreditsScreen() {

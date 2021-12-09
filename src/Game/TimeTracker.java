@@ -78,20 +78,26 @@ public class TimeTracker implements Drawable {
     }
 
     /**
-     * Usable when dealing with pausing
+     * Starts the total and level specific time
      */
     public void start() {
         total.start();
         levels[currentLevel].start();
     }
 
+    /**
+     * Stops the total and level specific time
+     */
     public void stop() {
         total.stop();
         levels[currentLevel].stop();
     }
 
     /**
-     * @return A TimeParser class that contains the total elapsed time of all levels (more accurate than totalTime)
+     * Calculates the total elapsed time over all levels. This will be more accurate than the given total time as it removes the potential wait
+     * time between stopping one level timer and starting another. This method should be used sparingly, as it requires adding every level-specific
+     * timer together.
+     * @return a TimeParser object of the total time
      */
     public TimeParser getElapsedTime() {
         TimeParser timeParser = new TimeParser();

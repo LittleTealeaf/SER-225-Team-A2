@@ -15,7 +15,9 @@ import Utils.Point;
 import java.awt.*;
 import java.util.HashMap;
 
-// This class is for the walrus NPC
+/**
+ * This class is for the walrus NPC
+ */
 public class Walrus extends NPC {
 
     public Walrus(Point location, Map map) {

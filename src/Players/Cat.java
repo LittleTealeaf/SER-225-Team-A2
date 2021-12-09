@@ -11,8 +11,10 @@ import Utils.Point;
 
 import java.util.HashMap;
 
-// This is the class for the Cat player character
-// basically just sets some values for physics and then defines animations
+/**
+ *  This is the class for the Cat player character
+ *  basically just sets some values for physics and then defines animations
+ */
 public class Cat extends Player {
 
     public Cat(String name, Point point) {

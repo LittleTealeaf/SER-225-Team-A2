@@ -303,9 +303,10 @@ public abstract class Menu extends Screen implements SelectableMenu {
     }
 
     /**
-     * SEts the rendered background of the menu
+     * sets the rendered background of the menu. This background will be (by default) rendered first before any other elements have been rendered
+     * for each rendered frame. The map is not updated, however visual graphics are also rendered.
      *
-     * @param background Menu Background
+     * @param background Menu Background to display behind all screens
      */
     protected void setBackground(Map background) {
         this.background = background;

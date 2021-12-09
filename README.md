@@ -1,1 +1,3 @@
-# TeamA4
+# SER-225 Team A2
+#### [Original GitHub Link](https://github.com/LittleTealeaf/SER-225-Team-A2)
+*Documentation Notes: The documentation provided for this project is best seen on GitHub, where links to other files and other supporting documents will properly work. All that is needed to be done is to upload everything (the whole archive) up to GitHub, and this README should display on the landing page of code.*

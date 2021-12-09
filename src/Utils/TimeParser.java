@@ -22,18 +22,27 @@ public class TimeParser {
         this.time = time;
     }
 
+    /**
+     * Adds time to the TimeParser
+     * @param time Time, in milliseconds, to add to the timer
+     */
     public void addTime(long time) {
         this.time += time;
     }
 
+    /**
+     * Removes time from the TimeParser
+     * @param time Time, in milliseconds, to remove from the timer
+     */
     public void subtractTime(long time) {
         this.time -= time;
     }
 
     /**
-     * Converts the time to a readable string
+     * Converts the time to a readable string. Uses {@link #getTime()} rather than specifically looking at the time object, such that overriding
+     * the {@link #getTime()} method will modify the time that this method displays.
      *
-     * @return
+     * @return Readable String representing the time.
      */
     public String toString() {
         /*
@@ -71,6 +80,10 @@ public class TimeParser {
         return stringBuilder.toString();
     }
 
+    /**
+     * Gets the current time. Override this method in order to modify what the {@link #toString()} method outputs
+     * @return Time, in milliseconds, to display
+     */
     public long getTime() {
         return time;
     }

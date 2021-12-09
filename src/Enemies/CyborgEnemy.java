@@ -15,9 +15,11 @@ import Utils.Stopwatch;
 
 import java.util.HashMap;
 
-// This class is for the cyborg
-// It walks back and forth between two set points (startLocation and endLocation)
-// Every so often (based on shootTimer) the cyborg will shoot lazers from its arms
+/**
+ *  This class is for the cyborg
+ *  It walks back and forth between two set points (startLocation and endLocation)
+ *  Every so often (based on shootTimer) the cyborg will shoot lazers from its arms
+ */
 public class CyborgEnemy extends Enemy {
 
     // different speeds depending on the difficulty

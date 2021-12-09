@@ -6,6 +6,9 @@ import Maps.TitleScreenMap;
 import Menu.Menu;
 import Menu.MenuOption;
 
+/**
+ * @author Thomas Kwashnak
+ */
 public class MenuScreen extends Menu {
 
     public MenuScreen() {

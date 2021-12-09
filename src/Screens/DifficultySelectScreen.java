@@ -8,6 +8,9 @@ import Menu.Menu;
 import Menu.MenuOption;
 import Menu.MenuOption.CloseOnExecute;
 
+/**
+ * @author Thomas Kwashnak
+ */
 public class DifficultySelectScreen extends Menu {
 
     //these values also correspond to the health given at each difficulty
@@ -18,12 +21,9 @@ public class DifficultySelectScreen extends Menu {
     public DifficultySelectScreen() {
         MenuOption[][] menu = new MenuOption[][]{
                 {
-                        new MenuOption("Normal", 100, 150, () -> GamePanel.setDifficulty(NORMAL), CloseOnExecute.CLOSE), new MenuOption(
-                        "Hard", 320, 150, () -> GamePanel.setDifficulty(HARD), CloseOnExecute.CLOSE), new MenuOption("Hardcore", 500, 150,
-                                                                                                                     () -> GamePanel.setDifficulty(
-                                                                                                                             HARDCORE),
-                                                                                                                     CloseOnExecute.CLOSE
-                )
+                        new MenuOption("Normal", 100, 150, () -> GamePanel.setDifficulty(NORMAL), CloseOnExecute.CLOSE),
+                        new MenuOption("Hard", 320, 150, () -> GamePanel.setDifficulty(HARD), CloseOnExecute.CLOSE),
+                        new MenuOption("Hardcore", 500, 150,() -> GamePanel.setDifficulty(HARDCORE),CloseOnExecute.CLOSE)
                 }, {
                         new MenuOption("Back to Main Menu", 225, 375, () -> GamePanel.getScreenCoordinator().setGameState(GameState.MENU))
                 }

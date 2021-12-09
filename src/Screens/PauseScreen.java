@@ -9,6 +9,9 @@ import Menu.MenuOption;
 
 import java.awt.*;
 
+/**
+ * @author Thomas Kwashnak
+ */
 public class PauseScreen extends Menu {
 
     private static final Color COLOR_GREY_BACKGROUND;

@@ -33,6 +33,13 @@ public class Keyboard extends KeyAdapter {
         return false;
     }
 
+    /**
+     * Removes all keys currently listed in the set
+     */
+    public static void clear() {
+        keysDown.clear();
+    }
+
     @Override
     public void keyPressed(KeyEvent keyEvent) {
         keysDown.add(keyEvent.getKeyCode());

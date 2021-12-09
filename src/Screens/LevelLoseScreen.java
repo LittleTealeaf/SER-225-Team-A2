@@ -9,6 +9,9 @@ import SpriteFont.SpriteFont;
 
 import java.awt.*;
 
+/**
+ * @author Thomas Kwashnak
+ */
 public class LevelLoseScreen extends Menu {
 
     private final PlayLevelScreen playLevelScreen;

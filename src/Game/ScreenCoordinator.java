@@ -2,14 +2,15 @@ package Game;
 
 import Engine.DefaultScreen;
 import Engine.GraphicsHandler;
+import Engine.Keyboard;
 import Engine.Screen;
 import Screens.*;
 
 import java.awt.event.MouseEvent;
 
 /**
- * Based on the current game state, this class determines which Screen should be shown
- * There can only be one "currentScreen", although screens can have "nested" screens
+ * Displays the screen based on the current Game State
+ * @author Thomas Kwashnak
  */
 public class ScreenCoordinator extends Screen {
 
@@ -42,19 +43,21 @@ public class ScreenCoordinator extends Screen {
             // if previousGameState does not equal gameState, it means there was a change in gameState
             // this triggers ScreenCoordinator to bring up a new Screen based on what the gameState is
             if (previousGameState != gameState) {
-                switch (gameState) {
-                    case MENU -> currentScreen = new MenuScreen();
-                    case LEVEL -> {
-                        currentScreen = new PlayLevelScreen(initialMap);
-                        initialMap = 0;
-                    } //should we skip tutorial?
-                    case CREDITS -> currentScreen = new CreditsScreen();
-                    case INSTRUCTIONS -> currentScreen = new InstructionsScreen();
-                    case LEVELSELECT -> currentScreen = new LevelSelectScreen();
-                    case OPENING -> currentScreen = new OpeningScreen(this);
-                    case OPTIONS -> currentScreen = new OptionsScreen();
-                    case DIFFICULTYSELECT -> currentScreen = new DifficultySelectScreen();
-                }
+                //This will return an error if there are unimplemented game states
+                currentScreen = switch(gameState) {
+                    case MENU -> new MenuScreen();
+                    case LEVEL -> new PlayLevelScreen(initialMap);
+                    case CREDITS -> new CreditsScreen();
+                    case INSTRUCTIONS -> new InstructionsScreen();
+                    case LEVELSELECT -> new LevelSelectScreen();
+                    case OPENING -> new OpeningScreen(this);
+                    case DIFFICULTYSELECT -> new DifficultySelectScreen();
+                    case OPTIONS -> new OptionsScreen();
+                };
+                //Resets initial map to 0 (in the instance it was used from level select)
+                initialMap = 0;
+                //Clears the screen if the current screen has changed
+                Keyboard.clear();
                 currentScreen.initialize();
             }
             previousGameState = gameState;
@@ -70,6 +73,10 @@ public class ScreenCoordinator extends Screen {
         currentScreen.draw(graphicsHandler);
     }
 
+    /**
+     * Delegates the mouse clicked event to the current screen
+     * @param e Mouse Event to Delegate
+     */
     public void mouseClicked(MouseEvent e) {
         currentScreen.mouseClicked(e);
     }
