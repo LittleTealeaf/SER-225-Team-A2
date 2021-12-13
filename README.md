@@ -1,7 +1,7 @@
 # SER-225 Fall 2021 Team A2
 #### [Original GitHub Link](https://github.com/LittleTealeaf/SER-225-Team-A2)
 
-[//]: # (Welcome to the FAll 2021 Team A2's SER-225's repository! If you are reading this from the text file, it is advised to either enable markdown rendering, view on your own repository &#40;or fork&#41;, or click the link above to view the published repository. )
+[//]: # (Welcome to the FAll 2021 Team A2's SER-225's repository! If you are reading this from the text file, it is advised to either enable markdown rendering, view on your own repository or fork, or click the link above to view the published repository.)
 
 ## What is this project?
 *Taken from the original archive provided*
