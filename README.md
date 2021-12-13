@@ -13,8 +13,8 @@ This is a standalone project, so running this program in either Eclipse or Intel
 
 If you haven't gotten java recently, you probably are running an out-dated java version. During our work, we decided to update our project to use Java version 17. Since we took advantage of the latest java syntax features, this project will most likely not run on older versions. If you are using IntelliJ, you will be able to just choose to download Java 17 when you select the java version.
 
-![img.png](docs_resources/img.png)
-The image above is showing the java version selector under the "project settings" (Look under `File`)
+![](docs_resources/intellij_java17.png)
+The image above is showing the java version selector under the "project settings" (Look under `File`). Additionally, make sure that `Language Level` is also set to the most recent language level.
 
 ### Running the Project
 There are two main classes used to run the project. First, and the most important, is the `Game.java` class. This can be found at [`src/Game/Game.java`](src/Game/Game.java). Running the main class will launch the full game.
