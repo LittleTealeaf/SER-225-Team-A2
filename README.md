@@ -3,7 +3,7 @@
 Welcome to the FAll 2021 Team A2's SER-225's repository! If you are reading this from the text file, it is advised to either enable markdown rendering, view on your own repository (or fork), or click the link above to view the published repository. 
 
 ## What is this project?
-*Taken from the original repository*
+*Taken from the original archive provided*
 >This is a game created for Quinnipiac's SER225 Agile Development class. Students will be paired up in teams for an entire semester, and will use agile development sprints to work further on this game. This usually involves adding features and fixing bugs (I'm sure there are bugs...)
 
 ## How do I use this project?
