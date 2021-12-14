@@ -35,3 +35,21 @@ Ok, so you've probably been shown the original documentation link. Additionally,
 - Game Loop
 
 That being said, many of the changes done have been documented in hopes to explain the madness. These comments are done in a way where in IntelliJ, hovering over any call should display a tooltip that describes that method, or at least if that method was documented.
+
+## Contents of this Repository
+
+Below is a brief overview of the documents contained in this directory, at least those contained in the latest GitHub Repository. Note that some files may be missing to clean the slate for your teams to build on.
+
+This table was taken directly from our final report. Yes, the file names are links, and should take you directly to that folder / file, depending on where you are viewing the markdown file from.
+
+| File                                               | Description                                                                                                                                                                                                                                                |
+|:---------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| [`Team A2`](Team%20A2)                             | Contains all our working documents as a team. A [`README.md`](Team%20A2/README.md) is provided to give additional insight into the directory's contents                                                                                                    |
+| [`Team A2/Test Cases`](Team%20A2/Test%20Cases)     | The final list of all test cases in the project, as markdown files. Each file is labeled by its Bug or Enhancement ID number (SCP-##). A template file “template.md” is also listed as a template for the test case markdown structure.                    |
+| [`Team A2/User Stories`](Team%20A2/User%20Stories) | This directory contains the “.docx” of our first wave of test cases and user stories, which we created during Scrum Spring 0. While some were completed, we ended up not continuing with these as described above.                                         |
+| [`docs_archive/`](docs_archive)                    | This is the directory containing the original documentation of the project. We specify “archive” because much of the documentation is obsolete with the current state of the project, but a fair chunk is still useful with learning how the system works. |
+| [`docs_resources`](docs_resources)                 | All the resources, such as the image used in the project README.md file, stored in one centralized location                                                                                                                                                |
+| [`resources/`](resources)                          | All resources pertaining to the java project. This will include Map Files, Music, and Images that the code loads up and runs.                                                                                                                              |
+| [`src/`](src)                                      | The source root directory of the project. This is the root folder where all the modules/packages are stored.                                                                                                                                               |
+| [`.gitignore`](.gitignore)                         | Ignore files used by git so that IDE-specific files and java compiled files are not committed or pushed during production                                                                                                                                  |
+| [`README.md`](README.md)                           | The file you are reading right now                                                                                                                                                                                                                         |
