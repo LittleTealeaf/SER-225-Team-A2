@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-3 |
 | :--- | :--- |
 | Owner of Test | Jacob Conrad |
@@ -18,6 +19,7 @@
 |3c|Receive Enemy Attack (if it has one)|The player should die|Pass|
 
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 10/12/2021 (Scrum Sprint 1 enemy)
 - **Test Result**: Passed

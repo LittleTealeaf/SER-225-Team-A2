@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-46 |
 | :--- | :--- |
 | Owner of Test | Nicholas Tourony |
@@ -18,6 +19,7 @@
 |6| Select the passable floating platform tile and click on the map to place it. | The passable floating platform is placed on the map. | Pass |
 
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 11/29/2021 10:14 AM
 - **Test Result**: Passed

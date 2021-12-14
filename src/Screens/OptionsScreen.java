@@ -18,6 +18,7 @@ import java.awt.image.BufferedImage;
 /**
  * Gives the user the ability to modify settings regarding the game, including setting the volume and the player color. This class demonstrates an
  * example of extending the {@link Menu} class properly.
+ *
  * @author Thomas Kwashnak
  */
 public class OptionsScreen extends Menu {
@@ -37,17 +38,17 @@ public class OptionsScreen extends Menu {
          */
         MenuOption[][] items = new MenuOption[][]{
                 {
-                    //Each of these curly brackets ("{}") describes a line, or elements that will be displayed next to each other
+                        //Each of these curly brackets ("{}") describes a line, or elements that will be displayed next to each other
                         new MenuOption("Volume Control:", 75, 150),
-                    /*
-                    "GamePanel::setVolumeOff" is a new java syntax that references a specific method. In simple terms, "GamePanel::setVolumeOff"
-                    creates an anonymous class based on the Runnable interface (which contains a run() method), and implements the run() method to
-                    just call GamePanel.setVolumeOff(). Lambdas and manual anonymous classes can also be used here
-                     */
+                        /*
+                        "GamePanel::setVolumeOff" is a new java syntax that references a specific method. In simple terms, "GamePanel::setVolumeOff"
+                        creates an anonymous class based on the Runnable interface (which contains a run() method), and implements the run() method to
+                        just call GamePanel.setVolumeOff(). Lambdas and manual anonymous classes can also be used here
+                         */
                         new MenuOption("Off", 350, 150, GamePanel::setVolumeOff),
                         new MenuOption("Low", 450, 150, GamePanel::setVolumeLow),
-                    new MenuOption("Medium", 550, 150, GamePanel::setVolumeMed),
-                    new MenuOption("High", 680, 150, GamePanel::setVolumeHigh)
+                        new MenuOption("Medium", 550, 150, GamePanel::setVolumeMed),
+                        new MenuOption("High", 680, 150, GamePanel::setVolumeHigh)
                 }, {
 
                         new MenuOption("Player", 100, 300),
@@ -79,6 +80,7 @@ public class OptionsScreen extends Menu {
 
     /**
      * Custom drawing instructions to display the cat based on the chosen option
+     *
      * @param handler Graphics Handler used for the current frame.
      */
     public void draw(GraphicsHandler handler) {

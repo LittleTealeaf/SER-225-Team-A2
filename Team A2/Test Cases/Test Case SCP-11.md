@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-11 |
 | :--- | :--- |
 | Owner of Test | Thomas Kwashnak |
@@ -18,6 +19,7 @@
 |6|Click on the "Start Game"|Clicking on "start game" begins the game|P|
 
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 11/7/2021 (Completed during copying)
 - **Test Result**: Fail (Clicking back arrow does not navigate user back to the main menu)

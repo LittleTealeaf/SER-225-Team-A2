@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-60|
 | :--- | :--- |
 | Owner of Test | Ty Hutchison|
@@ -16,6 +17,7 @@
 |4| Enter Main Menu Screen | The User will enter the Main Menu screen |Pass|
 
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 11/29/2021 3:57 PM
 - **Test Result**: Passed

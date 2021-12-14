@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-55 |
 | :--- | :--- |
 | Owner of Test | Jacob Conrad |
@@ -16,8 +17,8 @@
 |4|Click on blue and then hover over orange or green|The blue cat should be displayed|Pass|
 |5|Click on green and then hover over blue or orange|The green cat should be displayed|Pass|
 
-
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 11/29/2021 10:17 AM
 - **Test Result**: Passed

@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-49 |
 | :--- | :--- |
 | Owner of Test | Nicholas Tourony |
@@ -26,6 +27,7 @@
 |14| Restart the game and beat each level at every difficulty to ensure the levels are still possible. (Use the level select to make hardcore mode easier) | Each level is beat on every difficulty | Passed |
 
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 11/30/2021
 - **Test Result**: Passed

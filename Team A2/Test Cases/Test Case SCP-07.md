@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-7 |
 | :--- | :--- |
 | Owner of Test | Jack Handy |
@@ -17,6 +18,7 @@
 |5|Repeat actions 1 through 4 for each additional level|Tasks 1-4 have the correct expected result for each level|Pass for levels 6 and 7|
 
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 10/27/2021
 - **Test Result**: Pass (*Levels 6-7*)

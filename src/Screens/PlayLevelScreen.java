@@ -16,7 +16,6 @@ import java.awt.event.MouseEvent;
  * Probably the most important screen of all. This is the screen that handles rendering and updating the game, along with the sub-screens of the
  * game, such as the instructions menu and the pause menu. This also contains the time tracker and handles the loading of individual maps
  *
- *
  * @author Thomas Kwashnak
  */
 /*

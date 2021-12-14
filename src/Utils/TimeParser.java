@@ -24,6 +24,7 @@ public class TimeParser {
 
     /**
      * Adds time to the TimeParser
+     *
      * @param time Time, in milliseconds, to add to the timer
      */
     public void addTime(long time) {
@@ -32,6 +33,7 @@ public class TimeParser {
 
     /**
      * Removes time from the TimeParser
+     *
      * @param time Time, in milliseconds, to remove from the timer
      */
     public void subtractTime(long time) {
@@ -82,6 +84,7 @@ public class TimeParser {
 
     /**
      * Gets the current time. Override this method in order to modify what the {@link #toString()} method outputs
+     *
      * @return Time, in milliseconds, to display
      */
     public long getTime() {

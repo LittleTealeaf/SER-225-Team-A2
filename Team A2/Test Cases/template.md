@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | [TEST ID] |
 | :--- | :--- |
 | Owner of Test | [OWNER NAME] |
@@ -15,6 +16,7 @@
 |n| [STEP TITLE] | [EXPECTED RESULT] | [RESULT] |
 
 ### Test Completion
+
 - **Tester**: [TESTER NAME]
 - **Date of Test**: DATE OF TEST
 - **Test Result**: TEST RESULT

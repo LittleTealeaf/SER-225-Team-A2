@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-15|
 | :--- | :--- |
 | Owner of Test | Ty Hutchison|
@@ -17,6 +18,7 @@
 |5| Check base volume | The User will be able to comfortable play the game without having the music too loud | Pass |
 
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 11/9/2021
 - **Test Result**: Passed

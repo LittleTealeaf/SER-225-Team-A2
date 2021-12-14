@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-33 |
 | :--- | :--- |
 | Owner of Test | Nicholas Tourony |
@@ -17,8 +18,8 @@
 |5|Tap the E key really fast while facing left|The fireball attack starts from the character.|P
 |6|Tap the E key really fast while facing right|The fireball attack starts from the character|P
 
-
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 10/27/2021
 - **Test Result**: Passed

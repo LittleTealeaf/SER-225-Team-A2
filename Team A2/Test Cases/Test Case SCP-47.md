@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-47|
 | :--- | :--- |
 | Owner of Test | Ty Hutchison|
@@ -17,6 +18,7 @@
 |5| Exit the game | The User will exit the game |Passed|
 
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 11/29/2021 4:21 PM
 - **Test Result**: Passed

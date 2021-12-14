@@ -15,8 +15,8 @@ import java.util.HashMap;
 
 /**
  * This class is for the lazer beam enemy that the DinosaurEnemy class shoots out
- *  it will travel in a straight line (x axis) for a set time before disappearing
- *  it will disappear early if it collides with a solid map tile
+ * it will travel in a straight line (x axis) for a set time before disappearing
+ * it will disappear early if it collides with a solid map tile
  */
 public class LazerBeam extends Projectile {
 

@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-46 |
 | :--- | :--- |
 | Owner of Test | Nicholas Tourony |
@@ -18,6 +19,7 @@
 |6| Select the spike block tile and click on the map to place it. | The spike block is placed on the map. | Pass |
 
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 11/7/2021
 - **Test Result**: Passed

@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | Test Case SCP-45 |
 | :--- | :--- |
 | Owner of Test | Thomas Kwashnak |
@@ -20,6 +21,7 @@
 |8|Navigate to the platform and aim to land on the left edge of the moving platform|Player does not die when hitting the corner/size of the moving platform|P|
 
 ### Test Completion
+
 - **Tester**: Nicholas Tourony
 - **Date of Test**: 11/7/2021
 - **Test Result**: Passed

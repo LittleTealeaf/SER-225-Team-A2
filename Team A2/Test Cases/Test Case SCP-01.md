@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-1 |
 | :--- | :--- |
 | Owner of Test | Nicholas Tourony |
@@ -21,6 +22,7 @@
 |9|Hold shift while holding the right arrow key|The character moves right at a fast speed|P|
 
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 11/7/2021 (Late, marked passed as task was submitted)
 - **Test Result**: Passed

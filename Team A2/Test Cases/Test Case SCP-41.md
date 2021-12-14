@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-41 |
 | :--- | :--- |
 | Owner of Test | Thomas Kwashnak |
@@ -18,6 +19,7 @@
 |6|Beat the first level|The first level is beatable, the "level complete" dialogue displays, and after a few seconds the user is taken to the next level|P|
 
 ### Test Completion
+
 - **Tester**: Nicholas Tourony
 - **Date of Test**: 11/7/2021
 - **Test Result**: Passed

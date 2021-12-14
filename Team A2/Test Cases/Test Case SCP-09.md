@@ -19,6 +19,7 @@
 |6| The player touches the boss | The player dies |Pass|
 
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 11/10/2021
 - **Test Result**: Passed

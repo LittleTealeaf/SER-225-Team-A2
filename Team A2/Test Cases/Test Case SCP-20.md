@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-20 |
 | :--- | :--- |
 | Owner of Test | Thomas Kwashnak |
@@ -20,6 +21,7 @@
 |4|Press escape|The options menu is closed and the main menu is showing again|P|
 
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 11/7/2021 (Late, filled during copy of new format)
 - **Test Result**: Passed

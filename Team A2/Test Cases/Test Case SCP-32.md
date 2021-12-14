@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-32|
 | :--- | :--- |
 | Owner of Test | Ty Hutchison|
@@ -17,6 +18,7 @@
 |5| Check in game instructions | The User will be able to press 'x' to see in game instructions | Pass |
 
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 11/9/2021
 - **Test Result**: Passed

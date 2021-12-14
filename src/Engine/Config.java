@@ -14,11 +14,11 @@ public class Config {
     /**
      * Path for the Resources folder
      */
-    public static final String RESOURCES_PATH = "Resources/";
+    public static final String RESOURCES_PATH = "resources/";
     /**
      * Path for the Map Files folder
      */
-    public static final String MAP_FILES_PATH = "MapFiles/";
+    public static final String MAP_FILES_PATH = RESOURCES_PATH + "MapFiles/";
     /**
      * Width of the window
      */

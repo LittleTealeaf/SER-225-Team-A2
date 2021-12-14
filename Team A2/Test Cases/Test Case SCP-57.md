@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-57 |
 | :--- | :--- |
 | Owner of Test | Thomas Kwashnak |
@@ -7,13 +8,14 @@
 | Test Objective | Ensure that all current functionalities of the player is implemented in new Player class and still functional |
 
 Functionality of `Player.java` tested:
- - Movement, and movement animations
- - Jumping, including gravity and hitting floor
- - Animation while jumping
- - Collision with enemies
- - Shooting, including animations while standing still and moving
- - Collision with map boundaries and map walls
- - Ability to complete all levels with physics
+
+- Movement, and movement animations
+- Jumping, including gravity and hitting floor
+- Animation while jumping
+- Collision with enemies
+- Shooting, including animations while standing still and moving
+- Collision with map boundaries and map walls
+- Ability to complete all levels with physics
 
 ### Procedure
 
@@ -48,6 +50,7 @@ Functionality of `Player.java` tested:
 |26|Play all levels of the game|Each level is completable|Pass|
 
 ### Test Completion
+
 - **Tester**: Nicholas Tourony
 - **Date of Test**: 11/30/2021
 - **Test Result**: Passed

@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-61 |
 | :--- | :--- |
 | Owner of Test | Jacob Conrad |
@@ -24,6 +25,7 @@
 |12|Play through the level until you find the checkpoint flag. Touch the flag and then die|The user should respawn at the checkpoint flag|Pass|
 
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 11/30/2021
 - **Test Result**: Passed

@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-8 |
 | :--- | :--- |
 | Owner of Test | Jacob Conrad |
@@ -12,8 +13,8 @@
 |:---:| :---        |    :----  | :---: |
 |1|Navigate to the Resources folder and open Dog.png | The Dog.png file is inside the resources folder and has the boss design sprite sheet inside it|Pass|
 
-
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 10/27/2021
 - **Test Result**: Pass

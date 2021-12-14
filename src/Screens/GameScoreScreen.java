@@ -14,6 +14,7 @@ import java.awt.*;
 /**
  * Displays the game score after the player completes the game, showing the time they took to complete each level, the total time, and the
  * difficulty that the player completed on.
+ *
  * @author Thomas Kwashnak
  */
 public class GameScoreScreen extends Menu {
@@ -44,7 +45,9 @@ public class GameScoreScreen extends Menu {
 
     /**
      * Converts the list of level-specific times to a single string, separating each level by a newline character ('\n')
+     *
      * @param timeTracker Time Tracker containing the list of level-specific maps used to render
+     *
      * @return Displayed list of newlines as a String
      */
     private String levelsToString(TimeTracker timeTracker) {

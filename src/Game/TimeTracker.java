@@ -97,6 +97,7 @@ public class TimeTracker implements Drawable {
      * Calculates the total elapsed time over all levels. This will be more accurate than the given total time as it removes the potential wait
      * time between stopping one level timer and starting another. This method should be used sparingly, as it requires adding every level-specific
      * timer together.
+     *
      * @return a TimeParser object of the total time
      */
     public TimeParser getElapsedTime() {

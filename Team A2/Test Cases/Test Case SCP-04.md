@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-4 |
 | :--- | :--- |
 | Owner of Test | Ty Hutchison |
@@ -15,8 +16,8 @@
 |3|Go through the tutorial and learn how to play the game|User completes tutorial and properly knows how to play the game||
 |4|Return ot the main menu after the level is complete|After the gold block is hit return to the main menu|F (Functionality Changed)|
 
-
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak;
 - **Date of Test**: (Late Copy/Test 11/7/2021)
 - **Test Result**: F (Specific test failed because implementation and design has changed since creation of test case)

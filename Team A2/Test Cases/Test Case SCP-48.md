@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-48 |
 | :--- | :--- |
 | Owner of Test | Nicholas Tourony |
@@ -16,6 +17,7 @@
 |5| Save the change compare the old txt file with the new one | The txt file has been changed |Pass|
 
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 11/7/2021
 - **Test Result**: Passed

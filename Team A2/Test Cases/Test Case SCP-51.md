@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-51|
 | :--- | :--- |
 | Owner of Test | Ty Hutchison|
@@ -14,8 +15,8 @@
 |2| Hit Quit Option | The User will select the quit option in the main menu |Pass|
 |3| The game will close | The game will close |Pass|
 
-
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 11/29/2021 3:59 PM
 - **Test Result**: Passed

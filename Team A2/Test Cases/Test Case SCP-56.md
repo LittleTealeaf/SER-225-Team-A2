@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-56 |
 | :--- | :--- |
 | Owner of Test | Thomas Kwashnak |
@@ -8,7 +9,6 @@
 | Test Notes| Due to the nature of this test case, multiple runs of the test must be conducted on various machines of different make and models. Measurements will be taken using a recording software, and should not be expected to be perfect|
 |Software Requirement|**Screen recording software:** Needs to be able to record the screen such that the tester can go back and accurately measure the time between events. *Suggested:* OBS|
 |Prerequisites|Test Case SCP-57 must be completed prior to this merge|
-
 
 ### Procedure
 
@@ -25,10 +25,10 @@
 |9|Complete the tutorial level|When the tutorial level is completed, the `level complete` is shown, and after a few seconds the player is loaded into the next level|**Measurement 5:** The time that the `level complete` screen is shown
 
 ### Test Execution
+
 Instances of tests are listed in table below (template provided). Measurements listed in instructions above are listed below for test completer to evaluate.
 
 **Overall Test Completion** indicates whether all steps were completed and no errors / inability to follow instructions occurred.
-
 
 |Date|Name|Device Information | Measure 1|Measure 2|Measure 3|Measure 5|Measure 4|Pass/Fail|
 |:---:|:---|:---|:---:|:---:|:---:|:---:|:---:|:---:|
@@ -40,9 +40,11 @@ Instances of tests are listed in table below (template provided). Measurements l
 [comment]: <> (Add test rows to end here ^^)
 
 ### Completion Criteria
- - There are no outliers on all measurements
+
+- There are no outliers on all measurements
 
 ### Test Completion
+
 - **Tester**: Nicholas Tourony
 - **Date of Test**: 11/30/2021
 - **Test Result**: Pass

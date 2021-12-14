@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-5 |
 | :--- | :--- |
 | Owner of Test | Ty Hutchison |
@@ -16,6 +17,7 @@
 |4|Return to the main menu after level is completed|After the gold block is hit, returns to the main menu|F (Change in Design)|
 
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 11/7/2021 (Late, done during copy)
 - **Test Result**: P (Only fails were not game-breaking)

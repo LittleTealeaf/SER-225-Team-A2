@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-6 |
 | :--- | :--- |
 | Owner of Test | Nicholas Tourony |
@@ -15,8 +16,8 @@
 |3|Restart the game and use the level selection in the main menu to select level 5|The player is loaded into the fifth level|P|
 |4|Play and beat the 5th level|The player can beat the fifth level, and it has a noticeable difference from the first level|P|
 
-
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 10/27/2021
 - **Test Result**: Pass

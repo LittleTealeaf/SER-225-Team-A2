@@ -166,10 +166,10 @@ public class GamePanel extends JPanel implements Updatable {
         gameThread.start();
 
         try {
-            music("Resources/Music/music.wav", .05);
+            music(Config.RESOURCES_PATH + "Music/music.wav", .05);
         } catch (Exception e) {
             try {
-                music("Resources/Music/music.mp3", .05);
+                music(Config.RESOURCES_PATH + "Music/music.mp3", .05);
             } catch (Exception ignored) {
 
             }

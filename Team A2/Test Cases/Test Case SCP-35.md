@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-35 |
 | :--- | :--- |
 | Owner of Test | Thomas Kwashnak |
@@ -44,6 +45,7 @@
 |34|Navigate and run into the bug to die, and hit escape to go back to the main menu|The player dies, and then the main menu is displayed after the player hits escape|P|
 
 ### Test Completion
+
 - **Tester**: Nicholas Tourony
 - **Date of Test**: 11/7/2021
 - **Test Result**: Passed

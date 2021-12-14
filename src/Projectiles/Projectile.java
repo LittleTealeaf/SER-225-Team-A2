@@ -12,7 +12,7 @@ import java.awt.image.BufferedImage;
 import java.util.HashMap;
 
 /**
- *  This class is a base class for all projectiles in the game -- all projectiles should extend from it
+ * This class is a base class for all projectiles in the game -- all projectiles should extend from it
  */
 public class Projectile extends MapEntity implements Collidable.Damage {
 

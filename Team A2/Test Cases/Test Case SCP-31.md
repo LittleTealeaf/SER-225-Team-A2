@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-31 |
 | :--- | :--- |
 | Owner of Test | Jacob Conrad |
@@ -20,6 +21,7 @@
 |8|Restart the tutorial level|Health should be visible again and be at three hearts (not the previous zero hearts from losing and going to the menu)|Pass
 
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 10/27/2021
 - **Test Result**: Pass

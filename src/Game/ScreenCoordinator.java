@@ -10,6 +10,7 @@ import java.awt.event.MouseEvent;
 
 /**
  * Displays the screen based on the current Game State
+ *
  * @author Thomas Kwashnak
  */
 public class ScreenCoordinator extends Screen {
@@ -44,7 +45,7 @@ public class ScreenCoordinator extends Screen {
             // this triggers ScreenCoordinator to bring up a new Screen based on what the gameState is
             if (previousGameState != gameState) {
                 //This will return an error if there are unimplemented game states
-                currentScreen = switch(gameState) {
+                currentScreen = switch (gameState) {
                     case MENU -> new MenuScreen();
                     case LEVEL -> new PlayLevelScreen(initialMap);
                     case CREDITS -> new CreditsScreen();
@@ -75,6 +76,7 @@ public class ScreenCoordinator extends Screen {
 
     /**
      * Delegates the mouse clicked event to the current screen
+     *
      * @param e Mouse Event to Delegate
      */
     public void mouseClicked(MouseEvent e) {

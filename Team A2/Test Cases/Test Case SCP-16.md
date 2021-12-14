@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-16 |
 | :--- | :--- |
 | Owner of Test | Nicholas Tourony |
@@ -16,6 +17,7 @@
 |4|Play the game|The user is able to play the game successfully without any sound|Pass|
 
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 10/27/2021
 - **Test Result**: Pass

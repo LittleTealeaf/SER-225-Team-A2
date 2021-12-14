@@ -1,4 +1,5 @@
 ### Test Case Information
+
 | TEST CASE ID | SCP-10|
 | :--- | :--- |
 | Owner of Test | Ty Hutchison|
@@ -15,8 +16,8 @@
 |3| User will read the Narrative Screen | User will read the narrative backstory and understand the games background | Pass |
 |4| User will complete the rest of the game | The User will be able to complete the rest of the game and complete the backstory | Pass (inferred) |
 
-
 ### Test Completion
+
 - **Tester**: Thomas Kwashnak
 - **Date of Test**: 11/9/2021
 - **Test Result**: Passed
