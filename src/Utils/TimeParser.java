@@ -1,5 +1,9 @@
 package Utils;
 
+/**
+ * Stores a given time in length, and provides tools in order to display that time in a readable format
+ * @author Thomas Kwashnak
+ */
 public class TimeParser {
 
     private static final long MS_PER_SECOND, SECOND_PER_MINUTE, MINUTE_PER_HOUR, MS_PER_HOUR, MS_PER_MINUTE;
@@ -91,6 +95,10 @@ public class TimeParser {
         return time;
     }
 
+    /**
+     * Sets the time to the given time parameter
+     * @param time Time to set the current TimeParser to.
+     */
     public void setTime(long time) {
         this.time = time;
     }

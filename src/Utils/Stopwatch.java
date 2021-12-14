@@ -1,6 +1,8 @@
 package Utils;
 
-// Class is designed to be told how many milliseconds to wait, and then will tell you when time is up
+/**
+ *  Class is designed to be told how many milliseconds to wait, and then will tell you when time is up
+ */
 public class Stopwatch {
 
     private long beforeTime = System.currentTimeMillis();
